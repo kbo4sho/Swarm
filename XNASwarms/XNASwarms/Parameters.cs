@@ -36,13 +36,13 @@ namespace XNASwarms
 	    public static int numberOfIndividualsMax = 300;
 
 	    private double neighborhoodRadius;
-	    public static double neighborhoodRadiusMax = 30;
+	    public static double neighborhoodRadiusMax = 300;
 
 	    private double normalSpeed;
-	    public static double normalSpeedMax = 10;
+	    public static double normalSpeedMax = 20;
 
 	    private double maxSpeed;
-	    public static double maxSpeedMax = 20;
+	    public static double maxSpeedMax = 40;
 
 	    private double c1;
 	    public static double c1Max = 1;
@@ -62,7 +62,7 @@ namespace XNASwarms
         public Random rand = new Random();
 
 	    public Parameters() {
-                        //All random were Math.random()
+            //All random were Math.random()
             neighborhoodRadius = rand.NextDouble() * neighborhoodRadiusMax;
             normalSpeed = rand.NextDouble() * normalSpeedMax;
             maxSpeed = rand.NextDouble() * maxSpeedMax;

@@ -12,19 +12,20 @@ namespace XNASwarms
 	    private Parameters genome;
 	    private int rankInXOrder, rankInYOrder;
 
-        public TouchEventArgs touchEvent;
-        public int TouchID;
-        public bool super;
+        //public TouchEventArgs touchEvent;
+        //public int TouchID;
+        //public bool super;
 
          //What was the issue with this?
-        //public Individual() {
-        //    this(0.0, 0.0, 0.0, 0.0, new Parameters());
-        //}
+        public Individual() :  this(0.0, 0.0, 0.0, 0.0, new Parameters())
+        {
+           
+        }
 
 	    public Individual(double xx, double yy, double dxx, double dyy,
 			    Parameters g) {
-		    x = xx + 500;
-		    y = yy + 500;
+		    x = xx;
+		    y = yy;
 		    dx = dx2 = dxx;
 		    dy = dy2 = dyy;
 		    genome = g;
@@ -46,20 +47,20 @@ namespace XNASwarms
 
 	    public void stepSimulation() 
         {
-            if (!super)
-            {
+            //if (!super)
+            //{
                 dx = dx2;
                 dy = dy2;
                 x += dx;
                 y += dy;
-            }
+            //}
 	    }
 
-        public void SetPosition(TouchPoint touchPoint)
-        {
-            x = touchPoint.CenterX;
-            y = touchPoint.CenterY;
-        }
+        //public void SetPosition(TouchPoint touchPoint)
+        //{
+        //    x = touchPoint.CenterX;
+        //    y = touchPoint.CenterY;
+        //}
 
 	    public Color getDisplayColor() {
 		    return genome.getDisplayColor();

@@ -9,12 +9,8 @@ namespace XNASwarms
 {
     static class Program
     {
-        // Hold on to the game window.
         static GameWindow Window;
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main(string[] args)
         {
@@ -46,7 +42,7 @@ namespace XNASwarms
         /// Position and adorn the Window appropriately.
         /// </summary>
         /// <param name="window"></param>
-        internal static void InitializeWindow(GameWindow window)
+        internal static void InitializeWindow(GameWindow window, bool testing)
         {
             if (window == null)
             {
@@ -59,7 +55,14 @@ namespace XNASwarms
             form.LocationChanged += OnFormLocationChanged;
 
             SetWindowStyle();
-            SetWindowSize();
+            if (testing)
+            {
+                SetTestingWindow();
+            }
+            else
+            {
+                SetWindowSize();
+            }
         }
 
         /// <summary>
@@ -105,6 +108,22 @@ namespace XNASwarms
             form.FormBorderStyle = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
                                     ? FormBorderStyle.None
                                     : FormBorderStyle.Sizable;
+        }
+
+
+        /// <summary>
+        /// Size the window to testing size.
+        /// </summary>
+        private static void SetTestingWindow()
+        {
+            int width = 800;
+            int height = 600;
+
+            Form form = (Form)Form.FromHandle(Window.Handle);
+            form.ClientSize = new Size(width, height);
+            form.WindowState = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+                            ? FormWindowState.Normal
+                            : FormWindowState.Maximized;
         }
 
         /// <summary>

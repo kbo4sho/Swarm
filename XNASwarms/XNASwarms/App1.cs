@@ -14,16 +14,14 @@ using Microsoft.Xna.Framework.Media;
 
 namespace XNASwarms
 {
-    /// <summary>
-    /// This is the main type for your application.
-    /// </summary>
-    public class App1 : Microsoft.Xna.Framework.Game
+
+    public class App1 : Game
     {
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
         private TouchTarget touchTarget;
-        private Color backgroundColor = new Color(81, 81, 81);
+        private Color backgroundColor = Color.White;
         private bool applicationLoadCompleteSignalled;
 
         private UserOrientation currentOrientation = UserOrientation.Bottom;
@@ -40,6 +38,9 @@ namespace XNASwarms
         Random rand;
         int[] randNumbers;
         int lastTime = 0;
+        private float TotalElapsed;
+        private float TimePerFrame;
+        private int FramesPerSec;
 
         /// <summary>
         /// The target receiving all surface input for the application.
@@ -60,7 +61,7 @@ namespace XNASwarms
             recipes = new Recipe[1];
             recipes[0] = new Recipe(StockRecipies.Recipe1());
             //recipes[1] = new Recipe(StockRecipies.Recipe1());
-            myPopulation = new PopulationSimulator(200, 200, recipes);
+            myPopulation = new PopulationSimulator(300, 300, recipes);
             Supers = new Dictionary<int, Individual>();
             //rand = new Random();
             //randNumbers = new int[10];
@@ -68,6 +69,7 @@ namespace XNASwarms
             //{
             //    ind.getGenome().inducePointMutations(rand.NextDouble(),.5);
             //}
+            
             
         }
 
@@ -84,10 +86,12 @@ namespace XNASwarms
                 return;
 
             // Get the window sized right.
-            Program.InitializeWindow(Window);
+            Program.InitializeWindow(Window, true);
             // Set the graphics device buffers.
-            graphics.PreferredBackBufferWidth = Program.WindowSize.Width;
-            graphics.PreferredBackBufferHeight = Program.WindowSize.Height;
+            //graphics.PreferredBackBufferWidth = Program.WindowSize.Width;
+            //graphics.PreferredBackBufferHeight = Program.WindowSize.Height;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
             // Make sure the window is in the right location.
             Program.PositionWindow();
@@ -115,7 +119,7 @@ namespace XNASwarms
 
         #endregion
 
-        #region Overridden Game Methods
+        #region Game Methods
 
         /// <summary>
         /// Allows the app to perform any initialization it needs to before starting to run.
@@ -142,42 +146,30 @@ namespace XNASwarms
             // Setup the UI to transform if the UI is rotated.
             // Create a rotation matrix to orient the screen so it is viewed correctly
             // when the user orientation is 180 degress different.
-            Matrix inverted = Matrix.CreateRotationZ(MathHelper.ToRadians(180)) *
-                       Matrix.CreateTranslation(graphics.GraphicsDevice.Viewport.Width,
-                                                 graphics.GraphicsDevice.Viewport.Height,
-                                                 0);
+            //Matrix inverted = Matrix.CreateRotationZ(MathHelper.ToRadians(180)) *
+            //           Matrix.CreateTranslation(graphics.GraphicsDevice.Viewport.Width,
+            //                                     graphics.GraphicsDevice.Viewport.Height,
+            //                                     0);
 
-            if (currentOrientation == UserOrientation.Top)
-            {
-                screenTransform = inverted;
-            }
+            //if (currentOrientation == UserOrientation.Top)
+            //{
+            //    screenTransform = inverted;
+            //}
 
             base.Initialize();
-            touchTarget.TouchDown += new EventHandler<TouchEventArgs>(this.SpawnSuper);
-            touchTarget.TouchUp += new EventHandler<TouchEventArgs>(this.DestroySuper);
+            //touchTarget.TouchDown += new EventHandler<TouchEventArgs>(this.SpawnSuper);
+            //touchTarget.TouchUp += new EventHandler<TouchEventArgs>(this.DestroySuper);
+
+            FramesPerSec = 10;
+            TimePerFrame = (float)1 / FramesPerSec;
 
         }
 
-        /// <summary>
-        /// LoadContent will be called once per app and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("SpriteFont1");
             swarmIndividual = Content.Load<Texture2D>("bee");
-            // TODO: use this.Content to load your application content here
-        }
-
-        /// <summary>
-        /// UnloadContent will be called once per app and is the place to unload
-        /// all content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -189,29 +181,41 @@ namespace XNASwarms
         {
             if (ApplicationServices.WindowAvailability != WindowAvailability.Unavailable)
             {
-                if (ApplicationServices.WindowAvailability == WindowAvailability.Interactive)
-                {
-                    // TODO: Process touches, 
-                    // use the following code to get the state of all current touch points.
-                    ReadOnlyTouchPointCollection touchPoints = touchTarget.GetState();
-                    for (int i = 0; i < touchPoints.Count; i++)
-                    {
-                        //if(Supers[i] != null)
-                        //Supers[i].SetPosition(touchPoints.GetTouchPointFromId(Supers[i].TouchID));
-                        //Supers.ElementAt(i).Value.SetPosition(touchPoints[i]);
-                        if (Supers.ElementAt(i).Value != null)
-                        {
-                            //error here
-                            Supers.ElementAt(i).Value.SetPosition(touchPoints.GetTouchPointFromId(Supers.ElementAt(i).Key));
-                        }
-                    }
-                }
+                //if (ApplicationServices.WindowAvailability == WindowAvailability.Interactive)
+                //{
+                //    // TODO: Process touches, 
+                //    // use the following code to get the state of all current touch points.
+                //    ReadOnlyTouchPointCollection touchPoints = touchTarget.GetState();
+                //    for (int i = 0; i < touchPoints.Count; i++)
+                //    {
+                //        //if(Supers[i] != null)
+                //        //Supers[i].SetPosition(touchPoints.GetTouchPointFromId(Supers[i].TouchID));
+                //        //Supers.ElementAt(i).Value.SetPosition(touchPoints[i]);
+                //        if (Supers.ElementAt(i).Value != null)
+                //        {
+                //            //error here
+                //            Supers.ElementAt(i).Value.SetPosition(touchPoints.GetTouchPointFromId(Supers.ElementAt(i).Key));
+                //        }
+                //    }
+                //}
                 List<Individual> SuperList = new List<Individual>();
-                for (int i = 0; i < Supers.Count; i++)
+                //for (int i = 0; i < Supers.Count; i++)
+                //{
+                //    SuperList.Add(Supers.ElementAt(i).Value);
+                //}
+                float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                #region FrameRate
+                TotalElapsed += elapsed;
+                if (TotalElapsed > TimePerFrame)
                 {
-                    SuperList.Add(Supers.ElementAt(i).Value);
+                    myPopulation.stepSimulation(SuperList, 1);
+                    TotalElapsed -= TimePerFrame;
                 }
-                myPopulation.stepSimulation(SuperList, 1);
+                
+                #endregion
+
+                
             }
             
 
@@ -250,8 +254,12 @@ namespace XNASwarms
             {
                 spriteBatch.Draw(swarmIndividual, new Rectangle(
                     (int)myPopulation.getPopulation()[i].getX(),
-                    (int)myPopulation.getPopulation()[i].getY(),
-                    10,10), myPopulation.getPopulation()[i].getDisplayColor());
+                    (int)myPopulation.getPopulation()[i].getY(), 2, 2),
+                    null,
+                    myPopulation.getPopulation()[i].getDisplayColor(),
+                    0f,
+                    new Vector2(1, 1),
+                    SpriteEffects.None, 0);
             }
 
             spriteBatch.End();
@@ -261,6 +269,15 @@ namespace XNASwarms
             //TODO: Avoid any expensive logic if application is neither active nor previewed
 
             base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// UnloadContent will be called once per app and is the place to unload
+        /// all content.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            // TODO: Unload any non ContentManager content here
         }
 
         #endregion
@@ -303,14 +320,14 @@ namespace XNASwarms
             //TODO: Disable raw image if it's enabled
         }
 
-        public void SpawnSuper(object sender, TouchEventArgs e)
-        {
-            Individual super = new Individual(10, 10, 10, 10, new Parameters());
-            myPopulation.getPopulation().Add(super);
-            super.TouchID = e.TouchPoint.Id;
-            super.super = true;
-            Supers.Add(e.TouchPoint.Id, super);
-        }
+        //public void SpawnSuper(object sender, TouchEventArgs e)
+        //{
+        //    Individual super = new Individual(10, 10, 10, 10, new Parameters());
+        //    myPopulation.getPopulation().Add(super);
+        //    super.TouchID = e.TouchPoint.Id;
+        //    super.super = true;
+        //    Supers.Add(e.TouchPoint.Id, super);
+        //}
 
         public void DestroySuper(object sender, TouchEventArgs e)
         {

@@ -71,17 +71,18 @@ namespace XNASwarms
 		try {
 			for (int i = 0; i < numberOfIngredients; i++) 
             {
-                numberOfIndividuals = int.Parse(st[0 + i * 9]);
+                int x = int.Parse(st[0].ToString().Replace("\"",""));
+                numberOfIndividuals = int.Parse(st[0].ToString());
 				if (numberOfIndividuals < 1)
 					numberOfIndividuals = 1;
-                neighborhoodRadius = Double.Parse(st[1 + i * 9]);
-                normalSpeed = Double.Parse(st[2 + i * 9]);
-                maxSpeed = Double.Parse(st[3 + i * 9]);
-                c1 = Double.Parse(st[4 + i * 9]);
-                c2 = Double.Parse(st[5 + i * 9]);
-                c3 = Double.Parse(st[6 + i * 9]);
-                c4 = Double.Parse(st[7 + i * 9]);
-                c5 = Double.Parse(st[8 + i * 9]);
+                neighborhoodRadius = Double.Parse(st[1]);
+                normalSpeed = Double.Parse(st[2]);
+                maxSpeed = Double.Parse(st[3]);
+                c1 = Double.Parse(st[4]);
+                c2 = Double.Parse(st[5]);
+                c3 = Double.Parse(st[6]);
+                c4 = Double.Parse(st[7]);
+                c5 = Double.Parse(st[8]);
 				parameters.Add(new Parameters(neighborhoodRadius,
 						normalSpeed, maxSpeed, c1, c2, c3, c4, c5));
 				popCounts.Add(numberOfIndividuals);
@@ -101,7 +102,7 @@ namespace XNASwarms
 	}
 
 	public void boundPopulationSize() {
-		int totalPopulation = 0;
+		double totalPopulation = 0;
 		double rescalingRatio;
 
 		int numberOfIngredients = parameters.Count;
@@ -169,7 +170,8 @@ namespace XNASwarms
 		return Math.Round(d * 100.0) / 100.0;
 	}
 
-	public List<Individual> createPopulation(int width, int height) {
+	public List<Individual> createPopulation(int width, int height) 
+    {
 		if (parameters == null)
 			return null;
 
