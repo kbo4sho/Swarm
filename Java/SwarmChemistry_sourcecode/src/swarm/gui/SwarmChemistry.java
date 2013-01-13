@@ -21,30 +21,47 @@ package swarm.gui;
 import java.awt.*;
 import java.applet.Applet;
 
+//public class SwarmChemistry extends Applet {
+//    public static void main(String args[]) {
+//	boolean recipeIsGiven = false;
+//	int n = 3;
+//	SwarmChemistryEnvironment master;
+//
+//	if (args.length > 0) {
+//	    try {
+//		n = Integer.parseInt(args[0]);
+//	    }
+//	    catch(NumberFormatException e) {
+//		n = 1;
+//		recipeIsGiven = true;
+//	    }
+//	    if (n < 1) n = 1;
+//	}
+//
+//	if (recipeIsGiven)
+//	    master = new SwarmChemistryEnvironment(false, args[0]);
+//	else
+//	    master = new SwarmChemistryEnvironment(false, n);
+//    }
+//
+//    public void init() {
+//	SwarmChemistryEnvironment master = new SwarmChemistryEnvironment(true, 6);
+//    }
+//}
+
+
 public class SwarmChemistry extends Applet {
+	
     public static void main(String args[]) {
-	boolean recipeIsGiven = false;
-	int n = 6;
+	
 	SwarmChemistryEnvironment master;
-
-	if (args.length > 0) {
-	    try {
-		n = Integer.parseInt(args[0]);
-	    }
-	    catch(NumberFormatException e) {
-		n = 1;
-		recipeIsGiven = true;
-	    }
-	    if (n < 1) n = 1;
-	}
-
-	if (recipeIsGiven)
-	    master = new SwarmChemistryEnvironment(false, args[0]);
-	else
-	    master = new SwarmChemistryEnvironment(false, n);
-    }
+	
+	master = new SwarmChemistryEnvironment(false, "282,128.08,2.62,36.46,0.92,.52,58.63,.04,.52");
+	
+}
 
     public void init() {
 	SwarmChemistryEnvironment master = new SwarmChemistryEnvironment(true, 6);
     }
+    
 }
