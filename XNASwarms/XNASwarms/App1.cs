@@ -21,7 +21,7 @@ namespace XNASwarms
         private SpriteBatch spriteBatch;
 
         private TouchTarget touchTarget;
-        private Color backgroundColor = Color.White;
+        private Color backgroundColor = Color.Black;
         private bool applicationLoadCompleteSignalled;
 
         private UserOrientation currentOrientation = UserOrientation.Bottom;
@@ -64,14 +64,15 @@ namespace XNASwarms
             recipes = new Recipe[1];
             recipes[0] = new Recipe(StockRecipies.Recipe1());
             //recipes[1] = new Recipe(StockRecipies.Recipe1());
-            populationSimulator = new PopulationSimulator(400, 400 , recipes);
+            populationSimulator = new PopulationSimulator(300, 300 , recipes);
             Supers = new Dictionary<int, Individual>();
-            //rand = new Random();
-            //randNumbers = new int[10];
-            //foreach (Individual ind in myPopulation.getPopulation())
-            //{
-            //    ind.getGenome().inducePointMutations(rand.NextDouble(),.5);
-            //}
+            rand = new Random();
+            randNumbers = new int[10];
+            foreach (Individual ind in populationSimulator.getPopulation())
+            {
+                //ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
+                //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
+            }
             
             
         }
@@ -93,8 +94,8 @@ namespace XNASwarms
             // Set the graphics device buffers.
             //graphics.PreferredBackBufferWidth = Program.WindowSize.Width;
             //graphics.PreferredBackBufferHeight = Program.WindowSize.Height;
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            //graphics.PreferredBackBufferWidth = 800;
+            //graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
             // Make sure the window is in the right location.
             Program.PositionWindow();
@@ -134,7 +135,7 @@ namespace XNASwarms
         {
             // TODO: Add your initialization logic here
             originalWidth = originalHeight =  graphics.GraphicsDevice.Viewport.Width;
-            width = graphics.GraphicsDevice.Viewport.Width / 2;
+            width = graphics.GraphicsDevice.Viewport.Width / 2 -175  ;
             height = graphics.GraphicsDevice.Viewport.Height / 2;
             IsMouseVisible = true; // easier for debugging not to "lose" mouse
             SetWindowOnSurface();
@@ -271,11 +272,11 @@ namespace XNASwarms
             {
                 spriteBatch.Draw(swarmIndividual, new Rectangle(
                     (int)population[i].getX() + width,
-                    (int)population[i].getY() + height, 4, 4),
+                    (int)population[i].getY() + height, 5, 5),
                     null,
                     population[i].getDisplayColor(),
                     0f,
-                    new Vector2(2, 2),
+                    new Vector2(0,0),
                     SpriteEffects.None, 0);
             }
 

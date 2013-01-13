@@ -39,10 +39,10 @@ namespace XNASwarms
 	    public static double neighborhoodRadiusMax = 300;
 
 	    private double normalSpeed;
-	    public static double normalSpeedMax = 20;
+	    public static double normalSpeedMax = 10;
 
 	    private double maxSpeed;
-	    public static double maxSpeedMax = 40;
+	    public static double maxSpeedMax = 20;
 
 	    private double c1;
 	    public static double c1Max = 1;
@@ -103,7 +103,7 @@ namespace XNASwarms
 		    int prime = 31;
 		    int result = 1;
 		    long temp;
-                    //all BitConverter.DoubleToInt64Bits were Double.DoubleToInt64Bits
+            //all BitConverter.DoubleToInt64Bits were Double.DoubleToInt64Bits
 		    temp = BitConverter.DoubleToInt64Bits(c1);
 		    result = prime * result + (int) (temp ^ (temp >> 32)); //all >> were >>
 		    temp = BitConverter.DoubleToInt64Bits(c2);

@@ -26,7 +26,7 @@ namespace XNASwarms
             //returnValue = "1, .5, 1, 4.21, 6, .5, 12, 1, 1";
             //returnValue += ", 25, 5, 5, 6, 0.82, 0.6, 51.09, 0.28, 0.46";
             //return returnValue;
-            string PopulationSize           = "283"; //0,1200
+            string PopulationSize           = "300"; //0,1200
 
             //string NeighborhoodRadius       = "289.69";  //0,300
             //string NormalSpeed              = "19.52";   //0,20
@@ -46,8 +46,8 @@ namespace XNASwarms
             string ChanceOfRandomSteering = ".04";  //0,.5
             string TendencyOfPaceKeeping = ".52";   //0,1white
 
-            return  PopulationSize + "," + NeighborhoodRadius + "," + NormalSpeed + "," + MaxSpeed + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
-            //return "224, 71.22, 10, 10, 1, 0.02, 15, 0.36, 1";//returnstr;
+            //return  PopulationSize + "," + NeighborhoodRadius + "," + NormalSpeed + "," + MaxSpeed + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
+            return "300, 172.66, 14.99, 20, 0.03, 0.76, 14.8, 0.42, 0.59";//returnstr;
         }
         public static string Recipe2()
         {
