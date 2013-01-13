@@ -226,7 +226,7 @@ namespace XNASwarms
 
 		    //sortInternalLists();
 
-		    //resetRanks();
+		    resetRanks();
 	    }
 
 	    /*private void sortInternalLists() {
@@ -266,61 +266,68 @@ namespace XNASwarms
 
             //population.Add(b);
 
-		   // sortInternalLists();
+		    sortInternalLists();
 
-		    if (swarmInXOrder.Count < 1) 
-            {
-			    swarmInXOrder.Add(b);
-			    swarmInYOrder.Add(b);
-		    } else {
-			    if ((b.getX() - swarmInXOrder[0].getX()) < (swarmInXOrder[swarmInXOrder.Count - 1].getX() - b.getX())) 
-                {
-				    int i = 0;
-				    while (i < swarmInXOrder.Count()) 
-                    {
-					    if (swarmInXOrder[i].getX() >= b.getX())
-						    break;
-					    i++;
-				    }
-				    swarmInXOrder.Insert(i, b);
-			    } 
-                else 
-                {
-				    int i = swarmInXOrder.Count;
-				    while (i > 0) 
-                    {
-					    if (swarmInXOrder[i - 1].getX() <= b.getX())
-						    break;
-					    i--;
-				    }
-				    swarmInXOrder.Insert(i, b);
-			    }
+            //if (swarmInXOrder.Count < 1) 
+            //{
+            //    swarmInXOrder.Add(b);
+            //    swarmInYOrder.Add(b);
+            //} else {
+            //    if ((b.getX() - swarmInXOrder[0].getX()) < (swarmInXOrder[swarmInXOrder.Count - 1].getX() - b.getX())) 
+            //    {
+            //        int i = 0;
+            //        while (i < swarmInXOrder.Count()) 
+            //        {
+            //            if (swarmInXOrder[i].getX() >= b.getX())
+            //                break;
+            //            i++;
+            //        }
+            //        swarmInXOrder.Insert(i, b);
+            //    } 
+            //    else 
+            //    {
+            //        int i = swarmInXOrder.Count;
+            //        while (i > 0) 
+            //        {
+            //            if (swarmInXOrder[i - 1].getX() <= b.getX())
+            //                break;
+            //            i--;
+            //        }
+            //        swarmInXOrder.Insert(i, b);
+            //    }
 
-			    if ((b.getY() - swarmInYOrder[0].getY()) < (swarmInYOrder[swarmInYOrder.Count - 1].getY() - b.getY())) 
-                {
-				    int i = 0;
-				    while (i < swarmInYOrder.Count) 
-                    {
-					    if (swarmInYOrder[i].getY() >= b.getY())
-						    break;
-					    i++;
-				    }
-				    swarmInYOrder.Insert(i, b);
-			    } 
-                else 
-                {
-				    int i = swarmInYOrder.Count;
-				    while (i > 0) 
-                    {
-					    if (swarmInYOrder[i - 1].getY() <= b.getY())
-						    break;
-					    i--;
-				    }
-				    swarmInYOrder.Insert(i, b);
-			    }
+            //    if ((b.getY() - swarmInYOrder[0].getY()) < (swarmInYOrder[swarmInYOrder.Count - 1].getY() - b.getY())) 
+            //    {
+            //        int i = 0;
+            //        while (i < swarmInYOrder.Count) 
+            //        {
+            //            if (swarmInYOrder[i].getY() >= b.getY())
+            //                break;
+            //            i++;
+            //        }
+            //        swarmInYOrder.Insert(i, b);
+            //    } 
+            //    else 
+            //    {
+            //        int i = swarmInYOrder.Count;
+            //        while (i > 0) 
+            //        {
+            //            if (swarmInYOrder[i - 1].getY() <= b.getY())
+            //                break;
+            //            i--;
+            //        }
+            //        swarmInYOrder.Insert(i, b);
+            //    }
 
-		    }
+            //}
 	    }
+
+        private void sortInternalLists() 
+        {
+            swarmInXOrder.Sort((x,y) => x.getX().CompareTo(y.getX()));
+            swarmInYOrder.Sort((x,y) => x.getY().CompareTo(y.getY()));
+        }
+	
 
         public void removeIndividual(Individual b)
         {

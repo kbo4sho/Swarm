@@ -25,10 +25,13 @@ namespace XNASwarms
         private bool applicationLoadCompleteSignalled;
 
         private UserOrientation currentOrientation = UserOrientation.Bottom;
+        
+
         private Matrix screenTransform = Matrix.Identity;
+        public int width, height, originalWidth, originalHeight;
 
         Texture2D swarmIndividual;
-        PopulationSimulator myPopulation;
+        PopulationSimulator populationSimulator;
         public SpriteFont font;
         Rectangle[] touchRects;
         Recipe[] recipes;
@@ -61,7 +64,7 @@ namespace XNASwarms
             recipes = new Recipe[1];
             recipes[0] = new Recipe(StockRecipies.Recipe1());
             //recipes[1] = new Recipe(StockRecipies.Recipe1());
-            myPopulation = new PopulationSimulator(300, 300, recipes);
+            populationSimulator = new PopulationSimulator(400, 400 , recipes);
             Supers = new Dictionary<int, Individual>();
             //rand = new Random();
             //randNumbers = new int[10];
@@ -130,7 +133,9 @@ namespace XNASwarms
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            originalWidth = originalHeight =  graphics.GraphicsDevice.Viewport.Width;
+            width = graphics.GraphicsDevice.Viewport.Width / 2;
+            height = graphics.GraphicsDevice.Viewport.Height / 2;
             IsMouseVisible = true; // easier for debugging not to "lose" mouse
             SetWindowOnSurface();
             InitializeSurfaceInput();
@@ -160,7 +165,7 @@ namespace XNASwarms
             //touchTarget.TouchDown += new EventHandler<TouchEventArgs>(this.SpawnSuper);
             //touchTarget.TouchUp += new EventHandler<TouchEventArgs>(this.DestroySuper);
 
-            FramesPerSec = 10;
+            FramesPerSec = 30;
             TimePerFrame = (float)1 / FramesPerSec;
 
         }
@@ -209,10 +214,10 @@ namespace XNASwarms
                 TotalElapsed += elapsed;
                 if (TotalElapsed > TimePerFrame)
                 {
-                    myPopulation.stepSimulation(SuperList, 1);
+                    populationSimulator.stepSimulation(SuperList, 20);
                     TotalElapsed -= TimePerFrame;
                 }
-                
+               
                 #endregion
 
                 
@@ -229,6 +234,8 @@ namespace XNASwarms
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            int max, x, y;
+
             if (!applicationLoadCompleteSignalled)
             {
                 // Dismiss the loading screen now that we are starting to draw
@@ -237,6 +244,7 @@ namespace XNASwarms
             }
 
             //TODO: Rotate the UI based on the value of screenTransform here if desired
+           
 
             GraphicsDevice.Clear(backgroundColor);
             spriteBatch.Begin();
@@ -250,15 +258,24 @@ namespace XNASwarms
             //    }
             //}
 
-            for(int i = 0; i < myPopulation.getPopulation().Count; i++)
+            Population population = populationSimulator.getPopulation();
+
+            if ((max = population.size()) == 0)
+            {
+                //FIX IF WE GET HERE
+                //redraw();
+                return;
+            }            
+
+            for(int i = 0; i < populationSimulator.getPopulation().Count; i++)
             {
                 spriteBatch.Draw(swarmIndividual, new Rectangle(
-                    (int)myPopulation.getPopulation()[i].getX(),
-                    (int)myPopulation.getPopulation()[i].getY(), 2, 2),
+                    (int)population[i].getX() + width,
+                    (int)population[i].getY() + height, 4, 4),
                     null,
-                    myPopulation.getPopulation()[i].getDisplayColor(),
+                    population[i].getDisplayColor(),
                     0f,
-                    new Vector2(1, 1),
+                    new Vector2(2, 2),
                     SpriteEffects.None, 0);
             }
 
@@ -335,7 +352,7 @@ namespace XNASwarms
             {
                 if (Supers[e.TouchPoint.Id] != null) //So it's not a null problem. The dictionary entry does not exist... :/ Create it if it doesn't?
                 {
-                    myPopulation.removeIndividual(Supers[e.TouchPoint.Id]);
+                    populationSimulator.removeIndividual(Supers[e.TouchPoint.Id]);
                     for (int i = 0; i < Supers.Count; i++)
                     {
                         if (Supers.ElementAt(i).Key == e.TouchPoint.Id)

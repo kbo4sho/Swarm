@@ -97,7 +97,7 @@ namespace XNASwarms
 		}
 
 		boundPopulationSize();
-		setFromPopulation(createPopulation(300, 300));
+		setFromPopulation(createPopulation(200, 200));
 		return true;
 	}
 
