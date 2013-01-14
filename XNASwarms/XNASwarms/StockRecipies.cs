@@ -46,8 +46,8 @@ namespace XNASwarms
             string ChanceOfRandomSteering = ".04";  //0,.5
             string TendencyOfPaceKeeping = ".52";   //0,1white
 
-            //return  PopulationSize + "," + NeighborhoodRadius + "," + NormalSpeed + "," + MaxSpeed + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
-            return "300, 172.66, 14.99, 20, 0.03, 0.76, 14.8, 0.42, 0.59";//returnstr;
+            return  PopulationSize + "," + NeighborhoodRadius + "," + NormalSpeed + "," + MaxSpeed + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
+            //return "300, 172.66, 14.99, 20, 0.03, 0.76, 14.8, 0.42, 0.59";//returnstr;
         }
         public static string Recipe2()
         {

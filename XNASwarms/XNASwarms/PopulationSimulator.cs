@@ -15,7 +15,6 @@ namespace XNASwarms
 
 	    public PopulationSimulator(Population newPopulation) 
         {
-		    //super();
 		    population = newPopulation;
 
 		    swarmInBirthOrder = new List<Individual>(population.size());

@@ -72,6 +72,7 @@
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -121,12 +122,18 @@
     <Compile Include="App1.cs" />
     <Compile Include="Recipe.cs" />
     <Compile Include="StockRecipies.cs" />
+    <Compile Include="SwarmsCamera.cs" />
+    <Compile Include="SwarmScreenBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ScreenSystem\ScreenSystem.csproj">
+      <Project>{45FA38FB-3602-4160-9C46-23FDDD7A05E7}</Project>
+      <Name>ScreenSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XNASwarmsContent\XNASwarmsContent.contentproj">
       <Name>XNASwarmsContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
