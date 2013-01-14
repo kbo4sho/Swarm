@@ -42,9 +42,9 @@ namespace XNASwarms
             string MaxSpeed = "36.46";   //0,40
             string CohesiveForce = "0.92";  //0,1
             string AligningForce = ".52";  //0,1
-            string SeperatingForce = "58.63"; //0,100100
+            string SeperatingForce = "58.63"; //0,100
             string ChanceOfRandomSteering = ".04";  //0,.5
-            string TendencyOfPaceKeeping = ".52";   //0,1white
+            string TendencyOfPaceKeeping = ".52";   //0,1
 
             return  PopulationSize + "," + NeighborhoodRadius + "," + NormalSpeed + "," + MaxSpeed + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
             //return "300, 172.66, 14.99, 20, 0.03, 0.76, 14.8, 0.42, 0.59";//returnstr;

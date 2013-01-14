@@ -7,31 +7,28 @@ using Microsoft.Xna.Framework;
 
 namespace XNASwarms
 {
-     public class Individual {
-	    private double x, y, dx, dy, dx2, dy2;
+     public class Individual 
+     {
+
+        private double x, y, dx, dy, dx2, dy2;
 	    private Parameters genome;
 	    private int rankInXOrder, rankInYOrder;
 
-        //public TouchEventArgs touchEvent;
-        //public int TouchID;
-        //public bool super;
-
-         //What was the issue with this?
         public Individual() :  this(0.0, 0.0, 0.0, 0.0, new Parameters())
         {
            
         }
 
-	    public Individual(double xx, double yy, double dxx, double dyy,
-			    Parameters g) {
-		    x = xx;
-		    y = yy;
-		    dx = dx2 = dxx;
-		    dy = dy2 = dyy;
-		    genome = g;
-		    rankInXOrder = 0;
-		    rankInYOrder = 0;
-	    }
+        public Individual(double xx, double yy, double dxx, double dyy, Parameters g)
+        {
+            x = xx;
+            y = yy;
+            dx = dx2 = dxx;
+            dy = dy2 = dyy;
+            genome = g;
+            rankInXOrder = 0;
+            rankInYOrder = 0;
+        }
 
 	    public void accelerate(double ax, double ay, double maxMove) {
 		    dx2 += ax;
@@ -45,22 +42,13 @@ namespace XNASwarms
 		    }
 	    }
 
-	    public void stepSimulation() 
+        public void stepSimulation()
         {
-            //if (!super)
-            //{
-                dx = dx2;
-                dy = dy2;
-                x += dx;
-                y += dy;
-            //}
-	    }
-
-        //public void SetPosition(TouchPoint touchPoint)
-        //{
-        //    x = touchPoint.CenterX;
-        //    y = touchPoint.CenterY;
-        //}
+            dx = dx2;
+            dy = dy2;
+            x += dx;
+            y += dy;
+        }
 
 	    public Color getDisplayColor() {
 		    return genome.getDisplayColor();

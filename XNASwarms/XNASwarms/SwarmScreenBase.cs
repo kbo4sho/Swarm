@@ -43,7 +43,7 @@ namespace XNASwarms
 
             foreach (Individual ind in populationSimulator.getPopulation())
             {
-                //ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
+                ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
                 //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
             }
             Supers.Add(0, new Individual());
@@ -75,12 +75,28 @@ namespace XNASwarms
                     new Vector2(0, 0),
                     SpriteEffects.None, 0);
             }
+
+            for (int i = 0; i < Supers.Count; i++)
+            {
+                Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2((int)Supers[i].getX(), (int)Supers[i].getY()));
+
+                ScreenManager.SpriteBatch.Draw(swarmIndividual, new Rectangle(
+                    (int)Supers[i].getX(),
+                    (int)Supers[i].getY(), 6, 6),
+                    null,
+                    Color.Red,
+                    0f,
+                    new Vector2(3, 3),
+                    SpriteEffects.None, 0);
+            }
+
             ScreenManager.SpriteBatch.End();
             base.Draw(gameTime);
         }
 
         public override void HandleInput(InputHelper input, Microsoft.Xna.Framework.GameTime gameTime)
         {
+            
             Supers.Clear();
             
             var surfacetouches = input.SurfaceTouches;
@@ -108,7 +124,7 @@ namespace XNASwarms
                          0.0, 0.0, new Parameters());
                 }
             }
-            else
+            else if(Supers.Count <= 0)
             {
                 //Mouse
                 Supers.Add(0, new Individual());
@@ -118,27 +134,41 @@ namespace XNASwarms
 
                     Supers[i] = new Individual(((double)position.X),
                          ((double)position.Y),
-                         0.0, 0.0, new Parameters());
+                         0,0, new Parameters());
                 }
             }
+
+            for(int i = 0; i < 45; i ++)
+            {
+                var pos = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(40*i,10));
+                var posb = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(40 * i,920));
+                var pos1 = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(10, 40*i));
+                var pos1b = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(1665, 40 * i));
+
+                Supers.Add(Supers.Count, new Individual(pos.X, pos.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
+                Supers.Add(Supers.Count, new Individual(posb.X, posb.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
+                Supers.Add(Supers.Count, new Individual(pos1.X, pos1.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
+                Supers.Add(Supers.Count, new Individual(pos1b.X, pos1b.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
+            }
+            
 
             HandleCamera(input, gameTime);
             
         }
 
-        private void UpdateSupers(ReadOnlyTouchPointCollection touches, InputHelper input)
-        {
+        //private void UpdateSupers(ReadOnlyTouchPointCollection touches, InputHelper input)
+        //{
          
 
-            for (int i = 0; i < touches.Count; i++)
-            {
-                Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(touches[i].X,touches[i].Y));
+        //    for (int i = 0; i < touches.Count; i++)
+        //    {
+        //        Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(touches[i].X,touches[i].Y));
 
-                Supers[i] = new Individual(((double)position.X),
-                     ((double)position.Y),
-                     0.0, 0.0, new Parameters());
-            }
-        }
+        //        Supers[i] = new Individual(((double)position.X),
+        //             ((double)position.Y),
+        //             0.0, 0.0, new Parameters());
+        //    }
+        //}
 
         private void HandleCamera(InputHelper input, GameTime gameTime)
         {
