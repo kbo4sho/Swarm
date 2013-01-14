@@ -25,8 +25,9 @@ namespace XNASwarms
 
         public SwarmScreenBase()
         {
-            recipes = new Recipe[1];
+            recipes = new Recipe[2];
             recipes[0] = new Recipe(StockRecipies.Recipe1());
+            recipes[1] = new Recipe(StockRecipies.Recipe1());
         }
 
         public override void LoadContent()
@@ -42,7 +43,7 @@ namespace XNASwarms
 
             foreach (Individual ind in populationSimulator.getPopulation())
             {
-                ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
+                //ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
                 //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
             }
             Supers.Add(0, new Individual());
@@ -86,32 +87,55 @@ namespace XNASwarms
             if (surfacetouches.Count > 0)
             {
                 //Surface
-                UpdateSupers(surfacetouches.ToList(), input);
+                for (int i = 0; i < surfacetouches.Count; i++)
+                {
+                    Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(surfacetouches[i].X, surfacetouches[i].Y));
+
+                    Supers[i] = new Individual(((double)position.X),
+                         ((double)position.Y),
+                         0.0, 0.0, new Parameters());
+                }
             }
             else if (input.Touches.Count > 0)
             {
                 //Everthing else touch
-                UpdateSupers(input.Touches.ToList(), input);
+                for (int i = 0; i < input.Touches.Count; i++)
+                {
+                    Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(input.Touches[i].Position.X, input.Touches[i].Position.Y));
+
+                    Supers[i] = new Individual(((double)position.X),
+                         ((double)position.Y),
+                         0.0, 0.0, new Parameters());
+                }
             }
             else
             {
                 //Mouse
                 Supers.Add(0, new Individual());
-                UpdateSupers(Supers.ToList(),input);
+                for (int i = 0; i < Supers.Count; i++)
+                {
+                    Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(input.Cursor);
+
+                    Supers[i] = new Individual(((double)position.X),
+                         ((double)position.Y),
+                         0.0, 0.0, new Parameters());
+                }
             }
 
             HandleCamera(input, gameTime);
             
         }
 
-        private void UpdateSupers(IList touches, InputHelper input)
+        private void UpdateSupers(ReadOnlyTouchPointCollection touches, InputHelper input)
         {
-            Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(input.Cursor);
+         
 
             for (int i = 0; i < touches.Count; i++)
             {
-                Supers[i] = new Individual(((double)(position.X)),
-                     ((double)(position.Y)),
+                Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(touches[i].X,touches[i].Y));
+
+                Supers[i] = new Individual(((double)position.X),
+                     ((double)position.Y),
                      0.0, 0.0, new Parameters());
             }
         }

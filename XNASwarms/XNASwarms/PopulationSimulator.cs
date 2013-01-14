@@ -34,7 +34,8 @@ namespace XNASwarms
             //population = (Population)recipes[0].createPopulation(width, height);
             //for (int i = 1; i < recipes.Length; i++)
             //{
-            //    //population.AddRange((Population)recipes[i].createPopulation(width, height));
+            //    population = new Population(recipes[i].createPopulation(width, height), "Crumpulation");
+                
             //}
 
             swarmInBirthOrder = new List<Individual>(population.size());
