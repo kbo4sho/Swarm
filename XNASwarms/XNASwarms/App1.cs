@@ -43,7 +43,7 @@ namespace XNASwarms
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            ConvertUnits.SetDisplayUnitToSimUnitRatio(2f);
+            ConvertUnits.SetDisplayUnitToSimUnitRatio(16f);
             TargetElapsedTime = TimeSpan.FromTicks(333333);
             
             
