@@ -81,6 +81,7 @@
     <Compile Include="ScreenSystem\GeneralScreen.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ScreenSystem\PinchToZoom.cs" />
     <Compile Include="ScreenSystem\ScoreSection.cs" />
     <Compile Include="ScreenSystem\ScreenManagerComponent.cs" />
     <Compile Include="ScreenSystem\SpriteFonts.cs" />

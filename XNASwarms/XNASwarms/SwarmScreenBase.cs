@@ -43,7 +43,7 @@ namespace XNASwarms
 
             foreach (Individual ind in populationSimulator.getPopulation())
             {
-                ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
+                //ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
                 //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
             }
             Supers.Add(0, new Individual());
@@ -135,6 +135,27 @@ namespace XNASwarms
                     Supers[i] = new Individual(((double)position.X),
                          ((double)position.Y),
                          0,0, new Parameters());
+                }
+            }
+
+            while (TouchPanel.IsGestureAvailable)
+            {
+                GestureSample gesture = TouchPanel.ReadGesture();
+
+                switch (gesture.GestureType)
+                {
+                    case GestureType.Pinch:
+                        float scaleFactor = PinchZoom.GetScaleFactor(gesture.Position, gesture.Position2,
+                            gesture.Delta, gesture.Delta2);
+                        //Vector2 panDelta = PinchZoom.GetTranslationDelta(gesture.Position, gesture.Position2,
+                        //    gesture.Delta, gesture.Delta2, spritePos, scaleFactor);
+                        Camera.Zoom *= scaleFactor;
+                        //spritePos += panDelta;
+
+                        // Or, rather than doing it manually, you can just call ApplyPinchZoom instead which does the
+                        // above work for you.
+                        /*PinchZoom.ApplyPinchZoom(gesture, ref spritePos, ref spriteScale);*/
+                        break;
                 }
             }
 
