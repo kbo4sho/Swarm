@@ -37,28 +37,35 @@ namespace XNASwarms
 
         public override void LoadContent()
         {
+            debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
+            
+
             width = ScreenManager.GraphicsDevice.Viewport.Width;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
 
-            debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
-            debugScreen.AddDebugItem("RESOLUTION" , width.ToString() + "x" + height.ToString());
+            
+            
 
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             populationSimulator = new PopulationSimulator(0, 0, recipes);
             Supers = new Dictionary<int, Individual>();
             rand = new Random();
+
+            debugScreen.AddDebugItem("RESOLUTION", width.ToString() + "x" + height.ToString(), XnaSwarmsData.Debug.DebugFlagType.Important);
             Border = new Border(this, WallFactory.FourPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
-            debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText());
+            debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), XnaSwarmsData.Debug.DebugFlagType.Important);
 
             foreach (Individual ind in populationSimulator.getPopulation())
             {
                 ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
                 //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
             }
+            
             Supers.Add(0, new Individual());
 
             base.LoadContent();
+            debugScreen.AddDebugItem("RECIPE", populationSimulator.getPopulation().get(0).getGenome().getRecipe(), XnaSwarmsData.Debug.DebugFlagType.Important);
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)

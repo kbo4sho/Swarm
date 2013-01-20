@@ -22,6 +22,7 @@ namespace ScreenSystem.ScreenSystem
         private SpriteFont LabelFont, BigFont;
         private MenuButton _scrollUp;
         private List<MenuEntry> menuEntries = new List<MenuEntry>();
+        private Rectangle _rectBG, DestinationRectangle;
 
         private readonly Vector2 _containerMargin  = new Vector2(10, 70);
         private readonly Vector2 _containerPadding = new Vector2(12,12);
@@ -31,6 +32,7 @@ namespace ScreenSystem.ScreenSystem
 
         private readonly int BorderThickness = 4;
         private readonly int _lineSpace = 40;
+
 
         
 
@@ -66,57 +68,57 @@ namespace ScreenSystem.ScreenSystem
             // Make the menu slide into place during transitions, using a
             // power curve to make things look more interesting (this makes
             // the movement slow down as it nears the end).
-            float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
+           // float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             Vector2 position = Vector2.Zero;
-            position.Y = _menuBorderTop - _menuOffset;
+            position.Y = _menuOffset;
 
             // update each menu entry's location in turn
-            for (int i = 0; i < _menuEntries.Count; ++i)
+            for (int i = 0; i < menuEntries.Count; ++i)
             {
-                position.X = ScreenManager.GraphicsDevice.Viewport.Width / 2f;
-                if (ScreenState == ScreenState.TransitionOn)
+                position.X = _screen.ScreenManager.GraphicsDevice.Viewport.Width / 2f;
+                if (_screen.ScreenState == ScreenState.TransitionOn)
                 {
-                    position.X -= transitionOffset * 256;
+                    position.X -= 1 * 256;
                 }
                 else
                 {
-                    position.X += transitionOffset * 256;
+                    position.X += 1 * 256;
                 }
 
                 // set the entry's position
-                _menuEntries[i].Position = position;
+                menuEntries[i].Position = position;
 
-                if (position.Y < _menuBorderTop)
-                {
-                    _menuEntries[i].Alpha = 1f -
-                                            Math.Min(_menuBorderTop - position.Y, _menuBorderMargin) / _menuBorderMargin;
-                }
-                else if (position.Y > _menuBorderBottom)
-                {
-                    _menuEntries[i].Alpha = 1f -
-                                            Math.Min(position.Y - _menuBorderBottom, _menuBorderMargin) /
-                                            _menuBorderMargin;
-                }
-                else
-                {
-                    _menuEntries[i].Alpha = 1f;
-                }
+                //if (position.Y < _menuBorderTop)
+                //{
+                //    menuEntries[i].Alpha = 1f -
+                //                            Math.Min(_menuBorderTop - position.Y, _menuBorderMargin) / _menuBorderMargin;
+                //}
+                //else if (position.Y > _menuBorderBottom)
+                //{
+                //    menuEntries[i].Alpha = 1f -
+                //                            Math.Min(position.Y - _menuBorderBottom, _menuBorderMargin) /
+                //                            _menuBorderMargin;
+                //}
+                //else
+                //{
+                //    menuEntries[i].Alpha = 1f;
+                //}
 
                 // move down for the next entry the size of this entry
                 if (i == 0)
                 {
-                    position.Y += _menuEntries[i].GetHeight() + _menuItemMarginTop;
+                    position.Y += menuEntries[i].GetHeight() + 10;
                 }
                 else
                 {
-                    position.Y += _menuEntries[i].GetHeight() + _menuItemMarginTop;
+                    position.Y += menuEntries[i].GetHeight() + 10;
                 }
             }
-            Vector2 scrollPos = _scrollSlider.Position;
-            scrollPos.Y = MathHelper.Lerp(_scrollSliderPosition.Y, _menuBorderBottom, _menuOffset / _maxOffset);
-            _scrollSlider.Position = scrollPos;
-            UpdateTitlePosition(ScreenManager.GraphicsDevice.Viewport);
+            //Vector2 scrollPos = _scrollSlider.Position;
+            //scrollPos.Y = MathHelper.Lerp(_scrollSliderPosition.Y, _menuBorderBottom, _menuOffset / _maxOffset);
+            //_scrollSlider.Position = scrollPos;
+            //UpdateTitlePosition(ScreenManager.GraphicsDevice.Viewport);
 
         }
 
@@ -124,46 +126,57 @@ namespace ScreenSystem.ScreenSystem
         /// <summary>
         /// Draws the menu.
         /// </summary>
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             // make sure our entries are in the right place before we draw them
             UpdateMenuEntryLocations();
 
 
-            SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-            SpriteFont font = ScreenManager.Fonts.MenuSpriteFont;
+            SpriteBatch spriteBatch = _screen.ScreenManager.SpriteBatch;
+            SpriteFont font = _screen.ScreenManager.Fonts.MenuSpriteFont;
 
-            spriteBatch.Begin();
+           
 
             // Make the menu slide into place during transitions, using a
             // power curve to make things look more interesting (this makes
             // the movement slow down as it nears the end).
-            Vector2 transitionOffset = new Vector2(0f, (float)Math.Pow(TransitionPosition, 2) * 100f);
+            Vector2 transitionOffset = new Vector2(0f, (float)Math.Pow(_screen.TransitionPosition, 2) * 100f);
 
             //Draw background
-            spriteBatch.Draw(_background, DestinationRectangle, _rectBG, _bgColor);
+            spriteBatch.Draw(_bgSprite, DestinationRectangle, _rectBG, Color.LightCyan);
 
             // Draw each menu entry in turn.
-            for (int i = 0; i < _menuEntries.Count; ++i)
+            for (int i = 0; i < menuEntries.Count; ++i)
             {
-                bool isSelected = IsActive && (i == _selectedEntry);
-                _menuEntries[i].Draw();
+                bool isSelected = _screen.IsActive && (i == _selectedEntry);
+                menuEntries[i].Draw();
             }
 
-            spriteBatch.DrawString(font, _menuTitle, _titlePosition - transitionOffset, Color.WhiteSmoke, 0,
-                                   _titleOrigin, 2f, SpriteEffects.None, 0);
-            if (_scoreSection != null)
-            {
-                _scoreSection.Draw(transitionOffset);
-            }
+            ////Container
+            //spriteBatch.Draw(_bgSprite, _position - animation + Vector2.One * 2f, _rect, _BorderColor, 0f, Vector2.Zero,
+            //            1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
 
-            if (_menuEntries.Count > NumEntries)
-            {
-                _scrollUp.Draw();
-                _scrollSlider.Draw();
-                _scrollDown.Draw();
-            }
-            spriteBatch.End();
+            ////Inner Container
+            //spriteBatch.Draw(_bgSprite, (_position - animation + Vector2.One * 2f) + new Vector2(BorderThickness / 2, BorderThickness / 2), _innerRect, _containerBGColor, 0f, Vector2.Zero,
+            //            1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+
+            ////Description
+            //spriteBatch.DrawString(BigFont, _description, _containerPadding + _position - animation + Vector2.One * 2f, Color.LightCyan);
+
+            //spriteBatch.DrawString(font, _menuTitle, _titlePosition - transitionOffset, Color.WhiteSmoke, 0,
+            //                       _titleOrigin, 2f, SpriteEffects.None, 0);
+            //if (_scoreSection != null)
+            //{
+            //    _scoreSection.Draw(transitionOffset);
+            //}
+
+            //if (menuEntries.Count > NumEntries)
+            //{
+            //    //_scrollUp.Draw();
+            //    //_scrollSlider.Draw();
+            //    //_scrollDown.Draw();
+            //}
+
         }
 
         public void AddMenuItem(string name, EntryType type, GameScreen screen)
@@ -396,11 +409,11 @@ namespace ScreenSystem.ScreenSystem
 
             if (input.IsMenuPressed())
             {
-                if (_scrollUp.Hover)
-                {
-                  //  _menuOffset = Math.Max(_menuOffset - 200f * (float)gameTime.ElapsedGameTime.TotalSeconds, 0f);
-                   // _scrollLock = false;
-                }
+                //if (_scrollUp.Hover)
+                //{
+                //  //  _menuOffset = Math.Max(_menuOffset - 200f * (float)gameTime.ElapsedGameTime.TotalSeconds, 0f);
+                //   // _scrollLock = false;
+                //}
                 //if (_scrollDown.Hover)
                 //{
                 //    _menuOffset = Math.Min((_menuOffset + 200f * (float)gameTime.ElapsedGameTime.TotalSeconds), _maxOffset);
@@ -422,26 +435,6 @@ namespace ScreenSystem.ScreenSystem
             }
         }
 
-        
-
-        public void Draw(Vector2 animation)
-        {
-            SpriteBatch batch = _screen.ScreenManager.SpriteBatch;
-
-
-            //Container
-            batch.Draw(_bgSprite, _position - animation + Vector2.One * 2f, _rect, _BorderColor, 0f, Vector2.Zero,
-                        1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-
-            //Inner Container
-            batch.Draw(_bgSprite, (_position - animation + Vector2.One * 2f) + new Vector2(BorderThickness/2,BorderThickness/2), _innerRect, _containerBGColor, 0f, Vector2.Zero,
-                        1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-
-            //Description
-            batch.DrawString(BigFont, _description, _containerPadding + _position - animation + Vector2.One * 2f, Color.LightCyan);
-
-
-        }
 
     }
 }

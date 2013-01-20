@@ -530,7 +530,7 @@ namespace ScreenSystem.ScreenSystem
                                    _titleOrigin, 2f, SpriteEffects.None, 0);
             if (_scoreSection != null)
             {
-                _scoreSection.Draw(transitionOffset);
+                //_scoreSection.Draw(transitionOffset);
             }
 
             if (_menuEntries.Count > NumEntries)

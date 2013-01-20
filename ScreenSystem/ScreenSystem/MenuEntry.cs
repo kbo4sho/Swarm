@@ -253,7 +253,7 @@ namespace ScreenSystem.ScreenSystem
         public virtual void Draw()
         {
 
-            SpriteFont font     = _menu.ScreenManager.Fonts.MenuSpriteFont;
+            SpriteFont font     = _menu.ScreenManager.Fonts.FrameRateCounterFont;
             SpriteBatch batch   = _menu.ScreenManager.SpriteBatch;
 
             Color color;

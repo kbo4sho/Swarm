@@ -33,7 +33,7 @@ import java.awt.Color;
 namespace XNASwarms
 {
      public class Parameters {
-	    public static int numberOfIndividualsMax = 400;
+	    public static int numberOfIndividualsMax = 300;
 
 	    private double neighborhoodRadius;
 	    public static double neighborhoodRadiusMax = 300;
@@ -71,6 +71,29 @@ namespace XNASwarms
             c4 = rand.NextDouble() * c4Max;
             c5 = rand.NextDouble() * c5Max;
 	    }
+
+        public string getRecipe()
+        {
+            StringBuilder sb = new StringBuilder("");
+            sb.Append((int)numberOfIndividualsMax);
+            sb.Append(", ");
+            sb.Append((int)getNeighborhoodRadius());
+            sb.Append(", ");
+            sb.Append((int)getNormalSpeed());
+            sb.Append(", ");
+            sb.Append((int)getMaxSpeed());
+            sb.Append(", ");
+            sb.Append((int)c1);
+            sb.Append(", ");
+            sb.Append((int)c2);
+            sb.Append(", ");
+            sb.Append((int)c3);
+            sb.Append(", ");
+            sb.Append((int)c4);
+            sb.Append(", ");
+            sb.Append((int)c5);
+            return sb.ToString();
+        }
 
 	    public Parameters(double p1, double p2, double p3, double p4,
 			    double p5, double p6, double p7, double p8) {
@@ -261,5 +284,7 @@ namespace XNASwarms
 	    public double getC5() {
 		    return c5;
 	    }
+
+        
     }
 }

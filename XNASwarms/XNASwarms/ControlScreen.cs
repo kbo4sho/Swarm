@@ -32,7 +32,7 @@ namespace XNASwarms
 
         public override void Draw(GameTime gameTime)
         {
-            ButtonSection.Draw(Vector2.Zero);
+            ButtonSection.Draw(gameTime);
             base.Draw(gameTime);
         }
 
