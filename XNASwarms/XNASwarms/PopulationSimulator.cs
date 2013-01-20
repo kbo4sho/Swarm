@@ -30,7 +30,11 @@ namespace XNASwarms
 
         public PopulationSimulator(int width, int height, params Recipe[] recipes)
         {
-            population = new Population(recipes[0].createPopulation(width, height), "Crumpulation");
+
+            population = new Population(recipes[0].createPopulation(width, height), "CrumpulaAtion");
+
+            //Population pop1 = new Population(recipes[1].createPopulation(width, height), "Crumpulation");
+            //population = new Population(pop, pop1, 1, 10, 10, "CrumpulatTion");
 
             swarmInBirthOrder = new List<Individual>(population.size());
             swarmInXOrder = new List<Individual>(population.size());
@@ -40,6 +44,7 @@ namespace XNASwarms
             {
                 addIndividual(population[i]);
             }
+
         }
         #endregion
 

@@ -26,7 +26,7 @@ namespace XNASwarms
             //returnValue = "1, .5, 1, 4.21, 6, .5, 12, 1, 1";
             //returnValue += ", 25, 5, 5, 6, 0.82, 0.6, 51.09, 0.28, 0.46";
             //return returnValue;
-            string PopulationSize           = "300"; //0,1200
+            string PopulationSize           = "400"; //0,1200
 
             //string NeighborhoodRadius       = "289.69";  //0,300
             //string NormalSpeed              = "19.52";   //0,20

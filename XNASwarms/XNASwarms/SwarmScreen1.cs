@@ -15,7 +15,7 @@ namespace XNASwarms
         {
             recipes = new Recipe[2];
             recipes[0] = new Recipe(StockRecipies.Recipe1());
-            recipes[1] = new Recipe(StockRecipies.Recipe1());
+            recipes[1] = new Recipe(StockRecipies.Recipe2());
         }
 
         public override void LoadContent()
@@ -30,7 +30,6 @@ namespace XNASwarms
             Population population = populationSimulator.getPopulation();
             for (int i = 0; i < populationSimulator.getPopulation().Count; i++)
             {
-                Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2((int)population[i].getX(), (int)population[i].getY()));
                 ScreenManager.SpriteBatch.Draw(swarmIndividual, new Rectangle(
                     (int)population.get(i).getX(),
                     (int)population.get(i).getY(), 5, 5),

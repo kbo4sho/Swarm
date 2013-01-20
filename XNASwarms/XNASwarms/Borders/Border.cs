@@ -39,27 +39,30 @@ namespace XNASwarms.Borders
             for (int i = 0; i < numberOfSwarm; i++)
             {
                 Individual currentInd = individuals[i];
-                if (currentInd.getX() > rightBound)
+                int currentX = (int)currentInd.getX();
+                int currentY = (int)currentInd.getY();
+
+                if (currentX > rightBound)
                 {
                     //Right
                     Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Right).First();
                     HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
                 }
-                else if (currentInd.getX() <= -rightBound)
+                else if (currentX < -rightBound)
                 {
                     //Left
                     Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Left).First();
                     HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
                 }
 
-                if (currentInd.getY() > bottomBound)
+                if (currentY > bottomBound)
                 {
                     //Bottom
                     Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Bottom).First();
                     HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
 
                 }
-                else if (currentInd.getY() <= -bottomBound)
+                else if (currentY < -bottomBound)
                 {
                     //Top
                     Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Top).First();

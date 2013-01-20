@@ -73,16 +73,16 @@ namespace XNASwarms.Borders.Walls
             switch (wallsidetype)
             {
                 case Walls.WallSideType.Left:
-                    Position = new Vector2(-roomwidth, -roomheight);
+                    Position = new Vector2(-roomwidth - Thickness, -roomheight);
                     break;
                 case Walls.WallSideType.Top:
-                    Position = new Vector2(-roomwidth, -roomheight);
+                    Position = new Vector2(-roomwidth, -roomheight - Thickness);
                     break;
                 case Walls.WallSideType.Right:
-                    Position = new Vector2(roomwidth, -roomheight);
+                    Position = new Vector2(roomwidth + Thickness, -roomheight);
                     break;
                 case Walls.WallSideType.Bottom:
-                    Position = new Vector2(-roomwidth, roomheight);
+                    Position = new Vector2(-roomwidth, roomheight + Thickness);
                     break;
             }
         }

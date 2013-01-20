@@ -33,7 +33,7 @@ import java.awt.Color;
 namespace XNASwarms
 {
      public class Parameters {
-	    public static int numberOfIndividualsMax = 300;
+	    public static int numberOfIndividualsMax = 400;
 
 	    private double neighborhoodRadius;
 	    public static double neighborhoodRadiusMax = 300;

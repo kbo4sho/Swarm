@@ -40,10 +40,10 @@ namespace XNASwarms
             height = ScreenManager.GraphicsDevice.Viewport.Height;
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
-            populationSimulator = new PopulationSimulator(200, 200, recipes);
+            populationSimulator = new PopulationSimulator(0, 0, recipes);
             Supers = new Dictionary<int, Individual>();
             rand = new Random();
-            Border = new Border(this, WallFactory.FourPortal(600, 400, 2), ScreenManager);
+            Border = new Border(this, WallFactory.FourPortal(800, 400, 1), ScreenManager);
             foreach (Individual ind in populationSimulator.getPopulation())
             {
                 //ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
