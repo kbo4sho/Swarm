@@ -12,10 +12,11 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections;
 using XNASwarms.Borders;
 using XNASwarms.Borders.Walls;
+using XnxSwarmsData.Debug;
 
 namespace XNASwarms
 {
-    class SwarmScreenBase : GameScreen
+    class SwarmScreenBase : ControlScreen
     {
         protected Recipe[] recipes;
         protected PopulationSimulator populationSimulator;
@@ -23,10 +24,10 @@ namespace XNASwarms
         Dictionary<int, Individual> Supers;
         public int width, height;
         Texture2D superAgentTexture;
-        protected SwarmsCamera Camera;
         protected Border Border;
         private float TimePerFrame;
         private int FramesPerSec;
+        private IDebugScreen debugScreen; 
 
         public SwarmScreenBase()
         {
@@ -36,17 +37,23 @@ namespace XNASwarms
 
         public override void LoadContent()
         {
-            width = ScreenManager.GraphicsDevice.Viewport.Width/2;
+            width = ScreenManager.GraphicsDevice.Viewport.Width;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
+
+            debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
+            debugScreen.AddDebugItem("RESOLUTION" , width.ToString() + "x" + height.ToString());
+
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             populationSimulator = new PopulationSimulator(0, 0, recipes);
             Supers = new Dictionary<int, Individual>();
             rand = new Random();
-            Border = new Border(this, WallFactory.FourPortal(800, 400, 1), ScreenManager);
+            Border = new Border(this, WallFactory.FourPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
+            debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText());
+
             foreach (Individual ind in populationSimulator.getPopulation())
             {
-                //ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
+                ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
                 //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
             }
             Supers.Add(0, new Individual());
@@ -162,9 +169,10 @@ namespace XNASwarms
             //    Supers.Add(Supers.Count, new Individual(pos1.X, pos1.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
             //    Supers.Add(Supers.Count, new Individual(pos1b.X, pos1b.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
             //}
-            
 
-            HandleCamera(input, gameTime);
+            ButtonSection.HandleInput(input, gameTime);
+
+            base.HandleInput(input, gameTime);
             
         }
 
@@ -182,43 +190,6 @@ namespace XNASwarms
         //    }
         //}
 
-        private void HandleCamera(InputHelper input, GameTime gameTime)
-        {
-            Vector2 camMove = Vector2.Zero;
-            float MoveSpeed = 100f;
-
-            if (input.KeyboardState.IsKeyDown(Keys.Up))
-            {
-                camMove.Y -= MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (input.KeyboardState.IsKeyDown(Keys.Down))
-            {
-                camMove.Y += MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (input.KeyboardState.IsKeyDown(Keys.Left))
-            {
-                camMove.X -= MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (input.KeyboardState.IsKeyDown(Keys.Right))
-            {
-                camMove.X += MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (camMove != Vector2.Zero)
-            {
-                Camera.MoveCamera(camMove);
-            }
-            if (input.KeyboardState.IsKeyDown(Keys.OemPlus))
-            {
-                Camera.Zoom += 5f * (float)gameTime.ElapsedGameTime.TotalSeconds * Camera.Zoom / 20f;
-            }
-            if (input.KeyboardState.IsKeyDown(Keys.OemMinus))
-            {
-                Camera.Zoom -= 5f * (float)gameTime.ElapsedGameTime.TotalSeconds * Camera.Zoom / 20f;
-            }
-            if (input.IsNewKeyPress(Keys.Escape))
-            {
-                Camera.ResetCamera();
-            }
-        }
+        
     }
 }

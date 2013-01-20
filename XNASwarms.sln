@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XNASwarmsContent", "XNASwar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSystem", "ScreenSystem\ScreenSystem.csproj", "{45FA38FB-3602-4160-9C46-23FDDD7A05E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XnaSwarmsData", "XnaSwarmsData\XnaSwarmsData.csproj", "{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -45,6 +47,16 @@ Global
 		{45FA38FB-3602-4160-9C46-23FDDD7A05E7}.Release|Windows Phone.ActiveCfg = Release|x86
 		{45FA38FB-3602-4160-9C46-23FDDD7A05E7}.Release|x86.ActiveCfg = Release|x86
 		{45FA38FB-3602-4160-9C46-23FDDD7A05E7}.Release|x86.Build.0 = Release|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|x86.ActiveCfg = Debug|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|x86.Build.0 = Debug|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|Mixed Platforms.Build.0 = Release|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|Windows Phone.ActiveCfg = Release|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|x86.ActiveCfg = Release|x86
+		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

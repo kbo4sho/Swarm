@@ -34,7 +34,7 @@ namespace ScreenSystem.ScreenSystem
         public Vector2 _baseOrigin { get; private set; }
 
         private float _height;
-        public MenuScreen _menu { get; private set; }
+        public GameScreen _menu { get; private set; }
 
         /// <summary>
         /// The position at which the entry is drawn. This is set by the MenuScreen
@@ -44,7 +44,7 @@ namespace ScreenSystem.ScreenSystem
         public float _scale { get; private set; }
         private float BaseScale;
         private GameScreen _screen;
-		private GeneralScreen _phyisicsGameScreen;
+		private GameScreen _phyisicsGameScreen;
 
         /// <summary>
         /// Tracks a fading selection effect on the entry.
@@ -61,7 +61,7 @@ namespace ScreenSystem.ScreenSystem
         public Rectangle BackgroundRectangle { get; private set; }
         private Color MenuEntryBackground;
 
-        public MenuEntry(MenuScreen menu, string text, EntryType type, GameScreen screen, Texture2D texture, GeneralScreen phyisicsscreen)
+        public MenuEntry(GameScreen menu, string text, EntryType type, GameScreen screen, Texture2D texture, GameScreen phyisicsscreen)
             : this(menu, text, type, screen, texture)
 		{
 			_phyisicsGameScreen = phyisicsscreen;
@@ -71,7 +71,7 @@ namespace ScreenSystem.ScreenSystem
         /// Constructs a new menu entry with the specified text.
         /// </summary>
 		/// 
-        public MenuEntry(MenuScreen menu, string text, EntryType type, GameScreen screen, Texture2D texture)
+        public MenuEntry(GameScreen menu, string text, EntryType type, GameScreen screen, Texture2D texture)
         {
             _text = text;
             _screen = screen;

@@ -58,7 +58,7 @@ namespace ScreenSystem.ScreenSystem
         private MenuButton _scrollSlider;
         private Vector2 _scrollSliderPosition;
 
-        private ScoreSection _scoreSection;
+        private ButtonSection _scoreSection;
         private Vector2 _scoreSectionOrigin;
         private bool _scrollLock;
 
@@ -87,7 +87,7 @@ namespace ScreenSystem.ScreenSystem
             _menuEntries.Add(entry);
         }
 
-		public void AddLevelMenuItem(string name, EntryType type, GameScreen screen, GeneralScreen physicsscreen)
+		public void AddLevelMenuItem(string name, EntryType type, GameScreen screen, GameScreen physicsscreen)
 		{
 			MenuEntry entry = new MenuEntry(this, name, type, screen,_menuItemBackground, physicsscreen);
             _menuEntries.Add(entry);
@@ -101,7 +101,7 @@ namespace ScreenSystem.ScreenSystem
 
         public void AddScoreSection(string desc, int outof, int achieved, int overallloops,int maxcomboreached)
         {
-            _scoreSection = new ScoreSection(false, _titleOrigin, this, desc, outof, achieved, overallloops, maxcomboreached);
+            _scoreSection = new ButtonSection(false, _titleOrigin, this, desc);
         }
 
 
@@ -111,7 +111,7 @@ namespace ScreenSystem.ScreenSystem
             base.LoadContent();
 
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-            SpriteFont font = ScreenManager.Fonts.MenuSpriteFont;
+            SpriteFont font = ScreenManager.Fonts.FrameRateCounterFont;
 
             _menuItemMarginTop = font.MeasureString("M").Y;
             _bgColor = Color.White;
@@ -252,7 +252,7 @@ namespace ScreenSystem.ScreenSystem
                     if (_menuEntries[_selectedEntry].IsRestart())
                     {
                         GameScreen[] scrs = ScreenManager.GetScreens();
-                        GeneralScreen game = scrs[scrs.Length - 2] as GeneralScreen;
+                        GameScreen game = scrs[scrs.Length - 2] as GameScreen;
                         //game.Reset();
                         this.ExitScreen();
                     }
@@ -263,7 +263,7 @@ namespace ScreenSystem.ScreenSystem
                     if (_menuEntries[_selectedEntry].IsNextLevel())
                     {
                         GameScreen[] scrs = ScreenManager.GetScreens();
-                        GeneralScreen game = scrs[scrs.Length - 2] as GeneralScreen;
+                        GameScreen game = scrs[scrs.Length - 2] as GameScreen;
                         //game.NextLevel();
                         this.ExitScreen();
 
@@ -286,7 +286,7 @@ namespace ScreenSystem.ScreenSystem
                 else if (_menuEntries[_selectedEntry].Screen != null &&
                          _menuEntries[_selectedEntry].IsDefaultMusic())
                 {
-                    GeneralScreen screen = _menuEntries[_selectedEntry].Screen as GeneralScreen;
+                    GameScreen screen = _menuEntries[_selectedEntry].Screen as GameScreen;
                     //////////////////////////////////////
                     //Check whether it is game or Freeplay
                     //////////////////////////////////////
@@ -323,7 +323,7 @@ namespace ScreenSystem.ScreenSystem
                 else if (_menuEntries[_selectedEntry].Screen != null &&
                          _menuEntries[_selectedEntry].IsBackgroundMuiscMuisc())
                 {
-                    GeneralScreen mscreen = _menuEntries[_selectedEntry].Screen as GeneralScreen;
+                    GameScreen mscreen = _menuEntries[_selectedEntry].Screen as GameScreen;
                     //mscreen.GoToLevel(_selectedEntry,1);
                     //MusicHelper.SetMusicType(MusicType.Background);
                     ScreenManager.AddScreen(_menuEntries[_selectedEntry].Screen);

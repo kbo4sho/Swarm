@@ -119,6 +119,7 @@
     <Compile Include="Borders\Walls\WallSideType.cs" />
     <Compile Include="Borders\Walls\WallActionType.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="ControlScreen.cs" />
     <Compile Include="IContainable.cs" />
     <Compile Include="Individual.cs" />
     <Compile Include="Parameters.cs" />
@@ -141,6 +142,10 @@
     <ProjectReference Include="..\..\ScreenSystem\ScreenSystem.csproj">
       <Project>{45FA38FB-3602-4160-9C46-23FDDD7A05E7}</Project>
       <Name>ScreenSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XnaSwarmsData\XnaSwarmsData.csproj">
+      <Project>{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}</Project>
+      <Name>XnaSwarmsData</Name>
     </ProjectReference>
     <ProjectReference Include="..\XNASwarmsContent\XNASwarmsContent.contentproj">
       <Name>XNASwarmsContent</Name>
@@ -181,6 +186,9 @@
       <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

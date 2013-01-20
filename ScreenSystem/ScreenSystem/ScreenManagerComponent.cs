@@ -190,10 +190,10 @@ namespace ScreenSystem.ScreenSystem
         {
             if (!Game.IsActive)
             {
-                var screen = _screens[_screens.Count - 1] as GeneralScreen;
+                var screen = _screens[_screens.Count - 1] as GameScreen;
                 if (screen != null)
                 {
-                    AddPauseScreen(new PauseScreen("PAUSE", ""));
+                    //AddPauseScreen(new PauseScreen("PAUSE", ""));
                 }
             }
         }

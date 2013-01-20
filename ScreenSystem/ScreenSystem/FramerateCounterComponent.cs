@@ -44,12 +44,13 @@ namespace ScreenSystem.ScreenSystem
         {
             _frameCounter++;
 
-            //string fps = string.Format(_format, "{0} fps", _frameRate);
+            string fps = string.Format(_format, "{0} fps", _frameRate);
 
-            //_screenManager.SpriteBatch.Begin();
-            //_screenManager.SpriteBatch.DrawString(_screenManager.Fonts.FrameRateCounterFont, fps,
-            //                                      _position, Color.White);
-            //_screenManager.SpriteBatch.End();
+            _screenManager.SpriteBatch.Begin();
+            _screenManager.SpriteBatch.DrawString(_screenManager.Fonts.FrameRateCounterFont, fps,
+                                                  _position, Color.White);
+            _screenManager.SpriteBatch.End();
+            base.Draw(gameTime);
         }
     }
 }

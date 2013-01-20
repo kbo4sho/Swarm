@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using ScreenSystem.ScreenSystem;
+using XnxSwarmsData.Debug;
 
 namespace XNASwarms
 {
@@ -61,16 +62,9 @@ namespace XNASwarms
             if (Window == null || Window.Handle == IntPtr.Zero)
                 return;
 
-            // Get the window sized right.
-            Program.InitializeWindow(Window, true);
-            // Set the graphics device buffers.
-            //graphics.PreferredBackBufferWidth = Program.WindowSize.Width;
-            //graphics.PreferredBackBufferHeight = Program.WindowSize.Height;
-            graphics.PreferredBackBufferWidth = 1680;
-            graphics.PreferredBackBufferHeight = 1050;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 768;
             graphics.ApplyChanges();
-            // Make sure the window is in the right location.
-            Program.PositionWindow();
         }
 
         #endregion
@@ -99,6 +93,7 @@ namespace XNASwarms
             // Subscribe to surface window availability events
             ApplicationServices.WindowInteractive += OnWindowInteractive;
             ApplicationServices.WindowNoninteractive += OnWindowNoninteractive;
+            
 
             base.Initialize();
 
@@ -111,10 +106,17 @@ namespace XNASwarms
             var backgroundscreen = new BackgroundScreen();
             screenManager.AddScreen(backgroundscreen);
 
+            var debugScreen = new DebugScreen(screenManager);
+            screenManager.Game.Components.Add(debugScreen);
+            this.Services.AddService(typeof(IDebugScreen), debugScreen);
+
             swarmSreen = new SwarmScreen1();
             screenManager.AddScreen(swarmSreen);
 
 
+
+
+            base.LoadContent();
             //font = Content.Load<SpriteFont>("SpriteFont1");
             //swarmIndividual = Content.Load<Texture2D>("bee");
         }

@@ -36,8 +36,8 @@ namespace ScreenSystem.ScreenSystem
 
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 logoSize = new Vector2();
-            logoSize.Y = 150;
-            logoSize.X = 150;
+            logoSize.Y = _logoTexture.Width;
+            logoSize.X = _logoTexture.Height;
 
             float border = viewport.Height * LogoScreenBorderRatio;
             Vector2 logoPosition = new Vector2(viewport.Width - border - logoSize.X,

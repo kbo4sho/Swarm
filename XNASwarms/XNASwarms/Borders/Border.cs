@@ -6,6 +6,7 @@ using ScreenSystem.ScreenSystem;
 using XNASwarms.Borders.Walls;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using XnxSwarmsData.Debug;
 
 namespace XNASwarms.Borders
 {
@@ -16,9 +17,12 @@ namespace XNASwarms.Borders
         private List<Wall> borderWalls;
         Texture2D borderTexture;
         int rightBound, bottomBound;
+        private IDebugScreen debugScreen; 
 
         public Border(GameScreen gamescreen, List<Wall> borderwalls, ScreenManager screenmanger)
         {
+            debugScreen = gamescreen.ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
+
             gameScreen = gamescreen;
             borderWalls = borderwalls;
             borderTexture = screenmanger.Content.Load<Texture2D>("Backgrounds/gray");
@@ -47,12 +51,15 @@ namespace XNASwarms.Borders
                     //Right
                     Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Right).First();
                     HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
+                    debugScreen.AddDebugItem("BORDER RIGHT", currentInd.getX().ToString(), XnaSwarmsData.Debug.DebugFlagType.Odd);
                 }
                 else if (currentX < -rightBound)
                 {
                     //Left
                     Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Left).First();
                     HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
+                    debugScreen.AddDebugItem("BORDER LEFT", currentInd.getX().ToString());
+
                 }
 
                 if (currentY > bottomBound)
@@ -113,6 +120,11 @@ namespace XNASwarms.Borders
                     new Vector2(0,0),
                     SpriteEffects.None, 0);
             }
+        }
+
+        public string GetWallTypeAsText()
+        {
+            return borderWalls[0].GetWallActionType().ToString();
         }
     }
 }

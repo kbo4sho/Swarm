@@ -18,7 +18,7 @@ namespace ScreenSystem.ScreenSystem
 #endif
             //MenuSpriteFont = contentManager.Load<SpriteFont>("Fonts/menufont");
             //MenuSpriteFont = contentManager.Load<SpriteFont>("Fonts/menufont");
-            //FrameRateCounterFont = contentManager.Load<SpriteFont>("Fonts/frameratecounterfont");
+            FrameRateCounterFont = contentManager.Load<SpriteFont>("Fonts/debugfont");
             DetailsFont = contentManager.Load<SpriteFont>("Fonts/detailsfont");
         }
     }

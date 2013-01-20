@@ -115,14 +115,14 @@ namespace XNASwarms
         {
             //x = x ;
             x = -x;
-            dx = -dx * 1000;
-            dx2 = dx2 * 1000;
+            dx = -dx * 400;
+            dx2 = dx2 * 400;
         }
         public void TravelThroughYWall()
         {
             y = -y;
-            dy = -dy * 1000;
-            dy2 = dy2 * 1000;
+            dy = -dy * 400;
+            dy2 = dy2 * 400;
         }
 
         public void BounceXWall()
