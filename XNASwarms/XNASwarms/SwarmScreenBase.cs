@@ -10,37 +10,40 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Surface.Core;
 using Microsoft.Xna.Framework.Input;
 using System.Collections;
+using XNASwarms.Borders;
+using XNASwarms.Borders.Walls;
 
 namespace XNASwarms
 {
     class SwarmScreenBase : GameScreen
     {
-        Recipe[] recipes;
-        PopulationSimulator populationSimulator;
+        protected Recipe[] recipes;
+        protected PopulationSimulator populationSimulator;
         Random rand;
         Dictionary<int, Individual> Supers;
         public int width, height;
-        Texture2D swarmIndividual;
-        SwarmsCamera Camera;
+        Texture2D superAgentTexture;
+        protected SwarmsCamera Camera;
+        protected Border Border;
+        private float TimePerFrame;
+        private int FramesPerSec;
 
         public SwarmScreenBase()
         {
-            recipes = new Recipe[2];
-            recipes[0] = new Recipe(StockRecipies.Recipe1());
-            recipes[1] = new Recipe(StockRecipies.Recipe1());
+            FramesPerSec = 14;
+            TimePerFrame = (float)1 / FramesPerSec;
         }
 
         public override void LoadContent()
         {
             width = ScreenManager.GraphicsDevice.Viewport.Width/2;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
-            swarmIndividual = ScreenManager.Content.Load<Texture2D>("bee");
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
-
-            populationSimulator = new PopulationSimulator(600, 200, recipes);
+            superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
+            populationSimulator = new PopulationSimulator(200, 200, recipes);
             Supers = new Dictionary<int, Individual>();
             rand = new Random();
-
+            Border = new Border(this, WallFactory.FourPortal(600, 400, 2), ScreenManager);
             foreach (Individual ind in populationSimulator.getPopulation())
             {
                 //ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
@@ -53,34 +56,21 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);
+
+            Border.Update(populationSimulator.getSwarmInBirthOrder().ToList<Individual>());
+            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);   
             Camera.Update(gameTime);
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
-            Population population = populationSimulator.getPopulation();
-            for (int i = 0; i < populationSimulator.getPopulation().Count; i++)
-            {
-                Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2((int)population[i].getX(),(int)population[i].getY()));
-
-                ScreenManager.SpriteBatch.Draw(swarmIndividual, new Rectangle(
-                    (int)population.get(i).getX(),
-                    (int)population.get(i).getY(), 5, 5),
-                    null,
-                    population[i].getDisplayColor(),
-                    0f,
-                    new Vector2(0, 0),
-                    SpriteEffects.None, 0);
-            }
 
             for (int i = 0; i < Supers.Count; i++)
             {
                 Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2((int)Supers[i].getX(), (int)Supers[i].getY()));
 
-                ScreenManager.SpriteBatch.Draw(swarmIndividual, new Rectangle(
+                ScreenManager.SpriteBatch.Draw(superAgentTexture, new Rectangle(
                     (int)Supers[i].getX(),
                     (int)Supers[i].getY(), 6, 6),
                     null,
@@ -90,7 +80,8 @@ namespace XNASwarms
                     SpriteEffects.None, 0);
             }
 
-            ScreenManager.SpriteBatch.End();
+            Border.Draw(ScreenManager.SpriteBatch, Camera);
+
             base.Draw(gameTime);
         }
 

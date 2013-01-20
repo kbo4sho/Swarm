@@ -62,7 +62,6 @@ namespace XNASwarms
         public Random rand = new Random();
 
 	    public Parameters() {
-            //All random were Math.random()
             neighborhoodRadius = rand.NextDouble() * neighborhoodRadiusMax;
             normalSpeed = rand.NextDouble() * normalSpeedMax;
             maxSpeed = rand.NextDouble() * maxSpeedMax;

@@ -13,7 +13,8 @@ namespace XNASwarms
 	    private List<Individual> swarmInBirthOrder, swarmInXOrder,
 			    swarmInYOrder;
 
-	    public PopulationSimulator(Population newPopulation) 
+        #region Constuctor
+        public PopulationSimulator(Population newPopulation) 
         {
 		    population = newPopulation;
 
@@ -30,13 +31,6 @@ namespace XNASwarms
         public PopulationSimulator(int width, int height, params Recipe[] recipes)
         {
             population = new Population(recipes[0].createPopulation(width, height), "Crumpulation");
-            //population = new Population(recipes[0].createPopulation(width, height), "Crumpulation");
-            //population = (Population)recipes[0].createPopulation(width, height);
-            //for (int i = 1; i < recipes.Length; i++)
-            //{
-            //    population = new Population(recipes[i].createPopulation(width, height), "Crumpulation");
-                
-            //}
 
             swarmInBirthOrder = new List<Individual>(population.size());
             swarmInXOrder = new List<Individual>(population.size());
@@ -47,6 +41,7 @@ namespace XNASwarms
                 addIndividual(population[i]);
             }
         }
+        #endregion
 
         public void stepSimulation(List<Individual> temporaryIndividuals, int weightOfTemporaries)
         {
@@ -213,6 +208,7 @@ namespace XNASwarms
 					    * param.getC5(),
 					    tempDY * (param.getNormalSpeed() - f) / f * param.getC5(),
 					    param.getMaxSpeed());
+
 		    }
 		
 		    updateInternalState();
@@ -224,7 +220,7 @@ namespace XNASwarms
 			    ind.stepSimulation();
 		    }
 
-		    //sortInternalLists();
+		    sortInternalLists();
 
 		    resetRanks();
 	    }
@@ -263,7 +259,7 @@ namespace XNASwarms
 
 		    swarmInXOrder.Add(b);		
 		    swarmInYOrder.Add(b);
-
+               
             //population.Add(b);
 
 		    sortInternalLists();
@@ -273,7 +269,7 @@ namespace XNASwarms
             //    swarmInXOrder.Add(b);
             //    swarmInYOrder.Add(b);
             //} else {
-            //    if ((b.getX() - swarmInXOrder[0].getX()) < (swarmInXOrder[swarmInXOrder.Count - 1].getX() - b.getX())) 
+            //    zif ((b.getX() - swarmInXOrder[0].getX()) < (swarmInXOrder[swarmInXOrder.Count - 1].getX() - b.getX())) 
             //    {
             //        int i = 0;
             //        while (i < swarmInXOrder.Count()) 
@@ -357,7 +353,7 @@ namespace XNASwarms
 
 	    public List<Individual> getSwarmInXOrder() 
         {
-		    //sortInternalLists();
+		    sortInternalLists();
 		    //return Collections.unmodifiableList(swarmInXOrder);
             //TODO : Fix commented out lines
             return swarmInXOrder;
@@ -365,11 +361,21 @@ namespace XNASwarms
 
 	    public List<Individual> getSwarmInYOrder() 
         {
-		    //sortInternalLists();
+		    sortInternalLists();
 		    //return Collections.unmodifiableList(swarmInYOrder);
             //TODO : Fix commented out lines
             return swarmInYOrder;
 	    }
+
+        public List<Individual> getSwarmInBirthOrder()
+        {
+            sortInternalLists();
+            //return Collections.unmodifiableList(swarmInYOrder);
+            //TODO : Fix commented out lines
+            return  swarmInBirthOrder;
+        }
+
+
 
 	    public Population getPopulation() {
 		    return population;

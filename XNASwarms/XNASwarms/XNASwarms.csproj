@@ -112,7 +112,14 @@
     <Reference Include="Microsoft.Surface.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Borders\Border.cs" />
+    <Compile Include="Borders\Walls\Wall.cs" />
+    <Compile Include="Borders\Walls\WallFactory.cs" />
+    <Compile Include="Borders\Walls\WallOrientationType.cs" />
+    <Compile Include="Borders\Walls\WallSideType.cs" />
+    <Compile Include="Borders\Walls\WallActionType.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="IContainable.cs" />
     <Compile Include="Individual.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="Population.cs" />
@@ -123,6 +130,7 @@
     <Compile Include="Recipe.cs" />
     <Compile Include="StockRecipies.cs" />
     <Compile Include="SwarmsCamera.cs" />
+    <Compile Include="SwarmScreen1.cs" />
     <Compile Include="SwarmScreenBase.cs" />
   </ItemGroup>
   <ItemGroup>

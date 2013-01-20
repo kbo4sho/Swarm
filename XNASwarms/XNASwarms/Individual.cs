@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace XNASwarms
 {
-     public class Individual 
+     public class Individual: IContainable
      {
 
         private double x, y, dx, dy, dx2, dy2;
@@ -30,16 +30,28 @@ namespace XNASwarms
             rankInYOrder = 0;
         }
 
-	    public void accelerate(double ax, double ay, double maxMove) {
-		    dx2 += ax;
-		    dy2 += ay;
+	    public void accelerate(double ax, double ay, double maxMove) 
+        {
+
+            dx2 += ax;
+            dy2 += ay;
+
+            //if ( y > 0 && y < 10 && dy2 > 0 && dy2 < 10)
+            //{
+            //    dy2 += ay;
+            //}
+            //else
+            //{
+            //    dy2 = -ay;
+            //}
 
 		    double d = dx2 * dx2 + dy2 * dy2;
-		    if (d > maxMove * maxMove) {
-			    double normalizationFactor = maxMove / Math.Sqrt(d); //was Math.sqrt(d)
-			    dx2 *= normalizationFactor;
-			    dy2 *= normalizationFactor;
-		    }
+            if (d > maxMove * maxMove)
+            {
+                double normalizationFactor = maxMove / Math.Sqrt(d); //was Math.sqrt(d)
+                dx2 *= normalizationFactor;
+                dy2 *= normalizationFactor;
+            }
 	    }
 
         public void stepSimulation()
@@ -97,7 +109,35 @@ namespace XNASwarms
 	    public Parameters getGenome() {
 		    return genome;
 	    }
-    }
+
+        #region IContainable
+        public void TravelThroughXWall()
+        {
+            //x = x ;
+            x = -x;
+            dx = -dx * 1000;
+        }
+        public void TravelThroughYWall()
+        {
+            y = -y;
+            dy = -dy * 1000;
+        }
+
+        public void BounceXWall()
+        {
+            //x = x ;
+            dx = -dx * 1000;
+            dx2 = -dx2 * 1000;
+        }
+        public void BounceYWall()
+        {
+            dy = -dy * 1000;
+            dy2 = -dy2 * 1000;
+        }
+        #endregion
+
+
+     }
 }
 
 

@@ -37,15 +37,15 @@ namespace XNASwarms
         private int FramesPerSec;
 
         ScreenManager screenManager;
-        SwarmScreenBase swarmSreen;
+        SwarmScreen1 swarmSreen;
 
         public App1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            ConvertUnits.SetDisplayUnitToSimUnitRatio(16f);
-            TargetElapsedTime = TimeSpan.FromTicks(333333);
-            
+            ConvertUnits.SetDisplayUnitToSimUnitRatio(1f);
+            //TargetElapsedTime = TimeSpan.FromTicks(167777);
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 30.0f);
             
         }
 
@@ -111,7 +111,7 @@ namespace XNASwarms
             var backgroundscreen = new BackgroundScreen();
             screenManager.AddScreen(backgroundscreen);
 
-            swarmSreen = new SwarmScreenBase();
+            swarmSreen = new SwarmScreen1();
             screenManager.AddScreen(swarmSreen);
 
 
@@ -126,20 +126,20 @@ namespace XNASwarms
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (ApplicationServices.WindowAvailability != WindowAvailability.Unavailable)
-            {
-                float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //if (ApplicationServices.WindowAvailability != WindowAvailability.Unavailable)
+            //{
+            //    float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                #region FrameRate
-                TotalElapsed += elapsed;
-                if (TotalElapsed > TimePerFrame)
-                {
-                    //populationSimulator.stepSimulation(SuperList, 20);
-                    TotalElapsed -= TimePerFrame;
-                }
+            //    #region FrameRate
+            //    TotalElapsed += elapsed;
+            //    if (TotalElapsed > TimePerFrame)
+            //    {
+            //        //populationSimulator.stepSimulation(SuperList, 20);
+            //        TotalElapsed -= TimePerFrame;
+            //    }
                
-                #endregion   
-            }
+            //    #endregion   
+            //}
 
             base.Update(gameTime);
         }
