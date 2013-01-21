@@ -58,7 +58,7 @@ namespace ScreenSystem.ScreenSystem
         private MenuButton _scrollSlider;
         private Vector2 _scrollSliderPosition;
 
-        private ButtonSection _scoreSection;
+        //private ButtonSection _scoreSection;
         private Vector2 _scoreSectionOrigin;
         private bool _scrollLock;
 
@@ -101,7 +101,7 @@ namespace ScreenSystem.ScreenSystem
 
         public void AddScoreSection(string desc, int outof, int achieved, int overallloops,int maxcomboreached)
         {
-            _scoreSection = new ButtonSection(false, _titleOrigin, this, desc);
+           // _scoreSection = new ButtonSection(false, _titleOrigin, this, desc);
         }
 
 
@@ -129,10 +129,10 @@ namespace ScreenSystem.ScreenSystem
             //Loas these only if we have a score
             //section
             //////////////////////////////////////
-            if (_scoreSection != null)
-            {
-                _scoreSection.Load();
-            }
+            //if (_scoreSection != null)
+            //{
+            //    _scoreSection.Load();
+            //}
 
             float scrollBarPos = viewport.Width / 2f;
             for (int i = 0; i < _menuEntries.Count; ++i)
@@ -528,10 +528,10 @@ namespace ScreenSystem.ScreenSystem
             
             spriteBatch.DrawString(font, _menuTitle, _titlePosition - transitionOffset, Color.WhiteSmoke, 0,
                                    _titleOrigin, 2f, SpriteEffects.None, 0);
-            if (_scoreSection != null)
-            {
-                //_scoreSection.Draw(transitionOffset);
-            }
+            //if (_scoreSection != null)
+            //{
+            //    //_scoreSection.Draw(transitionOffset);
+            //}
 
             if (_menuEntries.Count > NumEntries)
             {

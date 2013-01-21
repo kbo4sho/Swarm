@@ -118,6 +118,7 @@
     <Compile Include="Borders\Walls\WallOrientationType.cs" />
     <Compile Include="Borders\Walls\WallSideType.cs" />
     <Compile Include="Borders\Walls\WallActionType.cs" />
+    <Compile Include="ButtonSection.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ControlScreen.cs" />
     <Compile Include="IContainable.cs" />

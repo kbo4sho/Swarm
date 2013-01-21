@@ -82,8 +82,9 @@ namespace ScreenSystem.ScreenSystem
 #else
             BaseScale = 1f;
 #endif
-            _scale = 0.7f;
-            
+            _scale = 1f;
+            //_width = 100;
+            //_height = 40;
             _alpha = 1.0f;
             _menuItemBackground = texture;
             
@@ -123,8 +124,8 @@ namespace ScreenSystem.ScreenSystem
         {
             SpriteFont font = _menu.ScreenManager.Fonts.MenuSpriteFont;
 
-            _menuItemBackground = _menu.ScreenManager.Content.Load<Texture2D>("Materials/blank");
-            BackgroundRectangle = new Rectangle(0, 0, 400, (int)((font.MeasureString(_text)).Y)*2);
+            _menuItemBackground = _menu.ScreenManager.Content.Load<Texture2D>("Menu/button");
+            BackgroundRectangle = new Rectangle(0, 0, 100, 100);
 
             _baseOrigin = new Vector2(font.MeasureString(Text).X / 2, font.MeasureString(Text).Y / 2);
 
@@ -138,12 +139,12 @@ namespace ScreenSystem.ScreenSystem
         {
             if (IsDisabled())
             {
-                MenuEntryBackground = new Color(247, 147, 30);
+                MenuEntryBackground = new Color(30, 30, 30, 100);
                 
             }
             else
             {
-                MenuEntryBackground = new Color(247, 147, 30);
+                MenuEntryBackground = new Color(30, 30, 30, 100);
             }
         }
 
@@ -253,7 +254,7 @@ namespace ScreenSystem.ScreenSystem
         public virtual void Draw()
         {
 
-            SpriteFont font     = _menu.ScreenManager.Fonts.FrameRateCounterFont;
+            SpriteFont font     = _menu.ScreenManager.Fonts.MenuSpriteFont;
             SpriteBatch batch   = _menu.ScreenManager.SpriteBatch;
 
             Color color;
@@ -273,13 +274,13 @@ namespace ScreenSystem.ScreenSystem
             if (_menuItemBackground != null && !IsSeperator())
             {
                 batch.Draw(_menuItemBackground,
-                    _position - new Vector2(BackgroundRectangle.Width / 2, BackgroundRectangle.Height / 2) * _scale, BackgroundRectangle,
+                    Vector2.Zero, BackgroundRectangle,
                     MenuEntryBackground , 0f, Vector2.Zero, _scale, SpriteEffects.None, 0f);
             }
             // Draw text, centered on the middle of each line.
             //batch.DrawString(font, _text, _position - _baseOrigin * _scale + Vector2.One,
             //                  Color.DarkSlateGray * _alpha * _alpha, 0, Vector2.Zero, _scale, SpriteEffects.None, 0);
-            batch.DrawString(font, _text, _position - _baseOrigin * _scale, color, 0, Vector2.Zero, _scale,
+            batch.DrawString(font, _text, Vector2.Zero, Color.WhiteSmoke, 0, Vector2.Zero, _scale,
                               SpriteEffects.None, 0);
         }
 

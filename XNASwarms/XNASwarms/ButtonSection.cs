@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using XnxSwarmsData.Debug;
+using ScreenSystem.ScreenSystem;
 
-namespace ScreenSystem.ScreenSystem
+namespace XNASwarms
 {
     public class ButtonSection
     {
@@ -27,18 +29,19 @@ namespace ScreenSystem.ScreenSystem
         private readonly Vector2 _containerMargin  = new Vector2(10, 70);
         private readonly Vector2 _containerPadding = new Vector2(12,12);
 
-        private readonly Color _containerBGColor = new Color(247, 147, 30);
-        private readonly Color _BorderColor = new Color(247, 147, 30);
+        private readonly Color _containerBGColor = new Color(30, 30, 30, 100);
+        private readonly Color _BorderColor = new Color(30, 30, 30, 100);
 
         private readonly int BorderThickness = 4;
         private readonly int _lineSpace = 40;
+        private IDebugScreen debugScreen; 
 
 
         
 
         public ButtonSection(bool flip, Vector2 position, GameScreen screen, string desc)
         {
-            _position = position + _containerMargin;
+            _position = position;// + _containerMargin;
             _screen = screen;
             _rect.Width = 250;
             _rect.Height = 300;
@@ -51,12 +54,18 @@ namespace ScreenSystem.ScreenSystem
 
         public void Load()
         {
+            debugScreen = _screen.ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
             Viewport viewport = _screen.ScreenManager.GraphicsDevice.Viewport;
-            _position.Y = viewport.Height / 2 - _rect.Height;
-            _position.X = viewport.Width / 2 + _containerMargin.X - _rect.Width *2;
+            _position.Y = 0;
+            _position.X = 0;
             _bgSprite = _screen.ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             LabelFont = _screen.ScreenManager.Fonts.DetailsFont;
             BigFont = _screen.ScreenManager.Fonts.FrameRateCounterFont;
+
+            for (int i = 0; i < menuEntries.Count; ++i)
+            {
+                menuEntries[i].Initialize();
+            }
         }
 
         /// <summary>
@@ -135,6 +144,16 @@ namespace ScreenSystem.ScreenSystem
             SpriteBatch spriteBatch = _screen.ScreenManager.SpriteBatch;
             SpriteFont font = _screen.ScreenManager.Fonts.MenuSpriteFont;
 
+            //Container
+            spriteBatch.Draw(_bgSprite, _position, _rect, _BorderColor, 0f, Vector2.Zero,
+                        1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+
+            //Inner Container
+            spriteBatch.Draw(_bgSprite, _position, _innerRect, _containerBGColor, 0f, Vector2.Zero,
+                        1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+
+            //Description
+            spriteBatch.DrawString(BigFont, _description, _containerPadding + _position + Vector2.One * 2f, Color.LightCyan);
            
 
             // Make the menu slide into place during transitions, using a
@@ -152,16 +171,7 @@ namespace ScreenSystem.ScreenSystem
                 menuEntries[i].Draw();
             }
 
-            ////Container
-            //spriteBatch.Draw(_bgSprite, _position - animation + Vector2.One * 2f, _rect, _BorderColor, 0f, Vector2.Zero,
-            //            1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-
-            ////Inner Container
-            //spriteBatch.Draw(_bgSprite, (_position - animation + Vector2.One * 2f) + new Vector2(BorderThickness / 2, BorderThickness / 2), _innerRect, _containerBGColor, 0f, Vector2.Zero,
-            //            1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-
-            ////Description
-            //spriteBatch.DrawString(BigFont, _description, _containerPadding + _position - animation + Vector2.One * 2f, Color.LightCyan);
+            
 
             //spriteBatch.DrawString(font, _menuTitle, _titlePosition - transitionOffset, Color.WhiteSmoke, 0,
             //                       _titleOrigin, 2f, SpriteEffects.None, 0);
@@ -201,8 +211,8 @@ namespace ScreenSystem.ScreenSystem
             {
                 float width = entry.GetWidth();
                 float height = entry.GetHeight();
-                Rectangle rect = new Rectangle((int)(entry.Position.X - width * .5f),
-                                               (int)(entry.Position.Y - height * .5f),
+                Rectangle rect = new Rectangle((int)(entry.Position.X),
+                                               (int)(entry.Position.Y),
                                                (int)width, (int)height);
                 if (rect.Contains((int)position.X, (int)position.Y) && entry.Alpha > 0.1f)
                 {
@@ -221,9 +231,10 @@ namespace ScreenSystem.ScreenSystem
         {
             // Mouse or touch on a menu item
             int hoverIndex = GetMenuEntryAt(input.Cursor);
-            if (hoverIndex > -1 && menuEntries[hoverIndex].IsSelectable())// && !_scrollLock)
+            if (hoverIndex >= 0)// && !_scrollLock)
             {
                 _selectedEntry = hoverIndex;
+                debugScreen.AddDebugItem("BUTTON HOVER", "Index " + hoverIndex, XnaSwarmsData.Debug.DebugFlagType.Important);
             }
             else
             {
@@ -360,7 +371,9 @@ namespace ScreenSystem.ScreenSystem
                 else if (menuEntries[_selectedEntry].Screen != null &&
                          menuEntries[_selectedEntry].IsGameModeGame())
                 {
+
                     _screen.ScreenManager.AddScreen(menuEntries[_selectedEntry].Screen);
+                    this._screen.ExitScreen();
                 }
                 ////////////////////////////
                 //MainMenu GameMode FreePlay

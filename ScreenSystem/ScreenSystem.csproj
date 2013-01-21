@@ -78,7 +78,6 @@
     <Compile Include="ScreenSystem\MessageBoxScreen.cs" />
     <Compile Include="ScreenSystem\PauseScreen.cs" />
     <Compile Include="ScreenSystem\PinchToZoom.cs" />
-    <Compile Include="ScreenSystem\ButtonSection.cs" />
     <Compile Include="ScreenSystem\ScreenManagerComponent.cs" />
     <Compile Include="ScreenSystem\SpriteFonts.cs" />
     <Compile Include="ScreenSystem\VirtualButton.cs" />

@@ -13,13 +13,14 @@ namespace XNASwarms
 
         public SwarmScreen1()
         {
-            recipes = new Recipe[2];
-            recipes[0] = new Recipe(StockRecipies.Recipe1());
-            recipes[1] = new Recipe(StockRecipies.Recipe2());
+            
         }
 
         public override void LoadContent()
         {
+            recipes = new Recipe[2];
+            recipes[0] = new Recipe(StockRecipies.Recipe1());
+            recipes[1] = new Recipe(StockRecipies.Recipe2());
             swarmIndividual = ScreenManager.Content.Load<Texture2D>("bee");
             base.LoadContent();
         }
