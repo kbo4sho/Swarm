@@ -51,7 +51,7 @@ namespace XnxSwarmsData.Debug
 
         public override void Update(GameTime gameTime)
         {
-            Vector2 largestStringSize = screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Count()).Last().GetFormatedMessage().ToString());
+            Vector2 largestStringSize = screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage()).Last().GetFormatedMessage().ToString());
             //DebugPanelRectangle.Width 
             DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding *3;
             DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count )+ PanelPadding * 3;

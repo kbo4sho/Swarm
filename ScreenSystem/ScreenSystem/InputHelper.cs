@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+#if Surface
 using Microsoft.Surface;
 using Microsoft.Surface.Core;
+#endif
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -43,9 +45,10 @@ namespace ScreenSystem.ScreenSystem
         private bool _cursorMoved;
         private Sprite _cursorSprite;
 
-        //Surface
+#if Surface
         public TouchTarget TouchTarget;
         private ReadOnlyTouchPointCollection touches;
+#endif
 
 #if WINDOWS_PHONE
         private VirtualStick _phoneStick;
@@ -54,11 +57,13 @@ namespace ScreenSystem.ScreenSystem
 #endif
         private ScreenManager _manager;
         private Viewport _viewport;
-
+#if Surface
         public InputHelper(TouchTarget touchtarget, ScreenManager manager) : this(manager)
         {
             TouchTarget = touchtarget;
         }
+
+#endif
 
         public InputHelper(ScreenManager manager)
         {
@@ -160,11 +165,12 @@ namespace ScreenSystem.ScreenSystem
         {
             get { return _touchState; }
         }
-
+#if SURFACE
         public ReadOnlyTouchPointCollection SurfaceTouches
         {
             get { return touches; }
         }
+#endif
 
         public void LoadContent()
         {
@@ -215,12 +221,13 @@ namespace ScreenSystem.ScreenSystem
                 _currentVirtualState = HandleVirtualStickWP7();
 #endif
             }
-
+#if Surface
             if (TouchTarget != null)
             {
                 //Surface touches
                 touches = TouchTarget.GetState();
             }
+#endif
 
             _touchState = TouchPanel.GetState();
             if (_touchState.Count > 0)
