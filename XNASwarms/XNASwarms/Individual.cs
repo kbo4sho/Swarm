@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if Surface
 using Microsoft.Surface.Core;
+#endif
 using Microsoft.Xna.Framework;
 
 namespace XNASwarms

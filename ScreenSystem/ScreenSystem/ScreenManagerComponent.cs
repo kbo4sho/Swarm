@@ -3,7 +3,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
+#if Surface
 using Microsoft.Surface.Core;
+#endif
+using ScreenSystem.W8.ScreenSystem;
 
 namespace ScreenSystem.ScreenSystem
 {
@@ -45,12 +48,13 @@ namespace ScreenSystem.ScreenSystem
             TouchPanel.EnabledGestures = GestureType.None;
             _contentManager = game.Content;
             _contentManager.RootDirectory = "Content";
-
+#if Surface
             TouchTarget touchTarget = new TouchTarget(game.Window.Handle, EventThreadChoice.OnBackgroundThread);
+
             touchTarget.EnableInput();
             _input = new InputHelper(touchTarget, this);
             //_input = new InputHelper(this);
-            
+#endif
             
             _screens = new List<GameScreen>();
             _screensToUpdate = new List<GameScreen>();
@@ -330,7 +334,7 @@ namespace ScreenSystem.ScreenSystem
             }
         }
 
-#if NETFX_CORE
+#if NETFX_CORE 
         public void AddSnappedScreen(SnappedScreen snappedscreen)
         {
             var screen = _screens[_screens.Count - 1] as SnappedScreen;

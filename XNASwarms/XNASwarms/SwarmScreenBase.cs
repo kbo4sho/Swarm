@@ -7,7 +7,9 @@ using Microsoft.Xna.Framework.Content;
 using ScreenSystem.ScreenSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
+#if Surface
 using Microsoft.Surface.Core;
+#endif
 using Microsoft.Xna.Framework.Input;
 using System.Collections;
 using XNASwarms.Borders;
@@ -120,6 +122,7 @@ namespace XNASwarms
             
             Supers.Clear();
             
+#if Surface
             var surfacetouches = input.SurfaceTouches;
             if (surfacetouches.Count > 0)
             {
@@ -132,8 +135,9 @@ namespace XNASwarms
                          ((double)position.Y),
                          0.0, 0.0, new Parameters());
                 }
-            }
-            else if (input.Touches.Count > 0)
+            }else 
+#endif
+            if (input.Touches.Count > 0)
             {
                 //Everthing else touch
                 for (int i = 0; i < input.Touches.Count; i++)

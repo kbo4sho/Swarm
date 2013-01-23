@@ -130,6 +130,63 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Borders\Border.cs">
+      <Link>Borders\Border.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Borders\Walls\Wall.cs">
+      <Link>Borders\Walls\Wall.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Borders\Walls\WallActionType.cs">
+      <Link>Borders\Walls\WallActionType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Borders\Walls\WallFactory.cs">
+      <Link>Borders\Walls\WallFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Borders\Walls\WallOrientationType.cs">
+      <Link>Borders\Walls\WallOrientationType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Borders\Walls\WallSideType.cs">
+      <Link>Borders\Walls\WallSideType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\ButtonSection.cs">
+      <Link>ButtonSection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Color.cs">
+      <Link>Color.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\ControlScreen.cs">
+      <Link>ControlScreen.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\IContainable.cs">
+      <Link>IContainable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Individual.cs">
+      <Link>Individual.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Parameters.cs">
+      <Link>Parameters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Population.cs">
+      <Link>Population.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\PopulationSimulator.cs">
+      <Link>PopulationSimulator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\Recipe.cs">
+      <Link>Recipe.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\StockRecipies.cs">
+      <Link>StockRecipies.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\SwarmsCamera.cs">
+      <Link>SwarmsCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\SwarmScreen1.cs">
+      <Link>SwarmScreen1.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\SwarmScreenBase.cs">
+      <Link>SwarmScreenBase.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -164,6 +221,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScreenSystem.W8\ScreenSystem.W8.csproj">
+      <Project>{b82f87be-6a82-4240-864a-aac8966a3f0c}</Project>
+      <Name>ScreenSystem.W8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XNASwarmsData.W8\XNASwarmsData.W8.csproj">
+      <Project>{6d8e2945-c938-41ca-b2b1-398734af197e}</Project>
+      <Name>XNASwarmsData.W8</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
