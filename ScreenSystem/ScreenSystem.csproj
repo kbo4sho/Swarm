@@ -73,8 +73,12 @@
     <Compile Include="ScreenSystem\InputHelper.cs" />
     <Compile Include="ScreenSystem\LogoScreen.cs" />
     <Compile Include="ScreenSystem\MenuButton.cs" />
-    <Compile Include="ScreenSystem\MenuEntry.cs" />
-    <Compile Include="ScreenSystem\MenuScreen.cs" />
+    <Compile Include="ScreenSystem\MenuEntry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScreenSystem\MenuScreen.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ScreenSystem\MessageBoxScreen.cs" />
     <Compile Include="ScreenSystem\PauseScreen.cs" />
     <Compile Include="ScreenSystem\PinchToZoom.cs" />

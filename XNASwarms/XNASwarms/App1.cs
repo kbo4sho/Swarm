@@ -62,8 +62,10 @@ namespace XNASwarms
             if (Window == null || Window.Handle == IntPtr.Zero)
                 return;
 
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = 1680;
+            graphics.PreferredBackBufferHeight = 1050;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 768;
             graphics.ApplyChanges();
         }
 
@@ -110,11 +112,8 @@ namespace XNASwarms
             screenManager.Game.Components.Add(debugScreen);
             this.Services.AddService(typeof(IDebugScreen), debugScreen);
 
-            swarmSreen = new SwarmScreen1();
+            swarmSreen = new SwarmScreen1(StockRecipies.Stable_A, false);
             screenManager.AddScreen(swarmSreen);
-
-
-
 
             base.LoadContent();
             //font = Content.Load<SpriteFont>("SpriteFont1");

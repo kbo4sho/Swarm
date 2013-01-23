@@ -221,7 +221,7 @@ namespace ScreenSystem.ScreenSystem
                                                             RenderTargetUsage.DiscardContents));
                     }
                     GraphicsDevice.SetRenderTarget(_transitions[transitionCount - 1]);
-                    GraphicsDevice.Clear(Color.Transparent);
+                    //GraphicsDevice.Clear(Color.Transparent);
                     screen.Draw(gameTime);
                     GraphicsDevice.SetRenderTarget(null);
                 }

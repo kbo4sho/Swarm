@@ -11,16 +11,15 @@ namespace XNASwarms
     {
         Texture2D swarmIndividual;
 
-        public SwarmScreen1()
+        public SwarmScreen1(string recipe, bool mutate)
+            : base(recipe, mutate)
         {
             
         }
 
         public override void LoadContent()
         {
-            recipes = new Recipe[2];
-            recipes[0] = new Recipe(StockRecipies.Recipe1());
-            recipes[1] = new Recipe(StockRecipies.Recipe2());
+            
             swarmIndividual = ScreenManager.Content.Load<Texture2D>("bee");
             base.LoadContent();
         }

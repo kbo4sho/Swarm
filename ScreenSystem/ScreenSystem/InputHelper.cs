@@ -43,7 +43,11 @@ namespace ScreenSystem.ScreenSystem
         private bool _cursorMoved;
         private Sprite _cursorSprite;
 
+        
+        
+
         //Surface
+        private bool tapped;
         public TouchTarget TouchTarget;
         private ReadOnlyTouchPointCollection touches;
 
@@ -58,6 +62,12 @@ namespace ScreenSystem.ScreenSystem
         public InputHelper(TouchTarget touchtarget, ScreenManager manager) : this(manager)
         {
             TouchTarget = touchtarget;
+            
+        }
+
+        void TouchTarget_TouchTapGesture(object sender, TouchEventArgs e)
+        {
+            //tapped = true;
         }
 
         public InputHelper(ScreenManager manager)
@@ -85,7 +95,7 @@ namespace ScreenSystem.ScreenSystem
             _cursor = Vector2.Zero;
 
             _handleVirtualStick = false;
-
+            
             
         }
 
@@ -168,6 +178,7 @@ namespace ScreenSystem.ScreenSystem
 
         public void LoadContent()
         {
+            TouchTarget.TouchDown += new System.EventHandler<TouchEventArgs>(TouchTarget_TouchTapGesture);
             //_cursorSprite = new Sprite(_manager.Content.Load<Texture2D>("Common/cursor"));
 #if WINDOWS_PHONE
             // virtual stick content
@@ -220,6 +231,10 @@ namespace ScreenSystem.ScreenSystem
             {
                 //Surface touches
                 touches = TouchTarget.GetState();
+                if (touches.Count > 0)
+                {
+                    _currentMouseState = new MouseState((int)touches[0].X, (int)touches[0].Y, 0, ButtonState.Pressed, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
+                }
             }
 
             _touchState = TouchPanel.GetState();
@@ -280,6 +295,10 @@ namespace ScreenSystem.ScreenSystem
                 _cursorIsValid = false;
             }
 #endif
+
+
+            
+
         }
 
         public void Draw()
@@ -337,6 +356,8 @@ namespace ScreenSystem.ScreenSystem
             }
 
             return new GamePadState(_leftStick, Vector2.Zero, 0f, 0f, _buttons.ToArray());
+
+            
         }
 
         private GamePadState HandleVirtualStickWP7()
@@ -363,12 +384,19 @@ namespace ScreenSystem.ScreenSystem
             }
             _stick = _phoneStick.StickPosition;
 #endif
+
             return new GamePadState(_stick, Vector2.Zero, 0f, 0f, _buttons.ToArray());
+        }
+
+        public bool IsNewTap()
+        {
+            return tapped;
         }
 
         /// <summary>
         ///   Helper for checking if a key was newly pressed during this update.
         /// </summary>
+        /// 
         public bool IsNewKeyPress(Keys key)
         {
             return (_currentKeyboardState.IsKeyDown(key) &&
@@ -454,14 +482,18 @@ namespace ScreenSystem.ScreenSystem
 
         /// <summary>
         ///   Checks for a "menu select" input action.
-        /// </summary>
+        /// </summary>s
         public bool IsMenuSelect()
         {
             return //IsNewKeyPress(Keys.Space) ||
-                   //IsNewKeyPress(Keys.Enter) ||
-                   //IsNewButtonPress(Buttons.A) ||
-                   //IsNewButtonPress(Buttons.Start) ||
-                   IsNewMouseButtonPress(MouseButtons.LeftButton);
+                //IsNewKeyPress(Keys.Enter) ||
+                //IsNewButtonPress(Buttons.A);
+                //IsNewButtonPress(Buttons.Start) ||
+                IsNewTap()||
+                  IsNewMouseButtonPress(MouseButtons.LeftButton);
+                   //touches.Contains(touches[0]);
+
+
         }
 
         public bool IsMenuPressed()

@@ -27,12 +27,24 @@ namespace XNASwarms
         protected Border Border;
         private float TimePerFrame;
         private int FramesPerSec;
-        private IDebugScreen debugScreen; 
+        private IDebugScreen debugScreen;
+        private string Recipe;
+        private bool Mutate;
 
-        public SwarmScreenBase()
+        public SwarmScreenBase(string recipe, bool mutate)
         {
             FramesPerSec = 14;
             TimePerFrame = (float)1 / FramesPerSec;
+            Recipe = recipe;
+            Mutate = mutate;
+            rand = new Random();
+            recipes = new Recipe[1];
+            recipes[0] = new Recipe(recipe);
+            populationSimulator = new PopulationSimulator(0, 0, recipes);
+            if (Mutate)
+            {
+                DoMutation();
+            }
         }
 
         public override void LoadContent()
@@ -44,11 +56,10 @@ namespace XNASwarms
             height = ScreenManager.GraphicsDevice.Viewport.Height;
 
             
-            
 
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
-            populationSimulator = new PopulationSimulator(0, 0, recipes);
+            
             Supers = new Dictionary<int, Individual>();
             rand = new Random();
 
@@ -56,16 +67,21 @@ namespace XNASwarms
             Border = new Border(this, WallFactory.FourPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
             debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), XnaSwarmsData.Debug.DebugFlagType.Important);
 
-            foreach (Individual ind in populationSimulator.getPopulation())
-            {
-                ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
-                //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
-            }
+           
             
             Supers.Add(0, new Individual());
 
             base.LoadContent();
             debugScreen.AddDebugItem("RECIPE", populationSimulator.getPopulation().get(0).getGenome().getRecipe(), XnaSwarmsData.Debug.DebugFlagType.Important);
+        }
+
+        private void DoMutation()
+        {
+            foreach (Individual ind in populationSimulator.getPopulation())
+            {
+                ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
+                //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
+            }
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
@@ -142,7 +158,7 @@ namespace XNASwarms
                          0,0, new Parameters());
                 }
             }
-
+            TouchPanel.EnabledGestures = GestureType.Pinch;
             while (TouchPanel.IsGestureAvailable)
             {
                 GestureSample gesture = TouchPanel.ReadGesture();

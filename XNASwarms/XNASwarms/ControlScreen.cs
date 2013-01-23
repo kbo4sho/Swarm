@@ -10,13 +10,13 @@ namespace XNASwarms
     public class ControlScreen : GameScreen
     {
 
-        protected SwarmsCamera Camera;
+        public SwarmsCamera Camera;
         protected ButtonSection ButtonSection;
         
         public ControlScreen()
             : base()
         {
-            ButtonSection = new ButtonSection(false, Vector2.Zero, this, "ya know");
+            ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
         }
 
         public override void LoadContent()
@@ -27,6 +27,7 @@ namespace XNASwarms
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
+            ButtonSection.Update();
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 

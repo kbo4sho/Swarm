@@ -119,10 +119,12 @@
     <Compile Include="Borders\Walls\WallSideType.cs" />
     <Compile Include="Borders\Walls\WallActionType.cs" />
     <Compile Include="ButtonSection.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ControlScreen.cs" />
     <Compile Include="IContainable.cs" />
     <Compile Include="Individual.cs" />
+    <Compile Include="MenuItem.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="PopulationSimulator.cs" />
@@ -187,9 +189,6 @@
       <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

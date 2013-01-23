@@ -14,6 +14,7 @@ namespace XnxSwarmsData.Debug
     {
         void AddDebugItem(string label, string message, DebugFlagType flagtype);
         void AddDebugItem(string label, string message);
+        void SetVisiblity();
     }
 
 
@@ -31,6 +32,8 @@ namespace XnxSwarmsData.Debug
         private int PanelPadding;
         private int MaxDebugItems;
 
+        private bool Visible;
+
         public DebugScreen(ScreenManager screenmanager)
             : base(screenmanager.Game)
         {
@@ -39,7 +42,7 @@ namespace XnxSwarmsData.Debug
             screenManager = screenmanager;
             frameratecounter = new FrameRateCounter(screenManager);
             screenManager.Game.Components.Add(frameratecounter);
-
+            Visible = true;
             PanelTexture = screenmanager.Content.Load<Texture2D>("Backgrounds/gray");
             itemSpacer = 10;
             PanelPadding = 10;
@@ -51,33 +54,40 @@ namespace XnxSwarmsData.Debug
 
         public override void Update(GameTime gameTime)
         {
-            Vector2 largestStringSize = screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Count()).Last().GetFormatedMessage().ToString());
-            //DebugPanelRectangle.Width 
-            DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding *3;
-            DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count )+ PanelPadding * 3;
-
-            if (DebugItems.Count > MaxDebugItems)
+            if (Visible)
             {
-                DebugItems.RemoveRange(MaxDebugItems - 3, DebugItems.Count - (MaxDebugItems));
+                Vector2 largestStringSize = screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Count()).Last().GetFormatedMessage().ToString());
+                //DebugPanelRectangle.Width 
+                DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding * 3;
+                DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count) + PanelPadding * 3;
+
+                if (DebugItems.Count > MaxDebugItems)
+                {
+                    DebugItems.RemoveRange(MaxDebugItems - 3, DebugItems.Count - (MaxDebugItems));
+                }
             }
             base.Update(gameTime);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            screenManager.SpriteBatch.Begin();
-            screenManager.SpriteBatch.Draw(PanelTexture, DebugPanelRectangle, new Color(20,20,20,170));
-
-            for (int i = DebugItems.Count -1 ; i >= 0; i -= 1)
+            if (Visible)
             {
-                screenManager.SpriteBatch.DrawString(screenManager.Fonts.FrameRateCounterFont, DebugItems[i].GetFormatedMessage(),
-                                                      new Vector2(DebugPanelRectangle.X + PanelPadding, (DebugPanelRectangle.Y + itemSpacer * i) + PanelPadding), DebugItems[i].GetColor());
+                screenManager.SpriteBatch.Begin();
+                screenManager.SpriteBatch.Draw(PanelTexture, DebugPanelRectangle, new Color(20, 20, 20, 170));
+
+                for (int i = DebugItems.Count - 1; i >= 0; i -= 1)
+                {
+                    screenManager.SpriteBatch.DrawString(screenManager.Fonts.FrameRateCounterFont, DebugItems[i].GetFormatedMessage(),
+                                                          new Vector2(DebugPanelRectangle.X + PanelPadding, (DebugPanelRectangle.Y + itemSpacer * i) + PanelPadding), DebugItems[i].GetColor());
+                }
+                screenManager.SpriteBatch.End();
+
             }
-            screenManager.SpriteBatch.End();
             base.Draw(gameTime);
         }
 
-
+        #region IDebugScreen
         public void AddDebugItem(string label, string message)
         {
             AddDebugItem(label, message, DebugFlagType.Normal);
@@ -100,10 +110,13 @@ namespace XnxSwarmsData.Debug
                     //SavedDebugItems.Insert(0, new DebugItem(label, message, flagtype));
                     break;
                     
-            }
-
-           
+            }  
         }
 
+        public void SetVisiblity()
+        {
+            Visible = !Visible;
+        }
+        #endregion
     }
 }

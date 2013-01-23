@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ScreenSystem.ScreenSystem;
+using XNASwarms;
 
 namespace ScreenSystem.ScreenSystem
 {
@@ -21,6 +21,8 @@ namespace ScreenSystem.ScreenSystem
         Game,
         FreePlay,
         Disabled,
+        Stable,
+        Debugger,
     }
 
     /// <summary>
@@ -44,7 +46,7 @@ namespace ScreenSystem.ScreenSystem
         public Vector2 _position { get; private set; }
         public float _scale { get; private set; }
         private float BaseScale;
-        private GameScreen _screen;
+        private ControlScreen _screen;
 		private GameScreen _phyisicsGameScreen;
 
         /// <summary>
@@ -62,17 +64,17 @@ namespace ScreenSystem.ScreenSystem
         public Rectangle BackgroundRectangle { get; private set; }
         private Color MenuEntryBackground;
 
-        public MenuEntry(GameScreen menu, string text, EntryType type, GameScreen screen, Texture2D texture, GameScreen phyisicsscreen)
-            : this(menu, text, type, screen, texture)
-		{
-			_phyisicsGameScreen = phyisicsscreen;
-		}
+        //public MenuEntry(GameScreen menu, string text, EntryType type, SwarmScreenBase screen, Texture2D texture, SwarmScreenBase phyisicsscreen)
+        //    : this(menu, text, type, screen, texture)
+        //{
+        //    _phyisicsGameScreen = phyisicsscreen;
+        //}
 
         /// <summary>
         /// Constructs a new menu entry with the specified text.
         /// </summary>
 		/// 
-        public MenuEntry(GameScreen menu, string text, EntryType type, GameScreen screen, Texture2D texture)
+        public MenuEntry(ControlScreen menu, string text, EntryType type, ControlScreen screen, Texture2D texture)
         {
             _text = text;
             _screen = screen;
@@ -214,11 +216,16 @@ namespace ScreenSystem.ScreenSystem
         {
             return _type == EntryType.Game;
         }
-
-        public bool IsGameModeFreePlay()
+        internal bool IsStable()
         {
-            return _type == EntryType.FreePlay;
+            return _type == EntryType.Stable;
         }
+
+        internal bool IsDebugger()
+        {
+            return _type == EntryType.Debugger;
+        }
+
         #endregion
 
         /// <summary>
@@ -252,11 +259,10 @@ namespace ScreenSystem.ScreenSystem
         /// <summary>
         /// Draws the menu entry. This can be overridden to customize the appearance.
         /// </summary>
-        public virtual void Draw()
+        public virtual void Draw(SpriteBatch spritebatch)
         {
-
             SpriteFont font     = _menu.ScreenManager.Fonts.MenuSpriteFont;
-            SpriteBatch batch   = _menu.ScreenManager.SpriteBatch;
+            //SpriteBatch batch   = _screen.ScreenManager.SpriteBatch;
 
             Color color;
             if (_type == EntryType.Separator)
@@ -270,18 +276,20 @@ namespace ScreenSystem.ScreenSystem
             }
             color *= _alpha;
 
+            var pos = _position;//_screen.Camera.ConvertScreenToWorld(_position);
+            //var pos = _position;
 
             //Drar the container of the item
             if (_menuItemBackground != null && !IsSeperator())
             {
-                batch.Draw(_menuItemBackground,
-                    Vector2.Zero, BackgroundRectangle,
+                spritebatch.Draw(_menuItemBackground,
+                    pos, BackgroundRectangle,
                     MenuEntryBackground , 0f, Vector2.Zero, _scale, SpriteEffects.None, 0f);
             }
             // Draw text, centered on the middle of each line.
             //batch.DrawString(font, _text, _position - _baseOrigin * _scale + Vector2.One,
             //                  Color.DarkSlateGray * _alpha * _alpha, 0, Vector2.Zero, _scale, SpriteEffects.None, 0);
-            batch.DrawString(font, _text, _position/4, Color.WhiteSmoke, 0, Vector2.Zero, _scale,
+            spritebatch.DrawString(font, _text, pos + new Vector2(10, 10), Color.WhiteSmoke, 0, Vector2.Zero, _scale,
                               SpriteEffects.None, 0);
         }
 
@@ -300,5 +308,7 @@ namespace ScreenSystem.ScreenSystem
         {
             return (int)_width;
         }
+
+       
     }
 }

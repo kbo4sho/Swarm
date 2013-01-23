@@ -12,7 +12,7 @@ namespace XNASwarms
     public class ButtonSection
     {
 
-        private GameScreen _screen;
+        private ControlScreen _screen;
         private Vector2 _position;
         private Texture2D _bgSprite;
         private Rectangle _rect, _innerRect;
@@ -22,6 +22,7 @@ namespace XNASwarms
         private float _maxOffset;
         private bool _scrollLock;
         private SpriteFont LabelFont, BigFont;
+        SpriteBatch spriteBatch;
         private MenuButton _scrollUp;
         private List<MenuEntry> menuEntries = new List<MenuEntry>();
         private Rectangle _rectBG, DestinationRectangle;
@@ -39,25 +40,28 @@ namespace XNASwarms
 
         
 
-        public ButtonSection(bool flip, Vector2 position, GameScreen screen, string desc)
+        public ButtonSection(bool flip, Vector2 position, ControlScreen screen, string desc)
         {
-            _position = position;// + _containerMargin;
+            _rect.Width = 100;
+            _rect.Height = 360;
             _screen = screen;
-            _rect.Width = 250;
-            _rect.Height = 300;
             _innerRect.Width = _rect.Width - BorderThickness;
             _innerRect.Height = _rect.Height - BorderThickness;
             _description = desc;
-
-            AddMenuItem("Button", EntryType.Game, _screen);
+            
+            AddMenuItem("Mutation", EntryType.Game, _screen);
+            AddMenuItem("Stable", EntryType.Stable, _screen);
+            AddMenuItem("Console", EntryType.Debugger, _screen);
         }
 
         public void Load()
         {
+            spriteBatch = new SpriteBatch(_screen.ScreenManager.GraphicsDevice);
             debugScreen = _screen.ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
             Viewport viewport = _screen.ScreenManager.GraphicsDevice.Viewport;
-            _position.Y = 0;
-            _position.X = 0;
+            //_position.Y = 0;
+            //_position.X = 0;
+            _position = new Vector2(_screen.ScreenManager.GraphicsDevice.Viewport.Width - _rect.Width, 0);// + _containerMargin;
             _bgSprite = _screen.ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             LabelFont = _screen.ScreenManager.Fonts.DetailsFont;
             BigFont = _screen.ScreenManager.Fonts.FrameRateCounterFont;
@@ -66,6 +70,13 @@ namespace XNASwarms
             {
                 menuEntries[i].Initialize();
             }
+        }
+
+        public void Update()
+        {
+            _rect.Width = 250;
+            _rect.Height = 300;
+           // _position = new Vector2(_screen.ScreenManager.GraphicsDevice.Viewport.Width - _rect.Width, 0);// + _containerMargin;
         }
 
         /// <summary>
@@ -85,18 +96,19 @@ namespace XNASwarms
             // update each menu entry's location in turn
             for (int i = 0; i < menuEntries.Count; ++i)
             {
-                position.X = _screen.ScreenManager.GraphicsDevice.Viewport.Width / 2f;
-                if (_screen.ScreenState == ScreenState.TransitionOn)
-                {
-                    position.X -= 1 * 256;
-                }
-                else
-                {
-                    position.X += 1 * 256;
-                }
+                menuEntries[i].Position = new Vector2(_position.X, _position.Y + i * menuEntries[i].GetHeight() + i * _containerPadding.Y);
+                //position.X = _screen.ScreenManager.GraphicsDevice.Viewport.Width;
+                //if (_screen.ScreenState == ScreenState.TransitionOn)
+                //{
+                //    position.X -= 1 * 256;
+                //}
+                //else
+                //{
+                //    position.X += 1 * 256;
+                //}
 
                 // set the entry's position
-                menuEntries[i].Position = position;
+                //menuEntries[i].Position = position;
 
                 //if (position.Y < _menuBorderTop)
                 //{
@@ -115,14 +127,14 @@ namespace XNASwarms
                 //}
 
                 // move down for the next entry the size of this entry
-                if (i == 0)
-                {
-                    position.Y += menuEntries[i].GetHeight() + 10;
-                }
-                else
-                {
-                    position.Y += menuEntries[i].GetHeight() + 10;
-                }
+                //if (i == 0)
+                //{
+                //    menuEntries[i].Position += menuEntries[i].GetHeight() + 10;
+                //}
+                //else
+                //{
+                //    menuEntries[i]._position += menuEntries[i].GetHeight() + 10;
+                //}
             }
             //Vector2 scrollPos = _scrollSlider.Position;
             //scrollPos.Y = MathHelper.Lerp(_scrollSliderPosition.Y, _menuBorderBottom, _menuOffset / _maxOffset);
@@ -137,23 +149,25 @@ namespace XNASwarms
         /// </summary>
         public void Draw(GameTime gameTime)
         {
+            spriteBatch.Begin();
             // make sure our entries are in the right place before we draw them
             UpdateMenuEntryLocations();
 
-
-            SpriteBatch spriteBatch = _screen.ScreenManager.SpriteBatch;
+            //SpriteBatch spriteBatch = _screen.ScreenManager.SpriteBatch;
             SpriteFont font = _screen.ScreenManager.Fonts.MenuSpriteFont;
 
+            var pos = _position; //= _screen.Camera.ConvertScreenToWorld(_position);
+
             //Container
-            spriteBatch.Draw(_bgSprite, _position, _rect, _BorderColor, 0f, Vector2.Zero,
+            spriteBatch.Draw(_bgSprite, pos, _rect, _BorderColor, 0f, Vector2.Zero,
                         1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
 
             //Inner Container
-            spriteBatch.Draw(_bgSprite, _position, _innerRect, _containerBGColor, 0f, Vector2.Zero,
+            spriteBatch.Draw(_bgSprite, pos, _innerRect, _containerBGColor, 0f, Vector2.Zero,
                         1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
 
             //Description
-            spriteBatch.DrawString(BigFont, _description, _containerPadding + _position + Vector2.One * 2f, Color.LightCyan);
+            spriteBatch.DrawString(BigFont, _description, _containerPadding + pos + Vector2.One * 2f, Color.LightCyan);
            
 
             // Make the menu slide into place during transitions, using a
@@ -168,10 +182,10 @@ namespace XNASwarms
             for (int i = 0; i < menuEntries.Count; ++i)
             {
                 bool isSelected = _screen.IsActive && (i == _selectedEntry);
-                menuEntries[i].Draw();
+                menuEntries[i].Draw(spriteBatch);
             }
 
-            
+            spriteBatch.End();
 
             //spriteBatch.DrawString(font, _menuTitle, _titlePosition - transitionOffset, Color.WhiteSmoke, 0,
             //                       _titleOrigin, 2f, SpriteEffects.None, 0);
@@ -189,7 +203,7 @@ namespace XNASwarms
 
         }
 
-        public void AddMenuItem(string name, EntryType type, GameScreen screen)
+        public void AddMenuItem(string name, EntryType type, ControlScreen screen)
         {
             MenuEntry entry = new MenuEntry(_screen, name, type, screen, _bgSprite);
             menuEntries.Add(entry);
@@ -218,6 +232,8 @@ namespace XNASwarms
                 {
                     return index;
                 }
+                debugScreen.AddDebugItem("CURSOR", (int)position.X + " " + (int)position.Y, XnaSwarmsData.Debug.DebugFlagType.Important);
+
                 ++index;
             }
             return -1;
@@ -234,7 +250,7 @@ namespace XNASwarms
             if (hoverIndex >= 0)// && !_scrollLock)
             {
                 _selectedEntry = hoverIndex;
-                debugScreen.AddDebugItem("BUTTON HOVER", "Index " + hoverIndex, XnaSwarmsData.Debug.DebugFlagType.Important);
+                //debugScreen.AddDebugItem("BUTTON HOVER", "Index " + hoverIndex, XnaSwarmsData.Debug.DebugFlagType.Important);
             }
             else
             {
@@ -345,25 +361,15 @@ namespace XNASwarms
                     //MusicHelper.SetMusicType(MusicType.Default);
                     _screen.ScreenManager.AddScreen(menuEntries[_selectedEntry].Screen);
                 }
-                //////////////////////////////
-                //Play Custom Music and game
-                //////////////////////////////
+                
+                ////////////////////////
+                //MainMenu GameMode Game
+                ////////////////////////
                 else if (menuEntries[_selectedEntry].Screen != null &&
-                         menuEntries[_selectedEntry].IsCustomMusic())
+                         menuEntries[_selectedEntry].IsStable())
                 {
-                    //MusicHelper.LoadSongFromLibrary();
-                    _screen.ScreenManager.AddScreen(menuEntries[_selectedEntry].Screen);
-                }
-                ///////////////////////////////////////
-                //Leave the playing Music and play game
-                ///////////////////////////////////////
-                else if (menuEntries[_selectedEntry].Screen != null &&
-                         menuEntries[_selectedEntry].IsBackgroundMuiscMuisc())
-                {
-                    GameScreen mscreen = menuEntries[_selectedEntry].Screen as GameScreen;
-                    //mscreen.GoToLevel(_selectedEntry,1);
-                    //MusicHelper.SetMusicType(MusicType.Background);
-                    _screen.ScreenManager.AddScreen(menuEntries[_selectedEntry].Screen);
+                    _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Stable_A, false));
+                    this._screen.ExitScreen();
                 }
                 ////////////////////////
                 //MainMenu GameMode Game
@@ -371,17 +377,16 @@ namespace XNASwarms
                 else if (menuEntries[_selectedEntry].Screen != null &&
                          menuEntries[_selectedEntry].IsGameModeGame())
                 {
-
-                    _screen.ScreenManager.AddScreen(menuEntries[_selectedEntry].Screen);
+                    _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Stable_A,true));
                     this._screen.ExitScreen();
                 }
-                ////////////////////////////
-                //MainMenu GameMode FreePlay
-                ////////////////////////////
+                ////////////////////////
+                //MainMenu GameMode Game
+                ////////////////////////
                 else if (menuEntries[_selectedEntry].Screen != null &&
-                         menuEntries[_selectedEntry].IsGameModeFreePlay())
+                         menuEntries[_selectedEntry].IsDebugger())
                 {
-                    _screen.ScreenManager.AddScreen(menuEntries[_selectedEntry].Screen);
+                    debugScreen.SetVisiblity();
                 }
                 //////////////////////////////
                 //Normal Add Screen
