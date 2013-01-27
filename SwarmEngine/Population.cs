@@ -27,7 +27,7 @@ using System.Text;
 
 import java.util.*;*/
 
-namespace XNASwarms
+namespace SwarmEngine
 {
     public class Population : List<Individual>
     {

@@ -7,7 +7,7 @@ using Microsoft.Surface.Core;
 #endif
 using Microsoft.Xna.Framework;
 
-namespace XNASwarms
+namespace SwarmEngine
 {
      public class Individual: IContainable
      {

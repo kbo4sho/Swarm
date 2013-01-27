@@ -232,7 +232,7 @@ namespace XNASwarms
                 {
                     return index;
                 }
-                debugScreen.AddDebugItem("CURSOR", (int)position.X + " " + (int)position.Y, XnaSwarmsData.Debug.DebugFlagType.Important);
+                //debugScreen.AddDebugItem("CURSOR", (int)position.X + " " + (int)position.Y, XnaSwarmsData.Debug.DebugFlagType.Important);
 
                 ++index;
             }

@@ -108,7 +108,6 @@ namespace ScreenSystem.ScreenSystem
 
         public override void LoadContent()
         {
-            base.LoadContent();
 
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             SpriteFont font = ScreenManager.Fonts.FrameRateCounterFont;

@@ -4,9 +4,9 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 
-namespace XNASwarms
+namespace SwarmEngine
 {
-    class PopulationSimulator
+    public class PopulationSimulator
     {
         private Population population;
        

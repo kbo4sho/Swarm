@@ -45,6 +45,7 @@ namespace ScreenSystem.ScreenSystem
             _logoDestination = new Rectangle((int)logoPosition.X, (int)logoPosition.Y, (int)logoSize.X,
                                              (int)logoSize.Y);
             _viewport = viewport.Bounds;
+
         }
 
         /// <summary>

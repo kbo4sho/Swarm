@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using SwarmEngine;
 
 namespace XNASwarms
 {
@@ -18,8 +19,7 @@ namespace XNASwarms
         }
 
         public override void LoadContent()
-        {
-            
+        {            
             swarmIndividual = ScreenManager.Content.Load<Texture2D>("bee");
             base.LoadContent();
         }

@@ -30,7 +30,7 @@ package swarm.engine;
 
 import java.awt.Color; 
   */
-namespace XNASwarms
+namespace SwarmEngine
 {
      public class Parameters {
 	    public static int numberOfIndividualsMax = 300;

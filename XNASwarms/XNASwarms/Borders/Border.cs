@@ -7,6 +7,7 @@ using XNASwarms.Borders.Walls;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using XnxSwarmsData.Debug;
+using SwarmEngine;
 
 namespace XNASwarms.Borders
 {
@@ -31,10 +32,6 @@ namespace XNASwarms.Borders
             bottomBound = borderWalls.Where(s => s.GetWallOrientation() == WallOrientationType.Vertical).First().GetLength();
         }
 
-        public void LoadContent()
-        {
-            
-        }
 
         public void Update(List<Individual> individuals)
         {
@@ -78,7 +75,7 @@ namespace XNASwarms.Borders
             }
         }
 
-        private void HandleWallAction(WallActionType wallactiontype, WallOrientationType wallorientationtype, Individual currentind)
+        private void HandleWallAction(WallActionType wallactiontype, WallOrientationType wallorientationtype, IContainable currentind)
         {
             switch (wallactiontype)
             {

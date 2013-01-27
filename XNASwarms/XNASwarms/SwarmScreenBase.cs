@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections;
 using XNASwarms.Borders;
 using XNASwarms.Borders.Walls;
+using SwarmEngine;
 using XnxSwarmsData.Debug;
 
 namespace XNASwarms
@@ -57,8 +58,6 @@ namespace XNASwarms
             width = ScreenManager.GraphicsDevice.Viewport.Width;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
 
-            
-
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             
@@ -88,7 +87,6 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-
             Border.Update(populationSimulator.getSwarmInBirthOrder().ToList<Individual>());
             populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);   
             Camera.Update(gameTime);

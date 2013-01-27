@@ -40,16 +40,20 @@ namespace XnxSwarmsData.Debug
             DebugItems = new List<DebugItem>() ;
             SavedDebugItems = new List<DebugItem>() { new DebugItem("/////DEBUG/////////////////////////////", "//////////////", DebugFlagType.Important) };
             screenManager = screenmanager;
+            Visible = true;
+            
+        }
+
+        protected override void LoadContent()
+        {
             frameratecounter = new FrameRateCounter(screenManager);
             screenManager.Game.Components.Add(frameratecounter);
-            Visible = true;
-            PanelTexture = screenmanager.Content.Load<Texture2D>("Backgrounds/gray");
+            PanelTexture = screenManager.Content.Load<Texture2D>("Backgrounds/gray");
             itemSpacer = 10;
             PanelPadding = 10;
-            DebugPanelRectangle = new Rectangle(10, 10, 280, screenmanager.GraphicsDevice.Viewport.Height - 50);
-            MaxDebugItems = (DebugPanelRectangle.Height - (PanelPadding * 2))/itemSpacer;
-            
-            
+            DebugPanelRectangle = new Rectangle(10, 10, 280, screenManager.GraphicsDevice.Viewport.Height - 50);
+            MaxDebugItems = (DebugPanelRectangle.Height - (PanelPadding * 2)) / itemSpacer;
+            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
