@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using XnxSwarmsData.Debug;
 using ScreenSystem.ScreenSystem;
+using ScreenSystem.Debug;
 
 namespace XNASwarms
 {

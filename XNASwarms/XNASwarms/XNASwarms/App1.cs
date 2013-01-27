@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using ScreenSystem.ScreenSystem;
-using XnxSwarmsData.Debug;
+using ScreenSystem.Debug;
 
 namespace XNASwarms
 {

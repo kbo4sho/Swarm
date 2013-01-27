@@ -6,8 +6,8 @@ using ScreenSystem.ScreenSystem;
 using XNASwarms.Borders.Walls;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using XnxSwarmsData.Debug;
 using SwarmEngine;
+using ScreenSystem.Debug;
 
 namespace XNASwarms.Borders
 {
@@ -48,7 +48,7 @@ namespace XNASwarms.Borders
                     //Right
                     Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Right).First();
                     HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
-                    debugScreen.AddDebugItem("BORDER RIGHT", currentInd.getX().ToString(), XnaSwarmsData.Debug.DebugFlagType.Odd);
+                    debugScreen.AddDebugItem("BORDER RIGHT", currentInd.getX().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
                 }
                 else if (currentX < -rightBound)
                 {

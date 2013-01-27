@@ -18,7 +18,7 @@ namespace SwarmEngine
 
         public Individual() :  this(0.0, 0.0, 0.0, 0.0, new Parameters())
         {
-           
+            
         }
 
         public Individual(double xx, double yy, double dxx, double dyy, Parameters g)

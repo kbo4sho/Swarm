@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}</ProjectGuid>
+    <ProjectGuid>{45FA38FB-3602-4160-9C46-23FDDD7A05E7}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XnaSwarmsData</RootNamespace>
-    <AssemblyName>XnaSwarmsData</AssemblyName>
+    <RootNamespace>ScreenSystem</RootNamespace>
+    <AssemblyName>ScreenSystem</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>Reach</XnaProfile>
-    <XnaCrossPlatformGroupID>7b25063f-37b3-4758-90a1-e48ff9c51ded</XnaCrossPlatformGroupID>
+    <XnaCrossPlatformGroupID>03f498c4-228c-4937-a924-27aea8025f3b</XnaCrossPlatformGroupID>
     <XnaOutputType>Library</XnaOutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -43,10 +43,13 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Surface, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Surface.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -59,16 +62,32 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Debuging\DebugItem.cs" />
-    <Compile Include="Debuging\DebugScreen.cs" />
+    <Compile Include="ScreenSystem\Debug\DebugItem.cs" />
+    <Compile Include="ScreenSystem\Debug\DebugScreen.cs" />
+    <Compile Include="DrawingSystem\Sprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ScreenSystem\ScreenSystem.csproj">
-      <Project>{45FA38FB-3602-4160-9C46-23FDDD7A05E7}</Project>
-      <Name>ScreenSystem</Name>
-    </ProjectReference>
+    <Compile Include="ScreenSystem\BackgroundScreen.cs" />
+    <Compile Include="ScreenSystem\Camera2D.cs" />
+    <Compile Include="ScreenSystem\ConvertUnits.cs" />
+    <Compile Include="ScreenSystem\FramerateCounterComponent.cs" />
+    <Compile Include="ScreenSystem\GameScreen.cs" />
+    <Compile Include="ScreenSystem\IDemoScreen.cs" />
+    <Compile Include="ScreenSystem\InputHelper.cs" />
+    <Compile Include="ScreenSystem\LogoScreen.cs" />
+    <Compile Include="ScreenSystem\MenuButton.cs" />
+    <Compile Include="ScreenSystem\MenuEntry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScreenSystem\MenuScreen.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScreenSystem\MessageBoxScreen.cs" />
+    <Compile Include="ScreenSystem\PauseScreen.cs" />
+    <Compile Include="ScreenSystem\PinchToZoom.cs" />
+    <Compile Include="ScreenSystem\ScreenManagerComponent.cs" />
+    <Compile Include="ScreenSystem\SpriteFonts.cs" />
+    <Compile Include="ScreenSystem\VirtualButton.cs" />
+    <Compile Include="ScreenSystem\VirtualStick.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

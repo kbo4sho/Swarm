@@ -15,7 +15,7 @@ using System.Collections;
 using XNASwarms.Borders;
 using XNASwarms.Borders.Walls;
 using SwarmEngine;
-using XnxSwarmsData.Debug;
+using ScreenSystem.Debug;
 
 namespace XNASwarms
 {
@@ -64,16 +64,16 @@ namespace XNASwarms
             Supers = new Dictionary<int, Individual>();
             rand = new Random();
 
-            debugScreen.AddDebugItem("RESOLUTION", width.ToString() + "x" + height.ToString(), XnaSwarmsData.Debug.DebugFlagType.Important);
+            debugScreen.AddDebugItem("RESOLUTION", width.ToString() + "x" + height.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             Border = new Border(this, WallFactory.FourPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
-            debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), XnaSwarmsData.Debug.DebugFlagType.Important);
+            debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), ScreenSystem.Debug.DebugFlagType.Important);
 
            
             
             Supers.Add(0, new Individual());
 
             base.LoadContent();
-            debugScreen.AddDebugItem("RECIPE", populationSimulator.getPopulation().get(0).getGenome().getRecipe(), XnaSwarmsData.Debug.DebugFlagType.Important);
+            debugScreen.AddDebugItem("RECIPE", populationSimulator.getPopulation().get(0).getGenome().getRecipe(), ScreenSystem.Debug.DebugFlagType.Important);
         }
 
         private void DoMutation()
