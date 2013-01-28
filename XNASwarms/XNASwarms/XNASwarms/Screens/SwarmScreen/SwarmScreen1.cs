@@ -27,20 +27,25 @@ namespace XNASwarms
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
             ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
+            base.Draw(gameTime);
             Population population = populationSimulator.getPopulation();
-            for (int i = 0; i < populationSimulator.getPopulation().Count; i++)
+
+            foreach(Species spcs in population)
             {
-                ScreenManager.SpriteBatch.Draw(swarmIndividual, new Rectangle(
-                    (int)population.get(i).getX(),
-                    (int)population.get(i).getY(), 5, 5),
-                    null,
-                    population[i].getDisplayColor(),
-                    0f,
-                    new Vector2(0, 0),
-                    SpriteEffects.None, 0);
+                foreach(Individual indvd in spcs)
+                {
+                    ScreenManager.SpriteBatch.Draw(swarmIndividual, new Rectangle(
+                        (int)indvd.getX(),
+                        (int)indvd.getY(), 5, 5),
+                        null,
+                        indvd.getDisplayColor(),
+                        0f,
+                        new Vector2(0, 0),
+                        SpriteEffects.None, 0);
+                }
             }
 
-            base.Draw(gameTime);
+            
             ScreenManager.SpriteBatch.End();
             
         }

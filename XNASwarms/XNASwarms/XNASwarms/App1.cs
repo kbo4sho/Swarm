@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using ScreenSystem.ScreenSystem;
 using ScreenSystem.Debug;
+using SwarmEngine;
 
 namespace XNASwarms
 {
@@ -27,8 +28,7 @@ namespace XNASwarms
             Content.RootDirectory = "Content";
             ConvertUnits.SetDisplayUnitToSimUnitRatio(1f);
             //TargetElapsedTime = TimeSpan.FromTicks(167777);
-            this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 30.0f);
-            
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 30.0f);   
         }
 
         #region Initialization
@@ -45,8 +45,11 @@ namespace XNASwarms
 
             //graphics.PreferredBackBufferWidth = 1680;
             //graphics.PreferredBackBufferHeight = 1050;
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = 1600;
+            graphics.PreferredBackBufferHeight = 900;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 768;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
         }
 
@@ -61,7 +64,7 @@ namespace XNASwarms
             ScreenManager screenManager = new ScreenManager(this);
             this.Components.Add(screenManager);
             
-            //graphics.IsFullScreen = true;
+            
             var backgroundscreen = new BackgroundScreen();
             screenManager.AddScreen(backgroundscreen);
 

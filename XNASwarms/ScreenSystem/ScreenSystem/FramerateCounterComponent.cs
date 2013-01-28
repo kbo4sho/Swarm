@@ -25,7 +25,7 @@ namespace ScreenSystem.ScreenSystem
 #if XBOX
             _position = new Vector2(55, 35);
 #else
-            _position = new Vector2(30, screenManager.GraphicsDevice.Viewport.Height - 20);
+            _position = new Vector2(30, 10);
 #endif
         }
 
@@ -48,7 +48,7 @@ namespace ScreenSystem.ScreenSystem
 
             _screenManager.SpriteBatch.Begin();
             _screenManager.SpriteBatch.DrawString(_screenManager.Fonts.FrameRateCounterFont, fps,
-                                                  _position, Color.White);
+                                                  _position, Color.LightBlue);
             _screenManager.SpriteBatch.End();
             base.Draw(gameTime);
         }

@@ -34,18 +34,8 @@ namespace SwarmEngine
 
 	    public void accelerate(double ax, double ay, double maxMove) 
         {
-
             dx2 += ax;
             dy2 += ay;
-
-            //if ( y > 0 && y < 10 && dy2 > 0 && dy2 < 10)
-            //{
-            //    dy2 += ay;
-            //}
-            //else
-            //{
-            //    dy2 = -ay;
-            //}
 
 		    double d = dx2 * dx2 + dy2 * dy2;
             if (d > maxMove * maxMove)
@@ -115,7 +105,6 @@ namespace SwarmEngine
         #region IContainable
         public void TravelThroughXWall()
         {
-            //x = x ;
             x = -x;
             dx = -dx * 400;
             dx2 = dx2 * 400;
@@ -129,18 +118,15 @@ namespace SwarmEngine
 
         public void BounceXWall()
         {
-            x = x ;
             dx = -dx * 1000;
             dx2 = -dx2 * 1000;
         }
         public void BounceYWall()
         {
-            x = x;
             dy = -dy * 1000;
             dy2 = -dy2 * 1000;
         }
         #endregion
-
 
      }
 }

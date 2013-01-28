@@ -23,7 +23,7 @@ namespace SwarmEngine
 		setFromText(text);
 	}
 
-	public Recipe(List<Individual> sol) {
+	public Recipe(List<Species> sol) {
 		setFromPopulation(sol);
 	}
 
@@ -97,7 +97,7 @@ namespace SwarmEngine
 		}
 
 		boundPopulationSize();
-		setFromPopulation(createPopulation(600, 200));
+		//setFromPopulation(createPopulation(600, 200));
 		return true;
 	}
 
@@ -123,26 +123,33 @@ namespace SwarmEngine
 				popCounts[i] = (1 + (int)Math.Floor((double)(popCounts[i] - 1) * rescalingRatio));
 	}
 
-	public void setFromPopulation(List<Individual> sol) {
+	public void setFromPopulation(List<Species> species) {
 		parameters = new List<Parameters>();
 		popCounts = new List<int>();
 
 		Parameters tempParam;
 
-		for (int i = 0; i < sol.Count(); i++) {
-			tempParam = sol[i].getGenome();
+		for (int i = 0; i < species.Count(); i++) {
 
-			bool alreadyInParameters = false;
-			for (int j = 0; j < parameters.Count; j++) {
-				if (parameters[j].equals(tempParam)) {
-					alreadyInParameters = true;
-					popCounts[j] = (popCounts[j] + 1);
-				}
-			}
-			if (alreadyInParameters == false) {
-				parameters.Add(tempParam);
-				popCounts.Add(1);
-			}
+            for (int j = 0; j < species[i].Count(); j++)
+            {
+                tempParam = species[i][j].getGenome();
+
+                bool alreadyInParameters = false;
+                for (int k = 0; k < parameters.Count; k++)
+                {
+                    if (parameters[k].equals(tempParam))
+                    {
+                        alreadyInParameters = true;
+                        popCounts[k] = (popCounts[k] + 1);
+                    }
+                }
+                if (alreadyInParameters == false)
+                {
+                    parameters.Add(tempParam);
+                    popCounts.Add(1);
+                }
+            }
 		}
 
 		setRecipeText();
@@ -170,25 +177,34 @@ namespace SwarmEngine
 		return Math.Round(d * 100.0) / 100.0;
 	}
 
-	public List<Individual> createPopulation(int width, int height) 
+    public List<Species> createPopulation(int width, int height)
     {
-		if (parameters == null)
-			return null;
+        if (parameters == null)
+            return null;
 
-		List<Individual> newPopulation = new List<Individual>();
-		Parameters tempParam;
+        List<Species> newListSpecies = new List<Species>();
+        Parameters tempParam;
 
-		for (int i = 0; i < parameters.Count; i++) {
-			tempParam = parameters[i];
-			for (int j = 0; j < popCounts[i]; j++)
-				newPopulation.Add(new Individual(rand.NextDouble() * width,
+        for (int i = 0; i < parameters.Count; i++)
+        {
+            tempParam = parameters[i];
+            var spcs = new Species(new List<Individual>());
+            for (int j = 0; j < popCounts[i]; j++)
+            {
+                
+                spcs.Add(new Individual(rand.NextDouble() * width,
                         rand.NextDouble() * height, rand.NextDouble() * 10 - 5,
                         rand.NextDouble() * 10 - 5, new Parameters(
-								tempParam)));
-		}
+                                tempParam)));
+
+            }
+            newListSpecies.Add(spcs);
+            
+            
+        }
         mutate();
-		return newPopulation;
-	}
+        return newListSpecies;
+    }
 	 
 	public bool mutate() {
 		bool mutated = false;

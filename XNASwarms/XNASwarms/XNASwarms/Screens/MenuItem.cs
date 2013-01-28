@@ -23,6 +23,8 @@ namespace ScreenSystem.ScreenSystem
         Disabled,
         Stable,
         Debugger,
+        ZoomIn,
+        ZoomOut,
     }
 
     /// <summary>
@@ -224,6 +226,16 @@ namespace ScreenSystem.ScreenSystem
         internal bool IsDebugger()
         {
             return _type == EntryType.Debugger;
+        }
+
+        internal bool IsZoomIn()
+        {
+            return _type == EntryType.ZoomIn;
+        }
+
+        internal bool IsZoomOut()
+        {
+            return _type == EntryType.ZoomOut;
         }
 
         #endregion

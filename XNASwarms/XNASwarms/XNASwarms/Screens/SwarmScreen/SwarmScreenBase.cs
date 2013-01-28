@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using ScreenSystem.ScreenSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
-#if Surface
+#if WINDOWS
 using Microsoft.Surface.Core;
 #endif
 using Microsoft.Xna.Framework.Input;
@@ -44,10 +44,7 @@ namespace XNASwarms
             recipes = new Recipe[1];
             recipes[0] = new Recipe(recipe);
             populationSimulator = new PopulationSimulator(0, 0, recipes);
-            if (Mutate)
-            {
-                DoMutation();
-            }
+            
         }
 
         public override void LoadContent()
@@ -64,25 +61,42 @@ namespace XNASwarms
             Supers = new Dictionary<int, Individual>();
             rand = new Random();
 
-            debugScreen.AddDebugItem("RESOLUTION", width.ToString() + "x" + height.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             Border = new Border(this, WallFactory.FourPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
-            debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), ScreenSystem.Debug.DebugFlagType.Important);
-
-           
             
             Supers.Add(0, new Individual());
 
             base.LoadContent();
-            debugScreen.AddDebugItem("RECIPE", populationSimulator.getPopulation().get(0).getGenome().getRecipe(), ScreenSystem.Debug.DebugFlagType.Important);
+            if (Mutate)
+            {
+                DoMutation();
+            }
+
+            //List<Individual> things = populationSimulator.getSwarmSortedBySpecies();
+            for (int i = 0; i < populationSimulator.getPopulation().Count(); i++)
+            {
+                debugScreen.AddDebugItem("GENOME " + i.ToString("00") + " COUNT", populationSimulator.getPopulation()[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Normal);
+                debugScreen.AddDebugItem("GENOME " + i.ToString("00"), populationSimulator.getPopulation()[i].First().getGenome().getRecipe(), ScreenSystem.Debug.DebugFlagType.Normal);
+                
+            }
+            debugScreen.AddDebugItem("SPECIES COUNT ", populationSimulator.getPopulation().Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+            debugScreen.AddDebugItem("RESOLUTION", width.ToString() + "x" + height.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+            debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), ScreenSystem.Debug.DebugFlagType.Important);
+            
+            debugScreen.AddSpacer();
         }
 
         private void DoMutation()
         {
-            foreach (Individual ind in populationSimulator.getPopulation())
+            foreach (Species spcs in populationSimulator.getPopulation())
             {
-                ind.getGenome().inducePointMutations(rand.NextDouble(), 2);
-                //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
+                foreach(Individual indvdl in spcs)
+                {
+                    indvdl.getGenome().inducePointMutations(rand.NextDouble(), 2);
+                    //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
+                }
             }
+            populationSimulator.DetermineSpecies();
+
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
@@ -174,26 +188,9 @@ namespace XNASwarms
                         //    gesture.Delta, gesture.Delta2, spritePos, scaleFactor);
                         Camera.Zoom *= scaleFactor;
                         //spritePos += panDelta;
-
-                        // Or, rather than doing it manually, you can just call ApplyPinchZoom instead which does the
-                        // above work for you.
-                        /*PinchZoom.ApplyPinchZoom(gesture, ref spritePos, ref spriteScale);*/
                         break;
                 }
             }
-
-            //for(int i = 0; i < 45; i ++)
-            //{
-            //    var pos = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(40*i,10));
-            //    var posb = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(40 * i,920));
-            //    var pos1 = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(10, 40*i));
-            //    var pos1b = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(1665, 40 * i));
-
-            //    Supers.Add(Supers.Count, new Individual(pos.X, pos.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
-            //    Supers.Add(Supers.Count, new Individual(posb.X, posb.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
-            //    Supers.Add(Supers.Count, new Individual(pos1.X, pos1.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
-            //    Supers.Add(Supers.Count, new Individual(pos1b.X, pos1b.Y, 0, 0, new Parameters(0, 0, 0, 0, 0, 100, 0, 1)));
-            //}
 
             ButtonSection.HandleInput(input, gameTime);
 

@@ -83,7 +83,7 @@ namespace XNASwarms
             {
                 if (_positionTracking)
                 {
-                    _targetPosition = new Vector2((float)_trackingBody.get(0).getX(), (float)_trackingBody.get(0).getY());
+                    _targetPosition = new Vector2((float)_trackingBody.get(0).get(0).getX(), (float)_trackingBody.get(0).get(0).getY());
                     if (_minPosition != _maxPosition)
                     {
                         Vector2.Clamp(ref _targetPosition, ref _minPosition, ref _maxPosition, out _targetPosition);

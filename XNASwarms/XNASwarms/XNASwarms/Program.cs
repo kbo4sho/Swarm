@@ -14,11 +14,7 @@ namespace XNASwarms
         [STAThread]
         static void Main(string[] args)
         {
-            // Disable the WinForms unhandled exception dialog.
-            // SurfaceShell will notify the user.
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
-
-            // Apply Surface globalization settings
             GlobalizationSettings.ApplyToCurrentThread();
 
             using (App1 app = new App1())
@@ -27,123 +23,123 @@ namespace XNASwarms
             }
         }
 
-        /// <summary>
-        /// Gets the size of the main window.
-        /// </summary>
-        internal static Size WindowSize
-        {
-            get
-            {
-                return ((Form)Form.FromHandle(Window.Handle)).DesktopBounds.Size;
-            }
-        }
+        ///// <summary>
+        ///// Gets the size of the main window.
+        ///// </summary>
+        //internal static Size WindowSize
+        //{
+        //    get
+        //    {
+        //        return ((Form)Form.FromHandle(Window.Handle)).DesktopBounds.Size;
+        //    }
+        //}
 
-        /// <summary>
-        /// Position and adorn the Window appropriately.
-        /// </summary>
-        /// <param name="window"></param>
-        internal static void InitializeWindow(GameWindow window, bool testing)
-        {
-            if (window == null)
-            {
-                throw new ArgumentNullException("window");
-            }
+        ///// <summary>
+        ///// Position and adorn the Window appropriately.
+        ///// </summary>
+        ///// <param name="window"></param>
+        //internal static void InitializeWindow(GameWindow window, bool testing)
+        //{
+        //    if (window == null)
+        //    {
+        //        throw new ArgumentNullException("window");
+        //    }
 
-            Window = window;
+        //    Window = window;
 
-            Form form = (Form)Form.FromHandle(Window.Handle);
-            form.LocationChanged += OnFormLocationChanged;
+        //    //Form form = (Form)Form.FromHandle(Window.Handle);
+        //    //form.LocationChanged += OnFormLocationChanged;
 
-            SetWindowStyle();
-            if (testing)
-            {
-                SetTestingWindow();
-            }
-            else
-            {
-                SetWindowSize();
-            }
-        }
+        //    SetWindowStyle();
+        //    if (testing)
+        //    {
+        //        SetTestingWindow();
+        //    }
+        //    else
+        //    {
+        //        SetWindowSize();
+        //    }
+        //}
 
-        /// <summary>
-        /// Respond to changes in the form location, adjust if necessary.
-        /// </summary>
-        private static void OnFormLocationChanged(object sender, EventArgs e)
-        {
-            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
-            {
-                Form form = (Form)Form.FromHandle(Window.Handle);
-                form.LocationChanged -= OnFormLocationChanged;
-                PositionWindow();
-                form.LocationChanged += OnFormLocationChanged;
-            }
-        }
+        ///// <summary>
+        ///// Respond to changes in the form location, adjust if necessary.
+        ///// </summary>
+        //private static void OnFormLocationChanged(object sender, EventArgs e)
+        //{
+        //    if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+        //    {
+        //        Form form = (Form)Form.FromHandle(Window.Handle);
+        //        form.LocationChanged -= OnFormLocationChanged;
+        //        PositionWindow();
+        //        form.LocationChanged += OnFormLocationChanged;
+        //    }
+        //}
 
-        /// <summary>
-        /// Position and size the window to the primary device.
-        /// </summary>
-        internal static void PositionWindow()
-        {
-            int left = (InteractiveSurface.PrimarySurfaceDevice != null)
-                            ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaLeft
-                            : Screen.PrimaryScreen.WorkingArea.Left;
-            int top = (InteractiveSurface.PrimarySurfaceDevice != null)
-                            ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaTop
-                            : Screen.PrimaryScreen.WorkingArea.Top;
+        ///// <summary>
+        ///// Position and size the window to the primary device.
+        ///// </summary>
+        //internal static void PositionWindow()
+        //{
+        //    int left = (InteractiveSurface.PrimarySurfaceDevice != null)
+        //                    ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaLeft
+        //                    : Screen.PrimaryScreen.WorkingArea.Left;
+        //    int top = (InteractiveSurface.PrimarySurfaceDevice != null)
+        //                    ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaTop
+        //                    : Screen.PrimaryScreen.WorkingArea.Top;
 
-            Form form = (Form)Form.FromHandle(Window.Handle);
-            FormWindowState windowState = form.WindowState;
-            form.WindowState = FormWindowState.Normal;
-            form.Location = new System.Drawing.Point(left, top);
-            form.WindowState = windowState;
-        }
+        //    Form form = (Form)Form.FromHandle(Window.Handle);
+        //    FormWindowState windowState = form.WindowState;
+        //    form.WindowState = FormWindowState.Normal;
+        //    form.Location = new System.Drawing.Point(left, top);
+        //    form.WindowState = windowState;
+        //}
 
-        /// <summary>
-        /// Set the window's style based on the availability of the Surface environment.
-        /// </summary>
-        private static void SetWindowStyle()
-        {
-            Window.AllowUserResizing = true;
-            Form form = (Form)Form.FromHandle(Window.Handle);
-            form.FormBorderStyle = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
-                                    ? FormBorderStyle.None
-                                    : FormBorderStyle.Sizable;
-        }
+        ///// <summary>
+        ///// Set the window's style based on the availability of the Surface environment.
+        ///// </summary>
+        //private static void SetWindowStyle()
+        //{
+        //    Window.AllowUserResizing = true;
+        //    Form form = (Form)Form.FromHandle(Window.Handle);
+        //    form.FormBorderStyle = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+        //                            ? FormBorderStyle.None
+        //                            : FormBorderStyle.Sizable;
+        //}
 
 
-        /// <summary>
-        /// Size the window to testing size.
-        /// </summary>
-        private static void SetTestingWindow()
-        {
-            int width = 800;
-            int height = 600;
+        ///// <summary>
+        ///// Size the window to testing size.
+        ///// </summary>
+        //private static void SetTestingWindow()
+        //{
+        //    int width = 800;
+        //    int height = 600;
 
-            Form form = (Form)Form.FromHandle(Window.Handle);
-            form.ClientSize = new Size(width, height);
-            form.WindowState = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
-                            ? FormWindowState.Normal
-                            : FormWindowState.Maximized;
-        }
+        //    Form form = (Form)Form.FromHandle(Window.Handle);
+        //    form.ClientSize = new Size(width, height);
+        //    form.WindowState = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+        //                    ? FormWindowState.Normal
+        //                    : FormWindowState.Maximized;
+        //}
 
-        /// <summary>
-        /// Size the window to the primary device.
-        /// </summary>
-        private static void SetWindowSize()
-        {
-            int width = (InteractiveSurface.PrimarySurfaceDevice != null)
-                            ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaWidth
-                            : Screen.PrimaryScreen.WorkingArea.Width;
-            int height = (InteractiveSurface.PrimarySurfaceDevice != null)
-                            ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaHeight
-                            : Screen.PrimaryScreen.WorkingArea.Height;
+        ///// <summary>
+        ///// Size the window to the primary device.
+        ///// </summary>
+        //private static void SetWindowSize()
+        //{
+        //    int width = (InteractiveSurface.PrimarySurfaceDevice != null)
+        //                    ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaWidth
+        //                    : Screen.PrimaryScreen.WorkingArea.Width;
+        //    int height = (InteractiveSurface.PrimarySurfaceDevice != null)
+        //                    ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaHeight
+        //                    : Screen.PrimaryScreen.WorkingArea.Height;
 
-            Form form = (Form)Form.FromHandle(Window.Handle);
-            form.ClientSize = new Size(width, height);
-            form.WindowState = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
-                            ? FormWindowState.Normal
-                            : FormWindowState.Maximized;
-        }
+        //    Form form = (Form)Form.FromHandle(Window.Handle);
+        //    form.ClientSize = new Size(width, height);
+        //    form.WindowState = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+        //                    ? FormWindowState.Normal
+        //                    : FormWindowState.Maximized;
+        //}
     }
 }
 

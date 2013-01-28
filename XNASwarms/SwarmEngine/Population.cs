@@ -29,14 +29,14 @@ import java.util.*;*/
 
 namespace SwarmEngine
 {
-    public class Population : List<Individual>
+    public class Population : List<Species>
     {
         private static double maxStartingVelocity = 5;
-        private List<Individual> population;
+        private List<Species> speciesPopulation;
         private String title;
         Random rand = new Random();
 
-        public Population(List<Individual> pop, String t)
+        public Population(List<Species> pop, String t)
         { 
             //population = pop;
             this.AddRange(pop);
@@ -49,7 +49,7 @@ namespace SwarmEngine
 
             Parameters ancestorGenome = new Parameters();
 
-            population = new List<Individual>();
+            speciesPopulation = new List<Species>();
             for (int i = 0; i < n; i++)
             {
                 Individual ind = new Individual(rand.NextDouble() * width, rand.NextDouble()
@@ -59,69 +59,80 @@ namespace SwarmEngine
             }
         }
 
-        public Population(Population a, int width, int height, String t)
+        //public Population(Population a, int width, int height, String t)
+        //{
+        //    title = t;
+
+        //    population = new List<Species>();
+        //    foreach (Species temp in a.population) //was  for(Individual temp: a)
+        //    {
+        //        foreach (Individual ind in temp)
+        //        {
+        //            population.Add(new Individual(rand.NextDouble() * width, rand.NextDouble()
+        //                    * height, randomVelocity(), randomVelocity(),
+        //                    new Parameters(temp.getGenome())));
+        //        }
+        //    }
+        //}
+
+        //public Population(Population a, Population b, double rate,
+        //        int width, int height, String t)
+        //{
+        //    title = t;
+
+        //    population = new List<Species>();
+        //    for (int i = 0; i < (a.size() + b.size()) / 2; i++)
+        //    {
+        //        Population source;
+        //        if (rand.NextDouble() < rate)
+        //            source = a;
+        //        else
+        //            source = b;
+        //        Species temp = source.get((int)(rand.NextDouble() * source.size()));
+        //        population.Add(new Individual(rand.NextDouble() * width, rand.NextDouble()
+        //                * height, randomVelocity(), randomVelocity(),
+        //                new Parameters(temp.getGenome())));
+        //    }
+        //}
+
+        private double randomVelocity()
         {
-            title = t;
-
-            population = new List<Individual>();
-            foreach (Individual temp in a.population) //was  for(Individual temp: a)
-            {
-                population.Add(new Individual(rand.NextDouble() * width, rand.NextDouble()
-                        * height, randomVelocity(), randomVelocity(),
-                        new Parameters(temp.getGenome())));
-            }
-        }
-
-        public Population(Population a, Population b, double rate,
-                int width, int height, String t)
-        {
-            title = t;
-
-            population = new List<Individual>();
-            for (int i = 0; i < (a.size() + b.size()) / 2; i++)
-            {
-                Population source;
-                if (rand.NextDouble() < rate)
-                    source = a;
-                else
-                    source = b;
-                Individual temp = source.get((int)(rand.NextDouble() * source.size()));
-                population.Add(new Individual(rand.NextDouble() * width, rand.NextDouble()
-                        * height, randomVelocity(), randomVelocity(),
-                        new Parameters(temp.getGenome())));
-            }
-        }
-
-        public static double randomVelocity()
-        {
-            Random rand = new Random();
-
             return rand.NextDouble() * (maxStartingVelocity * 2) - maxStartingVelocity;
         }
 
-        public void perturb(double pcm, int spaceSize)
-        {
-            Random rand = new Random();
-            int pop = population.Count();
-            pop += (int)((rand.NextDouble() * 2.0 - 1.0) * pcm * (double)pop);
-            if (pop < 1)
-                pop = 1;
-            if (pop > Parameters.numberOfIndividualsMax)
-                pop = Parameters.numberOfIndividualsMax;
+        //public void perturb(double pcm, int spaceSize)
+        //{
+        //    int speciesCount = population.Count();
+        //    speciesCount += (int)((rand.NextDouble() * 2.0 - 1.0) * pcm * (double)speciesCount);
+           
+        //    if (speciesCount < 1)
+        //    {
+        //        speciesCount = 1;
+        //    }
+        //    if (speciesCount > Parameters.numberOfIndividualsMax)
+        //    {
+        //        speciesCount = Parameters.numberOfIndividualsMax;
+        //    }
 
-            List<Individual> newPopulation = new List<Individual>();
-            Parameters tempParam;
-            for (int i = 0; i < pop; i++)
-            {
-                tempParam = new Parameters(population
-                        [(int)(rand.NextDouble() * population.Count())].getGenome());
-                newPopulation.Add(new Individual(rand.NextDouble() * spaceSize,
-                        rand.NextDouble() * spaceSize, randomVelocity(), randomVelocity(), tempParam));
-            }
-            population = newPopulation;
-        }
+        //    List<Species> newPopulation = new List<Species>();
+        //    Parameters tempParam;
+        //    for (int i = 0; i < speciesCount; i++)
+        //    {
+        //        tempParam = new Parameters(population
+        //                [(int)(rand.NextDouble() * population.Count())][(int)(rand.NextDouble() * population.Count())].getGenome());
 
+        //        foreach(Species spcs in population)
+        //        {
+        //            Species newSpecies = new Species(rand.NextDouble() * spaceSize, rand.NextDouble() * spaceSize, randomVelocity(), randomVelocity(), tempParam);
+        //            foreach(Individual in spc
+        //            newPopulation.Add();
+        //        }
+                
+        //    }
+        //    population = newPopulation;
+        //}
 
+    
         //public Iterator<Individual> iterator() {
         //    return Collections.unmodifiableCollection(population).iterator();
         //} ************************* What is this?
@@ -134,7 +145,7 @@ namespace SwarmEngine
         }
 
 
-        public Individual get(int index)
+        public Species get(int index)
         {
             return this[index];
         }
@@ -148,5 +159,10 @@ namespace SwarmEngine
         {
             this.title = title;
         }
+
+        //public Species GetIndividuals()
+        //{
+            
+        //}
     }
 }

@@ -48,14 +48,14 @@ namespace XNASwarms.Borders
                     //Right
                     Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Right).First();
                     HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
-                    debugScreen.AddDebugItem("BORDER RIGHT", currentInd.getX().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
+                    //debugScreen.AddDebugItem("BORDER RIGHT", currentInd.getX().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
                 }
                 else if (currentX < -rightBound)
                 {
                     //Left
                     Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Left).First();
                     HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
-                    debugScreen.AddDebugItem("BORDER LEFT", currentInd.getX().ToString());
+                    //debugScreen.AddDebugItem("BORDER LEFT", currentInd.getX().ToString());
 
                 }
 
