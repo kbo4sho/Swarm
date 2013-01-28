@@ -74,8 +74,8 @@ namespace XNASwarms
             //List<Individual> things = populationSimulator.getSwarmSortedBySpecies();
             for (int i = 0; i < populationSimulator.getPopulation().Count(); i++)
             {
-                debugScreen.AddDebugItem("SPECIES " + i.ToString("00") + " COUNT", populationSimulator.getPopulation()[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Normal);
-                debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.getPopulation()[i].First().getGenome().getRecipe(), ScreenSystem.Debug.DebugFlagType.Normal);
+                debugScreen.AddDebugItem("SPECIES " + i.ToString("00") + " COUNT", populationSimulator.getPopulation()[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
+                debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.getPopulation()[i].First().getGenome().getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
                 
             }
             debugScreen.AddDebugItem("SPECIES COUNT ", populationSimulator.getPopulation().Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);

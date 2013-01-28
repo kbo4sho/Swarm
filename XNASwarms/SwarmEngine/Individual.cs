@@ -106,14 +106,14 @@ namespace SwarmEngine
         public void TravelThroughXWall()
         {
             x = -x;
-            dx = -dx * 400;
-            dx2 = dx2 * 400;
+            dx = -dx;
+            dx2 = dx2 * 100;
         }
         public void TravelThroughYWall()
         {
             y = -y;
-            dy = -dy * 400;
-            dy2 = dy2 * 400;
+            dy = -dy;
+            dy2 = dy2 * 100;
         }
 
         public void BounceXWall()
