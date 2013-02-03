@@ -233,7 +233,7 @@ namespace ScreenSystem.ScreenSystem
                 touches = TouchTarget.GetState();
                 if (touches.Count > 0)
                 {
-                    _currentMouseState = new MouseState((int)touches[0].X, (int)touches[0].Y, 0, ButtonState.Pressed, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
+                    //_currentMouseState = new MouseState((int)touches[0].X, (int)touches[0].Y, 0, ButtonState.Pressed, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
                 }
             }
 

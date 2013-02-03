@@ -134,7 +134,6 @@ namespace XNASwarms
             
             Supers.Clear();
             
-#if Surface
             var surfacetouches = input.SurfaceTouches;
             if (surfacetouches.Count > 0)
             {
@@ -147,9 +146,8 @@ namespace XNASwarms
                          ((double)position.Y),
                          0.0, 0.0, new Parameters());
                 }
-            }else 
-#endif
-            if (input.Touches.Count > 0)
+            }
+            else if (input.Touches.Count > 0)
             {
                 //Everthing else touch
                 for (int i = 0; i < input.Touches.Count; i++)
@@ -174,23 +172,23 @@ namespace XNASwarms
                          0,0, new Parameters());
                 }
             }
-            TouchPanel.EnabledGestures = GestureType.Pinch;
-            while (TouchPanel.IsGestureAvailable)
-            {
-                GestureSample gesture = TouchPanel.ReadGesture();
+            //TouchPanel.EnabledGestures = GestureType.Pinch;
+            //while (TouchPanel.IsGestureAvailable)
+            //{
+            //    GestureSample gesture = TouchPanel.ReadGesture();
 
-                switch (gesture.GestureType)
-                {
-                    case GestureType.Pinch:
-                        float scaleFactor = PinchZoom.GetScaleFactor(gesture.Position, gesture.Position2,
-                            gesture.Delta, gesture.Delta2);
-                        //Vector2 panDelta = PinchZoom.GetTranslationDelta(gesture.Position, gesture.Position2,
-                        //    gesture.Delta, gesture.Delta2, spritePos, scaleFactor);
-                        Camera.Zoom *= scaleFactor;
-                        //spritePos += panDelta;
-                        break;
-                }
-            }
+            //    switch (gesture.GestureType)
+            //    {
+            //        case GestureType.Pinch:
+            //            float scaleFactor = PinchZoom.GetScaleFactor(gesture.Position, gesture.Position2,
+            //                gesture.Delta, gesture.Delta2);
+            //            //Vector2 panDelta = PinchZoom.GetTranslationDelta(gesture.Position, gesture.Position2,
+            //            //    gesture.Delta, gesture.Delta2, spritePos, scaleFactor);
+            //            Camera.Zoom *= scaleFactor;
+            //            //spritePos += panDelta;
+            //            break;
+            //    }
+            //}
 
             ButtonSection.HandleInput(input, gameTime);
 
