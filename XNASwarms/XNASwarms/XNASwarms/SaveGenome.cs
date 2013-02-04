@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using SwarmEngine;
 
 namespace XNASwarms
 {
@@ -20,6 +22,12 @@ namespace XNASwarms
         public SaveGenome()
         {
 
+        }
+
+        public Color getDisplayColor()
+        {
+            return new Color((float)(c1 / Parameters.c1Max * 0.8),
+                    (float)(c2 / Parameters.c2Max * 0.8), (float)(c3 / Parameters.c3Max * 0.8));
         }
     }
 }

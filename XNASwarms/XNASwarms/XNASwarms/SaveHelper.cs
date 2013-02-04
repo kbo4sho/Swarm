@@ -31,7 +31,9 @@ namespace XNASwarms
             {
                 Stream stream = File.OpenRead(filename + ".xml");
                 XmlSerializer serializer = new XmlSerializer(typeof(SaveAllSpecies));
-                return (SaveAllSpecies)serializer.Deserialize(stream);
+                var item = (SaveAllSpecies)serializer.Deserialize(stream);
+                stream.Close();
+                return item;
             }
             catch
             {

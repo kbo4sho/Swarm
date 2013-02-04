@@ -129,7 +129,7 @@
     <Compile Include="App1.cs" />
     <Compile Include="Screens\ButtonSection.cs" />
     <Compile Include="Screens\ControlScreen.cs" />
-    <Compile Include="Screens\SavedSwarm.cs" />
+    <Compile Include="Screens\SavedSwarmButton.cs" />
     <Compile Include="Screens\SwarmsCamera.cs" />
     <Compile Include="Screens\SwarmScreen\SwarmScreen1.cs" />
     <Compile Include="Screens\SwarmScreen\SwarmScreenBase.cs" />

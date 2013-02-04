@@ -17,7 +17,7 @@ namespace XNASwarms
         private Population GetPopulationFromSaveSpecies(SaveSpecies savespecies)
         {
             List<Species> species = new List<Species>();
-            foreach (List<SaveGenome> genome in savespecies)
+            foreach (List<SaveGenome> genome in savespecies.SavedSpecies)
             {
                 species.Add(GetIndividualsFromSaveGenome(genome));
             }

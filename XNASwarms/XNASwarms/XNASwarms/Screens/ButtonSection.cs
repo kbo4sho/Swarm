@@ -50,7 +50,7 @@ namespace XNASwarms
             AddMenuItem("Stable", EntryType.Stable, _screen);
             //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
             //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
-            AddMenuItem("Console", EntryType.Debugger, _screen);
+            //AddMenuItem("Console", EntryType.Debugger, _screen);
             AddMenuItem("Save", EntryType.Save, _screen);
             
         }
@@ -115,19 +115,24 @@ namespace XNASwarms
         private void LoadSavedSwarms()
         {
             SaveAllSpecies allSaved = SaveHelper.Load("AllSaved");
+            //var olditems = menuEntries.OfType<SavedSwarm>();
+            menuEntries.RemoveAll(s => s.GetType() == typeof(SavedSwarmButton));
             if (allSaved != null)
             {
                 if (allSaved.Count == 1)
                 {
-                    AddSavedSwarm("1", EntryType.Recall1, null);
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1,allSaved[0].GetMostUsedColors(), null);
                 }
                 else if (allSaved.Count == 2)
                 {
-                    AddSavedSwarm("2", EntryType.Recall2, null);
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
                 }
                 else if (allSaved.Count == 3)
                 {
-                    AddSavedSwarm("3", EntryType.Recall2, null);
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), null);
                 }
                 
             }
@@ -152,22 +157,13 @@ namespace XNASwarms
                     SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
                     allSaved.Add(savespecies);
                     SaveHelper.Save("AllSaved", allSaved);
-                    AddSavedSwarm("2", EntryType.Recall2, null);
                 }
                 else if (allSaved.Count == 2)
                 {
                     SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
                     allSaved.Add(savespecies);
                     SaveHelper.Save("AllSaved", allSaved);
-                    AddSavedSwarm("3", EntryType.Recall3, null);
                 }
-                //else if (allSaved.Count == 3)
-                //{
-                //    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
-                //    allSaved.Add(savespecies);
-                //    SaveHelper.Save("AllSaved", allSaved);
-                //    AddSavedSwarm("3", EntryType.Recall2, null);
-                //}
             }
             else
             {
@@ -175,25 +171,7 @@ namespace XNASwarms
                 SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
                 allSaved.Add(savespecies);
                 SaveHelper.Save("AllSaved", allSaved);
-                AddSavedSwarm("1", EntryType.Recall1, null);
             }
-            //SaveSpecies secondSaved = SaveHelper.Load("Second");
-            //if (secondSaved == null && menuEntries.Where(m => m.Text == "Second").Count() == 0)
-            //{
-            //    SaveHelper.Save("Second", _screen.GetPopulationAsSaveSpecies());
-            //    return;
-            //}
-
-            //SaveSpecies thirdSaved = SaveHelper.Load("Third");
-            //if (thirdSaved == null && menuEntries.Where(m => m.Text == "Third").Count() == 0)
-            //{
-            //    SaveHelper.Save("Third", _screen.GetPopulationAsSaveSpecies());
-            //    return;
-            //}
-
-            //List<SaveSpecies> saveSpecies = new List<SaveSpecies>() { firstSaved, secondSaved, thirdSaved };
-            //SaveSpecies oldestSpecies = saveSpecies.OrderBy(s => s.CreadtedDt).First();
-
         }
 
         public void AddMenuItem(string name, EntryType type, ControlScreen screen)
@@ -202,9 +180,9 @@ namespace XNASwarms
             menuEntries.Add(entry);
         }
 
-        public void AddSavedSwarm(string name, EntryType type, ControlScreen screen)
+        public void AddSavedSwarm(string name, EntryType type, List<Color> colors, ControlScreen screen)
         {
-            SavedSwarm entry = new SavedSwarm(_screen, name, type, screen, _bgSprite);
+            SavedSwarmButton entry = new SavedSwarmButton(_screen, name, type, colors, screen, _bgSprite);
             entry.Initialize();
             menuEntries.Add(entry);
         }
@@ -284,6 +262,7 @@ namespace XNASwarms
                     else if (menuEntries[_selectedEntry].IsSave())
                     {
                         SaveSwarm();
+                        LoadSavedSwarms();
                     }
                     else if (menuEntries[_selectedEntry].IsRecall1())
                     {
@@ -298,7 +277,7 @@ namespace XNASwarms
                     else if (menuEntries[_selectedEntry].IsRecall2())
                     {
 
-                        SaveAllSpecies saveSpecies = SaveHelper.Load("Second");
+                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[1]));
@@ -308,7 +287,7 @@ namespace XNASwarms
                     else if (menuEntries[_selectedEntry].IsRecall3())
                     {
 
-                        SaveAllSpecies saveSpecies = SaveHelper.Load("Third");
+                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[2]));

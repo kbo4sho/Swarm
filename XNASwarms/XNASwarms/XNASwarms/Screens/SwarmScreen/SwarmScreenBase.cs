@@ -181,7 +181,7 @@ namespace XNASwarms
             saveSpecies.CreadtedDt = DateTime.Now;
             foreach (Species species in populationSimulator.getPopulation())
             {
-                saveSpecies.Add(GetSavedGenomes(species));
+                saveSpecies.SavedSpecies.Add(GetSavedGenomes(species));
             }
             return saveSpecies;
         }
