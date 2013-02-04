@@ -8,46 +8,15 @@ using SwarmEngine;
 
 namespace XNASwarms
 {
-    class SwarmScreen1 : SwarmScreenBase
+    class SwarmScreen1 : SwarmScreenDrawScreen
     {
-        Texture2D swarmIndividual;
-
         public SwarmScreen1(string recipe, bool mutate)
-            : base(recipe, mutate)
+            : base(mutate)
         {
-            
+            Recipe[] recipes = new Recipe[1];
+            recipes[0] = new Recipe(recipe);
+            populationSimulator = new PopulationSimulator(0, 0, recipes);
         }
-
-        public override void LoadContent()
-        {            
-            swarmIndividual = ScreenManager.Content.Load<Texture2D>("bee");
-            base.LoadContent();
-        }
-
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
-        {
-            ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
-            base.Draw(gameTime);
-            Population population = populationSimulator.getPopulation();
-
-            foreach(Species spcs in population)
-            {
-                foreach(Individual indvd in spcs)
-                {
-                    ScreenManager.SpriteBatch.Draw(swarmIndividual, new Rectangle(
-                        (int)indvd.getX(),
-                        (int)indvd.getY(), 5, 5),
-                        null,
-                        indvd.getDisplayColor(),
-                        0f,
-                        new Vector2(0, 0),
-                        SpriteEffects.None, 0);
-                }
-            }
-
-            
-            ScreenManager.SpriteBatch.End();
-            
-        }
+        
     }
 }

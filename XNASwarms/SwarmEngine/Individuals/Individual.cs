@@ -6,14 +6,17 @@ using System.Text;
 using Microsoft.Surface.Core;
 #endif
 using Microsoft.Xna.Framework;
+using System.Xml.Serialization;
 
 namespace SwarmEngine
 {
+    [Serializable]
+    [XmlInclude(typeof(Parameters))]
      public class Individual: IContainable
      {
 
         private double x, y, dx, dy, dx2, dy2;
-	    private Parameters genome;
+	    public Parameters genome;
 	    private int rankInXOrder, rankInYOrder;
 
         public Individual() :  this(0.0, 0.0, 0.0, 0.0, new Parameters())

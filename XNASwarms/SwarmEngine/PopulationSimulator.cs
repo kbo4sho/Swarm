@@ -15,9 +15,29 @@ namespace SwarmEngine
                 swarmInYOrder;
 
         #region Constuctor
-        public PopulationSimulator(Population newPopulation)
+        //public PopulationSimulator(Population newPopulation)
+        //{
+        //    population = newPopulation;
+
+        //    swarmInBirthOrder = new List<Individual>(population.size());
+        //    swarmInXOrder = new List<Individual>(population.size());
+        //    swarmInYOrder = new List<Individual>(population.size());
+
+        //    for (int i = 0; i < population.Count; i++)
+        //    {
+        //        for (int j = 0; j < population[i].Count; j++)
+        //        {
+
+        //            addIndividual(population[i][j]);
+        //        }
+
+        //    }
+        //}
+
+        public PopulationSimulator(int width, int height, params Recipe[] recipes)
         {
-            population = newPopulation;
+
+            population = new Population(recipes[0].createPopulation(width, height), "CrumpulaAtion");
 
             swarmInBirthOrder = new List<Individual>(population.size());
             swarmInXOrder = new List<Individual>(population.size());
@@ -27,20 +47,16 @@ namespace SwarmEngine
             {
                 for (int j = 0; j < population[i].Count; j++)
                 {
-
                     addIndividual(population[i][j]);
                 }
 
             }
+
         }
 
-        public PopulationSimulator(int width, int height, params Recipe[] recipes)
+        public PopulationSimulator(int width, int height, Population pop)
         {
-
-            population = new Population(recipes[0].createPopulation(width, height), "CrumpulaAtion");
-
-            //Population pop1 = new Population(recipes[1].createPopulation(width, height), "Crumpulation");
-            //population = new Population(pop, pop1, 1, 10, 10, "CrumpulatTion");
+            population = pop;
 
             swarmInBirthOrder = new List<Individual>(population.size());
             swarmInXOrder = new List<Individual>(population.size());

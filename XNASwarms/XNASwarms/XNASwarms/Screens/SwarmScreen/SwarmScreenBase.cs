@@ -19,11 +19,10 @@ using ScreenSystem.Debug;
 
 namespace XNASwarms
 {
-    class SwarmScreenBase : ControlScreen
+    public class SwarmScreenBase : ControlScreen
     {
-        protected Recipe[] recipes;
         protected PopulationSimulator populationSimulator;
-        Random rand;
+        
         Dictionary<int, Individual> Supers;
         public int width, height;
         Texture2D superAgentTexture;
@@ -32,25 +31,18 @@ namespace XNASwarms
         private int FramesPerSec;
         private IDebugScreen debugScreen;
         private string Recipe;
-        private bool Mutate;
+        
 
-        public SwarmScreenBase(string recipe, bool mutate)
+        public SwarmScreenBase()
         {
             FramesPerSec = 14;
             TimePerFrame = (float)1 / FramesPerSec;
-            Recipe = recipe;
-            Mutate = mutate;
-            rand = new Random();
-            recipes = new Recipe[1];
-            recipes[0] = new Recipe(recipe);
-            populationSimulator = new PopulationSimulator(0, 0, recipes);
-            
+            ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
         }
 
         public override void LoadContent()
         {
             debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
-            
 
             width = ScreenManager.GraphicsDevice.Viewport.Width;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
@@ -59,19 +51,13 @@ namespace XNASwarms
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             
             Supers = new Dictionary<int, Individual>();
-            rand = new Random();
 
             Border = new Border(this, WallFactory.FourPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
             
             Supers.Add(0, new Individual());
 
             base.LoadContent();
-            if (Mutate)
-            {
-                DoMutation();
-            }
-
-            //List<Individual> things = populationSimulator.getSwarmSortedBySpecies();
+            
             for (int i = 0; i < populationSimulator.getPopulation().Count(); i++)
             {
                 debugScreen.AddDebugItem("SPECIES " + i.ToString("00") + " COUNT", populationSimulator.getPopulation()[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
@@ -85,19 +71,7 @@ namespace XNASwarms
             debugScreen.AddSpacer();
         }
 
-        private void DoMutation()
-        {
-            foreach (Species spcs in populationSimulator.getPopulation())
-            {
-                foreach(Individual indvdl in spcs)
-                {
-                    indvdl.getGenome().inducePointMutations(rand.NextDouble(), 2);
-                    //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
-                }
-            }
-            populationSimulator.DetermineSpecies();
-
-        }
+        
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
@@ -196,6 +170,45 @@ namespace XNASwarms
             
         }
 
+        public Population GetPopulation()
+        {
+            return populationSimulator.getPopulation();
+        }
+
+        public SaveSpecies GetPopulationAsSaveSpecies()
+        {
+            SaveSpecies saveSpecies = new SaveSpecies();
+            saveSpecies.CreadtedDt = DateTime.Now;
+            foreach (Species species in populationSimulator.getPopulation())
+            {
+                saveSpecies.Add(GetSavedGenomes(species));
+            }
+            return saveSpecies;
+        }
+
+        private List<SaveGenome> GetSavedGenomes(Species species)
+        {
+            List<SaveGenome> savedGenomes = new List<SaveGenome>();
+            foreach (Individual individual in species)
+            {
+                savedGenomes.Add(GetSavedGenomeFromIndividual(individual));
+            }
+            return savedGenomes;
+        }
+
+        private SaveGenome GetSavedGenomeFromIndividual(Individual individual)
+        {
+            SaveGenome savedGenome = new SaveGenome();
+            savedGenome.neighborhoodRadius = individual.genome.getNeighborhoodRadius();
+            savedGenome.normalSpeed = individual.genome.getNormalSpeed();
+            savedGenome.maxSpeed = individual.genome.getMaxSpeed();
+            savedGenome.c1 = individual.genome.getC1();
+            savedGenome.c2 = individual.genome.getC2();
+            savedGenome.c3 = individual.genome.getC3();
+            savedGenome.c4 = individual.genome.getC4();
+            savedGenome.c5 = individual.genome.getC5();
+            return savedGenome;
+        }
         //private void UpdateSupers(ReadOnlyTouchPointCollection touches, InputHelper input)
         //{
          
@@ -209,6 +222,8 @@ namespace XNASwarms
         //             0.0, 0.0, new Parameters());
         //    }
         //}
+
+
 
         
     }

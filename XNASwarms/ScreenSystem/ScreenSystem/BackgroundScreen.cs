@@ -4,11 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ScreenSystem.ScreenSystem
 {
-    /// <summary>
-    /// The background screen sits behind all the other menu screens.
-    /// It draws a background image that remains fixed in place regardless
-    /// of whatever transitions the screens on top of it may be doing.
-    /// </summary>
     public class BackgroundScreen : GameScreen
     {
         private const float LogoScreenHeightRatio = 0.25f;
@@ -20,9 +15,6 @@ namespace ScreenSystem.ScreenSystem
         private Texture2D _logoTexture;
         private Rectangle _viewport;
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
         public BackgroundScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
@@ -40,7 +32,7 @@ namespace ScreenSystem.ScreenSystem
             logoSize.X = _logoTexture.Height;
 
             float border = viewport.Height * LogoScreenBorderRatio;
-            Vector2 logoPosition = new Vector2(viewport.Width - border - logoSize.X,
+            Vector2 logoPosition = new Vector2(logoSize.X,
                                                viewport.Height - border - logoSize.Y*1.25f);
             _logoDestination = new Rectangle((int)logoPosition.X, (int)logoPosition.Y, (int)logoSize.X,
                                              (int)logoSize.Y);
@@ -48,22 +40,11 @@ namespace ScreenSystem.ScreenSystem
 
         }
 
-        /// <summary>
-        /// Updates the background screen. Unlike most screens, this should not
-        /// transition off even if it has been covered by another screen: it is
-        /// supposed to be covered, after all! This overload forces the
-        /// coveredByOtherScreen parameter to false in order to stop the base
-        /// Update method wanting to transition off.
-        /// </summary>
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
-                                    bool coveredByOtherScreen)
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
         }
 
-        /// <summary>
-        /// Draws the background screen.
-        /// </summary>
         public override void Draw(GameTime gameTime)
         {
             ScreenManager.SpriteBatch.Begin();

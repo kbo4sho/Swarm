@@ -97,7 +97,6 @@ namespace SwarmEngine
 		}
 
 		boundPopulationSize();
-		//setFromPopulation(createPopulation(600, 200));
 		return true;
 	}
 
@@ -190,8 +189,7 @@ namespace SwarmEngine
             tempParam = parameters[i];
             var spcs = new Species(new List<Individual>());
             for (int j = 0; j < popCounts[i]; j++)
-            {
-                
+            {                
                 spcs.Add(new Individual(rand.NextDouble() * width,
                         rand.NextDouble() * height, rand.NextDouble() * 10 - 5,
                         rand.NextDouble() * 10 - 5, new Parameters(
@@ -199,65 +197,63 @@ namespace SwarmEngine
 
             }
             newListSpecies.Add(spcs);
-            
-            
         }
-        mutate();
+        //mutate();
         return newListSpecies;
     }
 	 
-	public bool mutate() {
-		bool mutated = false;
-		int numberOfIngredients = parameters.Count();
+    //public bool mutate() {
+    //    bool mutated = false;
+    //    int numberOfIngredients = parameters.Count();
 
-		// Insertions, duplications and deletions
+    //    // Insertions, duplications and deletions
 
-		for (int j = 0; j < numberOfIngredients-1; j++) {
-            if (rand.NextDouble() < duplicationOrDeletionRatePerParameterSets)
-            {
-				if (rand.NextDouble() < .5) { // Duplication
-					mutated = true;
-					parameters[j + 1] = parameters[j];
-					popCounts[j + 1] = popCounts[j];
-					numberOfIngredients++;
-					j++;
-				} else { // Deletion
-					if (numberOfIngredients > 1) {
-						mutated = true;
-						parameters.RemoveAt(j);
-                        popCounts.RemoveAt(j);
-						numberOfIngredients--;
-						j--;
-					}
-				}
-			}
-		}
+    //    for (int j = 0; j < numberOfIngredients-1; j++) {
+    //        if (rand.NextDouble() < duplicationOrDeletionRatePerParameterSets)
+    //        {
+    //            if (rand.NextDouble() < .5) { // Duplication
+    //                mutated = true;
+    //                parameters[j + 1] = parameters[j];
+    //                popCounts[j + 1] = popCounts[j];
+    //                numberOfIngredients++;
+    //                j++;
+    //            } else { // Deletion
+    //                if (numberOfIngredients > 1) {
+    //                    mutated = true;
+    //                    parameters.RemoveAt(j);
+    //                    popCounts.RemoveAt(j);
+    //                    numberOfIngredients--;
+    //                    j--;
+    //                }
+    //            }
+    //        }
+    //    }
 
-        if (rand.NextDouble() < randomAdditionRatePerRecipe)
-        { // Addition
-			mutated = true;
-			parameters.Add(new Parameters());
-            popCounts.Add((int)(rand.NextDouble() * Parameters.numberOfIndividualsMax * 0.5) + 1);
-		}
+    //    if (rand.NextDouble() < randomAdditionRatePerRecipe)
+    //    { // Addition
+    //        mutated = true;
+    //        parameters.Add(new Parameters());
+    //        popCounts.Add((int)(rand.NextDouble() * Parameters.numberOfIndividualsMax * 0.5) + 1);
+    //    }
 
-		// Then Point Mutations
+    //    // Then Point Mutations
 
-		Parameters tempParam;
+    //    Parameters tempParam;
 
-		for (int j = 0; j < numberOfIngredients; j++) {
-			tempParam = new Parameters(parameters[j]);
-			tempParam.inducePointMutations(pointMutationRatePerParameter,
-					pointMutationMagnitude);
-			if (!parameters[j].equals(tempParam)) {
-				mutated = true;
-				parameters[j] = tempParam;
-			}
-		}
+    //    for (int j = 0; j < numberOfIngredients; j++) {
+    //        tempParam = new Parameters(parameters[j]);
+    //        tempParam.inducePointMutations(pointMutationRatePerParameter,
+    //                pointMutationMagnitude);
+    //        if (!parameters[j].equals(tempParam)) {
+    //            mutated = true;
+    //            parameters[j] = tempParam;
+    //        }
+    //    }
 
-		boundPopulationSize();
+    //    boundPopulationSize();
 		
-		return mutated;
-	}
+    //    return mutated;
+    //}
 	
 	public String getRecipeText() {
 		setRecipeText();

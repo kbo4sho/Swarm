@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using ScreenSystem.ScreenSystem;
+
 using ScreenSystem.Debug;
 using SwarmEngine;
+using XNASwarms.Screens;
 
 namespace XNASwarms
 {
     public class ButtonSection
     {
 
-        private ControlScreen _screen;
+        private SwarmScreenBase _screen;
         private Vector2 _position;
         private Texture2D _bgSprite;
         private Rectangle _rect, _innerRect;
@@ -36,7 +37,7 @@ namespace XNASwarms
 
 
 
-        public ButtonSection(bool flip, Vector2 position, ControlScreen screen, string desc)
+        public ButtonSection(bool flip, Vector2 position, SwarmScreenBase screen, string desc)
         {
             _rect.Width = 100;
             _rect.Height = 360;
@@ -47,9 +48,11 @@ namespace XNASwarms
 
             AddMenuItem("Mutation", EntryType.Game, _screen);
             AddMenuItem("Stable", EntryType.Stable, _screen);
-            AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
-            AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
+            //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
+            //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
             AddMenuItem("Console", EntryType.Debugger, _screen);
+            AddMenuItem("Save", EntryType.Save, _screen);
+            
         }
 
         public void Load()
@@ -66,6 +69,7 @@ namespace XNASwarms
             {
                 menuEntries[i].Initialize();
             }
+            LoadSavedSwarms();
         }
 
         public void Update()
@@ -76,48 +80,28 @@ namespace XNASwarms
         protected virtual void UpdateMenuEntryLocations()
         {
             Vector2 position = Vector2.Zero;
-
-            // update each menu entry's location in turn
             for (int i = 0; i < menuEntries.Count; ++i)
             {
                 menuEntries[i].Position = new Vector2(_position.X, _position.Y + i * menuEntries[i].GetHeight() + i * _containerPadding.Y);
             }
-
         }
 
-
-        /// <summary>
-        /// Draws the menu.
-        /// </summary>
         public void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
-            // make sure our entries are in the right place before we draw them
+
             UpdateMenuEntryLocations();
 
-            //SpriteBatch spriteBatch = _screen.ScreenManager.SpriteBatch;
             SpriteFont font = _screen.ScreenManager.Fonts.MenuSpriteFont;
 
-            var pos = _position; //= _screen.Camera.ConvertScreenToWorld(_position);
+            var pos = _position;
 
-            ////Container
-            //spriteBatch.Draw(_bgSprite, pos, _rect, _BorderColor, 0f, Vector2.Zero,
-            //            1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-
-            ////Inner Container
-            //spriteBatch.Draw(_bgSprite, pos, _innerRect, _containerBGColor, 0f, Vector2.Zero,
-            //            1, true ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-
-            //Description
             spriteBatch.DrawString(BigFont, _description, _containerPadding + pos + Vector2.One * 2f, Color.LightCyan);
-
 
             Vector2 transitionOffset = new Vector2(0f, (float)Math.Pow(_screen.TransitionPosition, 2) * 100f);
 
-            //Draw background
             spriteBatch.Draw(_bgSprite, DestinationRectangle, _rectBG, Color.LightCyan);
 
-            // Draw each menu entry in turn.
             for (int i = 0; i < menuEntries.Count; ++i)
             {
                 bool isSelected = _screen.IsActive && (i == _selectedEntry);
@@ -128,9 +112,100 @@ namespace XNASwarms
 
         }
 
+        private void LoadSavedSwarms()
+        {
+            SaveAllSpecies allSaved = SaveHelper.Load("AllSaved");
+            if (allSaved != null)
+            {
+                if (allSaved.Count == 1)
+                {
+                    AddSavedSwarm("1", EntryType.Recall1, null);
+                }
+                else if (allSaved.Count == 2)
+                {
+                    AddSavedSwarm("2", EntryType.Recall2, null);
+                }
+                else if (allSaved.Count == 3)
+                {
+                    AddSavedSwarm("3", EntryType.Recall2, null);
+                }
+                
+            }
+        }
+
+        private void SaveSwarm()
+        {
+            SaveAllSpecies allSaved = SaveHelper.Load("AllSaved");
+            if (allSaved != null && allSaved.Count() >= 3)
+            {
+                //Replacing
+                SaveSpecies oldestSpecies = allSaved.OrderBy(s => s.CreadtedDt).First();
+                allSaved.Remove(oldestSpecies);
+                allSaved.Add(_screen.GetPopulationAsSaveSpecies());
+                SaveHelper.Save("AllSaved", allSaved);
+            }
+
+            if (allSaved != null)
+            {
+                if (allSaved.Count == 1)
+                {
+                    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                    allSaved.Add(savespecies);
+                    SaveHelper.Save("AllSaved", allSaved);
+                    AddSavedSwarm("2", EntryType.Recall2, null);
+                }
+                else if (allSaved.Count == 2)
+                {
+                    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                    allSaved.Add(savespecies);
+                    SaveHelper.Save("AllSaved", allSaved);
+                    AddSavedSwarm("3", EntryType.Recall3, null);
+                }
+                //else if (allSaved.Count == 3)
+                //{
+                //    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                //    allSaved.Add(savespecies);
+                //    SaveHelper.Save("AllSaved", allSaved);
+                //    AddSavedSwarm("3", EntryType.Recall2, null);
+                //}
+            }
+            else
+            {
+                allSaved = new SaveAllSpecies();
+                SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                allSaved.Add(savespecies);
+                SaveHelper.Save("AllSaved", allSaved);
+                AddSavedSwarm("1", EntryType.Recall1, null);
+            }
+            //SaveSpecies secondSaved = SaveHelper.Load("Second");
+            //if (secondSaved == null && menuEntries.Where(m => m.Text == "Second").Count() == 0)
+            //{
+            //    SaveHelper.Save("Second", _screen.GetPopulationAsSaveSpecies());
+            //    return;
+            //}
+
+            //SaveSpecies thirdSaved = SaveHelper.Load("Third");
+            //if (thirdSaved == null && menuEntries.Where(m => m.Text == "Third").Count() == 0)
+            //{
+            //    SaveHelper.Save("Third", _screen.GetPopulationAsSaveSpecies());
+            //    return;
+            //}
+
+            //List<SaveSpecies> saveSpecies = new List<SaveSpecies>() { firstSaved, secondSaved, thirdSaved };
+            //SaveSpecies oldestSpecies = saveSpecies.OrderBy(s => s.CreadtedDt).First();
+
+        }
+
         public void AddMenuItem(string name, EntryType type, ControlScreen screen)
         {
             MenuEntry entry = new MenuEntry(_screen, name, type, screen, _bgSprite);
+            menuEntries.Add(entry);
+        }
+
+        public void AddSavedSwarm(string name, EntryType type, ControlScreen screen)
+        {
+            SavedSwarm entry = new SavedSwarm(_screen, name, type, screen, _bgSprite);
+            entry.Initialize();
             menuEntries.Add(entry);
         }
 
@@ -161,7 +236,7 @@ namespace XNASwarms
         }
 
 
-        public void HandleInput(InputHelper input, GameTime gameTime)
+        public void HandleInput(ScreenSystem.ScreenSystem.InputHelper input, GameTime gameTime)
         {
             // Mouse or touch on a menu item
             int hoverIndex = GetMenuEntryAt(input.Cursor);
@@ -182,34 +257,63 @@ namespace XNASwarms
                 {
                     _screen.ScreenManager.Game.Exit();
                 }
-                else if (menuEntries[_selectedEntry].Screen != null)
+                else
                 {
-                    if (menuEntries[_selectedEntry].Screen != null &&
-                             menuEntries[_selectedEntry].IsStable())
+                    if (menuEntries[_selectedEntry].IsStable())
                     {
                         _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Stable_A, false));
                         this._screen.ExitScreen();
                     }
-                    else if (menuEntries[_selectedEntry].Screen != null &&
-                             menuEntries[_selectedEntry].IsGameModeGame())
+                    else if (menuEntries[_selectedEntry].IsGameModeGame())
                     {
                         _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Stable_A, true));
                         this._screen.ExitScreen();
                     }
-                    else if (menuEntries[_selectedEntry].Screen != null &&
-                         menuEntries[_selectedEntry].IsZoomIn())
+                    else if (menuEntries[_selectedEntry].IsZoomIn())
                     {
                         this._screen.Camera.Zoom += .1f;
                     }
-                    else if (menuEntries[_selectedEntry].Screen != null &&
-                         menuEntries[_selectedEntry].IsZoomOut())
+                    else if (menuEntries[_selectedEntry].IsZoomOut())
                     {
                         this._screen.Camera.Zoom -= .1f;
                     }
-                    else if (menuEntries[_selectedEntry].Screen != null &&
-                             menuEntries[_selectedEntry].IsDebugger())
+                    else if (menuEntries[_selectedEntry].IsDebugger())
                     {
                         debugScreen.SetVisiblity();
+                    }
+                    else if (menuEntries[_selectedEntry].IsSave())
+                    {
+                        SaveSwarm();
+                    }
+                    else if (menuEntries[_selectedEntry].IsRecall1())
+                    {
+
+                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
+                        if (saveSpecies != null)
+                        {
+                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[0]));
+                            this._screen.ExitScreen();
+                        }
+                    }
+                    else if (menuEntries[_selectedEntry].IsRecall2())
+                    {
+
+                        SaveAllSpecies saveSpecies = SaveHelper.Load("Second");
+                        if (saveSpecies != null)
+                        {
+                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[1]));
+                            this._screen.ExitScreen();
+                        }
+                    }
+                    else if (menuEntries[_selectedEntry].IsRecall3())
+                    {
+
+                        SaveAllSpecies saveSpecies = SaveHelper.Load("Third");
+                        if (saveSpecies != null)
+                        {
+                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[2]));
+                            this._screen.ExitScreen();
+                        }
                     }
 
                 }

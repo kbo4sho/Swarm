@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SwarmEngine.Individual" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QACAIBAAABAAAAQAAAAIAAAEAAAAQgAgAABiYGAABRA=</HashCode>
+      <FileName>Individuals\Individual.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SwarmEngine.StockIndividualsFacotry" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Individuals\StockIndividualsFacotry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.Parameters" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICgAAIBAEACAAEQEAAAAJKAAQgCAGAAJAABAQAEEEVI=</HashCode>
+      <FileName>Parameters.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SwarmEngine.Population" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAQEAABEAAAIAAQAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Population.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.PopulationSimulator" Collapsed="true">
+    <Position X="7" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>wAAiAIAAEogAAAEAAAAAIAAAAAAAAAABAAAAQAAAAgg=</HashCode>
+      <FileName>PopulationSimulator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.Recipe" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAwCIAAACgAAgAAAAAEAIAAABAIAAgAAgAIAICAAAA=</HashCode>
+      <FileName>Recipes\Recipe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.StockRecipies" Collapsed="true">
+    <Position X="2.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAgAA=</HashCode>
+      <FileName>Recipes\StockRecipies.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.Species" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAACAAQA=</HashCode>
+      <FileName>Species\Species.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.StockSpecies" Collapsed="true">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Species\StockSpecies.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="SwarmEngine.IContainable" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAABAAAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>IContainable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

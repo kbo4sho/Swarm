@@ -112,6 +112,11 @@
     <Reference Include="Microsoft.Surface.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="SaveAllSpecies.cs" />
+    <Compile Include="SaveGenome.cs" />
+    <Compile Include="SaveSpecies.cs" />
+    <Compile Include="SaveHelper.cs" />
     <Compile Include="Screens\Borders\Border.cs" />
     <Compile Include="Screens\Borders\Walls\Wall.cs" />
     <Compile Include="Screens\Borders\Walls\WallFactory.cs" />
@@ -124,9 +129,13 @@
     <Compile Include="App1.cs" />
     <Compile Include="Screens\ButtonSection.cs" />
     <Compile Include="Screens\ControlScreen.cs" />
+    <Compile Include="Screens\SavedSwarm.cs" />
     <Compile Include="Screens\SwarmsCamera.cs" />
     <Compile Include="Screens\SwarmScreen\SwarmScreen1.cs" />
     <Compile Include="Screens\SwarmScreen\SwarmScreenBase.cs" />
+    <Compile Include="Screens\SwarmScreen\SwarmScreenDrawScreen.cs" />
+    <Compile Include="Screens\SwarmScreen\SwarmScreenFromPopulation.cs" />
+    <Compile Include="Screens\SwarmScreen\SwarmScreenFromSavedSpecies.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Game.ico" />

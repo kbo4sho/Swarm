@@ -16,7 +16,7 @@ namespace XNASwarms
         public ControlScreen()
             : base()
         {
-            ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
+            
         }
 
         public override void LoadContent()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 /*package swarm.engine;
 
@@ -22,42 +23,47 @@ using System.Text;
 //   Email: sayama@binghamton.edu
 //
 // For more information about this software, see:
-//   http://bingweb.binghamton.edu/~sayama/SwarmChemistry/
+// http://bingweb.binghamton.edu/~sayama/SwarmChemistry/
 //
 
 import java.util.*;*/
 
 namespace SwarmEngine
 {
+    [Serializable]
+    [XmlInclude(typeof(Species))]
     public class Population : List<Species>
     {
         private static double maxStartingVelocity = 5;
-        private List<Species> speciesPopulation;
         private String title;
         Random rand = new Random();
 
-        public Population(List<Species> pop, String t)
-        { 
-            //population = pop;
-            this.AddRange(pop);
-            title = t;
-        }
 
-        public Population(int n, int width, int height, String t)
+        public Population():this(new List<Species>(),"kbothing")
         {
-            title = t;
-
-            Parameters ancestorGenome = new Parameters();
-
-            speciesPopulation = new List<Species>();
-            for (int i = 0; i < n; i++)
-            {
-                Individual ind = new Individual(rand.NextDouble() * width, rand.NextDouble()
-                        * height, randomVelocity(), randomVelocity(),
-                        new Parameters(ancestorGenome));
-
-            }
         }
+
+        public Population(List<Species> species, String t)
+        { 
+            this.AddRange(species);
+            title = t;
+        }
+
+        //public Population(int n, int width, int height, String t)
+        //{
+        //    title = t;
+
+        //    Parameters ancestorGenome = new Parameters();
+
+        //    speciesPopulation = new List<Species>();
+        //    for (int i = 0; i < n; i++)
+        //    {
+        //        Individual ind = new Individual(rand.NextDouble() * width, rand.NextDouble()
+        //                * height, randomVelocity(), randomVelocity(),
+        //                new Parameters(ancestorGenome));
+
+        //    }
+        //}
 
         //public Population(Population a, int width, int height, String t)
         //{
@@ -160,9 +166,5 @@ namespace SwarmEngine
             this.title = title;
         }
 
-        //public Species GetIndividuals()
-        //{
-            
-        //}
     }
 }

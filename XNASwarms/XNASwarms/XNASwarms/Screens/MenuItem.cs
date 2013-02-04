@@ -2,8 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNASwarms;
+using ScreenSystem.ScreenSystem;
 
-namespace ScreenSystem.ScreenSystem
+namespace XNASwarms.Screens
 {
     public enum EntryType
     {
@@ -25,6 +26,10 @@ namespace ScreenSystem.ScreenSystem
         Debugger,
         ZoomIn,
         ZoomOut,
+        Save,
+        Recall1,
+        Recall2,
+        Recall3,
     }
 
     /// <summary>
@@ -238,6 +243,26 @@ namespace ScreenSystem.ScreenSystem
             return _type == EntryType.ZoomOut;
         }
 
+        internal bool  IsSave()
+        {
+            return _type == EntryType.Save;
+        }
+
+        internal bool IsRecall1()
+        {
+            return _type == EntryType.Recall1;
+        }
+
+        internal bool IsRecall2()
+        {
+            return _type == EntryType.Recall2;
+        }
+
+        internal bool IsRecall3()
+        {
+            return _type == EntryType.Recall3;
+        }
+
         #endregion
 
         /// <summary>
@@ -288,10 +313,8 @@ namespace ScreenSystem.ScreenSystem
             }
             color *= _alpha;
 
-            var pos = _position;//_screen.Camera.ConvertScreenToWorld(_position);
-            //var pos = _position;
+            var pos = _position;
 
-            //Drar the container of the item
             if (_menuItemBackground != null && !IsSeperator())
             {
                 spritebatch.Draw(_menuItemBackground,
