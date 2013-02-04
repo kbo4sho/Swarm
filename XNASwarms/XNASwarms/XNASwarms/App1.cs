@@ -43,6 +43,8 @@ namespace XNASwarms
             if (Window == null || Window.Handle == IntPtr.Zero)
                 return;
 
+            //graphics.PreferredBackBufferWidth = 1920;
+            //graphics.PreferredBackBufferHeight = 1080;
             //graphics.PreferredBackBufferWidth = 1680;
             //graphics.PreferredBackBufferHeight = 1050;
             //graphics.PreferredBackBufferWidth = 1600;

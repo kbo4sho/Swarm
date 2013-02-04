@@ -46,10 +46,11 @@ namespace XNASwarms
             _innerRect.Height = _rect.Height - BorderThickness;
             _description = desc;
 
+            AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
+            AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
             AddMenuItem("Mutation", EntryType.Game, _screen);
             AddMenuItem("Stable", EntryType.Stable, _screen);
-            //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
-            //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
+            
             //AddMenuItem("Console", EntryType.Debugger, _screen);
             AddMenuItem("Save", EntryType.Save, _screen);
             
@@ -249,11 +250,17 @@ namespace XNASwarms
                     }
                     else if (menuEntries[_selectedEntry].IsZoomIn())
                     {
-                        this._screen.Camera.Zoom += .1f;
+                        if (this._screen.Camera.Zoom < 1.5)
+                        {
+                            this._screen.Camera.Zoom += .1f;
+                        }
                     }
                     else if (menuEntries[_selectedEntry].IsZoomOut())
                     {
-                        this._screen.Camera.Zoom -= .1f;
+                        if (this._screen.Camera.Zoom > .5)
+                        {
+                            this._screen.Camera.Zoom -= .1f;
+                        }
                     }
                     else if (menuEntries[_selectedEntry].IsDebugger())
                     {
