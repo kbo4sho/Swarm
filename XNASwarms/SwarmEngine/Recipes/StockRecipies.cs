@@ -37,9 +37,28 @@ namespace SwarmEngine
             }
         }
 
-        public static string Recipe2()
+        public static string Recipe2
         {
-            return "15, 226.96, 10.74, 38.96, 0.82, 0.8, 51.09, 0.28, 0.46";
+            get
+            {
+                return "15, 226.96, 10.74, 38.96, 0.82, 0.8, 51.09, 0.28, 0.46";
+            }
+        }
+
+        public static string Swinger
+        {
+            get
+            {
+                return "74, 217.14, 12.13, 12.42, 0.59, 0.98, 14.06, 0.04, 0.65";
+            }
+        }
+
+        public static string Fussbudget
+        {
+            get
+            {
+                return "19, 434.79, 12.86, 28.2, 0.87, 0.11, 94.19, 0.28, 0.11";
+            }
         }
 
         public static string Recipe3

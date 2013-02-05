@@ -46,11 +46,12 @@ namespace XNASwarms
             _innerRect.Height = _rect.Height - BorderThickness;
             _description = desc;
 
-            AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
-            AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
+            //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
+            //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
             AddMenuItem("Mutation", EntryType.Game, _screen);
             AddMenuItem("Stable", EntryType.Stable, _screen);
-            
+            AddMenuItem("Swinger", EntryType.Swinger, _screen);
+            AddMenuItem("FussBudget", EntryType.FussBudget, _screen);
             //AddMenuItem("Console", EntryType.Debugger, _screen);
             AddMenuItem("Save", EntryType.Save, _screen);
             
@@ -241,6 +242,16 @@ namespace XNASwarms
                     if (menuEntries[_selectedEntry].IsStable())
                     {
                         _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Stable_A, false));
+                        this._screen.ExitScreen();
+                    }
+                    else if (menuEntries[_selectedEntry].IsSwinger())
+                    {
+                        _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Swinger, false));
+                        this._screen.ExitScreen();
+                    }
+                    else if (menuEntries[_selectedEntry].IsFussBudget())
+                    {
+                        _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Fussbudget, false));
                         this._screen.ExitScreen();
                     }
                     else if (menuEntries[_selectedEntry].IsGameModeGame())

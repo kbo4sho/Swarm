@@ -107,7 +107,7 @@ namespace XNASwarms
         {
             
             Supers.Clear();
-            
+
             var surfacetouches = input.SurfaceTouches;
             if (surfacetouches.Count > 0)
             {
@@ -121,7 +121,8 @@ namespace XNASwarms
                          0.0, 0.0, new Parameters());
                 }
             }
-            else if (input.Touches.Count > 0)
+            else 
+            if (input.Touches.Count > 0)
             {
                 //Everthing else touch
                 for (int i = 0; i < input.Touches.Count; i++)

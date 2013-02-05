@@ -42,11 +42,11 @@ namespace XNASwarms
                 {
                     ScreenManager.SpriteBatch.Draw(swarmIndividual, new Rectangle(
                         (int)indvd.getX(),
-                        (int)indvd.getY(), 5, 5),
+                        (int)indvd.getY(), swarmIndividual.Width, swarmIndividual.Height),
                         null,
                         indvd.getDisplayColor(),
                         0f,
-                        new Vector2(0, 0),
+                        new Vector2(swarmIndividual.Width / 2, swarmIndividual.Height/2),
                         SpriteEffects.None, 0);
                 }
             }

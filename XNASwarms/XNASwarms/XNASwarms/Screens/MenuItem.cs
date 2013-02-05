@@ -30,6 +30,8 @@ namespace XNASwarms.Screens
         Recall1,
         Recall2,
         Recall3,
+        Swinger,
+        FussBudget,
     }
 
     /// <summary>
@@ -226,6 +228,15 @@ namespace XNASwarms.Screens
         internal bool IsStable()
         {
             return _type == EntryType.Stable;
+        }
+
+        internal bool IsSwinger()
+        {
+            return _type == EntryType.Swinger;
+        }
+        internal bool IsFussBudget()
+        {
+            return _type == EntryType.FussBudget;
         }
 
         internal bool IsDebugger()
