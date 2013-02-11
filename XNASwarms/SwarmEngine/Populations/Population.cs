@@ -30,8 +30,6 @@ import java.util.*;*/
 
 namespace SwarmEngine
 {
-    [Serializable]
-    [XmlInclude(typeof(Species))]
     public class Population : List<Species>
     {
         private static double maxStartingVelocity = 5;

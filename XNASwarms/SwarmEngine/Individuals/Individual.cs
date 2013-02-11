@@ -7,8 +7,6 @@ using System.Xml.Serialization;
 
 namespace SwarmEngine
 {
-    [Serializable]
-    [XmlInclude(typeof(Parameters))]
      public class Individual: IContainable
      {
 

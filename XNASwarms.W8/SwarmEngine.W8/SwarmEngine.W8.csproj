@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5A7EC12B-3D04-43AE-A1B9-EF34BAB14571}</ProjectGuid>
+    <ProjectGuid>{8BA84DE0-E042-403B-9338-15A76F12A14A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScreenBase.W8</RootNamespace>
-    <AssemblyName>ScreenBase.W8</AssemblyName>
+    <RootNamespace>SwarmEngine.W8</RootNamespace>
+    <AssemblyName>SwarmEngine.W8</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -99,10 +99,45 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Compile Include="..\..\XNASwarms\SwarmEngine\IContainable.cs">
+      <Link>IContainable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\Individuals\Individual.cs">
+      <Link>Individuals\Individual.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\Individuals\StockIndividualsFacotry.cs">
+      <Link>Individuals\StockIndividualsFacotry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\Parameters.cs">
+      <Link>Parameters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\PopulationSimulator.cs">
+      <Link>PopulationSimulator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\Populations\Population.cs">
+      <Link>Populations\Population.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\Populations\PopulationFacotry.cs">
+      <Link>Populations\PopulationFacotry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\Recipes\Recipe.cs">
+      <Link>Recipes\Recipe.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\Recipes\StockRecipies.cs">
+      <Link>Recipes\StockRecipies.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\Species\Species.cs">
+      <Link>Species\Species.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\Species\StockSpecies.cs">
+      <Link>Species\StockSpecies.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Reference Include="MonoGame.Framework.Windows8">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows8\MonoGame.Framework.Windows8.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

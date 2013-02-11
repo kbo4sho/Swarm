@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Surface;
-using Microsoft.Surface.Core;
+//using Microsoft.Surface;
+//using Microsoft.Surface.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -48,8 +48,8 @@ namespace ScreenSystem.ScreenSystem
 
         //Surface
         private bool tapped;
-        public TouchTarget TouchTarget;
-        private ReadOnlyTouchPointCollection touches;
+        //public TouchTarget TouchTarget;
+        //private ReadOnlyTouchPointCollection touches;
 
 #if WINDOWS_PHONE
         private VirtualStick _phoneStick;
@@ -59,16 +59,16 @@ namespace ScreenSystem.ScreenSystem
         private ScreenManager _manager;
         private Viewport _viewport;
 
-        public InputHelper(TouchTarget touchtarget, ScreenManager manager) : this(manager)
-        {
-            TouchTarget = touchtarget;
+        //public InputHelper(TouchTarget touchtarget, ScreenManager manager) : this(manager)
+        //{
+        //    TouchTarget = touchtarget;
             
-        }
+        //}
 
-        void TouchTarget_TouchTapGesture(object sender, TouchEventArgs e)
-        {
-            //tapped = true;
-        }
+        //void TouchTarget_TouchTapGesture(object sender, TouchEventArgs e)
+        //{
+        //    //tapped = true;
+        //}
 
         public InputHelper(ScreenManager manager)
         {
@@ -171,14 +171,15 @@ namespace ScreenSystem.ScreenSystem
             get { return _touchState; }
         }
 
-        public ReadOnlyTouchPointCollection SurfaceTouches
-        {
-            get { return touches; }
-        }
+        //public ReadOnlyTouchPointCollection SurfaceTouches
+        //{
+        //    get { return touches; }
+        //}
 
         public void LoadContent()
         {
-            TouchTarget.TouchDown += new System.EventHandler<TouchEventArgs>(TouchTarget_TouchTapGesture);
+            //TouchTarget.TouchDown += new System.EventHandler<TouchEventArgs>(TouchTarget_TouchTapGesture);
+
             //_cursorSprite = new Sprite(_manager.Content.Load<Texture2D>("Common/cursor"));
 #if WINDOWS_PHONE
             // virtual stick content
@@ -227,15 +228,15 @@ namespace ScreenSystem.ScreenSystem
 #endif
             }
 
-            if (TouchTarget != null)
-            {
-                //Surface touches
-                touches = TouchTarget.GetState();
-                if (touches.Count > 0)
-                {
-                    _currentMouseState = new MouseState((int)touches[0].X, (int)touches[0].Y, 0, ButtonState.Pressed, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
-                }
-            }
+            //if (TouchTarget != null)
+            //{
+            //    //Surface touches
+            //    touches = TouchTarget.GetState();
+            //    if (touches.Count > 0)
+            //    {
+            //        _currentMouseState = new MouseState((int)touches[0].X, (int)touches[0].Y, 0, ButtonState.Pressed, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
+            //    }
+            //}
 
             _touchState = TouchPanel.GetState();
             if (_touchState.Count > 0)

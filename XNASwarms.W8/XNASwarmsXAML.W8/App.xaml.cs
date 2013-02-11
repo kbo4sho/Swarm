@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
-namespace XNASwarms.W8
+namespace XNASwarmsXAML.W8
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

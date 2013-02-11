@@ -7,7 +7,9 @@ using SwarmEngine;
 
 namespace XNASwarms
 {
+#if WINDOWS
     [Serializable]
+#endif
     public class SaveGenome
     {
         public double neighborhoodRadius;

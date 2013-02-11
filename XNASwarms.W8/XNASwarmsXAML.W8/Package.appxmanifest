@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
 
-  <Identity Name="d932e3e2-0c91-4f38-a4c8-957435c3647f"
+  <Identity Name="6597bef5-0139-4838-aeb2-24d537361507"
             Publisher="CN=kevin_000"
             Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>XNASwarmsRelease.W8</DisplayName>
+    <DisplayName>XNASwarms.W8</DisplayName>
     <PublisherDisplayName>kevin_000</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -23,12 +23,12 @@
   <Applications>
     <Application Id="App"
         Executable="$targetnametoken$.exe"
-        EntryPoint="XNASwarmsRelease.W8.App">
+        EntryPoint="XNASwarms.W8.App">
         <VisualElements
-            DisplayName="XNASwarmsRelease.W8"
+            DisplayName="XNASwarms.W8"
             Logo="Assets\Logo.png"
             SmallLogo="Assets\SmallLogo.png"
-            Description="XNASwarmsRelease.W8"
+            Description="XNASwarms.W8"
             ForegroundText="light"
             BackgroundColor="#464646">
             <DefaultTile ShowName="allLogos" />

@@ -23,11 +23,11 @@ namespace XNASwarms
         public override void LoadContent()
         {
             swarmIndividual = ScreenManager.Content.Load<Texture2D>("bee");
-            base.LoadContent();
             if (Mutate)
             {
                 DoMutation();
             }
+            base.LoadContent();
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)

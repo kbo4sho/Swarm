@@ -32,7 +32,6 @@ import java.awt.Color;
   */
 namespace SwarmEngine
 {
-    [Serializable]
     public class Parameters : IComparable
     {
         public static int numberOfIndividualsMax = 300;

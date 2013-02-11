@@ -15,13 +15,15 @@ namespace ScreenSystem.ScreenSystem
         private int _frameRate;
         private Vector2 _position;
         private ScreenManager _screenManager;
+        private bool IsVisible;
 
-        public FrameRateCounter(ScreenManager screenManager)
+        public FrameRateCounter(ScreenManager screenManager, bool visible)
             : base(screenManager.Game)
         {
             _screenManager = screenManager;
             _format = new NumberFormatInfo();
             _format.NumberDecimalSeparator = ".";
+            IsVisible = visible;
 #if XBOX
             _position = new Vector2(55, 35);
 #else
@@ -31,26 +33,37 @@ namespace ScreenSystem.ScreenSystem
 
         public override void Update(GameTime gameTime)
         {
-            _elapsedTime += gameTime.ElapsedGameTime;
+            if (IsVisible)
+            {
+                _elapsedTime += gameTime.ElapsedGameTime;
 
-            if (_elapsedTime <= TimeSpan.FromSeconds(1)) return;
+                if (_elapsedTime <= TimeSpan.FromSeconds(1)) return;
 
-            _elapsedTime -= TimeSpan.FromSeconds(1);
-            _frameRate = _frameCounter;
-            _frameCounter = 0;
+                _elapsedTime -= TimeSpan.FromSeconds(1);
+                _frameRate = _frameCounter;
+                _frameCounter = 0;
+            }
         }
 
         public override void Draw(GameTime gameTime)
         {
-            _frameCounter++;
+            if (IsVisible)
+            {
+                _frameCounter++;
 
-            string fps = string.Format(_format, "{0} fps", _frameRate);
+                string fps = string.Format(_format, "{0} fps", _frameRate);
 
-            _screenManager.SpriteBatch.Begin();
-            _screenManager.SpriteBatch.DrawString(_screenManager.Fonts.FrameRateCounterFont, fps,
-                                                  _position, Color.LightBlue);
-            _screenManager.SpriteBatch.End();
+                _screenManager.SpriteBatch.Begin();
+                _screenManager.SpriteBatch.DrawString(_screenManager.Fonts.FrameRateCounterFont, fps,
+                                                      _position, Color.LightBlue);
+                _screenManager.SpriteBatch.End();
+            }
             base.Draw(gameTime);
+        }
+
+        public void SetVisiblity()
+        {
+            IsVisible = !IsVisible;
         }
     }
 }

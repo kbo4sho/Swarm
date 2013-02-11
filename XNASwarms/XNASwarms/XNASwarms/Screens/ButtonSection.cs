@@ -52,8 +52,8 @@ namespace XNASwarms
             AddMenuItem("Stable", EntryType.Stable, _screen);
             AddMenuItem("Swinger", EntryType.Swinger, _screen);
             AddMenuItem("FussBudget", EntryType.FussBudget, _screen);
-            //AddMenuItem("Console", EntryType.Debugger, _screen);
-            AddMenuItem("Save", EntryType.Save, _screen);
+            AddMenuItem("Console", EntryType.Debugger, _screen);
+            //AddMenuItem("Save", EntryType.Save, _screen);
             
         }
 

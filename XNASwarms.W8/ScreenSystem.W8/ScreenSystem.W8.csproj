@@ -99,61 +99,67 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\ScreenSystem\DrawingSystem\Sprite.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\DrawingSystem\Sprite.cs">
       <Link>DrawingSystem\Sprite.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\BackgroundScreen.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\BackgroundScreen.cs">
       <Link>ScreenSystem\BackgroundScreen.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\Camera2D.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Camera2D.cs">
       <Link>ScreenSystem\Camera2D.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\ConvertUnits.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\ConvertUnits.cs">
       <Link>ScreenSystem\ConvertUnits.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\FramerateCounterComponent.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Debuging\DebugItem.cs">
+      <Link>ScreenSystem\Debuging\DebugItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Debuging\DebugScreen.cs">
+      <Link>ScreenSystem\Debuging\DebugScreen.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\FramerateCounterComponent.cs">
       <Link>ScreenSystem\FramerateCounterComponent.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\GameScreen.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\GameScreen.cs">
       <Link>ScreenSystem\GameScreen.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\IDemoScreen.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\IDemoScreen.cs">
       <Link>ScreenSystem\IDemoScreen.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\InputHelper.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\InputHelper.cs">
       <Link>ScreenSystem\InputHelper.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\LogoScreen.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\LogoScreen.cs">
       <Link>ScreenSystem\LogoScreen.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\MenuButton.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\MenuButton.cs">
       <Link>ScreenSystem\MenuButton.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\MenuEntry.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\MenuEntry.cs">
       <Link>ScreenSystem\MenuEntry.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\MenuScreen.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\MenuScreen.cs">
       <Link>ScreenSystem\MenuScreen.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\MessageBoxScreen.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\MessageBoxScreen.cs">
       <Link>ScreenSystem\MessageBoxScreen.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\PauseScreen.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\PauseScreen.cs">
       <Link>ScreenSystem\PauseScreen.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\PinchToZoom.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\PinchToZoom.cs">
       <Link>ScreenSystem\PinchToZoom.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\ScreenManagerComponent.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\ScreenManagerComponent.cs">
       <Link>ScreenSystem\ScreenManagerComponent.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\SpriteFonts.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\SpriteFonts.cs">
       <Link>ScreenSystem\SpriteFonts.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\VirtualButton.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\VirtualButton.cs">
       <Link>ScreenSystem\VirtualButton.cs</Link>
     </Compile>
-    <Compile Include="..\..\ScreenSystem\ScreenSystem\VirtualStick.cs">
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\VirtualStick.cs">
       <Link>ScreenSystem\VirtualStick.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -163,6 +169,12 @@
     <Reference Include="MonoGame.Framework.Windows8">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows8\MonoGame.Framework.Windows8.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SwarmEngine.W8\SwarmEngine.W8.csproj">
+      <Project>{8ba84de0-e042-403b-9338-15a76f12a14a}</Project>
+      <Name>SwarmEngine.W8</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

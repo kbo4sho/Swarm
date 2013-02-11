@@ -10,8 +10,10 @@ namespace XNASwarms
 {
     public static class SaveHelper
     {
+
         public static void Save(string filename, SaveAllSpecies savespecies)
         {
+#if !NETFX_CORE
             try
             {
                 Stream stream = File.Create(filename + ".xml");
@@ -23,10 +25,13 @@ namespace XNASwarms
             {
                 //
             }
+#endif
         }
 
         public static SaveAllSpecies Load(string filename)
         {
+
+#if !NETFX_CORE
             try
             {
                 Stream stream = File.OpenRead(filename + ".xml");
@@ -39,6 +44,9 @@ namespace XNASwarms
             {
                 return null;
             }
+#else
+            return null;
+#endif
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="XNASwarms.W8.App"
+    x:Class="XNASwarmsXAML.W8.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:XNASwarms.W8">
+    xmlns:local="using:XNASwarmsXAML.W8">
 
     <Application.Resources>
         <ResourceDictionary>

@@ -6,8 +6,6 @@ using System.Xml.Serialization;
 
 namespace SwarmEngine
 {
-    [Serializable]
-    [XmlInclude(typeof(Individual))]
     public class Species : List<Individual>
     {
         private Parameters parameters;

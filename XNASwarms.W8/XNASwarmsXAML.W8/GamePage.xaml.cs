@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Controls;
 using MonoGame.Framework;
 
 
-namespace XNASwarms.W8
+namespace XNASwarmsXAML.W8
 {
     /// <summary>
     /// The root page used to display the game.

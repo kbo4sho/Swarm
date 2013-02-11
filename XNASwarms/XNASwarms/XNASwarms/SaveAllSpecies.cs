@@ -6,7 +6,9 @@ using System.Xml.Serialization;
 
 namespace XNASwarms
 {
+#if WINDOWS
     [Serializable]
+#endif
     [XmlInclude(typeof(SaveSpecies))]
     public class SaveAllSpecies : List<SaveSpecies>
     {

@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{99D29725-C4FC-44CD-BAC0-74D98CE6AA03}</ProjectGuid>
+    <ProjectGuid>{14A6A9A8-E74B-4E46-ACC4-DA0943C55E13}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XNASwarms.W8</RootNamespace>
-    <AssemblyName>XNASwarms.W8</AssemblyName>
+    <RootNamespace>XNASwarmsXAML.W8</RootNamespace>
+    <AssemblyName>XNASwarmsXAML.W8</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>XNASwarmsRelease.W8_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>XNASwarms.W8_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -142,55 +142,60 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpecies.cs">
       <Link>SaveSpecies.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\borders\Border.cs">
-      <Link>Screens\Borders\Border.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Border.cs">
+      <Link>Borders\Borders\Border.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\borders\walls\Wall.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Walls\Wall.cs">
       <Link>Screens\Borders\Walls\Wall.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\borders\walls\WallActionType.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Walls\WallActionType.cs">
       <Link>Screens\Borders\Walls\WallActionType.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\borders\walls\WallFactory.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Walls\WallFactory.cs">
       <Link>Screens\Borders\Walls\WallFactory.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\borders\walls\WallOrientationType.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Walls\WallOrientationType.cs">
       <Link>Screens\Borders\Walls\WallOrientationType.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\borders\walls\WallSideType.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Walls\WallSideType.cs">
       <Link>Screens\Borders\Walls\WallSideType.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\ButtonSection.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\ButtonSection.cs">
       <Link>Screens\ButtonSection.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\ControlScreen.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\ControlScreen.cs">
       <Link>Screens\ControlScreen.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\MenuItem.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\MenuItem.cs">
       <Link>Screens\MenuItem.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\SavedSwarmButton.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SavedSwarmButton.cs">
       <Link>Screens\SavedSwarmButton.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\SwarmsCamera.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SwarmsCamera.cs">
       <Link>Screens\SwarmsCamera.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\swarmscreen\SwarmScreen1.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SwarmScreen\SwarmScreen1.cs">
       <Link>Screens\SwarmScreen\SwarmScreen1.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\swarmscreen\SwarmScreenBase.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SwarmScreen\SwarmScreenBase.cs">
       <Link>Screens\SwarmScreen\SwarmScreenBase.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\swarmscreen\SwarmScreenDrawScreen.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SwarmScreen\SwarmScreenDrawScreen.cs">
       <Link>Screens\SwarmScreen\SwarmScreenDrawScreen.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\swarmscreen\SwarmScreenFromPopulation.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SwarmScreen\SwarmScreenFromPopulation.cs">
       <Link>Screens\SwarmScreen\SwarmScreenFromPopulation.cs</Link>
     </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\swarmscreen\SwarmScreenFromSavedSpecies.cs">
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SwarmScreen\SwarmScreenFromSavedSpecies.cs">
       <Link>Screens\SwarmScreen\SwarmScreenFromSavedSpecies.cs</Link>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Game1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -198,40 +203,54 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\black.xnb">
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\Backgrounds\black.xnb">
       <Link>Content\Backgrounds\black.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\gray.xnb">
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\Backgrounds\gray.xnb">
       <Link>Content\Backgrounds\gray.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\logo.xnb">
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\Backgrounds\logo.xnb">
       <Link>Content\Backgrounds\logo.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\red.xnb">
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\Backgrounds\red.xnb">
       <Link>Content\Backgrounds\red.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\bee.xnb">
-      <Link>Content\bee.xnb</Link>
-    </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\fonts\debugfont.xnb">
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\Fonts\debugfont.xnb">
       <Link>Content\Fonts\debugfont.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\fonts\detailsfont.xnb">
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\Fonts\detailsfont.xnb">
       <Link>Content\Fonts\detailsfont.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\menu\button.xnb">
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\Menu\button.xnb">
       <Link>Content\Menu\button.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\menu\menufont.xnb">
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\Menu\menufont.xnb">
       <Link>Content\Menu\menufont.xnb</Link>
     </Content>
-    <None Include="XNASwarmsRelease.W8_TemporaryKey.pfx" />
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\bee.xnb">
+      <Link>Content\bee.xnb</Link>
+    </Content>
+    <None Include="XNASwarms.W8_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GamePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ScreenSystem.W8\ScreenSystem.W8.csproj">
@@ -243,6 +262,7 @@
       <Name>SwarmEngine.W8</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

@@ -12,7 +12,7 @@ namespace ScreenSystem.ScreenSystem
         public SpriteFonts(ContentManager contentManager)
         {
 #if NETFX_CORE
-            MenuSpriteFont = contentManager.Load<SpriteFont>("Fonts/bigmenufont");
+            MenuSpriteFont = contentManager.Load<SpriteFont>("Menu/menufont");
 #else
             //MenuSpriteFont = contentManager.Load<SpriteFont>("Fonts/menufont");
 #endif

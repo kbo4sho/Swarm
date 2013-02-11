@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ScreenSystem.Debug;
 using ScreenSystem.ScreenSystem;
@@ -6,7 +6,7 @@ using SwarmEngine;
 using System;
 using XNASwarms;
 
-namespace XNASwarms.W8
+namespace XNASwarmsXAML.W8
 {
     /// <summary>
     /// This is the main type for your game
@@ -19,7 +19,7 @@ namespace XNASwarms.W8
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 60.0f);
+            //this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 30.0f);
         }
 
         protected override void Initialize()
@@ -41,14 +41,14 @@ namespace XNASwarms.W8
 
         protected override void LoadContent()
         {
-          
+           
         }
 
         protected override void UnloadContent()
         {
            
         }
-
+   
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

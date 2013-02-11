@@ -31,7 +31,7 @@ namespace ScreenSystem.Debug
         private int PanelPadding;
         private int MaxDebugItems;
 
-        private bool Visible;
+        private bool IsVisible;
 
 
         public DebugScreen(ScreenManager screenmanager, bool visible)
@@ -40,14 +40,14 @@ namespace ScreenSystem.Debug
             DebugItems = new List<DebugItem>();
             SavedDebugItems = new List<DebugItem>(); 
             screenManager = screenmanager;
-            Visible = visible;
-            
+            IsVisible = visible;
         }
 
         protected override void LoadContent()
         {
-            //frameratecounter = new FrameRateCounter(screenManager);
-            //screenManager.Game.Components.Add(frameratecounter);
+            frameratecounter = new FrameRateCounter(screenManager, IsVisible);
+            screenManager.Game.Components.Add(frameratecounter);
+
             PanelTexture = screenManager.Content.Load<Texture2D>("Backgrounds/gray");
             itemSpacer = 10;
             PanelPadding = 10;
@@ -58,10 +58,9 @@ namespace ScreenSystem.Debug
 
         public override void Update(GameTime gameTime)
         {
-            if (Visible)
+            if (IsVisible)
             {
-                Vector2 largestStringSize = screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Count()).Last().GetFormatedMessage().ToString());
-                //DebugPanelRectangle.Width 
+                Vector2 largestStringSize = screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
                 DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding * 3;
                 DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count) + PanelPadding * 3;
 
@@ -75,7 +74,7 @@ namespace ScreenSystem.Debug
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (Visible)
+            if (IsVisible)
             {
                 screenManager.SpriteBatch.Begin();
                 screenManager.SpriteBatch.Draw(PanelTexture, DebugPanelRectangle, new Color(20, 20, 20, 170));
@@ -124,7 +123,8 @@ namespace ScreenSystem.Debug
 
         public void SetVisiblity()
         {
-            Visible = !Visible;
+            frameratecounter.SetVisiblity();
+            IsVisible = !IsVisible;
         }
 
         public void AddSpacer()

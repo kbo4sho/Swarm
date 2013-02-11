@@ -53,11 +53,13 @@ namespace ScreenSystem.ScreenSystem
             _contentManager.RootDirectory = "Content";
 #if WINDOWS
             TouchTarget touchTarget = new TouchTarget(game.Window.Handle, EventThreadChoice.OnBackgroundThread);
-
             touchTarget.EnableInput();
-            _input = new InputHelper(touchTarget, this);
+             _input = new InputHelper(touchTarget, this);
+#else
+            _input = new InputHelper(this);
 #endif
-            
+
+
             _screens = new List<GameScreen>();
             _screensToUpdate = new List<GameScreen>();
             _transitions = new List<RenderTarget2D>();

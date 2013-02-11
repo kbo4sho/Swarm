@@ -8,8 +8,10 @@ using Microsoft.Xna.Framework;
 
 namespace XNASwarms
 {
+#if WINDOWS
     [Serializable]
     [XmlInclude(typeof(SaveGenome))]
+#endif
     public class SaveSpecies
     {
         //normal DateTime accessor
