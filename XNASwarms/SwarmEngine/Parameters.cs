@@ -79,21 +79,21 @@ namespace SwarmEngine
             StringBuilder sb = new StringBuilder("");
             sb.Append((int)numberOfIndividualsMax);
             sb.Append(", ");
-            sb.Append((int)getNeighborhoodRadius());
+            sb.Append((double)getNeighborhoodRadius());
             sb.Append(", ");
-            sb.Append((int)getNormalSpeed());
+            sb.Append((double)getNormalSpeed());
             sb.Append(", ");
-            sb.Append((int)getMaxSpeed());
+            sb.Append((double)getMaxSpeed());
             sb.Append(", ");
-            sb.Append((int)c1);
+            sb.Append((double)c1);
             sb.Append(", ");
-            sb.Append((int)c2);
+            sb.Append((double)c2);
             sb.Append(", ");
-            sb.Append((int)c3);
+            sb.Append((double)c3);
             sb.Append(", ");
-            sb.Append((int)c4);
+            sb.Append((double)c4);
             sb.Append(", ");
-            sb.Append((int)c5);
+            sb.Append((double)c5);
             return sb.ToString();
         }
 

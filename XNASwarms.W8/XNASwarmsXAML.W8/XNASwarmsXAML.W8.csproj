@@ -190,6 +190,9 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SwarmScreen\SwarmScreenFromSavedSpecies.cs">
       <Link>Screens\SwarmScreen\SwarmScreenFromSavedSpecies.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\StockSaveSpecies.cs">
+      <Link>StockSaveSpecies.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
