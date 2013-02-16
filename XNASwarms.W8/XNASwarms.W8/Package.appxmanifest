@@ -1,39 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-
-  <Identity Name="d932e3e2-0c91-4f38-a4c8-957435c3647f"
-            Publisher="CN=kevin_000"
-            Version="1.0.0.0" />
-
+  <Identity Name="d932e3e2-0c91-4f38-a4c8-957435c3647f" Publisher="CN=kevin_000" Version="1.0.0.0" />
   <Properties>
     <DisplayName>XNASwarmsRelease.W8</DisplayName>
     <PublisherDisplayName>kevin_000</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
   <Prerequisites>
     <OSMinVersion>6.2.1</OSMinVersion>
     <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
-
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
-    <Application Id="App"
-        Executable="$targetnametoken$.exe"
-        EntryPoint="XNASwarmsRelease.W8.App">
-        <VisualElements
-            DisplayName="XNASwarmsRelease.W8"
-            Logo="Assets\Logo.png"
-            SmallLogo="Assets\SmallLogo.png"
-            Description="XNASwarmsRelease.W8"
-            ForegroundText="light"
-            BackgroundColor="#464646">
-            <DefaultTile ShowName="allLogos" />
-            <SplashScreen Image="Assets\SplashScreen.png" />
-        </VisualElements>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="XNASwarmsRelease.W8.App">
+      <VisualElements DisplayName="XNASwarmsRelease.W8" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="XNASwarmsRelease.W8" ForegroundText="light" BackgroundColor="#000000">
+        <DefaultTile ShowName="allLogos" ShortName="Columbia College Swarms" />
+        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#464646" />
+      </VisualElements>
     </Application>
   </Applications>
   <Capabilities>

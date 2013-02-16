@@ -110,7 +110,7 @@ namespace XNASwarms
         {
             
             Supers.Clear();
-#if !NETFX_CORE
+#if WINDOWS
             var surfacetouches = input.SurfaceTouches;
             if (surfacetouches.Count > 0)
             {
@@ -138,7 +138,7 @@ namespace XNASwarms
                          0.0, 0.0, new Parameters());
                 }
             }
-            else if(Supers.Count <= 0)
+            else if (Supers.Count <= 0 && input.Cursor != Vector2.Zero)
             {
                 //Mouse
                 Supers.Add(0, new Individual());

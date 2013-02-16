@@ -117,9 +117,6 @@
     <Compile Include="..\..\XNASwarms\SwarmEngine\Populations\Population.cs">
       <Link>Populations\Population.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\Populations\PopulationFacotry.cs">
-      <Link>Populations\PopulationFacotry.cs</Link>
-    </Compile>
     <Compile Include="..\..\XNASwarms\SwarmEngine\Recipes\Recipe.cs">
       <Link>Recipes\Recipe.cs</Link>
     </Compile>

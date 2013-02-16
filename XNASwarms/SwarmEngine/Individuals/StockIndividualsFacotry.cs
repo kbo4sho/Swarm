@@ -8,6 +8,21 @@ namespace SwarmEngine
     public static class StockIndividualsFacotry
     {
 
+        public static List<Individual> GenerateSet(int howmany)
+        {
+            Random rand = new Random(); ;
+            List<Individual> indvdls = new List<Individual>();
+
+            for (int i = 0; i < howmany; i++)
+            {
+                indvdls.Add(new Individual(rand.NextDouble() * 0,
+                    rand.NextDouble() * 0, rand.NextDouble() * 10 - 5,
+                    rand.NextDouble() * 10 - 5, new Parameters(226.96, 10.74, 38.96, 0.82, 0.8, 51.09, 0.28, 0.46)));
+
+            }
+            return indvdls;
+        }
+
         public static List<Individual> SetA()
         {
             Random rand = new Random(); ;

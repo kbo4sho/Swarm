@@ -251,7 +251,7 @@ namespace XNASwarms
                     }
                     else if (menuEntries[_selectedEntry].IsFussBudget())
                     {
-                        _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Fussbudget, false));
+                        _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(StockSaveSpecies.GetLavaLamp));
                         this._screen.ExitScreen();
                     }
                     else if (menuEntries[_selectedEntry].IsGameModeGame())

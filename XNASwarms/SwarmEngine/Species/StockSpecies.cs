@@ -23,5 +23,24 @@ namespace SwarmEngine
 
             }
         }
+
+        public static Population LavaLamp
+        {
+            get
+            {
+                List<Species> spcs = new List<Species>();
+                Species spec1 = new Species(StockIndividualsFacotry.SetA());
+                Species spec2 = new Species(StockIndividualsFacotry.SetB());
+                Species spec3 = new Species(StockIndividualsFacotry.SetC());
+                Species spec4 = new Species(StockIndividualsFacotry.SetD());
+                spcs.Add(spec1);
+                spcs.Add(spec2);
+                spcs.Add(spec3);
+                spcs.Add(spec4);
+
+                return new Population(spcs, "KboPop");
+
+            }
+        }
     }
 }
