@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using SwarmEngine;
 using Microsoft.Xna.Framework;
+using SwarmAnalysisEngine;
 
 namespace XNASwarms
 {
@@ -28,6 +29,11 @@ namespace XNASwarms
                 DoMutation();
             }
             base.LoadContent();
+        }
+
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)

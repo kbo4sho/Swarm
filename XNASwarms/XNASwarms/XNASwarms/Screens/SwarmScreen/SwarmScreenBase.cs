@@ -16,6 +16,7 @@ using XNASwarms.Borders;
 using XNASwarms.Borders.Walls;
 using SwarmEngine;
 using ScreenSystem.Debug;
+using SwarmAnalysisEngine;
 
 namespace XNASwarms
 {
@@ -30,11 +31,12 @@ namespace XNASwarms
         private float TimePerFrame;
         private int FramesPerSec;
         private IDebugScreen debugScreen;
-        private string Recipe;
+        AnalysisEngine analysisEngine;
         
 
         public SwarmScreenBase()
         {
+            analysisEngine = new ClusterAnaylsisEngine();
             FramesPerSec = 14;
             TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
@@ -75,6 +77,7 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
+            analysisEngine.Run();
             Border.Update(populationSimulator.getSwarmInBirthOrder().ToList<Individual>());
             populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);   
             Camera.Update(gameTime);

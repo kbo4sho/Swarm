@@ -146,6 +146,10 @@
       <Project>{45FA38FB-3602-4160-9C46-23FDDD7A05E7}</Project>
       <Name>ScreenSystem</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SwarmAnalysisEngine\SwarmAnalysisEngine.csproj">
+      <Project>{B995B1B8-65B9-4057-969F-AA229C750A83}</Project>
+      <Name>SwarmAnalysisEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SwarmData\SwarmData.csproj">
       <Project>{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}</Project>
       <Name>SwarmData</Name>
