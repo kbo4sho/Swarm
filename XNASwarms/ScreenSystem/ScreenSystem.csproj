@@ -89,6 +89,12 @@
     <Compile Include="ScreenSystem\VirtualButton.cs" />
     <Compile Include="ScreenSystem\VirtualStick.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SwarmAnalysisEngine\SwarmAnalysisEngine.csproj">
+      <Project>{B995B1B8-65B9-4057-969F-AA229C750A83}</Project>
+      <Name>SwarmAnalysisEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

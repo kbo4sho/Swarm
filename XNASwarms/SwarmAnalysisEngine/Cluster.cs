@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using SwarmEngine;
 
 namespace SwarmAnalysisEngine
 {
-    public interface IAnalysisModule
+    public class Cluster : List<Individual>
     {
-        string ModuleName{get;}
-        List<AnalysisResult> Analyze(List<Individual> indvds);
+        public double MaxHeight;
+        public double MinHeight;
     }
 }

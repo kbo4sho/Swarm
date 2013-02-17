@@ -13,15 +13,15 @@ namespace XNASwarms
             get
             {
                 SaveSpecies lavalamp = new SaveSpecies();
-                lavalamp.SavedSpecies.Add(GetSpecies(38, 300, 55.95, 10, 13.75, 1, 1, 88.61, 0.19, 0));
-                lavalamp.SavedSpecies.Add(GetSpecies(14, 300, 55.95, 10, 13.75, 1, 0.52, 58.63, 0.18, 0.83));
-                lavalamp.SavedSpecies.Add(GetSpecies(2, 300, 128.08, 2.62, 20, 0.92, .52, 58.63, 0.04, 0.52));
-                lavalamp.SavedSpecies.Add(GetSpecies(49, 300, 55.95, 10, 20, 0.92, 0.99, 58.63, 0.04, 0.52));
-                lavalamp.SavedSpecies.Add(GetSpecies(18, 300, 55.95, 10, 20, 0, 0.52, 58.63, 0.04, 0.81));
-                lavalamp.SavedSpecies.Add(GetSpecies(29, 300, 55.95, 10, 13.75, 1, 0.52, 92.94, 0.10, 0.58));
-                lavalamp.SavedSpecies.Add(GetSpecies(29, 300, 128.08, 2.62, 20, 0.92, 0.52, 58.63, 0.02, 0.52));
-                lavalamp.SavedSpecies.Add(GetSpecies(105, 300, 55.95, 10, 20, 0, 0.52, 58.63, 0.04, 0.52));
-                lavalamp.SavedSpecies.Add(GetSpecies(16, 300, 128.08, 2.62, 20, 0.92, 0.52, 100, 0.04, 0.52));
+                lavalamp.SavedSpecies.Add(GetSpecies(38, 400, 55.95, 10, 13.75, 1, 1, 88.61, 0.19, 0));
+                lavalamp.SavedSpecies.Add(GetSpecies(14, 400, 55.95, 10, 13.75, 1, 0.52, 58.63, 0.18, 0.83));
+                lavalamp.SavedSpecies.Add(GetSpecies(2, 400, 128.08, 2.62, 20, 0.92, .52, 58.63, 0.04, 0.52));
+                lavalamp.SavedSpecies.Add(GetSpecies(49, 400, 55.95, 10, 20, 0.92, 0.99, 58.63, 0.04, 0.52));
+                lavalamp.SavedSpecies.Add(GetSpecies(18, 400, 55.95, 10, 20, 0, 0.52, 58.63, 0.04, 0.81));
+                lavalamp.SavedSpecies.Add(GetSpecies(29, 400, 55.95, 10, 13.75, 1, 0.52, 92.94, 0.10, 0.58));
+                lavalamp.SavedSpecies.Add(GetSpecies(29, 400, 128.08, 2.62, 20, 0.92, 0.52, 58.63, 0.02, 0.52));
+                lavalamp.SavedSpecies.Add(GetSpecies(105, 400, 55.95, 10, 20, 0, 0.52, 58.63, 0.04, 0.52));
+                lavalamp.SavedSpecies.Add(GetSpecies(16, 400, 128.08, 2.62, 20, 0.92, 0.52, 100, 0.04, 0.52));
                 return lavalamp;
             }
         }

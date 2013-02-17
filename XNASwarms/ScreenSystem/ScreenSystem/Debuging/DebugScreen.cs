@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ScreenSystem.ScreenSystem;
+using SwarmAnalysisEngine;
 
 namespace ScreenSystem.Debug
 {
@@ -13,6 +14,7 @@ namespace ScreenSystem.Debug
     {
         void AddDebugItem(string label, string message, DebugFlagType flagtype);
         void AddDebugItem(string label, string message);
+        void AddAnaysisResult(List<AnalysisResult> analysisresult);
         void SetVisiblity();
         void AddSpacer();
     }
@@ -119,6 +121,14 @@ namespace ScreenSystem.Debug
                     break;
                     
             }  
+        }
+
+        public void AddAnaysisResult(List<AnalysisResult> analysisresult)
+        {
+            foreach(AnalysisResult result in analysisresult)
+            {
+                AddDebugItem(result.Type, result.Message);
+            }
         }
 
         public void SetVisiblity()

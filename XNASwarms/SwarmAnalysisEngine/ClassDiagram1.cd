@@ -10,7 +10,7 @@
   <Class Name="SwarmAnalysisEngine.ClusterModule">
     <Position X="3" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>ClusterModule.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -22,17 +22,25 @@
       <FileName>ClusterAnaylsisEngine.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="SwarmAnalysisEngine.NameModule">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>NameModule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Struct Name="SwarmAnalysisEngine.AnalysisResult">
     <Position X="0.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAIAAAAAA=</HashCode>
       <FileName>AnalysisResult.cs</FileName>
     </TypeIdentifier>
   </Struct>
   <Interface Name="SwarmAnalysisEngine.IAnalysisModule">
-    <Position X="3" Y="0.75" Width="1.5" />
+    <Position X="3" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>IAnalysisModule.cs</FileName>
     </TypeIdentifier>
   </Interface>

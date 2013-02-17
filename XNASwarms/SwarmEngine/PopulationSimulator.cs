@@ -11,7 +11,7 @@ namespace SwarmEngine
         private Population population;
         Random rand = new Random();
 
-        private List<Individual> swarmInBirthOrder, swarmInXOrder,
+        private Species swarmInBirthOrder, swarmInXOrder,
                 swarmInYOrder;
 
         #region Constuctor
@@ -39,9 +39,9 @@ namespace SwarmEngine
 
             population = new Population(recipes[0].createPopulation(width, height), "CrumpulaAtion");
 
-            swarmInBirthOrder = new List<Individual>(population.size());
-            swarmInXOrder = new List<Individual>(population.size());
-            swarmInYOrder = new List<Individual>(population.size());
+            swarmInBirthOrder = new Species();
+            swarmInXOrder = new Species();
+            swarmInYOrder = new Species();
 
             for (int i = 0; i < population.Count; i++)
             {
@@ -58,9 +58,9 @@ namespace SwarmEngine
         {
             population = pop;
 
-            swarmInBirthOrder = new List<Individual>(population.size());
-            swarmInXOrder = new List<Individual>(population.size());
-            swarmInYOrder = new List<Individual>(population.size());
+            swarmInBirthOrder = new Species();
+            swarmInXOrder = new Species();
+            swarmInYOrder = new Species();
 
             for (int i = 0; i < population.Count; i++)
             {
@@ -76,19 +76,12 @@ namespace SwarmEngine
 
         public void stepSimulation(List<Individual> temporaryIndividuals, int weightOfTemporaries)
         {
-            //Individual tempSwarm, tempSwarm2;
-            //Parameters param;
-
-            //double tempX, tempY, tempX2, tempY2, tempDX, tempDY;
-            //double localCenterX, localCenterY, localDX, localDY, tempAx, tempAy, d;
-            //int n;
-
-            List<Individual> neighbors = new List<Individual>();
-
             int numberOfSwarm = swarmInBirthOrder.Count();
 
             for (int i = 0; i < numberOfSwarm; i++)
             {
+                List<Individual> neighbors = new List<Individual>();
+
                 Individual currentInd = swarmInBirthOrder[i];
                 Parameters param = currentInd.getGenome();
                 double tempX = currentInd.getX();
@@ -403,38 +396,37 @@ namespace SwarmEngine
             }
         }
 
-        public List<Individual> getSwarmInXOrder()
+        public List<Individual> GetSwarmInXOrder()
         {
             sortInternalLists();
-            //return Collections.unmodifiableList(swarmInXOrder);
-            //TODO : Fix commented out lines
             return swarmInXOrder;
         }
 
-        public List<Individual> getSwarmInYOrder()
+        public List<Individual> GetSwarmInYOrder()
         {
             sortInternalLists();
-            //return Collections.unmodifiableList(swarmInYOrder);
-            //TODO : Fix commented out lines
             return swarmInYOrder;
         }
 
-        public List<Individual> getSwarmInBirthOrder()
+        public List<Individual> GetSwarmInBirthOrder()
         {
             sortInternalLists();
-            //return Collections.unmodifiableList(swarmInYOrder);
-            //TODO : Fix commented out lines
             return swarmInBirthOrder;
         }
 
+        //public List<Individual> GetNeighbors()
+        //{
+        //    return neighbors;
+        //}
 
 
-        public Population getPopulation()
+
+        public Population GetPopulation()
         {
             return population;
         }
 
-        public List<Individual> getSwarmSortedBySpecies()
+        public List<Individual> GetSwarmSortedBySpecies()
         {
             List<Individual> allSpecies = new List<Individual>();
             foreach (Species spcs in population)

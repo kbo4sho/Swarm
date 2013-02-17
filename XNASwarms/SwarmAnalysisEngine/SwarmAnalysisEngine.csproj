@@ -61,13 +61,21 @@
   <ItemGroup>
     <Compile Include="AnalysisEngine.cs" />
     <Compile Include="AnalysisResult.cs" />
+    <Compile Include="Cluster.cs" />
     <Compile Include="ClusterAnaylsisEngine.cs" />
     <Compile Include="ClusterModule.cs" />
     <Compile Include="IAnalysisModule.cs" />
+    <Compile Include="NameModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SwarmEngine\SwarmEngine.csproj">
+      <Project>{6C3EFB94-062C-4EF9-9A72-1B561782E1A4}</Project>
+      <Name>SwarmEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

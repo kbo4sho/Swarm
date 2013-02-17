@@ -12,7 +12,7 @@ namespace XNASwarms
     class SwarmScreenDrawScreen : SwarmScreenBase
     {
         Random rand;
-        Texture2D swarmIndividual;
+        Texture2D individualTexture, bigIndividualTexture;
         bool Mutate;
 
         public SwarmScreenDrawScreen(bool mutate)
@@ -23,7 +23,8 @@ namespace XNASwarms
 
         public override void LoadContent()
         {
-            swarmIndividual = ScreenManager.Content.Load<Texture2D>("bee");
+            individualTexture = ScreenManager.Content.Load<Texture2D>("bee");
+            bigIndividualTexture = ScreenManager.Content.Load<Texture2D>("beebig");
             if (Mutate)
             {
                 DoMutation();
@@ -38,30 +39,35 @@ namespace XNASwarms
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            Population population = populationSimulator.GetPopulation();
             ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
             base.Draw(gameTime);
-            Population population = populationSimulator.getPopulation();
-
+            
             foreach (Species spcs in population)
             {
                 foreach (Individual indvd in spcs)
                 {
-                    ScreenManager.SpriteBatch.Draw(swarmIndividual, new Rectangle(
-                        (int)indvd.getX(),
-                        (int)indvd.getY(), swarmIndividual.Width, swarmIndividual.Height),
-                        null,
-                        indvd.getDisplayColor(),
-                        0f,
-                        new Vector2(swarmIndividual.Width / 2, swarmIndividual.Height/2),
-                        SpriteEffects.None, 0);
+                    DrawIndividual(indvd, indvd.getDisplayColor(), individualTexture);
                 }
             }
             ScreenManager.SpriteBatch.End();
         }
 
+        private void DrawIndividual(Individual indvd,Color color, Texture2D texture)
+        {
+            ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
+                        (int)indvd.getX(),
+                        (int)indvd.getY(), texture.Width, texture.Height),
+                        null,
+                        color,
+                        0f,
+                        new Vector2(texture.Width / 2, texture.Height / 2),
+                        SpriteEffects.None, 0);
+        }
+
         private void DoMutation()
         {
-            foreach (Species spcs in populationSimulator.getPopulation())
+            foreach (Species spcs in populationSimulator.GetPopulation())
             {
                 foreach (Individual indvdl in spcs)
                 {

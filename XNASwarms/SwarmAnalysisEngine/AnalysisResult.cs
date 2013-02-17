@@ -9,13 +9,14 @@ namespace SwarmAnalysisEngine
     {
         public string Message
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            get;
+            set;
+        }
+
+        public string Type
+        {
+            get;
+            set;
         }
     }
 }

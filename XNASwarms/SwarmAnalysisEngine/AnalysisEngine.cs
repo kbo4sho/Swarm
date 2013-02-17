@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SwarmEngine;
 
 namespace SwarmAnalysisEngine
 {
@@ -14,12 +15,12 @@ namespace SwarmAnalysisEngine
             Modules = modules;
         }
     
-        public List<AnalysisResult> Run()
+        public List<AnalysisResult> Run(List<Individual> indvds)
         {
             List<AnalysisResult> results = new List<AnalysisResult>();
             foreach (IAnalysisModule module in Modules)
             {
-                results.Add(module.Analyze());
+                results.AddRange(module.Analyze(indvds));
             }
             return results;
         }

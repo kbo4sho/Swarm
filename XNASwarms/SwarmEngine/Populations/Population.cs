@@ -36,7 +36,6 @@ namespace SwarmEngine
         private String title;
         Random rand = new Random();
 
-
         public Population():this(new List<Species>(),"kbothing")
         {
         }
@@ -142,12 +141,10 @@ namespace SwarmEngine
         //} ************************* What is this?
         //SC? : I have a feeling we don't need this anymore. It seems like it is used for some kind of for loop.
 
-
         public int size()
         {
             return this.Count(); //was population.size()
         }
-
 
         public Species get(int index)
         {

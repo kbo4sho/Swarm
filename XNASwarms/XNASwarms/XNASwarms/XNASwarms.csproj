@@ -136,6 +136,7 @@
     <Compile Include="Screens\SwarmScreen\SwarmScreenDrawScreen.cs" />
     <Compile Include="Screens\SwarmScreen\SwarmScreenFromPopulation.cs" />
     <Compile Include="Screens\SwarmScreen\SwarmScreenFromSavedSpecies.cs" />
+    <Compile Include="StockSaveSpecies.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Game.ico" />
