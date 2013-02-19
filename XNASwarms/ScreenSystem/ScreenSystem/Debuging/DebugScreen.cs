@@ -125,9 +125,12 @@ namespace ScreenSystem.Debug
 
         public void AddAnaysisResult(List<AnalysisResult> analysisresult)
         {
-            foreach(AnalysisResult result in analysisresult)
+            if (this.IsVisible)
             {
-                AddDebugItem(result.Type, result.Message);
+                foreach (AnalysisResult result in analysisresult)
+                {
+                    AddDebugItem(result.Type, result.Message);
+                }
             }
         }
 

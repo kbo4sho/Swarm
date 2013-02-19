@@ -34,66 +34,104 @@ namespace SwarmAnalysisEngine
             List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
             Clusters.Clear();
             Individual oneBeforeIndividiual = new Individual();
-            string returnstring = "";
             bool IsNewCluster = false;
             List<Cluster> tempClusters = new List<Cluster>();
 
             if (Clusters.Count() == 0)
             {
-                Clusters.Add(new Cluster());
+                Clusters.Add(new Cluster() { indvds.First() });
             }
             tempClusters.Clear();
 
             Clusters.Select(s => s.MinHeight = 0);
             Clusters.Select(s => s.MaxHeight = 0);
+
             foreach (Individual individual in indvds)
             {
-              
-                foreach(Cluster cluster in Clusters)
+                Vector2 indvdPosition = new Vector2((float)individual.getX(), (float)individual.getY());
+                Vector2 beforeIndvdPosition = new Vector2((float)oneBeforeIndividiual.getX(), (float)oneBeforeIndividiual.getY());
+
+                //ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "INDVIDUAL # " + individual.getRankInXOrder() });
+
+                for (int c = 0; c < Clusters.Count; c++)
                 {
-                    //tempClusters.Clear();
-                    Vector2 indvdPosition = new Vector2((float)individual.getX(),(float)individual.getY());
-                    Vector2 beforeIndvdPosition =  new Vector2((float)oneBeforeIndividiual.getX(),(float)oneBeforeIndividiual.getY());
-                    double distance = Vector2.Distance(indvdPosition,beforeIndvdPosition);
+                    tempClusters.Clear();
 
-                    double newdis = (individual.getX() - oneBeforeIndividiual.getX()) * (individual.getX() - oneBeforeIndividiual.getX()) + (individual.getY() - oneBeforeIndividiual.getY()) * (individual.getY() - oneBeforeIndividiual.getY());
-                    double oneBeforeNeighborhood = oneBeforeIndividiual.getX() + (oneBeforeIndividiual.getGenome().getNeighborhoodRadius() * oneBeforeIndividiual.getGenome().getNeighborhoodRadius());
+                    #region Check Last Ten
+                    var lastTenAdded = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - 20)).Take(20);
 
-                    Vector2 oneBeforePosition = new Vector2((float)oneBeforeIndividiual.getX(),(float)oneBeforeIndividiual.getY());
+                    foreach (Individual indvd in lastTenAdded)
+                    {
+                        double newdis = (individual.getX() - indvd.getX()) * (individual.getX() - indvd.getX()) + (individual.getY() - indvd.getY()) * (individual.getY() - indvd.getY());
+                        IsNewCluster = true;
+                        if (newdis < indvd.getGenome().getNeighborhoodRadius() * indvd.getGenome().getNeighborhoodRadius())//||oneBeforePosition.Y < Clusters[c].MaxHeight && oneBeforePosition.Y > Clusters[c].MinHeight)
+                        {
+                            //ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "ADDED ONE TO CLUSTER # " + c });
+                            Clusters[c].Add(individual);
+                            IsNewCluster = false;
+                            break;
 
-                    //if (cluster.Count > 0)
+                        }
+                        else
+                        {
+                            //ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "NO ACTION TO CLUSTER # " + c });
+                            //Clusters[c].Add(individual);
+                        }
+                    }
+                    #endregion
+                    //foreach (Individual indvd in Clusters[c])
                     //{
-                    //    if (individual.getY() > cluster.OrderBy(s => s.getY()).First().getY())
+                    //    double newdis = (individual.getX() - indvd.getX()) * (individual.getX() - indvd.getX()) + (individual.getY() - indvd.getY()) * (individual.getY() - indvd.getY());
+
+                    //    if (newdis < oneBeforeIndividiual.getGenome().getNeighborhoodRadius())//||oneBeforePosition.Y < Clusters[c].MaxHeight && oneBeforePosition.Y > Clusters[c].MinHeight)
                     //    {
-                    //        cluster.MaxHeight = individual.getY();
+                    //        ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "ADDED NEIGHBOR" });
+                    //        Clusters[c].Add(individual);
+
                     //    }
-                    //    if (individual.getY() < cluster.OrderByDescending(s => s.getY()).First().getY())
+                    //    else if (c != 0 && !Clusters[c].Contains(individual))
                     //    {
-                    //        cluster.MinHeight = individual.getY();
+                    //        IsNewCluster = true;
+                    //        ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "NEW CLUSTER" });
+                    //        ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "CLUSTER MAX HEIGHT: " + Clusters[c].MaxHeight });
+                    //        ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "CLUSTER MIN HEIGHT: " + Clusters[c].MinHeight });
+                    //    }
+                    //    else
+                    //    {
+                    //        ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "ADDED NON NEIGHBOR" });
+                    //        Clusters[c].Add(individual);
                     //    }
                     //}
 
-                    if (newdis < oneBeforeIndividiual.getGenome().getNeighborhoodRadius() * oneBeforeIndividiual.getGenome().getNeighborhoodRadius() ||
-                        oneBeforePosition.Y < cluster.MaxHeight && oneBeforePosition.Y > cluster.MinHeight)
+                    
+
+                    if (IsNewCluster)
                     {
-                        ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "ADDED NEIGHBOR" });
-                        cluster.Add(individual);
+                        tempClusters.Add(new Cluster() { individual });
                     }
-                    else if (!cluster.Contains(individual))
-                    {
-                        IsNewCluster = true;
-                        ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "NEW CLUSTER" });
-                        ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "CLUSTER MAX HEIGHT: " + cluster.MaxHeight });
-                        ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "CLUSTER MIN HEIGHT: " + cluster.MinHeight });
-                    }
+
+                    //if (Clusters[c].Count > 0)
+                    //{
+                    //    if (individual.getY() > Clusters[c].OrderBy(s => s.getY()).First().getY())
+                    //    {
+                    //        Clusters[c].MaxHeight = individual.getY();
+                    //    }
+                    //    if (individual.getY() < Clusters[c].OrderByDescending(s => s.getY()).First().getY())
+                    //    {
+                    //        Clusters[c].MinHeight = individual.getY();
+                    //    }
+                    //}
+
                 }
 
-                if (IsNewCluster)
+
+
+                if (tempClusters.Count > 0)
                 {
-                    //tempClusters.Add(new Cluster() { individual });
+                    Clusters.AddRange(tempClusters);
                 }
 
-                oneBeforeIndividiual = individual;
+                //oneBeforeIndividiual = individual;
             }
 
            
@@ -102,10 +140,12 @@ namespace SwarmAnalysisEngine
             //Add my tempCluster back in to the main stack
             if (tempClusters.Count > 0)
             {
-                //Clusters.AddRange(tempClusters);
+                Clusters.AddRange(tempClusters);
             }
 
-            ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = Clusters.Count().ToString() });
+            ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "////////////////////////////////////////////" });
+            ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "# OF CLUSTERS " + Clusters.Count().ToString() });
+            ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "////////////////////////////////////////////" });
             return ReadOut;// Clusters.Count().ToString() + "///" + returnstring;
         }
 

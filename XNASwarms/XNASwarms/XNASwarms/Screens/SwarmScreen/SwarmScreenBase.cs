@@ -30,6 +30,7 @@ namespace XNASwarms
         protected Border Border;
         private float TimePerFrame;
         private int FramesPerSec;
+        float TotalElapsed;
         private IDebugScreen debugScreen;
         AnalysisEngine analysisEngine;
         
@@ -37,7 +38,7 @@ namespace XNASwarms
         public SwarmScreenBase()
         {
             analysisEngine = new ClusterAnaylsisEngine();
-            FramesPerSec = 14;
+            FramesPerSec = 4;
             TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
         }
@@ -77,7 +78,15 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            debugScreen.AddAnaysisResult(analysisEngine.Run(populationSimulator.GetSwarmInXOrder()));
+            #region FrameRate
+            TotalElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (TotalElapsed > TimePerFrame)
+            {
+                debugScreen.AddAnaysisResult(analysisEngine.Run(populationSimulator.GetSwarmInXOrder()));
+                TotalElapsed -= TimePerFrame;
+            }
+            #endregion
+            
             populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);
             Border.Update(populationSimulator.GetSwarmInBirthOrder().ToList<Individual>());
             Camera.Update(gameTime);
@@ -86,7 +95,6 @@ namespace XNASwarms
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-
             for (int i = 0; i < Supers.Count; i++)
             {
                 Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2((int)Supers[i].getX(), (int)Supers[i].getY()));
