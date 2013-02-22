@@ -121,6 +121,24 @@ namespace XNASwarms.Borders
 
         public string GetWallTypeAsText()
         {
+            if (borderWalls.Where(w => w.GetWallActionType() == WallActionType.Portal).Count() == 2
+                && borderWalls.Where(w => w.GetWallActionType() == WallActionType.Bounce).Count() == 2)
+            {
+                return "Two Bouncy Two Portal";
+            }
+            else if(borderWalls.Where(w => w.GetWallActionType() == WallActionType.Portal).Count() == 4)
+            {
+                return "Portal";
+            }
+            else if (borderWalls.Where(w => w.GetWallActionType() == WallActionType.Bounce).Count() == 4)
+            {
+               return "Bouncy";
+            }
+            else
+            {
+                return "";
+            }
+
             return borderWalls[0].GetWallActionType().ToString();
         }
     }

@@ -55,7 +55,7 @@ namespace XNASwarms
             
             Supers = new Dictionary<int, Individual>();
 
-            Border = new Border(this, WallFactory.FourPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
+            Border = new Border(this, WallFactory.TopBottomPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
             
             Supers.Add(0, new Individual());
 
