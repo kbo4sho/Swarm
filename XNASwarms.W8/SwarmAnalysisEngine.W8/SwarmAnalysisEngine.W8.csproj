@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B82F87BE-6A82-4240-864A-AAC8966A3F0C}</ProjectGuid>
+    <ProjectGuid>{FD87B571-0F0A-4F16-A154-96D94353E52E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScreenSystem.W8</RootNamespace>
-    <AssemblyName>ScreenSystem.W8</AssemblyName>
+    <RootNamespace>SwarmAnalysisEngine.W8</RootNamespace>
+    <AssemblyName>SwarmAnalysisEngine.W8</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -99,71 +99,28 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\DrawingSystem\Sprite.cs">
-      <Link>DrawingSystem\Sprite.cs</Link>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\AnalysisEngine.cs">
+      <Link>AnalysisEngine.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\BackgroundScreen.cs">
-      <Link>ScreenSystem\BackgroundScreen.cs</Link>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\AnalysisResult.cs">
+      <Link>AnalysisResult.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Camera2D.cs">
-      <Link>ScreenSystem\Camera2D.cs</Link>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\Cluster.cs">
+      <Link>Cluster.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\ConvertUnits.cs">
-      <Link>ScreenSystem\ConvertUnits.cs</Link>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\ClusterAnaylsisEngine.cs">
+      <Link>ClusterAnaylsisEngine.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Debuging\DebugItem.cs">
-      <Link>ScreenSystem\Debuging\DebugItem.cs</Link>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\ClusterModule.cs">
+      <Link>ClusterModule.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Debuging\DebugScreen.cs">
-      <Link>ScreenSystem\Debuging\DebugScreen.cs</Link>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\IAnalysisModule.cs">
+      <Link>IAnalysisModule.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\FramerateCounterComponent.cs">
-      <Link>ScreenSystem\FramerateCounterComponent.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\GameScreen.cs">
-      <Link>ScreenSystem\GameScreen.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\IDemoScreen.cs">
-      <Link>ScreenSystem\IDemoScreen.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\InputHelper.cs">
-      <Link>ScreenSystem\InputHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\LogoScreen.cs">
-      <Link>ScreenSystem\LogoScreen.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\MenuButton.cs">
-      <Link>ScreenSystem\MenuButton.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\MenuEntry.cs">
-      <Link>ScreenSystem\MenuEntry.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\MenuScreen.cs">
-      <Link>ScreenSystem\MenuScreen.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\MessageBoxScreen.cs">
-      <Link>ScreenSystem\MessageBoxScreen.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\PauseScreen.cs">
-      <Link>ScreenSystem\PauseScreen.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\PinchToZoom.cs">
-      <Link>ScreenSystem\PinchToZoom.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\ScreenManagerComponent.cs">
-      <Link>ScreenSystem\ScreenManagerComponent.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\SpriteFonts.cs">
-      <Link>ScreenSystem\SpriteFonts.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\VirtualButton.cs">
-      <Link>ScreenSystem\VirtualButton.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\VirtualStick.cs">
-      <Link>ScreenSystem\VirtualStick.cs</Link>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\NameModule.cs">
+      <Link>NameModule.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScreenSystem\SnappedScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework.Windows8">
@@ -171,10 +128,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SwarmAnalysisEngine.W8\SwarmAnalysisEngine.W8.csproj">
-      <Project>{fd87b571-0f0a-4f16-a154-96d94353e52e}</Project>
-      <Name>SwarmAnalysisEngine.W8</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SwarmEngine.W8\SwarmEngine.W8.csproj">
       <Project>{8ba84de0-e042-403b-9338-15a76f12a14a}</Project>
       <Name>SwarmEngine.W8</Name>
