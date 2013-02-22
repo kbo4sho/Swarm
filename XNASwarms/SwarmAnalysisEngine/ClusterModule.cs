@@ -18,7 +18,7 @@ namespace SwarmAnalysisEngine
         }
 
         int ClusterItemThreshhold = 5;
-        int ClusterBackCount = 20;
+        int ClusterBackCount = 10;
 
         public List<Cluster> Clusters;
 
