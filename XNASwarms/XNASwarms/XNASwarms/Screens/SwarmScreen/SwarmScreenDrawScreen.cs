@@ -47,7 +47,7 @@ namespace XNASwarms
             {
                 foreach (Individual indvd in spcs)
                 {
-                    DrawIndividual(indvd, indvd.getDisplayColor(), individualTexture);
+                    DrawIndividual(indvd, indvd.getGenomeColor(), individualTexture);
                 }
             }
             ScreenManager.SpriteBatch.End();

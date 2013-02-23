@@ -67,6 +67,7 @@
     <Compile Include="IAnalysisModule.cs" />
     <Compile Include="NameModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpeedModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

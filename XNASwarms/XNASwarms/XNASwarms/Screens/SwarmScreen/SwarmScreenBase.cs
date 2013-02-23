@@ -38,7 +38,7 @@ namespace XNASwarms
         public SwarmScreenBase()
         {
             analysisEngine = new ClusterAnaylsisEngine();
-            FramesPerSec = 30;
+            FramesPerSec = 4;
             TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
         }
@@ -55,7 +55,7 @@ namespace XNASwarms
             
             Supers = new Dictionary<int, Individual>();
 
-            Border = new Border(this, WallFactory.TopBottomPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
+            Border = new Border(this, WallFactory.FourBouncy(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
             
             Supers.Add(0, new Individual());
 
@@ -88,7 +88,7 @@ namespace XNASwarms
             }
             #endregion
 
-            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 50);
+            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);
             Border.Update(populationSimulator.GetSwarmInBirthOrder().ToList<Individual>());
             Camera.Update(gameTime);
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);

@@ -102,6 +102,7 @@ namespace SwarmEngine
                 int minRankInYOrder = currentInd.getRankInYOrder();
                 int maxRankInYOrder = currentInd.getRankInYOrder();
 
+                //TODO: Make this faster
                 for (int j = currentInd.getRankInXOrder() - 1; j >= 0; j--)
                 {
                     if (swarmInXOrder[j].getX() >= minX)
@@ -182,7 +183,7 @@ namespace SwarmEngine
                 int n = neighbors.Count();
 
                 double tempAx, tempAy;
-                if (n == 0 || n >= 300)
+                if (n == 0 || n >= 100)
                 {
 
                     tempAx = rand.NextDouble() - 0.5;

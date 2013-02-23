@@ -11,20 +11,18 @@ namespace SwarmAnalysisEngine
     {
         public string ModuleName
         {
-            get
-            {
-                return "Cluster Module";
-            }
+            get { return "Cluster Module"; }
         }
 
         int ClusterItemThreshhold = 5;
-        int ClusterBackCount = 10;
-
+        int ClusterBackCount = 100;
+        List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
         public List<Cluster> Clusters;
 
         public ClusterModule()
         {
             Clusters = new List<Cluster>();
+            List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
         }
         
         public List<AnalysisResult> Analyze(List<Individual> indvds)
@@ -34,13 +32,10 @@ namespace SwarmAnalysisEngine
 
         private List<AnalysisResult> GetClustersReadOut(List<Individual> indvds)
         {
-            List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
+            
             Clusters.Clear();
 
-            if (Clusters.Count() == 0)
-            {
-                Clusters.Add(new Cluster() { indvds.First() });
-            }
+            Clusters.Add(new Cluster() { indvds[0] });
 
             for (int i = 0; i < indvds.Count; i++)
             {
@@ -48,21 +43,17 @@ namespace SwarmAnalysisEngine
                 {
                     Clusters.Add(new Cluster() { indvds[i] });
                 }
+
+                //TODO: Check and merge clusters that can be connected
+                foreach (Cluster cluster in Clusters)
+                {
+
+                }
             }
 
             RemoveSmallClusters();
 
-            for (int i = 0; i < Clusters.Count; i++ )
-            {
-                string clusterVisualCount = "";
-                for (int c = 0; c < Clusters[i].Count()/4; c++)
-                {
-                    clusterVisualCount += "+";
-                }
-                ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "CLUSTER # " + (i + 1) + " : COUNT : " + clusterVisualCount });
-            }
-            ReadOut.Add(new AnalysisResult() { Type = "              ", Message = "                                                  " });
-            return ReadOut;
+            return GenerateMessage();
         }
 
         private void RemoveSmallClusters()
@@ -89,6 +80,21 @@ namespace SwarmAnalysisEngine
                 }
             }
             return false;
-        }        
+        }
+
+        private List<AnalysisResult> GenerateMessage()
+        {
+            for (int i = 0; i < Clusters.Count; i++)
+            {
+                string clusterVisualCount = "";
+                for (int c = 0; c < Clusters[i].Count() / 4; c++)
+                {
+                    clusterVisualCount += "+";
+                }
+                ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "CLUSTER # " + (i + 1) + " : COUNT : " + clusterVisualCount });
+            }
+            ReadOut.Add(new AnalysisResult() { Type = "              ", Message = "                                                  " });
+            return ReadOut;
+        }
     }
 }
