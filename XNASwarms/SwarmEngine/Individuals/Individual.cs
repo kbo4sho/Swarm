@@ -13,6 +13,7 @@ namespace SwarmEngine
         private double x, y, dx, dy, dx2, dy2;
 	    public Parameters genome;
 	    private int rankInXOrder, rankInYOrder;
+        private Color color;
 
         public Individual() :  this(0.0, 0.0, 0.0, 0.0, new Parameters())
         {
@@ -26,6 +27,7 @@ namespace SwarmEngine
             dx = dx2 = dxx;
             dy = dy2 = dyy;
             genome = g;
+            color = genome.getDisplayColor();
             rankInXOrder = 0;
             rankInYOrder = 0;
         }
@@ -52,9 +54,19 @@ namespace SwarmEngine
             y += dy;
         }
 
+        public void setDisplayColor(Color clr)
+        {
+            this.color = clr;
+        }
+
 	    public Color getDisplayColor() {
-		    return genome.getDisplayColor();
+            return this.color;
 	    }
+
+        public Color getGenomeColor()
+        {
+            return genome.getDisplayColor();
+        }
 
 	    public int getRankInXOrder() {
 		    return rankInXOrder;

@@ -42,18 +42,26 @@ namespace SwarmAnalysisEngine
                 Clusters.Add(new Cluster() { indvds.First() });
             }
 
-            foreach (Individual individual in indvds)
+            for (int i = 0; i < indvds.Count; i++)
             {
-                if(!InExistingCluster(individual))
+                if (!InExistingCluster(indvds[i]))
                 {
-                    Clusters.Add(new Cluster(){individual});
+                    Clusters.Add(new Cluster() { indvds[i] });
                 }
             }
 
             RemoveSmallClusters();
 
-            ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "# OF CLUSTERS : " + Clusters.Count().ToString() });
-            
+            for (int i = 0; i < Clusters.Count; i++ )
+            {
+                string clusterVisualCount = "";
+                for (int c = 0; c < Clusters[i].Count()/4; c++)
+                {
+                    clusterVisualCount += "+";
+                }
+                ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "CLUSTER # " + (i + 1) + " : COUNT : " + clusterVisualCount });
+            }
+            ReadOut.Add(new AnalysisResult() { Type = "              ", Message = "                                                  " });
             return ReadOut;
         }
 
@@ -67,13 +75,13 @@ namespace SwarmAnalysisEngine
         {
             for (int c = 0; c < Clusters.Count; c++)
             {
-                var lastFew = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - ClusterBackCount)).Take(ClusterBackCount);
+                var lastFew = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - ClusterBackCount)).Take(ClusterBackCount).ToList();
 
-                foreach (Individual indvd in lastFew)
+                for (int i = 0; i < lastFew.Count();i++ )
                 {
-                    double newdis = (individual.getX() - indvd.getX()) * (individual.getX() - indvd.getX()) + (individual.getY() - indvd.getY()) * (individual.getY() - indvd.getY());
+                    double newdis = (individual.getX() - lastFew[i].getX()) * (individual.getX() - lastFew[i].getX()) + (individual.getY() - lastFew[i].getY()) * (individual.getY() - lastFew[i].getY());
 
-                    if (newdis < indvd.getGenome().getNeighborhoodRadius() * indvd.getGenome().getNeighborhoodRadius())
+                    if (newdis < lastFew[i].getGenome().getNeighborhoodRadius() * lastFew[i].getGenome().getNeighborhoodRadius())
                     {
                         Clusters[c].Add(individual);
                         return true;

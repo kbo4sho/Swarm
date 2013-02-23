@@ -18,9 +18,9 @@ namespace SwarmAnalysisEngine
         public List<AnalysisResult> Run(List<Individual> indvds)
         {
             List<AnalysisResult> results = new List<AnalysisResult>();
-            foreach (IAnalysisModule module in Modules)
+            for (int i = 0; i < Modules.Count; i++ )
             {
-                results.AddRange(module.Analyze(indvds));
+                results.AddRange(Modules[i].Analyze(indvds));
             }
             return results;
         }

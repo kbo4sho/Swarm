@@ -38,7 +38,7 @@ namespace XNASwarms
         public SwarmScreenBase()
         {
             analysisEngine = new ClusterAnaylsisEngine();
-            FramesPerSec = 4;
+            FramesPerSec = 30;
             TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
         }

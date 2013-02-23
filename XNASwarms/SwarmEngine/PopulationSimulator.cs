@@ -252,14 +252,14 @@ namespace SwarmEngine
 
             }
 
-            updateInternalState();
+           // updateInternalState();
         }
 
         private void updateInternalState()
         {
-            foreach (Individual ind in swarmInBirthOrder)
+            for (int i = 0; i < swarmInBirthOrder.Count(); i++)
             {
-                ind.stepSimulation();
+                swarmInBirthOrder[i].stepSimulation();
             }
 
             sortInternalLists();
