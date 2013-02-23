@@ -77,11 +77,10 @@ namespace SwarmEngine
         public void stepSimulation(List<Individual> temporaryIndividuals, int weightOfTemporaries)
         {
             int numberOfSwarm = swarmInBirthOrder.Count();
+            List<Individual> neighbors = new List<Individual>();
 
             for (int i = 0; i < numberOfSwarm; i++)
             {
-                List<Individual> neighbors = new List<Individual>();
-
                 Individual currentInd = swarmInBirthOrder[i];
                 Parameters param = currentInd.getGenome();
                 double tempX = currentInd.getX();
@@ -183,13 +182,12 @@ namespace SwarmEngine
                 int n = neighbors.Count();
 
                 double tempAx, tempAy;
-                if (n == 0)
+                if (n == 0 || n >= 300)
                 {
 
                     tempAx = rand.NextDouble() - 0.5;
                     tempAy = rand.NextDouble() - 0.5;
                 }
-
                 else
                 {
                     double localCenterX = 0;
@@ -230,13 +228,14 @@ namespace SwarmEngine
                         tempAy += (tempY - tempY2) / d * param.getC3();
                     }
 
-                    rand = new Random();
-                    if (rand.NextDouble() < param.getC4())
-                    {
-                        tempAx += rand.NextDouble() * 10 - 5;
-                        tempAy += rand.NextDouble() * 10 - 5;
-                    }
+                    //rand = new Random();
+                    //if (rand.NextDouble() < param.getC4())
+                    //{
+                    //    tempAx += rand.NextDouble() * 10 - 5;
+                    //    tempAy += rand.NextDouble() * 10 - 5;
+                    //}
                 }
+
 
                 currentInd.accelerate(tempAx, tempAy, param.getMaxSpeed());
 
@@ -252,7 +251,7 @@ namespace SwarmEngine
 
             }
 
-           // updateInternalState();
+            updateInternalState();
         }
 
         private void updateInternalState()

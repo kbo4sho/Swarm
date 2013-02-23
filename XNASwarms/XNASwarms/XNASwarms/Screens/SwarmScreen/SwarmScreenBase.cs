@@ -83,11 +83,12 @@ namespace XNASwarms
             if (TotalElapsed > TimePerFrame)
             {
                 debugScreen.AddAnaysisResult(analysisEngine.Run(populationSimulator.GetSwarmInXOrder()));
+              
                 TotalElapsed -= TimePerFrame;
             }
             #endregion
-            
-            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);
+
+            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 50);
             Border.Update(populationSimulator.GetSwarmInBirthOrder().ToList<Individual>());
             Camera.Update(gameTime);
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);

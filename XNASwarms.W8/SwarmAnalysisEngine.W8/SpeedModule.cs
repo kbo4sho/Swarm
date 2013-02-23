@@ -20,17 +20,21 @@ namespace SwarmAnalysisEngine
             {
                 double d = indvds[i].getDx2() * indvds[i].getDx2() + indvds[i].getDy2() * indvds[i].getDy2();
 
-                if (d > 8)
+                if (d > 12)
+                {
+                    indvds[i].setDisplayColor(Color.Red);
+                }
+                else if (d > 8)
+                {
+                    indvds[i].setDisplayColor(Color.DarkOrange);
+                }
+                else if (d > 5)
                 {
                     indvds[i].setDisplayColor(Color.Yellow);
                 }
-                else if (d > 4)
-                {
-                    indvds[i].setDisplayColor(Color.Orange);
-                }
                 else
                 {
-                    indvds[i].setDisplayColor(Color.Red);
+                    indvds[i].setDisplayColor(Color.Aquamarine);
                 }
             }
             return new List<AnalysisResult>();
