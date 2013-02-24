@@ -8,23 +8,12 @@ namespace SwarmAnalysisEngine
 {
     public class NameModule : AnalysisModule
     {
-        public string ModuleName
+        public NameModule()
+            : base("Name Module", 30)
         {
-            get 
-            {
-                return "Name Module";
-            }
         }
 
-        public int FramesPerSecond
-        {
-            get
-            {
-                return 30;
-            }
-        }
-
-        public List<AnalysisResult> Analyze(List<Individual> indvds)
+        public override List<AnalysisResult> Analyze(List<Individual> indvds)
         {
             return new List<AnalysisResult>(){new AnalysisResult(){ Type = ModuleName, Message = "//"}};
         }
