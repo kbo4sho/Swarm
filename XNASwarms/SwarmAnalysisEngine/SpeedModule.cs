@@ -14,6 +14,11 @@ namespace SwarmAnalysisEngine
             get { return "Speed Module"; }
         }
 
+        public int FramesPerSecond
+        {
+            get { return 30; }
+        }
+
         public List<AnalysisResult> Analyze(List<SwarmEngine.Individual> indvds)
         {
             for (int i = 0; i < indvds.Count; i++)

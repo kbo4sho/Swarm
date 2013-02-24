@@ -38,7 +38,7 @@ namespace XNASwarms
         public SwarmScreenBase()
         {
             analysisEngine = new ClusterAnaylsisEngine();
-            FramesPerSec = 4;
+            FramesPerSec = 30;
             TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
         }
@@ -87,7 +87,6 @@ namespace XNASwarms
                 TotalElapsed -= TimePerFrame;
             }
             #endregion
-
             populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);
             Border.Update(populationSimulator.GetSwarmInBirthOrder().ToList<Individual>());
             Camera.Update(gameTime);

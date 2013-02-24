@@ -120,8 +120,10 @@
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\NameModule.cs">
       <Link>NameModule.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\SpeedModule.cs">
+      <Link>SpeedModule.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpeedModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework.Windows8">

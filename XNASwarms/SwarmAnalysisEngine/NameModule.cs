@@ -6,13 +6,21 @@ using SwarmEngine;
 
 namespace SwarmAnalysisEngine
 {
-    public class NameModule : IAnalysisModule
+    public class NameModule : AnalysisModule
     {
         public string ModuleName
         {
             get 
             {
                 return "Name Module";
+            }
+        }
+
+        public int FramesPerSecond
+        {
+            get
+            {
+                return 30;
             }
         }
 

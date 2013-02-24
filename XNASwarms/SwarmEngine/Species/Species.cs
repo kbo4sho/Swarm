@@ -26,11 +26,5 @@ namespace SwarmEngine
             return this[index];
         }
 
-
-
-        public object getDisplayColor()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

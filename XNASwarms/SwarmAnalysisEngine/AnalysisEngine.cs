@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SwarmEngine;
+using Microsoft.Xna.Framework;
 
 namespace SwarmAnalysisEngine
 {
@@ -15,7 +16,7 @@ namespace SwarmAnalysisEngine
             Modules = modules;
         }
     
-        public List<AnalysisResult> Run(List<Individual> indvds)
+        public List<AnalysisResult> Run(List<Individual> indvds, GameTime gametime)
         {
             List<AnalysisResult> results = new List<AnalysisResult>();
             for (int i = 0; i < Modules.Count; i++ )

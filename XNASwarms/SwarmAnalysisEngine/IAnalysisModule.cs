@@ -6,9 +6,12 @@ using SwarmEngine;
 
 namespace SwarmAnalysisEngine
 {
-    public interface IAnalysisModule
+    public abstract class AnalysisModule
     {
         string ModuleName{get;}
+
+        int FramesPerSecond{get;}
+
         List<AnalysisResult> Analyze(List<Individual> indvds);
     }
 }

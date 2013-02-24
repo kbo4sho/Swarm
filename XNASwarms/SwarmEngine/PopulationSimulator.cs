@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SwarmEngine
 {
@@ -77,7 +78,7 @@ namespace SwarmEngine
         public void stepSimulation(List<Individual> temporaryIndividuals, int weightOfTemporaries)
         {
             int numberOfSwarm = swarmInBirthOrder.Count();
-            List<Individual> neighbors = new List<Individual>();
+            
 
             for (int i = 0; i < numberOfSwarm; i++)
             {
@@ -89,7 +90,7 @@ namespace SwarmEngine
                 double neighborhoodRadiusSquared = param.getNeighborhoodRadius()
                         * param.getNeighborhoodRadius();
 
-                neighbors.Clear();
+                List<Individual> neighbors = new List<Individual>();
 
                 // Detecting neighbors using sorted lists
 
@@ -183,7 +184,7 @@ namespace SwarmEngine
                 int n = neighbors.Count();
 
                 double tempAx, tempAy;
-                if (n == 0 || n >= 100)
+                if (n == 0)
                 {
 
                     tempAx = rand.NextDouble() - 0.5;
@@ -267,34 +268,6 @@ namespace SwarmEngine
             resetRanks();
         }
 
-        /*private void sortInternalLists() {
-            IComparable myCollection;
-
-            Collections.sort(swarmInXOrder, new Comparator<Individual>() {
-			   
-                public int compare(Individual o1, Individual o2) {
-                    return Double.compare(o1.getX(), o2.getX());
-                }		
-            });
-            Collections.sort(swarmInYOrder, new Comparator<Individual>() {
-			   
-                public int compare(Individual o1, Individual o2) {
-                    return Double.compare(o1.getY(), o2.getY());
-                }		
-            });
-        }*/
-
-        /*private static Individual compareIndividual(Individual o1, Individual o2)
-        {
-            //TODO : put real sort logic in here
-            return o1;
-        }
-
-        private void sortInternalLists()
-        {
-            swarmInXOrder.Sort();
-        }*/
-
         public void addIndividual(Individual b)
         {
             swarmInBirthOrder.Add(b);
@@ -364,6 +337,8 @@ namespace SwarmEngine
         {
             swarmInXOrder.Sort((x, y) => x.getX().CompareTo(y.getX()));
             swarmInYOrder.Sort((x, y) => x.getY().CompareTo(y.getY()));
+            //swarmInXOrder = new Species(swarmInXOrder.AsParallel().OrderByDescending(x => x.getX()).ToList<Individual>());
+            //swarmInYOrder = new Species(swarmInYOrder.AsParallel().OrderByDescending(x => x.getY()).ToList<Individual>());
         }
 
 
@@ -439,14 +414,14 @@ namespace SwarmEngine
         public void DetermineSpecies()
         {
             //Reorganize the population in to a species
-            List<string> discoverdRecipies = population.Select(s => s.Select(d => d.getGenome().getRecipe()).Distinct().ToList<string>()).First();
+            List<string> discoverdRecipies = population.AsParallel().Select(s => s.Select(d => d.getGenome().getRecipe()).Distinct().ToList<string>()).First();
 
             if (discoverdRecipies != null && discoverdRecipies.Count() > 0)
             {
                 List<Species> species = new List<Species>();
                 foreach (var rcpe in discoverdRecipies)
                 {
-                    species.Add(new Species(population.Select(s => s.Where(t => t.getGenome().getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
+                    species.Add(new Species(population.AsParallel().Select(s => s.Where(t => t.getGenome().getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
                 }
 
                 population.Clear();

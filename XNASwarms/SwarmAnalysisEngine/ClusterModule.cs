@@ -9,13 +9,11 @@ namespace SwarmAnalysisEngine
 {
     public class ClusterModule : IAnalysisModule
     {
-        public string ModuleName
-        {
-            get { return "Cluster Module"; }
-        }
+        public string ModuleName { get { return "Cluster Module"; }}
+        public int FramesPerSecond { get { return 8; } }
 
         int ClusterItemThreshhold = 5;
-        int ClusterBackCount = 100;
+        int ClusterBackCount = 20;
         List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
         public List<Cluster> Clusters;
 

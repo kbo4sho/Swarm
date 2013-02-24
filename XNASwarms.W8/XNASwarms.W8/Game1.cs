@@ -19,7 +19,9 @@ namespace XNASwarms.W8
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 60.0f);
+#if NETFX_ARM
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 30.0f);
+#endif
         }
 
         protected override void Initialize()
