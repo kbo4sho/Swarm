@@ -16,6 +16,7 @@ namespace ScreenSystem.Debug
         void AddDebugItem(string label, string message);
         void AddAnaysisResult(List<AnalysisResult> analysisresult);
         void SetVisiblity();
+        void Reset();
         void AddSpacer();
     }
 
@@ -62,13 +63,28 @@ namespace ScreenSystem.Debug
         {
             if (IsVisible)
             {
-                Vector2 largestStringSize = screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
+                Vector2 largestStringSize = new Vector2(30,20);//screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
                 DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding * 3;
                 DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count) + PanelPadding * 3;
 
                 if (DebugItems.Count > MaxDebugItems)
                 {
-                    DebugItems.RemoveRange(MaxDebugItems, DebugItems.Count - (MaxDebugItems));
+                    //DebugItems.RemoveAll(s=>s.GetFlagType() == DebugFlagType.Normal) ..ToList());
+                    List<DebugItem> tempItems = new List<DebugItem>();
+                    foreach (var item in DebugItems.Skip(MaxDebugItems - DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count()))
+                    {
+                        if(item.GetFlagType() == DebugFlagType.Normal)
+                        {
+                            tempItems.Add(item);
+                        }
+                    }
+
+                    foreach (var temp in tempItems)
+                    {
+                        DebugItems.Remove(temp);
+                    }
+
+                    //DebugItems.RemoveRange(MaxDebugItems - DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count(), DebugItems.Count - (MaxDebugItems- DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count())));
                 }
             }
             base.Update(gameTime);
@@ -119,7 +135,6 @@ namespace ScreenSystem.Debug
                     DebugItems.Insert(0, new DebugItem(label, message, flagtype));
                     //SavedDebugItems.Insert(0, new DebugItem(label, message, flagtype));
                     break;
-                    
             }  
         }
 
@@ -143,6 +158,14 @@ namespace ScreenSystem.Debug
         public void AddSpacer()
         {
             AddDebugItemSpacer();
+        }
+
+        public void Reset()
+        {
+            foreach (DebugItem item in DebugItems.Where(i=>i.GetFlagType() != DebugFlagType.Normal))
+            {
+               item.ResetFlag();
+            }
         }
 
         #endregion

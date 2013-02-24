@@ -67,5 +67,10 @@ namespace ScreenSystem.Debug
             return Color.Blue;
             
         }
+
+        internal void ResetFlag()
+        {
+            this.DebugFlagType = Debug.DebugFlagType.Normal;
+        }
     }
 }

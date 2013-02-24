@@ -28,7 +28,7 @@ namespace XNASwarms
             Content.RootDirectory = "Content";
             ConvertUnits.SetDisplayUnitToSimUnitRatio(1f);
             //TargetElapsedTime = TimeSpan.FromTicks(167777);
-            this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 30.0f);   
+            //this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 30.0f);   
         }
 
         #region Initialization

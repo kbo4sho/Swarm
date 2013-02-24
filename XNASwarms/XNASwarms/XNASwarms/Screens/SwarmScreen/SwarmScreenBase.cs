@@ -46,7 +46,7 @@ namespace XNASwarms
         public override void LoadContent()
         {
             debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
-
+            debugScreen.Reset();
             width = ScreenManager.GraphicsDevice.Viewport.Width;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
 
@@ -55,7 +55,7 @@ namespace XNASwarms
             
             Supers = new Dictionary<int, Individual>();
 
-            Border = new Border(this, WallFactory.TopBottomPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
+            Border = new Border(this, WallFactory.FourBouncy(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
             
             Supers.Add(0, new Individual());
 
@@ -78,17 +78,8 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            #region FrameRate
-            TotalElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (TotalElapsed > TimePerFrame)
-            {
-                debugScreen.AddAnaysisResult(analysisEngine.Run(populationSimulator.GetSwarmInXOrder()));
-              
-                TotalElapsed -= TimePerFrame;
-            }
-            #endregion
-
-            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 50);
+            debugScreen.AddAnaysisResult(analysisEngine.Run(populationSimulator.GetSwarmInXOrder(), (float)gameTime.ElapsedGameTime.TotalSeconds));
+            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);
             Border.Update(populationSimulator.GetSwarmInBirthOrder().ToList<Individual>());
             Camera.Update(gameTime);
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);

@@ -98,11 +98,9 @@ namespace XNASwarms
 
             var pos = _position;
 
-            spriteBatch.DrawString(BigFont, _description, _containerPadding + pos + Vector2.One * 2f, Color.LightCyan);
+            //spriteBatch.DrawString(BigFont, _description, _containerPadding + pos + Vector2.One * 2f, Color.LightCyan);
 
-            Vector2 transitionOffset = new Vector2(0f, (float)Math.Pow(_screen.TransitionPosition, 2) * 100f);
-
-            spriteBatch.Draw(_bgSprite, DestinationRectangle, _rectBG, Color.LightCyan);
+            //spriteBatch.Draw(_bgSprite, DestinationRectangle, _rectBG, Color.LightCyan);
 
             for (int i = 0; i < menuEntries.Count; ++i)
             {

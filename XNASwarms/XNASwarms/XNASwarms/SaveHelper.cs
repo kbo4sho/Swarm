@@ -13,7 +13,7 @@ namespace XNASwarms
 
         public static void Save(string filename, SaveAllSpecies savespecies)
         {
-#if !NETFX_CORE
+#if WINDOWS
             try
             {
                 Stream stream = File.Create(filename + ".xml");
@@ -31,7 +31,7 @@ namespace XNASwarms
         public static SaveAllSpecies Load(string filename)
         {
 
-#if !NETFX_CORE
+#if WINDOWS
             try
             {
                 Stream stream = File.OpenRead(filename + ".xml");

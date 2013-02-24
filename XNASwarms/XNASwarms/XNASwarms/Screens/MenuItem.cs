@@ -310,19 +310,8 @@ namespace XNASwarms.Screens
         public virtual void Draw(SpriteBatch spritebatch)
         {
             SpriteFont font     = _menu.ScreenManager.Fonts.MenuSpriteFont;
-            //SpriteBatch batch   = _screen.ScreenManager.SpriteBatch;
 
-            Color color;
-            if (_type == EntryType.Separator)
-            {
-                color = Color.Black;
-            }
-            else
-            {
-                // Draw the selected entry in yellow, otherwise white
-                color = Color.Lerp(Color.Black, Color.Black, _selectionFade);
-            }
-            color *= _alpha;
+          
 
             var pos = _position;
 

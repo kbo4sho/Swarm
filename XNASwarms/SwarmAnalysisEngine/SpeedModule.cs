@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace SwarmAnalysisEngine
 {
-    class SpeedModule : IAnalysisModule
+    class SpeedModule : AnalysisModule
     {
-        public string ModuleName
+        public SpeedModule()
+            : base("Speed Module", 30)
         {
-            get { return "Speed Module"; }
         }
 
-        public List<AnalysisResult> Analyze(List<SwarmEngine.Individual> indvds)
+        public override List<AnalysisResult> Analyze(List<SwarmEngine.Individual> indvds)
         {
+            
             for (int i = 0; i < indvds.Count; i++)
             {
                 double d = indvds[i].getDx2() * indvds[i].getDx2() + indvds[i].getDy2() * indvds[i].getDy2();

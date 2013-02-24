@@ -41,15 +41,16 @@ namespace XNASwarms
         {
             Population population = populationSimulator.GetPopulation();
             ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
-            base.Draw(gameTime);
-            
-            foreach (Species spcs in population)
+
+            for (int s = 0; s < population.Count; s++ )
             {
-                foreach (Individual indvd in spcs)
+                for (int i = 0; i < population[s].Count; i++)
                 {
-                    DrawIndividual(indvd, indvd.getDisplayColor(), individualTexture);
+                    DrawIndividual(population[s][i], population[s][i].getDisplayColor(), individualTexture);
                 }
             }
+
+            base.Draw(gameTime);
             ScreenManager.SpriteBatch.End();
         }
 
