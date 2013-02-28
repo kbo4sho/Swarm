@@ -137,7 +137,7 @@ namespace XNASwarms.Screens
             SpriteFont font = _menu.ScreenManager.Fonts.MenuSpriteFont;
 
             _menuItemBackground = _menu.ScreenManager.Content.Load<Texture2D>("Menu/button");
-            BackgroundRectangle = new Rectangle(0, 0, 100, 100);
+            BackgroundRectangle = new Rectangle(0, 0, 100, 50);
 
             _baseOrigin = new Vector2(font.MeasureString(Text).X / 2, font.MeasureString(Text).Y / 2);
 

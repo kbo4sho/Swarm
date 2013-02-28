@@ -10,7 +10,7 @@ namespace SwarmAnalysisEngine
     public class ClusterModule : AnalysisModule
     {
         int ClusterItemThreshhold = 5;
-        int ClusterBackCount = 30;
+        int ClusterBackCount = 40;
         List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
         public List<Cluster> Clusters;
 
@@ -94,7 +94,6 @@ namespace SwarmAnalysisEngine
         {
             for (int clusterid = 0; clusterid < Clusters.Count; clusterid++)
             {
-
                 foreach (Individual indvd in Clusters[clusterid])
                 {
                     if (clusterid == 0)
@@ -119,7 +118,6 @@ namespace SwarmAnalysisEngine
                     }
                 }
             }
-
         }
 
         private List<AnalysisResult> GenerateMessage()
