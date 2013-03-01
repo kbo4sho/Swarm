@@ -26,6 +26,12 @@ namespace SwarmAnalysisEngine
             return GetClustersReadOut(indvds);
         }
 
+        private void ResetColor(Individual indvd)
+        {
+            indvd.setDisplayColor(Color.MidnightBlue);
+        }
+
+
         private List<AnalysisResult> GetClustersReadOut(List<Individual> indvds)
         {
             
@@ -37,6 +43,7 @@ namespace SwarmAnalysisEngine
 
             for (int i = 0; i < indvds.Count; i++)
             {
+                ResetColor(indvds[i]);
                 if (!InExistingCluster(indvds[i]))
                 {
                     Clusters.Add(new Cluster() { indvds[i] });
@@ -102,7 +109,7 @@ namespace SwarmAnalysisEngine
                     }
                     else if (clusterid == 1)
                     {
-                        indvd.setDisplayColor(Color.Blue);
+                        indvd.setDisplayColor(Color.Chartreuse);
                     }
                     else if (clusterid == 2)
                     {
@@ -114,7 +121,7 @@ namespace SwarmAnalysisEngine
                     }
                     else
                     {
-                        indvd.setDisplayColor(Color.Green);
+                        indvd.setDisplayColor(Color.Lerp(Color.LightPink,Color.LightBlue,clusterid*.15f));
                     }
                 }
             }
