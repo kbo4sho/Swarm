@@ -13,7 +13,7 @@ namespace SwarmAnalysisEngine
         {
         }
 
-        public override List<AnalysisResult> Analyze(List<Individual> indvds)
+        protected override List<AnalysisResult> Analyze(List<Individual> indvds)
         {
             return new List<AnalysisResult>(){new AnalysisResult(){ Type = ModuleName, Message = "//"}};
         }

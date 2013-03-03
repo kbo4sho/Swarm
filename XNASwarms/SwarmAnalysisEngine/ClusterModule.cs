@@ -21,7 +21,7 @@ namespace SwarmAnalysisEngine
             List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
         }
         
-        public override List<AnalysisResult> Analyze(List<Individual> indvds)
+        protected override List<AnalysisResult> Analyze(List<Individual> indvds)
         {
             return GetClustersReadOut(indvds);
         }
@@ -32,8 +32,6 @@ namespace SwarmAnalysisEngine
             Clusters.Clear();
 
             Clusters.Add(new Cluster() { indvds[0] });
-
-             
 
             for (int i = 0; i < indvds.Count; i++)
             {
@@ -113,9 +111,13 @@ namespace SwarmAnalysisEngine
                     {
                         indvd.setDisplayColor(Color.Orange);
                     }
-                    else
+                    else if (clusterid == 4)
                     {
                         indvd.setDisplayColor(Color.Green);
+                    }
+                    else
+                    {
+                        indvd.setDisplayColor(Color.Lerp(Color.Green, Color.Cyan, (float)(clusterid*.05)));
                     }
                 }
             }

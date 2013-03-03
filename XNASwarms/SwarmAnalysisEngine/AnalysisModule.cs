@@ -42,7 +42,7 @@ namespace SwarmAnalysisEngine
             return false;
         }
 
-        public virtual List<AnalysisResult> Analyze(List<Individual> indvds)
+        protected virtual List<AnalysisResult> Analyze(List<Individual> indvds)
         {
             return null;
         }

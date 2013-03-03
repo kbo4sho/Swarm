@@ -37,13 +37,13 @@ namespace SwarmEngine
         public static int numberOfIndividualsMax = 1000;
 
         private double neighborhoodRadius;
-        public static double neighborhoodRadiusMax = 20;
+        public static double neighborhoodRadiusMax = 200;
 
         private double normalSpeed;
-        public static double normalSpeedMax = 10;
+        public static double normalSpeedMax = 20;
 
         private double maxSpeed;
-        public static double maxSpeedMax = 20;
+        public static double maxSpeedMax = 40;
 
         private double c1;
         public static double c1Max = 1;

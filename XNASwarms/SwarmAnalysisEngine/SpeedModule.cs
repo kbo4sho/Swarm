@@ -14,7 +14,7 @@ namespace SwarmAnalysisEngine
         {
         }
 
-        public override List<AnalysisResult> Analyze(List<SwarmEngine.Individual> indvds)
+        protected override List<AnalysisResult> Analyze(List<SwarmEngine.Individual> indvds)
         {
             
             for (int i = 0; i < indvds.Count; i++)
