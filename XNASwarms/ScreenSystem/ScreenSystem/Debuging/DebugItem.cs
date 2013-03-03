@@ -50,7 +50,11 @@ namespace ScreenSystem.Debug
 
         public string GetFormatedMessage()
         {
-            return Label + ":   " + Message;
+            StringBuilder sb = new StringBuilder();
+            sb.Append(Label);
+            sb.Append(":  ");
+            sb.Append(Message);
+            return sb.ToString();
         }
 
         public Color GetColor()

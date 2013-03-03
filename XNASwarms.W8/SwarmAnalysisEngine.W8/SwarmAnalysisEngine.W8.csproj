@@ -123,6 +123,8 @@
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\SpeedModule.cs">
       <Link>SpeedModule.cs</Link>
     </Compile>
+    <Compile Include="FilterResult.cs" />
+    <Compile Include="FilterType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
