@@ -10,7 +10,7 @@ namespace SwarmAnalysisEngine
     public class ClusterModule : AnalysisModule
     {
         int ClusterItemThreshhold = 5;
-        int ClusterBackCount = 30;
+        int ClusterBackCount = 40;
         List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
         public List<Cluster> Clusters;
 
@@ -26,6 +26,12 @@ namespace SwarmAnalysisEngine
             return GetClustersReadOut(indvds);
         }
 
+        private void ResetColor(Individual indvd)
+        {
+            indvd.setDisplayColor(Color.MidnightBlue);
+        }
+
+
         private List<AnalysisResult> GetClustersReadOut(List<Individual> indvds)
         {
             
@@ -35,6 +41,7 @@ namespace SwarmAnalysisEngine
 
             for (int i = 0; i < indvds.Count; i++)
             {
+                ResetColor(indvds[i]);
                 if (!InExistingCluster(indvds[i]))
                 {
                     Clusters.Add(new Cluster() { indvds[i] });
@@ -92,7 +99,6 @@ namespace SwarmAnalysisEngine
         {
             for (int clusterid = 0; clusterid < Clusters.Count; clusterid++)
             {
-
                 foreach (Individual indvd in Clusters[clusterid])
                 {
                     if (clusterid == 0)
@@ -101,7 +107,7 @@ namespace SwarmAnalysisEngine
                     }
                     else if (clusterid == 1)
                     {
-                        indvd.setDisplayColor(Color.Blue);
+                        indvd.setDisplayColor(Color.Chartreuse);
                     }
                     else if (clusterid == 2)
                     {
@@ -113,7 +119,7 @@ namespace SwarmAnalysisEngine
                     }
                     else if (clusterid == 4)
                     {
-                        indvd.setDisplayColor(Color.Green);
+                        indvd.setDisplayColor(Color.Lerp(Color.LightPink,Color.LightBlue,clusterid*.15f));
                     }
                     else
                     {
@@ -121,7 +127,6 @@ namespace SwarmAnalysisEngine
                     }
                 }
             }
-
         }
 
         private List<AnalysisResult> GenerateMessage()

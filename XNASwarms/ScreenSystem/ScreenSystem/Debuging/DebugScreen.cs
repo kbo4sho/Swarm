@@ -15,8 +15,9 @@ namespace ScreenSystem.Debug
         void AddDebugItem(string label, string message, DebugFlagType flagtype);
         void AddDebugItem(string label, string message);
         void AddAnaysisResult(List<AnalysisResult> analysisresult);
+        void AddAnalysisFilterData(List<FilterResult> filterresult);
         void SetVisiblity();
-        void Reset();
+        void ResetDebugItemsToNormal();
         void AddSpacer();
     }
 
@@ -26,6 +27,8 @@ namespace ScreenSystem.Debug
         private List<DebugItem> DebugItems;
         private List<DebugItem> SavedDebugItems;
 
+        private List<FilterResult> FilterResults;
+
         private Rectangle DebugPanelRectangle;
         private Texture2D PanelTexture;
         private ScreenManager screenManager;
@@ -34,7 +37,7 @@ namespace ScreenSystem.Debug
         private int PanelPadding;
         private int MaxDebugItems;
 
-        private bool IsVisible;
+        private bool ConsoleVisible;
 
 
         public DebugScreen(ScreenManager screenmanager, bool visible)
@@ -43,12 +46,12 @@ namespace ScreenSystem.Debug
             DebugItems = new List<DebugItem>();
             SavedDebugItems = new List<DebugItem>(); 
             screenManager = screenmanager;
-            IsVisible = visible;
+            ConsoleVisible = visible;
         }
 
         protected override void LoadContent()
         {
-            frameratecounter = new FrameRateCounter(screenManager, IsVisible);
+            frameratecounter = new FrameRateCounter(screenManager, ConsoleVisible);
             screenManager.Game.Components.Add(frameratecounter);
 
             PanelTexture = screenManager.Content.Load<Texture2D>("Backgrounds/gray");
@@ -61,7 +64,7 @@ namespace ScreenSystem.Debug
 
         public override void Update(GameTime gameTime)
         {
-            if (IsVisible)
+            if (ConsoleVisible)
             {
                 Vector2 largestStringSize = new Vector2(30,20);//screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
                 DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding * 3;
@@ -92,7 +95,7 @@ namespace ScreenSystem.Debug
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (IsVisible)
+            if (ConsoleVisible)
             {
                 screenManager.SpriteBatch.Begin();
                 screenManager.SpriteBatch.Draw(PanelTexture, DebugPanelRectangle, new Color(20, 20, 20, 170));
@@ -102,10 +105,21 @@ namespace ScreenSystem.Debug
                     screenManager.SpriteBatch.DrawString(screenManager.Fonts.FrameRateCounterFont, DebugItems[i].GetFormatedMessage(),
                                                           new Vector2(DebugPanelRectangle.X + PanelPadding, (DebugPanelRectangle.Y + itemSpacer * i) + PanelPadding), DebugItems[i].GetColor());
                 }
+
+                DrawAnalysisFilters();
+
                 screenManager.SpriteBatch.End();
 
             }
             base.Draw(gameTime);
+        }
+
+        private void DrawAnalysisFilters()
+        {
+            for (int i = FilterResults.Count - 1; i >= 0; i -= 1)
+            {
+
+            }
         }
 
         private void AddDebugItemSpacer()
@@ -140,7 +154,7 @@ namespace ScreenSystem.Debug
 
         public void AddAnaysisResult(List<AnalysisResult> analysisresult)
         {
-            if (this.IsVisible)
+            if (this.ConsoleVisible)
             {
                 foreach (AnalysisResult result in analysisresult)
                 {
@@ -149,10 +163,15 @@ namespace ScreenSystem.Debug
             }
         }
 
+        public void AddAnalysisFilterData(List<FilterResult> filterresult)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetVisiblity()
         {
             frameratecounter.SetVisiblity();
-            IsVisible = !IsVisible;
+            ConsoleVisible = !ConsoleVisible;
         }
 
         public void AddSpacer()
@@ -160,7 +179,7 @@ namespace ScreenSystem.Debug
             AddDebugItemSpacer();
         }
 
-        public void Reset()
+        public void ResetDebugItemsToNormal()
         {
             foreach (DebugItem item in DebugItems.Where(i=>i.GetFlagType() != DebugFlagType.Normal))
             {
@@ -170,9 +189,5 @@ namespace ScreenSystem.Debug
 
         #endregion
 
-
-        
-
-       
     }
 }

@@ -46,7 +46,7 @@ namespace XNASwarms
         public override void LoadContent()
         {
             debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
-            debugScreen.Reset();
+            debugScreen.ResetDebugItemsToNormal();
             width = ScreenManager.GraphicsDevice.Viewport.Width;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
 
@@ -67,6 +67,7 @@ namespace XNASwarms
                 debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.GetPopulation()[i].First().getGenome().getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
                 
             }
+
             debugScreen.AddDebugItem("SPECIES COUNT ", populationSimulator.GetPopulation().Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             debugScreen.AddDebugItem("RESOLUTION", width.ToString() + "x" + height.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), ScreenSystem.Debug.DebugFlagType.Important);
