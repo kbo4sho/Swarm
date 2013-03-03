@@ -110,6 +110,9 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.Surface" />
     <Reference Include="Microsoft.Surface.Core" />
+    <Reference Include="WinRtUtility">
+      <HintPath>..\..\..\SoultionItems\WinRtUtility.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
@@ -150,10 +153,6 @@
     <ProjectReference Include="..\..\SwarmAnalysisEngine\SwarmAnalysisEngine.csproj">
       <Project>{B995B1B8-65B9-4057-969F-AA229C750A83}</Project>
       <Name>SwarmAnalysisEngine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SwarmData\SwarmData.csproj">
-      <Project>{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}</Project>
-      <Name>SwarmData</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SwarmEngine\SwarmEngine.csproj">
       <Project>{6C3EFB94-062C-4EF9-9A72-1B561782E1A4}</Project>

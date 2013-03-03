@@ -5,9 +5,12 @@ using System.Text;
 using SwarmEngine;
 using System.IO;
 using System.Xml.Serialization;
+#if NETFX_CORE
 using Windows.Storage;
-using System.Threading.Tasks;
 using WinRtUtility;
+#endif
+using System.Threading.Tasks;
+
 
 
 namespace XNASwarms
@@ -35,6 +38,7 @@ namespace XNASwarms
 
         }
 
+        #if NETFX_CORE
         private static async void SaveW8(string filename, SaveAllSpecies savespecies)
         {
             await W8SaveFile(filename, savespecies);
@@ -46,6 +50,7 @@ namespace XNASwarms
             await objectStorageHelper.SaveAsync(data, filename + ".xml");
             return data;
         }
+#endif
         #endregion
 
         public static SaveAllSpecies Load(string filename)
@@ -68,7 +73,7 @@ namespace XNASwarms
 
 #endif
         }
-
+#if NETFX_CORE
         public static async Task<SaveAllSpecies> LoadGameFile(string filename)
         {
             var save = await LoadFile(filename);
@@ -99,6 +104,7 @@ namespace XNASwarms
                 return new SaveAllSpecies();
             }
         }
+#endif
 
     }
 }

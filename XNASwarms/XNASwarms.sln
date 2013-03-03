@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSystem", "ScreenSyste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmEngine", "SwarmEngine\SwarmEngine.csproj", "{6C3EFB94-062C-4EF9-9A72-1B561782E1A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmData", "SwarmData\SwarmData.csproj", "{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmAnalysisEngine", "SwarmAnalysisEngine\SwarmAnalysisEngine.csproj", "{B995B1B8-65B9-4057-969F-AA229C750A83}"
 EndProject
 Global
@@ -61,16 +59,6 @@ Global
 		{6C3EFB94-062C-4EF9-9A72-1B561782E1A4}.Release|Windows Phone.ActiveCfg = Release|x86
 		{6C3EFB94-062C-4EF9-9A72-1B561782E1A4}.Release|x86.ActiveCfg = Release|x86
 		{6C3EFB94-062C-4EF9-9A72-1B561782E1A4}.Release|x86.Build.0 = Release|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|Windows Phone.ActiveCfg = Debug|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|x86.ActiveCfg = Debug|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Debug|x86.Build.0 = Debug|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|Mixed Platforms.Build.0 = Release|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|Windows Phone.ActiveCfg = Release|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|x86.ActiveCfg = Release|x86
-		{CB5F2766-7925-4A02-B2DA-BAC774C0FC2D}.Release|x86.Build.0 = Release|x86
 		{B995B1B8-65B9-4057-969F-AA229C750A83}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{B995B1B8-65B9-4057-969F-AA229C750A83}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{B995B1B8-65B9-4057-969F-AA229C750A83}.Debug|Windows Phone.ActiveCfg = Debug|x86

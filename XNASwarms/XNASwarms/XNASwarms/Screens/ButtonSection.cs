@@ -64,7 +64,9 @@ namespace XNASwarms
         {
             if (allSaved == null)
             {
+#if NETFX_CORE
                 GetSaveSwarmData();
+#endif
             }
             spriteBatch = new SpriteBatch(_screen.ScreenManager.GraphicsDevice);
             debugScreen = _screen.ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
@@ -123,9 +125,6 @@ namespace XNASwarms
 #if WINDOWS
             SaveAllSpecies allSaved = SaveHelper.Load("AllSaved");
 #endif
-            //GetSaveSwarmData();
-            
-            //var olditems = menuEntries.OfType<SavedSwarm>();
             menuEntries.RemoveAll(s => s.GetType() == typeof(SavedSwarmButton));
             if (allSaved != null)
             {
@@ -155,11 +154,13 @@ namespace XNASwarms
             }
         }
 
+#if NETFX_CORE
         private async void GetSaveSwarmData()
         {
             allSaved = await SaveHelper.LoadGameFile("AllSaved");
             LoadSavedSwarms();
         }
+#endif
 
         private void SaveSwarm()
         {
