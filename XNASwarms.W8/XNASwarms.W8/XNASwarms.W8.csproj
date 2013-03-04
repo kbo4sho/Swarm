@@ -235,6 +235,9 @@
     <Content Include="..\..\..\..\..\SwarmResources\Content\Content\beebig.xnb">
       <Link>Content\beebig.xnb</Link>
     </Content>
+    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\centermarker.xnb">
+      <Link>Content\centermarker.xnb</Link>
+    </Content>
     <None Include="XNASwarmsRelease.W8_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

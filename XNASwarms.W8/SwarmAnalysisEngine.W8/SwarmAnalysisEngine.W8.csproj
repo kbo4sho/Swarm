@@ -99,6 +99,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\Analysis.cs">
+      <Link>Analysis.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\AnalysisEngine.cs">
       <Link>AnalysisEngine.cs</Link>
     </Compile>
@@ -129,7 +132,6 @@
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\SpeedModule.cs">
       <Link>SpeedModule.cs</Link>
     </Compile>
-    <Compile Include="Analysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -18,7 +18,6 @@ namespace ScreenSystem.Debug
         void SetVisiblity();
         void ResetDebugItemsToNormal();
         void AddSpacer();
-        void SetCamera(Camera2D camera);
     }
 
 
@@ -33,7 +32,6 @@ namespace ScreenSystem.Debug
         private Texture2D PanelTexture;
         private ScreenManager screenManager;
         FrameRateCounter frameratecounter;
-        Camera2D Camera;
         private int itemSpacer;
         private int PanelPadding;
         private int MaxDebugItems;
@@ -65,30 +63,25 @@ namespace ScreenSystem.Debug
 
         public override void Update(GameTime gameTime)
         {
-            if (ConsoleVisible)
+
+            Vector2 largestStringSize = new Vector2(100, 20);//screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
+            DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding * 3;
+            DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count) + PanelPadding * 3;
+
+            if (DebugItems.Count > MaxDebugItems)
             {
-                Vector2 largestStringSize = new Vector2(30,20);//screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
-                DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding * 3;
-                DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count) + PanelPadding * 3;
-
-                if (DebugItems.Count > MaxDebugItems)
+                List<DebugItem> tempItems = new List<DebugItem>();
+                foreach (var item in DebugItems.Skip(MaxDebugItems - DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count()))
                 {
-                    //DebugItems.RemoveAll(s=>s.GetFlagType() == DebugFlagType.Normal) ..ToList());
-                    List<DebugItem> tempItems = new List<DebugItem>();
-                    foreach (var item in DebugItems.Skip(MaxDebugItems - DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count()))
+                    if (item.GetFlagType() == DebugFlagType.Normal)
                     {
-                        if(item.GetFlagType() == DebugFlagType.Normal)
-                        {
-                            tempItems.Add(item);
-                        }
+                        tempItems.Add(item);
                     }
+                }
 
-                    foreach (var temp in tempItems)
-                    {
-                        DebugItems.Remove(temp);
-                    }
-
-                    //DebugItems.RemoveRange(MaxDebugItems - DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count(), DebugItems.Count - (MaxDebugItems- DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count())));
+                foreach (var temp in tempItems)
+                {
+                    DebugItems.Remove(temp);
                 }
             }
             base.Update(gameTime);
@@ -98,10 +91,11 @@ namespace ScreenSystem.Debug
         {
 
             screenManager.SpriteBatch.Begin();
-            screenManager.SpriteBatch.Draw(PanelTexture, DebugPanelRectangle, new Color(20, 20, 20, 170));
-
+            
             if (ConsoleVisible)
             {
+                screenManager.SpriteBatch.Draw(PanelTexture, DebugPanelRectangle, new Color(20, 20, 20, 170));
+
                 for (int i = DebugItems.Count - 1; i >= 0; i -= 1)
                 {
                     screenManager.SpriteBatch.DrawString(screenManager.Fonts.FrameRateCounterFont, DebugItems[i].GetFormatedMessage(),
@@ -122,10 +116,9 @@ namespace ScreenSystem.Debug
             {
                 for (int i = FilterResults.Count - 1; i >= 0; i -= 1)
                 {
-                    foreach(Vector2 clustercenter in FilterResults[i].ClusterCenters)
+                    for (int c = 0; c < FilterResults[i].ClusterCenters.Count(); c++ )
                     {
-                        //Vector2 position = Camera.ConvertScreenToWorld(clustercenter);
-                        screenManager.SpriteBatch.Draw(LineTexture, clustercenter, null, Color.White, 0, new Vector2(-(screenManager.GraphicsDevice.Viewport.Width / 2), -(screenManager.GraphicsDevice.Viewport.Height / 2)) + new Vector2(5, 5), Vector2.One, SpriteEffects.None, 0); 
+                        screenManager.SpriteBatch.Draw(LineTexture, FilterResults[i].ClusterCenters[c], null, Color.White, 0, new Vector2(-(screenManager.GraphicsDevice.Viewport.Width / 2), -(screenManager.GraphicsDevice.Viewport.Height / 2)) + new Vector2(5, 5), Vector2.One, SpriteEffects.None, 0);
                     }
                 }
                 if (FilterResults.Count > 1)
@@ -148,7 +141,6 @@ namespace ScreenSystem.Debug
 
         public void AddDebugItem(string label, string message, DebugFlagType flagtype)
         {
-            
             switch (flagtype)
             {
                 case DebugFlagType.Normal:
@@ -156,20 +148,18 @@ namespace ScreenSystem.Debug
                     break;
                 case DebugFlagType.Odd:
                     DebugItems.Insert(0, new DebugItem(label, message,flagtype));
-                    //SavedDebugItems.Insert(0, new DebugItem(label, message, flagtype));
                     break;
                 case DebugFlagType.Important:
                     DebugItems.Insert(0, new DebugItem(label, message, flagtype));
-                    //SavedDebugItems.Insert(0, new DebugItem(label, message, flagtype));
                     break;
             }  
         }
 
         public void AddAnaysisResult(List<Analysis> analysisresult)
         {
-            if (this.ConsoleVisible)
+            foreach (Analysis analysis in analysisresult)
             {
-                foreach (Analysis analysis in analysisresult)
+                if (this.ConsoleVisible)
                 {
                     if (analysis.Messages != null)
                     {
@@ -178,11 +168,11 @@ namespace ScreenSystem.Debug
                             AddDebugItem(message.Type, message.Message, DebugFlagType.Normal);
                         }
                     }
+                }
 
-                    if (analysis.FilterResult != null)
-                    {
-                        FilterResults.Add(analysis.FilterResult);
-                    }
+                if (analysis.FilterResult != null)
+                {
+                    FilterResults.Add(analysis.FilterResult);
                 }
             }
         }
@@ -204,11 +194,6 @@ namespace ScreenSystem.Debug
             {
                item.ResetFlag();
             }
-        }
-
-        public void SetCamera(Camera2D camera)
-        {
-            Camera = camera;
         }
         #endregion
 

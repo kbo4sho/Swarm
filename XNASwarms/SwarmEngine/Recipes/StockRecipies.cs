@@ -23,7 +23,7 @@ namespace SwarmEngine
         {
             get
             {
-                string PopulationSize = "600";
+                string PopulationSize = "500";
                 string NeighborhoodRadius = "128.08";
                 string NormalSpeed = "2.62";
                 string MaxSpeed = "36.46";

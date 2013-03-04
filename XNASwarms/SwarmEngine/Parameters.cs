@@ -34,7 +34,7 @@ namespace SwarmEngine
 {
     public class Parameters : IComparable
     {
-        public static int numberOfIndividualsMax = 1000;
+        public static int numberOfIndividualsMax = 2200;
 
         private double neighborhoodRadius;
         public static double neighborhoodRadiusMax = 20;

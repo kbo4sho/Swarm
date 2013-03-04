@@ -30,6 +30,9 @@ namespace XNASwarms.Screens
         Recall1,
         Recall2,
         Recall3,
+        Recall4,
+        Recall5,
+        Recall6,
         Swinger,
         FussBudget,
     }
@@ -272,6 +275,21 @@ namespace XNASwarms.Screens
         internal bool IsRecall3()
         {
             return _type == EntryType.Recall3;
+        }
+
+        internal bool IsRecall4()
+        {
+            return _type == EntryType.Recall4;
+        }
+
+        internal bool IsRecall5()
+        {
+            return _type == EntryType.Recall5;
+        }
+
+        internal bool IsRecall6()
+        {
+            return _type == EntryType.Recall6;
         }
 
         #endregion

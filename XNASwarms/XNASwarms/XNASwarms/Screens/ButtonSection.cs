@@ -24,7 +24,6 @@ namespace XNASwarms
         SpriteBatch spriteBatch;
         SaveAllSpecies allSaved;
         private List<MenuEntry> menuEntries = new List<MenuEntry>();
-        private Rectangle _rectBG, DestinationRectangle;
 
         private readonly Vector2 _containerMargin = new Vector2(10, 70);
         private readonly Vector2 _containerPadding = new Vector2(12, 12);
@@ -148,7 +147,24 @@ namespace XNASwarms
                     AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
                     AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
                     AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[3].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), null);
+                }
+                else if (allSaved.Count == 5)
+                {
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allSaved[4].GetMostUsedColors(), null);
+                }
+                else if (allSaved.Count == 6)
+                {
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allSaved[4].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[5].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall6, allSaved[5].GetMostUsedColors(), null);
                 }
                 
             }
@@ -170,7 +186,7 @@ namespace XNASwarms
 
 #endif
 
-            if (allSaved != null && allSaved.Count() >= 4)
+            if (allSaved != null && allSaved.Count() >= 6)
             {
                 //Replacing
                 SaveSpecies oldestSpecies = allSaved.OrderBy(s => s.CreadtedDt).First();
@@ -194,6 +210,18 @@ namespace XNASwarms
                     SaveHelper.Save("AllSaved", allSaved);
                 }
                 else if (allSaved.Count == 3)
+                {
+                    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                    allSaved.Add(savespecies);
+                    SaveHelper.Save("AllSaved", allSaved);
+                }
+                else if (allSaved.Count == 4)
+                {
+                    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                    allSaved.Add(savespecies);
+                    SaveHelper.Save("AllSaved", allSaved);
+                }
+                else if (allSaved.Count == 5)
                 {
                     SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
                     allSaved.Add(savespecies);
@@ -355,6 +383,48 @@ namespace XNASwarms
 #else
                         _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(allSaved[2]));
                             this._screen.ExitScreen();
+#endif
+                    }
+                    else if (menuEntries[_selectedEntry].IsRecall4())
+                    {
+#if WINDOWS 
+                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
+                        if (saveSpecies != null)
+                        {
+                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[3]));
+                            this._screen.ExitScreen();
+                        }
+#else
+                        _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(allSaved[3]));
+                        this._screen.ExitScreen();
+#endif
+                    }
+                    else if (menuEntries[_selectedEntry].IsRecall5())
+                    {
+#if WINDOWS 
+                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
+                        if (saveSpecies != null)
+                        {
+                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[4]));
+                            this._screen.ExitScreen();
+                        }
+#else
+                        _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(allSaved[4]));
+                        this._screen.ExitScreen();
+#endif
+                    }
+                    else if (menuEntries[_selectedEntry].IsRecall6())
+                    {
+#if WINDOWS 
+                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
+                        if (saveSpecies != null)
+                        {
+                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[5]));
+                            this._screen.ExitScreen();
+                        }
+#else
+                        _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(allSaved[5]));
+                        this._screen.ExitScreen();
 #endif
                     }
 
