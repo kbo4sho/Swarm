@@ -54,7 +54,7 @@ namespace ScreenSystem.Debug
         {
             frameratecounter = new FrameRateCounter(screenManager, ConsoleVisible);
             screenManager.Game.Components.Add(frameratecounter);
-            LineTexture = screenManager.Content.Load<Texture2D>("bee");
+            LineTexture = screenManager.Content.Load<Texture2D>("centermarker");
             PanelTexture = screenManager.Content.Load<Texture2D>("Backgrounds/gray");
             itemSpacer = 10;
             PanelPadding = 10;
@@ -125,12 +125,12 @@ namespace ScreenSystem.Debug
                     foreach(Vector2 clustercenter in FilterResults[i].ClusterCenters)
                     {
                         //Vector2 position = Camera.ConvertScreenToWorld(clustercenter);
-                        screenManager.SpriteBatch.Draw(LineTexture, clustercenter, null, Color.White, 0, new Vector2( -(screenManager.GraphicsDevice.Viewport.Width/2),-(screenManager.GraphicsDevice.Viewport.Height/2)), Vector2.One, SpriteEffects.None, 0); 
+                        screenManager.SpriteBatch.Draw(LineTexture, clustercenter, null, Color.White, 0, new Vector2(-(screenManager.GraphicsDevice.Viewport.Width / 2), -(screenManager.GraphicsDevice.Viewport.Height / 2)) + new Vector2(5, 5), Vector2.One, SpriteEffects.None, 0); 
                     }
                 }
-                if (FilterResults.Count > 5)
+                if (FilterResults.Count > 1)
                 {
-                    FilterResults.RemoveRange(0, FilterResults.Count - 5);
+                    FilterResults.RemoveRange(0, FilterResults.Count - 1);
                 }
             }
         }
