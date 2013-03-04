@@ -10,20 +10,20 @@ namespace SwarmAnalysisEngine
     public class ClusterModule : AnalysisModule
     {
         int ClusterItemThreshhold = 5;
-        int ClusterBackCount = 40;
-        List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
+        int ClusterBackCount = 30;
+        List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
         public List<Cluster> Clusters;
 
         public ClusterModule()
-            : base("Cluster Module", 2)
+            : base("Cluster Module", 8)
         {
             Clusters = new List<Cluster>();
-            List<AnalysisResult> ReadOut = new List<AnalysisResult>(); 
+            List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
         }
         
-        protected override List<AnalysisResult> Analyze(List<Individual> indvds)
+        protected override Analysis Analyze(List<Individual> indvds)
         {
-            return GetClustersReadOut(indvds);
+            return DoAnalysis(indvds);
         }
 
         private void ResetColor(Individual indvd)
@@ -32,7 +32,7 @@ namespace SwarmAnalysisEngine
         }
 
 
-        private List<AnalysisResult> GetClustersReadOut(List<Individual> indvds)
+        private Analysis DoAnalysis(List<Individual> indvds)
         {
             
             Clusters.Clear();
@@ -50,14 +50,18 @@ namespace SwarmAnalysisEngine
 
             RemoveSmallClusters();
             SetClusterColor();
-            return GenerateMessage();
+
+            Analysis analysis = new Analysis();
+            analysis.Messages = GenerateMessage();
+            analysis.FilterResult = GenerateFilterResult();
+
+            return analysis;
         }
 
         private void RemoveSmallClusters()
         {
             Clusters.RemoveAll(s => s.Count() <= ClusterItemThreshhold);
         }
-
 
         private bool InExistingCluster(Individual individual)
         {
@@ -129,7 +133,7 @@ namespace SwarmAnalysisEngine
             }
         }
 
-        private List<AnalysisResult> GenerateMessage()
+        private List<AnalysisMessage> GenerateMessage()
         {
             for (int i = 0; i < Clusters.Count; i++)
             {
@@ -147,10 +151,26 @@ namespace SwarmAnalysisEngine
                     }
                     
                 }
-                ReadOut.Add(new AnalysisResult() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5  });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5  });
             }
-            ReadOut.Add(new AnalysisResult() { Type = "              ", Message = "                                                  " });
+            ReadOut.Add(new AnalysisMessage() { Type = "              ", Message = "                                                  " });
             return ReadOut;
+        }
+
+        private FilterResult GenerateFilterResult()
+        {
+            FilterResult filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
+            foreach (Cluster cluster in Clusters)
+            {
+                double leftindvd = cluster.OrderBy(point => point.getX()).First().getX();
+                double rightindvd = cluster.OrderByDescending(point => point.getX()).First().getX();
+                double topindvd = cluster.OrderBy(point => point.getY()).First().getY();
+                double bottomindvd = cluster.OrderByDescending(point => point.getY()).First().getY();
+
+                filterresult.ClusterCenters.Add(new Vector2((float)(leftindvd + rightindvd)*.5f,(float)(topindvd + bottomindvd)*.5f));
+            }
+            return filterresult;
+
         }
     }
 }

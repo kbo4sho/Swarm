@@ -7,7 +7,7 @@ using System.IO;
 using System.Xml.Serialization;
 #if NETFX_CORE
 using Windows.Storage;
-using WinRtUtility;
+
 #endif
 using System.Threading.Tasks;
 
@@ -46,7 +46,7 @@ namespace XNASwarms
 
         static async Task<SaveAllSpecies> W8SaveFile(string filename, SaveAllSpecies data)
         {
-            var objectStorageHelper = new ObjectStorageHelper<SaveAllSpecies>(StorageType.Local);
+            var objectStorageHelper = new WinRtUtility.ObjectStorageHelper<SaveAllSpecies>(WinRtUtility.StorageType.Local);
             await objectStorageHelper.SaveAsync(data, filename + ".xml");
             return data;
         }
@@ -94,7 +94,7 @@ namespace XNASwarms
             SaveAllSpecies data = new SaveAllSpecies();
             try
             {
-                var objectStorageHelper = new ObjectStorageHelper<SaveAllSpecies>(StorageType.Local);
+                var objectStorageHelper = new WinRtUtility.ObjectStorageHelper<SaveAllSpecies>(WinRtUtility.StorageType.Local);
                 data = await objectStorageHelper.LoadAsync(filename + ".xml");
                 return data;
             }

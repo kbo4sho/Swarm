@@ -179,7 +179,7 @@ namespace XNASwarms
                 SaveHelper.Save("AllSaved", allSaved);
             }
 
-            if (allSaved != null)
+            if (allSaved != null && allSaved.Count > 0)
             {
                 if (allSaved.Count == 1)
                 {

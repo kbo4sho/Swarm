@@ -117,14 +117,19 @@
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\ClusterModule.cs">
       <Link>ClusterModule.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\FilterResult.cs">
+      <Link>FilterResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\FilterType.cs">
+      <Link>FilterType.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\NameModule.cs">
       <Link>NameModule.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\SpeedModule.cs">
       <Link>SpeedModule.cs</Link>
     </Compile>
-    <Compile Include="FilterResult.cs" />
-    <Compile Include="FilterType.cs" />
+    <Compile Include="Analysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

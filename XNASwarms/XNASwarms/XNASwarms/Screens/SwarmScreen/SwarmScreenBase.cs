@@ -45,12 +45,14 @@ namespace XNASwarms
 
         public override void LoadContent()
         {
+            Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
+            debugScreen.SetCamera(Camera);
             debugScreen.ResetDebugItemsToNormal();
             width = ScreenManager.GraphicsDevice.Viewport.Width;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
 
-            Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
+            
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             
             Supers = new Dictionary<int, Individual>();

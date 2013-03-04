@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace SwarmAnalysisEngine
 {
-    public enum FilterType
+    public class Analysis
     {
-        None = 0,
-        ClusterBox = 1,
-        ClusterCenter = 2,
+        public List<AnalysisMessage> Messages;
+        public FilterResult FilterResult;
     }
 }

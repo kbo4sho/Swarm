@@ -130,7 +130,7 @@
     </Reference>
     <Reference Include="WinRtUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\WinRtUtility\WinRtUtility.dll</HintPath>
+      <HintPath>..\..\SoultionItems\WinRtUtility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

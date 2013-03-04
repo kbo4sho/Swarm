@@ -14,7 +14,7 @@ namespace SwarmAnalysisEngine
         {
         }
 
-        protected override List<AnalysisResult> Analyze(List<SwarmEngine.Individual> indvds)
+        protected override Analysis Analyze(List<SwarmEngine.Individual> indvds)
         {
             
             for (int i = 0; i < indvds.Count; i++)
@@ -38,7 +38,7 @@ namespace SwarmAnalysisEngine
                     indvds[i].setDisplayColor(Color.Aquamarine);
                 }
             }
-            return new List<AnalysisResult>();
+            return new Analysis();
         }
     }
 }
