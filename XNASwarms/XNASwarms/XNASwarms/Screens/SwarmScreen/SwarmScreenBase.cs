@@ -80,9 +80,9 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            //debugScreen.AddAnaysisResult(analysisEngine.Run(populationSimulator.GetSwarmInXOrder(), (float)gameTime.ElapsedGameTime.TotalSeconds));
+            debugScreen.AddAnaysisResult(analysisEngine.Run(populationSimulator.GetSwarmInXOrder(), (float)gameTime.ElapsedGameTime.TotalSeconds));
             populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
-            Border.Update(populationSimulator.GetSwarmInBirthOrder().ToList<Individual>());
+            Border.Update(populationSimulator.GetSwarmInXOrder().ToList<Individual>());
             Camera.Update(gameTime);
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
