@@ -62,7 +62,7 @@ namespace ScreenSystem.Debug
             switch (DebugFlagType)
             {
                 case Debug.DebugFlagType.Normal:
-                    return Color.LightCyan;                    
+                    return Color.LightBlue;                    
                 case Debug.DebugFlagType.Odd:
                     return Color.LightBlue;
                 case Debug.DebugFlagType.Important:
