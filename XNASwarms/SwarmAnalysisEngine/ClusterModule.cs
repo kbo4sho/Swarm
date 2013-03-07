@@ -13,12 +13,14 @@ namespace SwarmAnalysisEngine
         int ClusterBackCount = 30;
         List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
         public List<Cluster> Clusters;
+        private Analysis analysis;
 
         public ClusterModule()
             : base("Cluster Module", 8)
         {
             Clusters = new List<Cluster>();
-            List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
+            List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
+            analysis = new Analysis();
         }
         
         protected override Analysis Analyze(List<Individual> indvds)
@@ -34,7 +36,6 @@ namespace SwarmAnalysisEngine
 
         private Analysis DoAnalysis(List<Individual> indvds)
         {
-            
             Clusters.Clear();
 
             Clusters.Add(new Cluster() { indvds[0] });
@@ -51,7 +52,6 @@ namespace SwarmAnalysisEngine
             RemoveSmallClusters();
             SetClusterColor();
 
-            Analysis analysis = new Analysis();
             analysis.Messages = GenerateMessage();
             analysis.FilterResult = GenerateFilterResult();
 
@@ -135,6 +135,8 @@ namespace SwarmAnalysisEngine
 
         private List<AnalysisMessage> GenerateMessage()
         {
+            ReadOut.Clear();
+
             for (int i = 0; i < Clusters.Count; i++)
             {
                 string clusterVisualCount = "";
