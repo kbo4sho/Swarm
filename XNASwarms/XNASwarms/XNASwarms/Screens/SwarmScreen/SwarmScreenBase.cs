@@ -80,9 +80,10 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            debugScreen.AddAnaysisResult(analysisEngine.Run(populationSimulator.GetSwarmInXOrder(), (float)gameTime.ElapsedGameTime.TotalSeconds));
+            var SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
+            debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds));
             populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
-            Border.Update(populationSimulator.GetSwarmInXOrder().ToList<Individual>());
+            Border.Update(SwarmInXOrder.ToList<Individual>());
             Camera.Update(gameTime);
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
@@ -91,11 +92,11 @@ namespace XNASwarms
         {
             for (int i = 0; i < Supers.Count; i++)
             {
-                Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2((int)Supers[i].getX(), (int)Supers[i].getY()));
+                Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2((int)Supers[i].X, (int)Supers[i].Y));
 
                 ScreenManager.SpriteBatch.Draw(superAgentTexture, new Rectangle(
-                    (int)Supers[i].getX(),
-                    (int)Supers[i].getY(), 6, 6),
+                    (int)Supers[i].X,
+                    (int)Supers[i].Y, 6, 6),
                     null,
                     Color.Red,
                     0f,

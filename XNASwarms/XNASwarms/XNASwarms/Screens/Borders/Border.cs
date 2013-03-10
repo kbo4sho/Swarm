@@ -40,8 +40,8 @@ namespace XNASwarms.Borders
             for (int i = 0; i < numberOfSwarm; i++)
             {
                 Individual currentInd = individuals[i];
-                int currentX = (int)currentInd.getX();
-                int currentY = (int)currentInd.getY();
+                int currentX = (int)currentInd.X;
+                int currentY = (int)currentInd.Y;
 
                 if (currentX > rightBound)
                 {

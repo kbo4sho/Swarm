@@ -66,14 +66,14 @@ namespace SwarmAnalysisEngine
         private bool InExistingCluster(Individual individual)
         {
             List<int> clustersIds = new List<int>();
-
+            List<Individual> lastfew;
             for (int c = 0; c < Clusters.Count; c++)
             {
-                var lastfew = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - ClusterBackCount)).Take(ClusterBackCount).ToList();
+                lastfew = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - ClusterBackCount)).Take(ClusterBackCount).ToList();
 
                 for (int i = 0; i < lastfew.Count(); i++)
                 {
-                    double newdis = (individual.getX() - lastfew[i].getX()) * (individual.getX() - lastfew[i].getX()) + (individual.getY() - lastfew[i].getY()) * (individual.getY() - lastfew[i].getY());
+                    double newdis = (individual.X - lastfew[i].X) * (individual.X - lastfew[i].X) + (individual.Y - lastfew[i].Y) * (individual.Y - lastfew[i].Y);
 
                     if (newdis < lastfew[i].getGenome().getNeighborhoodRadius() * lastfew[i].getGenome().getNeighborhoodRadius())
                     {
@@ -164,10 +164,10 @@ namespace SwarmAnalysisEngine
             FilterResult filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
             foreach (Cluster cluster in Clusters)
             {
-                double leftindvd = cluster.OrderBy(point => point.getX()).First().getX();
-                double rightindvd = cluster.OrderByDescending(point => point.getX()).First().getX();
-                double topindvd = cluster.OrderBy(point => point.getY()).First().getY();
-                double bottomindvd = cluster.OrderByDescending(point => point.getY()).First().getY();
+                double leftindvd = cluster.OrderBy(point => point.X).First().X;
+                double rightindvd = cluster.OrderByDescending(point => point.X).First().X;
+                double topindvd = cluster.OrderBy(point => point.Y).First().Y;
+                double bottomindvd = cluster.OrderByDescending(point => point.Y).First().Y;
 
                 filterresult.ClusterCenters.Add(new Vector2((float)(leftindvd + rightindvd)*.5f,(float)(topindvd + bottomindvd)*.5f));
             }

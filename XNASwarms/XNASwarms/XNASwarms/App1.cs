@@ -53,6 +53,7 @@ namespace XNASwarms
             graphics.PreferredBackBufferHeight = 768;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
+            graphics.ToggleFullScreen();
         }
 
         #endregion

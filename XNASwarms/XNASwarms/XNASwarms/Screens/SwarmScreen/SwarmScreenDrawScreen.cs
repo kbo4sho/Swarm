@@ -57,8 +57,8 @@ namespace XNASwarms
         private void DrawIndividual(Individual indvd,Color color, Texture2D texture)
         {
             ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
-                        (int)indvd.getX(),
-                        (int)indvd.getY(), texture.Width, texture.Height),
+                        (int)indvd.X,
+                        (int)indvd.Y, texture.Width, texture.Height),
                         null,
                         color,
                         0f,

@@ -15,6 +15,17 @@ namespace SwarmEngine
 	    private int rankInXOrder, rankInYOrder;
         private Color color;
 
+
+        public double X
+        {
+            get { return x; }
+        }
+
+        public double Y
+        {
+          get { return y;}
+        }
+
         public Individual() :  this(0.0, 0.0, 0.0, 0.0, new Parameters())
         {
             
@@ -84,14 +95,15 @@ namespace SwarmEngine
 		    this.rankInYOrder = rankInYOrder;
 	    }
 
-	    public double getX() {
+	    /*
+        public double getX() {
 		    return x;
 	    }
 
 	    public double getY() {
 		    return y;
 	    }
-
+        */
 	    public double getDx() {
 		    return dx;
 	    }
