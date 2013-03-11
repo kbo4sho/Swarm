@@ -208,38 +208,38 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\black.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Backgrounds\black.xnb">
       <Link>Content\Backgrounds\black.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\gray.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Backgrounds\gray.xnb">
       <Link>Content\Backgrounds\gray.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\logo.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Backgrounds\logo.xnb">
       <Link>Content\Backgrounds\logo.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\red.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Backgrounds\red.xnb">
       <Link>Content\Backgrounds\red.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\bee.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\bee.xnb">
       <Link>Content\bee.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\fonts\debugfont.xnb">
-      <Link>Content\Fonts\debugfont.xnb</Link>
-    </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\fonts\detailsfont.xnb">
-      <Link>Content\Fonts\detailsfont.xnb</Link>
-    </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\menu\button.xnb">
-      <Link>Content\Menu\button.xnb</Link>
-    </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\menu\menufont.xnb">
-      <Link>Content\Menu\menufont.xnb</Link>
-    </Content>
-    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\beebig.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\beebig.xnb">
       <Link>Content\beebig.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\centermarker.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\centermarker.xnb">
       <Link>Content\centermarker.xnb</Link>
+    </Content>
+    <Content Include="..\..\SoultionItems\Content\Content\Fonts\debugfont.xnb">
+      <Link>Content\Fonts\debugfont.xnb</Link>
+    </Content>
+    <Content Include="..\..\SoultionItems\Content\Content\Fonts\detailsfont.xnb">
+      <Link>Content\Fonts\detailsfont.xnb</Link>
+    </Content>
+    <Content Include="..\..\SoultionItems\Content\Content\Menu\button.xnb">
+      <Link>Content\Menu\button.xnb</Link>
+    </Content>
+    <Content Include="..\..\SoultionItems\Content\Content\Menu\menufont.xnb">
+      <Link>Content\Menu\menufont.xnb</Link>
     </Content>
     <None Include="XNASwarmsRelease.W8_TemporaryKey.pfx" />
   </ItemGroup>
