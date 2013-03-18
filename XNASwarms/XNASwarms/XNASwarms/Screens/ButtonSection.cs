@@ -317,8 +317,8 @@ namespace XNASwarms
                     }
                     else if (menuEntries[_selectedEntry].IsGameModeGame())
                     {
-                        _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Stable_A, true));
                         this._screen.ExitScreen();
+                        _screen.ScreenManager.AddScreen(new SwarmScreen1(StockRecipies.Stable_A, true));
                     }
                     else if (menuEntries[_selectedEntry].IsZoomIn())
                     {

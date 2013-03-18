@@ -8,7 +8,6 @@ namespace ScreenSystem.Debug
 {
     public enum DebugFlagType
     {
-        
         Normal = 0,
         Odd = 1,
         Important = 2,

@@ -63,25 +63,27 @@ namespace ScreenSystem.Debug
 
         public override void Update(GameTime gameTime)
         {
-
-            Vector2 largestStringSize = new Vector2(100, 20);//screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
-            DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding * 3;
-            DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count) + PanelPadding * 3;
-
-            if (DebugItems.Count > MaxDebugItems)
+            if (ConsoleVisible)
             {
-                List<DebugItem> tempItems = new List<DebugItem>();
-                foreach (var item in DebugItems.Skip(MaxDebugItems - DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count()))
-                {
-                    if (item.GetFlagType() == DebugFlagType.Normal)
-                    {
-                        tempItems.Add(item);
-                    }
-                }
+                Vector2 largestStringSize = new Vector2(100, 20);//screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
+                DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding * 3;
+                DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count) + PanelPadding * 3;
 
-                foreach (var temp in tempItems)
+                if (DebugItems.Count > MaxDebugItems)
                 {
-                    DebugItems.Remove(temp);
+                    List<DebugItem> tempItems = new List<DebugItem>();
+                    foreach (var item in DebugItems.Skip(MaxDebugItems - DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count()))
+                    {
+                        if (item.GetFlagType() == DebugFlagType.Normal)
+                        {
+                            tempItems.Add(item);
+                        }
+                    }
+
+                    foreach (var temp in tempItems)
+                    {
+                        DebugItems.Remove(temp);
+                    }
                 }
             }
             base.Update(gameTime);
@@ -89,11 +91,11 @@ namespace ScreenSystem.Debug
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-
-            screenManager.SpriteBatch.Begin();
-            
             if (ConsoleVisible)
             {
+                screenManager.SpriteBatch.Begin();
+
+
                 screenManager.SpriteBatch.Draw(PanelTexture, DebugPanelRectangle, new Color(20, 20, 20, 170));
 
                 for (int i = DebugItems.Count - 1; i >= 0; i -= 1)
@@ -101,11 +103,13 @@ namespace ScreenSystem.Debug
                     screenManager.SpriteBatch.DrawString(screenManager.Fonts.FrameRateCounterFont, DebugItems[i].GetFormatedMessage(),
                                                           new Vector2(DebugPanelRectangle.X + PanelPadding, (DebugPanelRectangle.Y + itemSpacer * i) + PanelPadding), DebugItems[i].GetColor());
                 }
+
+
+                DrawAnalysisFilters();
+
+                screenManager.SpriteBatch.End();
+
             }
-
-            DrawAnalysisFilters();
-
-            screenManager.SpriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -123,7 +127,7 @@ namespace ScreenSystem.Debug
                 }
                 if (FilterResults.Count > 1)
                 {
-                    FilterResults.RemoveRange(0, FilterResults.Count - 1);
+                    FilterResults.Clear();
                 }
             }
         }
@@ -141,38 +145,44 @@ namespace ScreenSystem.Debug
 
         public void AddDebugItem(string label, string message, DebugFlagType flagtype)
         {
-            switch (flagtype)
+            if (ConsoleVisible)
             {
-                case DebugFlagType.Normal:
-                    DebugItems.Insert(0, new DebugItem(label, message, flagtype));
-                    break;
-                case DebugFlagType.Odd:
-                    DebugItems.Insert(0, new DebugItem(label, message,flagtype));
-                    break;
-                case DebugFlagType.Important:
-                    DebugItems.Insert(0, new DebugItem(label, message, flagtype));
-                    break;
-            }  
+                switch (flagtype)
+                {
+                    case DebugFlagType.Normal:
+                        DebugItems.Insert(0, new DebugItem(label, message, flagtype));
+                        break;
+                    case DebugFlagType.Odd:
+                        DebugItems.Insert(0, new DebugItem(label, message, flagtype));
+                        break;
+                    case DebugFlagType.Important:
+                        DebugItems.Insert(0, new DebugItem(label, message, flagtype));
+                        break;
+                }
+            }
         }
 
         public void AddAnaysisResult(List<Analysis> analysisresult)
         {
-            foreach (Analysis analysis in analysisresult)
+            if (ConsoleVisible)
             {
-                if (this.ConsoleVisible)
+                foreach (Analysis analysis in analysisresult)
                 {
-                    if (analysis.Messages != null)
+                    if (this.ConsoleVisible)
                     {
-                        foreach (AnalysisMessage message in analysis.Messages)
+                        if (analysis.Messages != null)
                         {
-                            AddDebugItem(message.Type, message.Message, DebugFlagType.Normal);
+                            foreach (AnalysisMessage message in analysis.Messages)
+                            {
+                                AddDebugItem(message.Type, message.Message, DebugFlagType.Normal);
+                            }
                         }
                     }
-                }
 
-                if (analysis.FilterResult != null)
-                {
-                    FilterResults.Add(analysis.FilterResult);
+                    if (analysis.FilterResult != null)
+                    {
+                        FilterResults.Add(analysis.FilterResult);
+                    }
                 }
             }
         }
