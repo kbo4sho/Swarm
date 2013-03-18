@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SwarmEngine;
 using ScreenSystem.Debug;
+using System.Threading.Tasks;
 
 namespace XNASwarms.Borders
 {
@@ -18,7 +19,8 @@ namespace XNASwarms.Borders
         private List<Wall> borderWalls;
         Texture2D borderTexture;
         int rightBound, bottomBound;
-        private IDebugScreen debugScreen; 
+        private IDebugScreen debugScreen;
+        Individual currentInd;
 
         public Border(GameScreen gamescreen, List<Wall> borderwalls, ScreenManager screenmanger)
         {
@@ -35,26 +37,25 @@ namespace XNASwarms.Borders
 
         public void Update(List<Individual> individuals)
         {
-
             int numberOfSwarm = individuals.Count;
+            int currentX, currentY;
+            //Parallel.For(0, numberOfSwarm, i =>
             for (int i = 0; i < numberOfSwarm; i++)
             {
-                Individual currentInd = individuals[i];
-                int currentX = (int)currentInd.X;
-                int currentY = (int)currentInd.Y;
+                currentInd = individuals[i];
+                currentX = (int)currentInd.X;
+                currentY = (int)currentInd.Y;
 
                 if (currentX > rightBound)
                 {
                     //Right
-                    Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Right).First();
-                    HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
+                    HandleWallAction(borderWalls[2].GetWallActionType(), borderWalls[2].GetWallOrientation(), currentInd);
                     //debugScreen.AddDebugItem("BORDER RIGHT", currentInd.getX().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
                 }
                 else if (currentX < -rightBound)
                 {
                     //Left
-                    Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Left).First();
-                    HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
+                    HandleWallAction(borderWalls[0].GetWallActionType(), borderWalls[0].GetWallOrientation(), currentInd);
                     //debugScreen.AddDebugItem("BORDER LEFT", currentInd.getX().ToString());
 
                 }
@@ -62,15 +63,13 @@ namespace XNASwarms.Borders
                 if (currentY > bottomBound)
                 {
                     //Bottom
-                    Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Bottom).First();
-                    HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
+                    HandleWallAction(borderWalls[3].GetWallActionType(), borderWalls[3].GetWallOrientation(), currentInd);
 
                 }
                 else if (currentY < -bottomBound)
                 {
                     //Top
-                    Wall wall = borderWalls.Where(s => s.GetSideType() == WallSideType.Top).First();
-                    HandleWallAction(wall.GetWallActionType(), wall.GetWallOrientation(), currentInd);
+                    HandleWallAction(borderWalls[1].GetWallActionType(), borderWalls[1].GetWallOrientation(), currentInd);
                 }
             }
         }

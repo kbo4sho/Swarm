@@ -170,9 +170,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SoultionItems\Windows8\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="MonoGame.Framework.Windows8">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows8\MonoGame.Framework.Windows8.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SwarmAnalysisEngine.W8\SwarmAnalysisEngine.W8.csproj">

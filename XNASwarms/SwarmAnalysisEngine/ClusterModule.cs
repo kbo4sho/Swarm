@@ -9,14 +9,14 @@ namespace SwarmAnalysisEngine
 {
     public class ClusterModule : AnalysisModule
     {
-        int ClusterItemThreshhold = 5;
+        int ClusterItemThreshhold = 8;
         int ClusterBackCount = 30;
         List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
         public List<Cluster> Clusters;
         private Analysis analysis;
 
         public ClusterModule()
-            : base("Cluster Module", 8)
+            : base("Cluster Module", 4)
         {
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
@@ -162,12 +162,13 @@ namespace SwarmAnalysisEngine
         private FilterResult GenerateFilterResult()
         {
             FilterResult filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
+            double leftindvd, rightindvd, topindvd, bottomindvd;
             foreach (Cluster cluster in Clusters)
             {
-                double leftindvd = cluster.OrderBy(point => point.X).First().X;
-                double rightindvd = cluster.OrderByDescending(point => point.X).First().X;
-                double topindvd = cluster.OrderBy(point => point.Y).First().Y;
-                double bottomindvd = cluster.OrderByDescending(point => point.Y).First().Y;
+                leftindvd = cluster.OrderBy(point => point.X).First().X;
+                rightindvd = cluster.OrderByDescending(point => point.X).First().X;
+                topindvd = cluster.OrderBy(point => point.Y).First().Y;
+                bottomindvd = cluster.OrderByDescending(point => point.Y).First().Y;
 
                 filterresult.ClusterCenters.Add(new Vector2((float)(leftindvd + rightindvd)*.5f,(float)(topindvd + bottomindvd)*.5f));
             }

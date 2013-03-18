@@ -11,9 +11,11 @@ namespace SwarmEngine
     {
         private Population population;
         Random rand = new Random();
+        Individual currentInd;
+        Parameters param;
+        Individual tempSwarm2;
 
-        private Species swarmInBirthOrder, swarmInXOrder,
-                swarmInYOrder;
+        private Species swarmInBirthOrder, swarmInXOrder, swarmInYOrder;
 
         #region Constuctor
         //public PopulationSimulator(Population newPopulation)
@@ -38,9 +40,6 @@ namespace SwarmEngine
         public PopulationSimulator(int width, int height, params Recipe[] recipes)
             :this (width, height, new Population(recipes[0].createPopulation(width, height), "CrumpulaAtion"))
         {
-
-            //only one constructor
-
         }
 
         public PopulationSimulator(int width, int height, Population pop)
@@ -57,29 +56,20 @@ namespace SwarmEngine
                 {
                     addIndividual(population[i][j]);
                 }
-
             }
-
         }
         #endregion
-
-        
 
         public void stepSimulation(List<Individual> temporaryIndividuals, int weightOfTemporaries)
         {
             int numberOfSwarm = swarmInBirthOrder.Count();
-            Individual currentInd;
-            Parameters param;
-            Individual tempSwarm2;
 
-            List<Individual> neighbors = new List<Individual>(); ;
+            int minRankInXOrder, maxRankInXOrder, minRankInYOrder, maxRankInYOrder;
 
             double tempX, tempY, minX, maxX, minY, maxY, neighborhoodRadiusSquared;
             double tempAx, tempAy;
 
             double tempX2, tempY2;
-
-            int minRankInXOrder, maxRankInXOrder, minRankInYOrder, maxRankInYOrder; 
 
             //Parallel.For(0, numberOfSwarm, i => //might need to put back all the instance decalartions to use Parallel might be faster this way
             for (int i = 0; i < numberOfSwarm; i++)
@@ -92,7 +82,7 @@ namespace SwarmEngine
                 neighborhoodRadiusSquared = param.getNeighborhoodRadius()
                         * param.getNeighborhoodRadius();
 
-                neighbors.Clear();
+                List<Individual> neighbors = new List<Individual>();
 
                 // Detecting neighbors using sorted lists
                 minX = tempX - param.getNeighborhoodRadius();
@@ -251,7 +241,7 @@ namespace SwarmEngine
                         tempDY * (param.getNormalSpeed() - f) / f * param.getC5(),
                         param.getMaxSpeed());
 
-            }
+            };
 
             updateInternalState();
         }

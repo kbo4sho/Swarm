@@ -32,6 +32,7 @@ namespace XNASwarms
         private int FramesPerSec;
         float TotalElapsed;
         private IDebugScreen debugScreen;
+        List<Individual> SwarmInXOrder;
         AnalysisEngine analysisEngine;
         
 
@@ -41,6 +42,7 @@ namespace XNASwarms
             FramesPerSec = 30;
             TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
+            SwarmInXOrder = new List<Individual>();
         }
 
         public override void LoadContent()
@@ -50,7 +52,6 @@ namespace XNASwarms
             debugScreen.ResetDebugItemsToNormal();
             width = ScreenManager.GraphicsDevice.Viewport.Width;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
-
             
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             
@@ -80,10 +81,10 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            var SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
+            SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
             debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds));
             populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
-            Border.Update(SwarmInXOrder.ToList<Individual>());
+            Border.Update(SwarmInXOrder);
             Camera.Update(gameTime);
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
