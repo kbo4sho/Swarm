@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid>
-        <!--<TextBox Text="Columbia College Chicago" Width="Auto" MinWidth="200" Height="23" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10"/>-->
+        <AppBar VerticalAlignment="Bottom">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="30">
             <StackPanel.Resources>
                 <Style TargetType="Grid">
@@ -47,8 +47,25 @@
                 <TextBlock Text="Slider" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                 <Slider Width="300" Grid.Row="1" Height="32" />
             </Grid>
-            
-        </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="export a copy of the swarms you've liked" x:Name="exportstatus"  Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Visibility="Collapsed"/>
+                <Button Content="Export likes" Click="Button_Click_1" Grid.Row="0" Grid.RowSpan="2" ToolTipService.ToolTip="{Binding ElementName=status, Path=Text}"/>
+            </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="import a liked swarms file you've saved" x:Name="importstatus"  Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Visibility="Collapsed"/>
+                    <Button Content="Import likes" Click="Button_Click_2" Grid.Row="0" Grid.RowSpan="2" ToolTipService.ToolTip="{Binding ElementName=status, Path=Text}"/>
+                </Grid>
+
+            </StackPanel>
+        </AppBar>
     </Grid>
     
     

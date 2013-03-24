@@ -34,7 +34,8 @@ namespace XNASwarms.Screens
         Recall5,
         Recall6,
         Swinger,
-        FussBudget,
+        ImportLikes,
+        ExportLikes,
     }
 
     /// <summary>
@@ -237,10 +238,6 @@ namespace XNASwarms.Screens
         {
             return _type == EntryType.Swinger;
         }
-        internal bool IsFussBudget()
-        {
-            return _type == EntryType.FussBudget;
-        }
 
         internal bool IsDebugger()
         {
@@ -290,6 +287,16 @@ namespace XNASwarms.Screens
         internal bool IsRecall6()
         {
             return _type == EntryType.Recall6;
+        }
+
+        internal bool IsImportLikes()
+        {
+            return _type == EntryType.ImportLikes;
+        }
+
+        internal bool IsExportLikes()
+        {
+            return _type == EntryType.ExportLikes;
         }
 
         #endregion

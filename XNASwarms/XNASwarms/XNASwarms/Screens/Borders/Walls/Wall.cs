@@ -31,16 +31,16 @@ namespace XNASwarms.Borders.Walls
             switch (wallsidetype)
             {
                 case Walls.WallSideType.Left:
-                    Length = roomheight;
+                    Length = (int)(roomheight);
                     break;
                 case Walls.WallSideType.Top:
-                    Length = roomwidth;
+                    Length = (int)(roomwidth);
                     break;
                 case Walls.WallSideType.Right:
-                    Length = roomheight;
+                    Length = (int)(roomheight);
                     break;
                 case Walls.WallSideType.Bottom:
-                    Length = roomwidth;
+                    Length = (int)(roomwidth);
                     break;
             }
         }

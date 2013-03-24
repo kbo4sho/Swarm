@@ -79,8 +79,8 @@ namespace SwarmEngine
             return genome.getDisplayColor();
         }
 
-	    public int getRankInXOrder() {
-		    return rankInXOrder;
+	    public int RankInXOrder{
+            get { return rankInXOrder; }
 	    }
 
 	    public void setRankInXOrder(int rankInXOrder) {

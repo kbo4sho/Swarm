@@ -14,6 +14,7 @@ namespace SwarmAnalysisEngine
         List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
         public List<Cluster> Clusters;
         private Analysis analysis;
+        List<Individual> lastfew;
 
         public ClusterModule()
             : base("Cluster Module", 4)
@@ -66,7 +67,8 @@ namespace SwarmAnalysisEngine
         private bool InExistingCluster(Individual individual)
         {
             List<int> clustersIds = new List<int>();
-            List<Individual> lastfew;
+            lastfew = new List<Individual>();
+
             for (int c = 0; c < Clusters.Count; c++)
             {
                 lastfew = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - ClusterBackCount)).Take(ClusterBackCount).ToList();
@@ -123,11 +125,11 @@ namespace SwarmAnalysisEngine
                     }
                     else if (clusterid == 4)
                     {
-                        indvd.setDisplayColor(Color.Lerp(Color.LightPink,Color.LightBlue,clusterid*.15f));
+                        indvd.setDisplayColor(Color.Lerp(Color.LightPink, Color.LightBlue, clusterid * .15f));
                     }
                     else
                     {
-                        indvd.setDisplayColor(Color.Lerp(Color.Green, Color.Cyan, (float)(clusterid*.05)));
+                        indvd.setDisplayColor(Color.Lerp(Color.LawnGreen, Color.Cyan, (float)((clusterid - 5) * .25)));
                     }
                 }
             }

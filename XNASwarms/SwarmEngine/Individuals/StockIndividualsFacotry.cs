@@ -7,6 +7,7 @@ namespace SwarmEngine
 {
     public static class StockIndividualsFacotry
     {
+        
 
         public static List<Individual> GenerateSet(int howmany)
         {

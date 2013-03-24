@@ -39,7 +39,7 @@ namespace XNASwarms.Borders
         {
             int numberOfSwarm = individuals.Count;
             int currentX, currentY;
-            //Parallel.For(0, numberOfSwarm, i =>
+
             for (int i = 0; i < numberOfSwarm; i++)
             {
                 currentInd = individuals[i];

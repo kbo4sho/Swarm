@@ -5,10 +5,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 /*
-
-package swarm.engine;
-
-// SwarmParameters.java
 //
 // Part of:
 // SwarmChemistry.java
@@ -27,23 +23,21 @@ package swarm.engine;
 // For more information about this software, see:
 //   http://bingweb.binghamton.edu/~sayama/SwarmChemistry/
 //
-
-import java.awt.Color; 
-  */
+*/
 namespace SwarmEngine
 {
     public class Parameters : IComparable
     {
-        public static int numberOfIndividualsMax = 1000;
+        public static int numberOfIndividualsMax = 3000;
 
         private double neighborhoodRadius;
-        public static double neighborhoodRadiusMax = 30;
+        public static double neighborhoodRadiusMax = 150;
 
         private double normalSpeed;
-        public static double normalSpeedMax = 20;
+        public static double normalSpeedMax = 10;
 
         private double maxSpeed;
-        public static double maxSpeedMax = 40;
+        public static double maxSpeedMax = 20;
 
         private double c1;
         public static double c1Max = 1;
@@ -60,7 +54,7 @@ namespace SwarmEngine
         private double c5;
         public static double c5Max = 1;
 
-        public Random rand = new Random();
+        private Random rand = new Random();
 
         public Parameters()
         {
