@@ -9,53 +9,53 @@
 
     <Grid>
         <AppBar VerticalAlignment="Bottom">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="30">
-            <StackPanel.Resources>
-                <Style TargetType="Grid">
-                    <Setter Property="Margin" Value="30,0,0,0"/>
-                </Style>
-            </StackPanel.Resources>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="Module" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                <ComboBox Width="200" Grid.Row="1" >
-                    <ComboBoxItem Content="Setting One"/>
-                    <ComboBoxItem Content="Setting Two"/>
-                    <ComboBoxItem Content="Setting Three"/>
-                </ComboBox>
-            </Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="Filter" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                <ComboBox Width="200" Grid.Row="1" Height="32" >
-                    <ComboBoxItem Content="Filter One"/>
-                    <ComboBoxItem Content="Filter Two"/>
-                    <ComboBoxItem Content="Filter Three"/>
-                </ComboBox>
-            </Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="Slider" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                <Slider Width="300" Grid.Row="1" Height="32" />
-            </Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="export a copy of the swarms you've liked" x:Name="exportstatus"  Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Visibility="Collapsed"/>
-                <Button Content="Export likes" Click="Button_Click_1" Grid.Row="0" Grid.RowSpan="2" ToolTipService.ToolTip="{Binding ElementName=status, Path=Text}"/>
-            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="30">
+                <StackPanel.Resources>
+                    <Style TargetType="Grid">
+                        <Setter Property="Margin" Value="30,0,0,0"/>
+                    </Style>
+                </StackPanel.Resources>
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Module" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    <ComboBox Width="200" Grid.Row="1" >
+                        <ComboBoxItem Content="Setting One"/>
+                        <ComboBoxItem Content="Setting Two"/>
+                        <ComboBoxItem Content="Setting Three"/>
+                    </ComboBox>
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Filter" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    <ComboBox Width="200" Grid.Row="1" Height="32" >
+                        <ComboBoxItem Content="Filter One"/>
+                        <ComboBoxItem Content="Filter Two"/>
+                        <ComboBoxItem Content="Filter Three"/>
+                    </ComboBox>
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Slider" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    <Slider Width="300" Grid.Row="1" Height="32" />
+                </Grid>
+                <Grid Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="export a copy of the swarms you've liked" x:Name="exportstatus"  Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Visibility="Collapsed"/>
+                    <Button Content="Export likes" Click="Button_Click_1" Grid.Row="0" Grid.RowSpan="2" ToolTipService.ToolTip="{Binding ElementName=status, Path=Text}"/>
+                </Grid>
+                <Grid Visibility="Collapsed">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
@@ -63,7 +63,6 @@
                     <TextBlock Text="import a liked swarms file you've saved" x:Name="importstatus"  Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Visibility="Collapsed"/>
                     <Button Content="Import likes" Click="Button_Click_2" Grid.Row="0" Grid.RowSpan="2" ToolTipService.ToolTip="{Binding ElementName=status, Path=Text}"/>
                 </Grid>
-
             </StackPanel>
         </AppBar>
     </Grid>

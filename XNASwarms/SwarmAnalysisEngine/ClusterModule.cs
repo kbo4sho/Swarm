@@ -14,7 +14,11 @@ namespace SwarmAnalysisEngine
         List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
         public List<Cluster> Clusters;
         private Analysis analysis;
+        double leftMostX, rightMostX, topMostY, bottomMostY;
         List<Individual> lastfew;
+        FilterResult filterresult;
+        BoundingSphere sphere;
+        BoundingBox rect;
 
         public ClusterModule()
             : base("Cluster Module", 4)
@@ -163,19 +167,42 @@ namespace SwarmAnalysisEngine
 
         private FilterResult GenerateFilterResult()
         {
-            FilterResult filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
-            double leftindvd, rightindvd, topindvd, bottomindvd;
+            filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
+
             foreach (Cluster cluster in Clusters)
             {
-                leftindvd = cluster.OrderBy(point => point.X).First().X;
-                rightindvd = cluster.OrderByDescending(point => point.X).First().X;
-                topindvd = cluster.OrderBy(point => point.Y).First().Y;
-                bottomindvd = cluster.OrderByDescending(point => point.Y).First().Y;
+                leftMostX = cluster.OrderBy(point => point.X).First().X;
+                rightMostX = cluster.OrderByDescending(point => point.X).First().X;
+                topMostY = cluster.OrderBy(point => point.Y).First().Y;
+                bottomMostY = cluster.OrderByDescending(point => point.Y).First().Y;
 
-                filterresult.ClusterCenters.Add(new Vector2((float)(leftindvd + rightindvd)*.5f,(float)(topindvd + bottomindvd)*.5f));
+                Vector3[] positions;
+
+                positions = new Vector3[3] {
+                        new Vector3((float)(leftMostX + rightMostX) * .5f,(float)topMostY, 0),
+                        new Vector3((float)leftMostX, (float)bottomMostY, 0),
+                        new Vector3((float)rightMostX, (float)bottomMostY, 0)
+                    };
+
+                filterresult.ClusterCenters.Add(GetSphereDifference(positions));
+
+                filterresult.ClusterCenters.Add(new Vector2((float)(leftMostX + rightMostX) * .5f, (float)(topMostY + bottomMostY) * .5f));
             }
             return filterresult;
 
         }
+
+        private Vector2 GetSphereDifference(Vector3[] positions)
+        {
+            BoundingSphere sphere = BoundingSphere.CreateFromPoints(positions);
+            return new Vector2(sphere.Center.X,sphere.Center.Y);
+            
+        }
+
+        //private Vector2 GetRectDifference(Vector3[] positions)
+        //{
+        //    BoundingBox rect = BoundingBox.CreateFromPoints(positions);
+        //    return rect.GetCorners();
+        //}
     }
 }
