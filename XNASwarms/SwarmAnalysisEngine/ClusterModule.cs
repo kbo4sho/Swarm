@@ -176,20 +176,46 @@ namespace SwarmAnalysisEngine
                 topMostY = cluster.OrderBy(point => point.Y).First().Y;
                 bottomMostY = cluster.OrderByDescending(point => point.Y).First().Y;
 
+                float verticalCenter = (float)(topMostY + bottomMostY) * .5f;
+                float horizontalCenter = (float)(leftMostX + rightMostX) * .5f;
+
+                AssignClusterCenterPoint(new Vector2(horizontalCenter, verticalCenter));
+
+                //2|1
+                //3|4
+
+                //1
+                AssignQuadCenterPoint(cluster.Where(i => i.X > horizontalCenter && i.Y < verticalCenter));
+                //2
+                AssignQuadCenterPoint(cluster.Where(i => i.X < horizontalCenter && i.Y < verticalCenter));
+                //3
+                AssignQuadCenterPoint(cluster.Where(i => i.X < horizontalCenter && i.Y > verticalCenter));
+                //4
+                AssignQuadCenterPoint(cluster.Where(i => i.X > horizontalCenter && i.Y > verticalCenter));              
+            }
+            return filterresult;
+        }
+
+
+        private void AssignQuadCenterPoint(IEnumerable<Individual> quadItems)
+        {
+            if (quadItems.Count() > 0)
+            {
+                leftMostX = quadItems.OrderBy(point => point.X).First().X;
+                rightMostX = quadItems.OrderByDescending(point => point.X).First().X;
+                topMostY = quadItems.OrderBy(point => point.Y).First().Y;
+                bottomMostY = quadItems.OrderByDescending(point => point.Y).First().Y;
+
                 Vector3[] positions;
 
                 positions = new Vector3[3] {
-                        new Vector3((float)(leftMostX + rightMostX) * .5f,(float)topMostY, 0),
-                        new Vector3((float)leftMostX, (float)bottomMostY, 0),
-                        new Vector3((float)rightMostX, (float)bottomMostY, 0)
+                        new Vector3((float)(leftMostX + rightMostX) * .5f, (float)(topMostY + bottomMostY) * .5f,0),
+                        new Vector3((float)leftMostX, (float)(bottomMostY + topMostY)*.5f, 0),
+                        new Vector3((float)(leftMostX + rightMostX) * .5f, (float)topMostY, 0)
                     };
 
                 filterresult.ClusterCenters.Add(GetSphereDifference(positions));
-
-                filterresult.ClusterCenters.Add(new Vector2((float)(leftMostX + rightMostX) * .5f, (float)(topMostY + bottomMostY) * .5f));
             }
-            return filterresult;
-
         }
 
         private Vector2 GetSphereDifference(Vector3[] positions)
@@ -199,10 +225,9 @@ namespace SwarmAnalysisEngine
             
         }
 
-        //private Vector2 GetRectDifference(Vector3[] positions)
-        //{
-        //    BoundingBox rect = BoundingBox.CreateFromPoints(positions);
-        //    return rect.GetCorners();
-        //}
+        private void AssignClusterCenterPoint(Vector2 clusterCenter)
+        {
+            filterresult.ClusterCenters.Add(clusterCenter);
+        }
     }
 }

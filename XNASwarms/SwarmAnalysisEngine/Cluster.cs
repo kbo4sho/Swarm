@@ -9,7 +9,5 @@ namespace SwarmAnalysisEngine
 {
     public class Cluster : List<Individual>
     {
-        public double MaxHeight;
-        public double MinHeight;
     }
 }
