@@ -67,7 +67,6 @@ namespace XNASwarms
             {
                 debugScreen.AddDebugItem("SPECIES " + i.ToString("00") + " COUNT", populationSimulator.GetPopulation()[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
                 debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.GetPopulation()[i].First().getGenome().getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
-                
             }
 
             debugScreen.AddDebugItem("SPECIES COUNT ", populationSimulator.GetPopulation().Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
@@ -81,11 +80,14 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
-            debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds));
-            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
-            Border.Update(SwarmInXOrder);
-            Camera.Update(gameTime);
+            if (this.IsActive)
+            {
+                SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
+                debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds));
+                populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
+                Border.Update(SwarmInXOrder);
+                Camera.Update(gameTime);
+            }
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
@@ -108,6 +110,12 @@ namespace XNASwarms
             Border.Draw(ScreenManager.SpriteBatch, Camera);
 
             base.Draw(gameTime);
+        }
+
+        public override void UnloadContent()
+        {
+            ButtonSection.Dispose();
+            base.UnloadContent();
         }
 
         public override void HandleInput(InputHelper input, Microsoft.Xna.Framework.GameTime gameTime)
@@ -155,23 +163,6 @@ namespace XNASwarms
                          0,0, new Parameters());
                 }
             }
-            //TouchPanel.EnabledGestures = GestureType.Pinch;
-            //while (TouchPanel.IsGestureAvailable)
-            //{
-            //    GestureSample gesture = TouchPanel.ReadGesture();
-
-            //    switch (gesture.GestureType)
-            //    {
-            //        case GestureType.Pinch:
-            //            float scaleFactor = PinchZoom.GetScaleFactor(gesture.Position, gesture.Position2,
-            //                gesture.Delta, gesture.Delta2);
-            //            //Vector2 panDelta = PinchZoom.GetTranslationDelta(gesture.Position, gesture.Position2,
-            //            //    gesture.Delta, gesture.Delta2, spritePos, scaleFactor);
-            //            Camera.Zoom *= scaleFactor;
-            //            //spritePos += panDelta;
-            //            break;
-            //    }
-            //}
 
             ButtonSection.HandleInput(input, gameTime);
 
@@ -218,22 +209,15 @@ namespace XNASwarms
             savedGenome.c5 = individual.genome.getC5();
             return savedGenome;
         }
-        //private void UpdateSupers(ReadOnlyTouchPointCollection touches, InputHelper input)
-        //{
-         
 
-        //    for (int i = 0; i < touches.Count; i++)
-        //    {
-        //        Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(touches[i].X,touches[i].Y));
+        internal void UpdatePopulation(string recipiText, bool mutate)
+        {
+            populationSimulator.UpdatePopulation(recipiText, mutate);
+        }
 
-        //        Supers[i] = new Individual(((double)position.X),
-        //             ((double)position.Y),
-        //             0.0, 0.0, new Parameters());
-        //    }
-        //}
-
-
-
-        
+        internal void UpdatePopulation(Population population, bool mutate)
+        {
+            populationSimulator.UpdatePopulation(population, mutate);
+        }
     }
 }

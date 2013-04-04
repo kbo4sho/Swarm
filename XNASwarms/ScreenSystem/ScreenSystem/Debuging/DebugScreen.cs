@@ -36,6 +36,8 @@ namespace ScreenSystem.Debug
         private int PanelPadding;
         private int MaxDebugItems;
 
+        private bool everyOther;
+        Color centerXColor;
         private bool ConsoleVisible;
 
 
@@ -94,8 +96,6 @@ namespace ScreenSystem.Debug
             if (ConsoleVisible)
             {
                 screenManager.SpriteBatch.Begin();
-
-
                 screenManager.SpriteBatch.Draw(PanelTexture, DebugPanelRectangle, new Color(20, 20, 20, 170));
 
                 for (int i = DebugItems.Count - 1; i >= 0; i -= 1)
@@ -122,7 +122,18 @@ namespace ScreenSystem.Debug
                 {
                     for (int c = 0; c < FilterResults[i].ClusterCenters.Count(); c++ )
                     {
-                        screenManager.SpriteBatch.Draw(LineTexture, FilterResults[i].ClusterCenters[c], null, Color.White, 0, new Vector2(-(screenManager.GraphicsDevice.Viewport.Width / 2), -(screenManager.GraphicsDevice.Viewport.Height / 2)) + new Vector2(5, 5), Vector2.One, SpriteEffects.None, 0);
+                        if (everyOther)
+                        {
+                            centerXColor = Color.Red;
+                        }
+                        else
+                        {
+                            centerXColor = Color.Blue;
+                        }
+
+                        screenManager.SpriteBatch.Draw(LineTexture, FilterResults[i].ClusterCenters[c], null, centerXColor, 0, new Vector2(-(screenManager.GraphicsDevice.Viewport.Width / 2), -(screenManager.GraphicsDevice.Viewport.Height / 2)) + new Vector2(5, 5), Vector2.One, SpriteEffects.None, 0);
+
+                        everyOther = !everyOther;
                     }
                 }
                 if (FilterResults.Count > 1)

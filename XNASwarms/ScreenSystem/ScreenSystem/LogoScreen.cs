@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ScreenSystem.ScreenSystem
 {
-    public class LogoScreen : GameScreen
+    public sealed class LogoScreen : GameScreen, IDisposable
     {
         private const float LogoScreenHeightRatio = 4f / 6f;
         private const float LogoWidthHeightRatio = 1.4f;
@@ -84,6 +84,13 @@ namespace ScreenSystem.ScreenSystem
             ScreenManager.SpriteBatch.Begin();
             ScreenManager.SpriteBatch.Draw(_farseerLogoTexture, _destination, Color.White);
             ScreenManager.SpriteBatch.End();
+        }
+
+
+
+        public void Dispose()
+        {
+            _content.Dispose();
         }
     }
 }

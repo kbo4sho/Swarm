@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace SwarmEngine
 {
-    public class Species : List<Individual>
+    public class Species : List<Individual>, IDisposable
     {
         private Parameters parameters;
 
@@ -26,5 +26,10 @@ namespace SwarmEngine
             return this[index];
         }
 
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

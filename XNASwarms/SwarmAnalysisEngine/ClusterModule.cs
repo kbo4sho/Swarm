@@ -14,6 +14,11 @@ namespace SwarmAnalysisEngine
         List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
         public List<Cluster> Clusters;
         private Analysis analysis;
+        double leftMostX, rightMostX, topMostY, bottomMostY;
+        List<Individual> lastfew;
+        FilterResult filterresult;
+        BoundingSphere sphere;
+        BoundingBox rect;
 
         public ClusterModule()
             : base("Cluster Module", 4)
@@ -66,7 +71,8 @@ namespace SwarmAnalysisEngine
         private bool InExistingCluster(Individual individual)
         {
             List<int> clustersIds = new List<int>();
-            List<Individual> lastfew;
+            lastfew = new List<Individual>();
+
             for (int c = 0; c < Clusters.Count; c++)
             {
                 lastfew = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - ClusterBackCount)).Take(ClusterBackCount).ToList();
@@ -123,11 +129,11 @@ namespace SwarmAnalysisEngine
                     }
                     else if (clusterid == 4)
                     {
-                        indvd.setDisplayColor(Color.Lerp(Color.LightPink,Color.LightBlue,clusterid*.15f));
+                        indvd.setDisplayColor(Color.Lerp(Color.LightPink, Color.LightBlue, clusterid * .15f));
                     }
                     else
                     {
-                        indvd.setDisplayColor(Color.Lerp(Color.Green, Color.Cyan, (float)(clusterid*.05)));
+                        indvd.setDisplayColor(Color.Lerp(Color.LawnGreen, Color.Cyan, (float)((clusterid - 5) * .25)));
                     }
                 }
             }
@@ -161,19 +167,67 @@ namespace SwarmAnalysisEngine
 
         private FilterResult GenerateFilterResult()
         {
-            FilterResult filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
-            double leftindvd, rightindvd, topindvd, bottomindvd;
+            filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
+
             foreach (Cluster cluster in Clusters)
             {
-                leftindvd = cluster.OrderBy(point => point.X).First().X;
-                rightindvd = cluster.OrderByDescending(point => point.X).First().X;
-                topindvd = cluster.OrderBy(point => point.Y).First().Y;
-                bottomindvd = cluster.OrderByDescending(point => point.Y).First().Y;
+                leftMostX = cluster.OrderBy(point => point.X).First().X;
+                rightMostX = cluster.OrderByDescending(point => point.X).First().X;
+                topMostY = cluster.OrderBy(point => point.Y).First().Y;
+                bottomMostY = cluster.OrderByDescending(point => point.Y).First().Y;
 
-                filterresult.ClusterCenters.Add(new Vector2((float)(leftindvd + rightindvd)*.5f,(float)(topindvd + bottomindvd)*.5f));
+                float verticalCenter = (float)(topMostY + bottomMostY) * .5f;
+                float horizontalCenter = (float)(leftMostX + rightMostX) * .5f;
+
+                AssignClusterCenterPoint(new Vector2(horizontalCenter, verticalCenter));
+
+                //2|1
+                //3|4
+
+                //1
+                AssignQuadCenterPoint(cluster.Where(i => i.X > horizontalCenter && i.Y < verticalCenter));
+                //2
+                AssignQuadCenterPoint(cluster.Where(i => i.X < horizontalCenter && i.Y < verticalCenter));
+                //3
+                AssignQuadCenterPoint(cluster.Where(i => i.X < horizontalCenter && i.Y > verticalCenter));
+                //4
+                AssignQuadCenterPoint(cluster.Where(i => i.X > horizontalCenter && i.Y > verticalCenter));              
             }
             return filterresult;
+        }
 
+
+        private void AssignQuadCenterPoint(IEnumerable<Individual> quadItems)
+        {
+            if (quadItems.Count() > 0)
+            {
+                leftMostX = quadItems.OrderBy(point => point.X).First().X;
+                rightMostX = quadItems.OrderByDescending(point => point.X).First().X;
+                topMostY = quadItems.OrderBy(point => point.Y).First().Y;
+                bottomMostY = quadItems.OrderByDescending(point => point.Y).First().Y;
+
+                Vector3[] positions;
+
+                positions = new Vector3[3] {
+                        new Vector3((float)(leftMostX + rightMostX) * .5f, (float)(topMostY + bottomMostY) * .5f,0),
+                        new Vector3((float)leftMostX, (float)(bottomMostY + topMostY)*.5f, 0),
+                        new Vector3((float)(leftMostX + rightMostX) * .5f, (float)topMostY, 0)
+                    };
+
+                filterresult.ClusterCenters.Add(GetSphereDifference(positions));
+            }
+        }
+
+        private Vector2 GetSphereDifference(Vector3[] positions)
+        {
+            BoundingSphere sphere = BoundingSphere.CreateFromPoints(positions);
+            return new Vector2(sphere.Center.X,sphere.Center.Y);
+            
+        }
+
+        private void AssignClusterCenterPoint(Vector2 clusterCenter)
+        {
+            filterresult.ClusterCenters.Add(clusterCenter);
         }
     }
 }

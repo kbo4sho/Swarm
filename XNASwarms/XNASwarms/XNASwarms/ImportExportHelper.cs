@@ -1,41 +1,26 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using MonoGame.Framework;
-using Windows.Storage.Pickers;
-using Windows.Storage;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using XNASwarms;
-using System.Xml;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 
-
-namespace XNASwarmsXAML.W8
+namespace XNASwarms
 {
-    /// <summary>
-    /// The root page used to display the game.
-    /// </summary>
-    public sealed partial class GamePage : SwapChainBackgroundPanel
+    public static class ImportExportHelper
     {
-        readonly Game1 _game;
-
-        public GamePage(string launchArguments)
-        {
-            this.InitializeComponent();
-
-            // Create the game.
-            _game = XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, this);
-        }
-
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        public static async Task<SaveAllSpecies> Export()
         {
             FileSavePicker exportPicker = new FileSavePicker();
             exportPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             exportPicker.FileTypeChoices.Add("XML", new List<string>() { ".xml" });
             exportPicker.DefaultFileExtension = ".xml";
             exportPicker.SuggestedFileName = "SwarmsSaves";
+            exportPicker.CommitButtonText = "Export";
             StorageFile file = await exportPicker.PickSaveFileAsync();
             if (null != file)
             {
@@ -53,17 +38,14 @@ namespace XNASwarmsXAML.W8
                             serializer.Serialize(xmlWriter, game);
                         }
                         await outputStream.FlushAsync();
+                        return game;
                     }
-                    importstatus.Text = "Successfully exported @ " + DateTime.Now.ToString("t");
                 }
             }
-            else
-            {
-                importstatus.Text = "File was not exported @ " + DateTime.Now.ToString("t");
-            }
+            return null;
         }
 
-        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        public static async Task<SaveAllSpecies> Import()
         {
             FileOpenPicker importPicker = new FileOpenPicker();
             importPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
@@ -76,23 +58,23 @@ namespace XNASwarmsXAML.W8
                 {
                     using (Stream inputStream = stream.AsStreamForRead())
                     {
-                        SaveAllSpecies test;
+                        SaveAllSpecies data;
                         XmlSerializer serializer = new XmlSerializer(typeof(SaveAllSpecies));
                         using (XmlReader xmlReader = XmlReader.Create(inputStream))
                         {
-                            test = (SaveAllSpecies)serializer.Deserialize(xmlReader);
-                            
-                            importstatus.Text = "Successfully imported @ " + DateTime.Now.ToString("t");
+                            data = (SaveAllSpecies)serializer.Deserialize(xmlReader);
                         }
                         await inputStream.FlushAsync();
-                    }
-                    importstatus.Text = "Successfully imported @ " + DateTime.Now.ToString("t");
+                        return data;
+                    }                    
                 }
             }
             else
             {
-                importstatus.Text = "File was not imported @ " + DateTime.Now.ToString("t");
+                //nothing
             }
+
+            return null;
         }
     }
 }

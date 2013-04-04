@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>XNASwarmsRelease.W8_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\Users\kevin_000\Desktop\SwarmsPublish\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -141,6 +143,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ImportExportHelper.cs">
+      <Link>ImportExportHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveAllSpecies.cs">
       <Link>SaveAllSpecies.cs</Link>
     </Compile>
@@ -152,6 +157,9 @@
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpecies.cs">
       <Link>SaveSpecies.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpeciesHelper.cs">
+      <Link>SaveSpeciesHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\borders\Border.cs">
       <Link>Screens\Borders\Border.cs</Link>
