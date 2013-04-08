@@ -62,8 +62,8 @@ namespace SwarmEngine
 			popCounts = null;
 			return false;
 		}
-		if (numberOfIngredients > Parameters.numberOfIndividualsMax)
-			numberOfIngredients = Parameters.numberOfIndividualsMax;
+		if (numberOfIngredients > WorldParameters.numberOfIndividualsMax)
+            numberOfIngredients = WorldParameters.numberOfIndividualsMax;
 
 		parameters = new List<Parameters>();
 		popCounts = new List<int>();
@@ -109,8 +109,8 @@ namespace SwarmEngine
 		for (int i = 0; i < numberOfIngredients; i++)
 			totalPopulation += popCounts[i];
 
-		if (totalPopulation > Parameters.numberOfIndividualsMax)
-			rescalingRatio = (double) (Parameters.numberOfIndividualsMax - numberOfIngredients)
+        if (totalPopulation > WorldParameters.numberOfIndividualsMax)
+            rescalingRatio = (double)(WorldParameters.numberOfIndividualsMax - numberOfIngredients)
 					/ (totalPopulation == numberOfIngredients ? 1.0
 							: (double) (totalPopulation - numberOfIngredients));
 

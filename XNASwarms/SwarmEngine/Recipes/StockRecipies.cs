@@ -31,9 +31,9 @@ namespace SwarmEngine
                 string AligningForce = ".52";
                 string SeperatingForce = "58.63";
                 string ChanceOfRandomSteering = ".04";
-                string TendencyOfPaceKeeping = ".52"; 
+                string TendencyOfPaceKeeping = ".52";
 
-                return PopulationSize + "," + NeighborhoodRadius + "," + NormalSpeed + "," + MaxSpeed + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
+                return WorldParameters.numberOfIndividualsMax + "," + WorldParameters.neighborhoodRadiusMax + "," + WorldParameters.normalSpeedMax + "," + WorldParameters.maxSpeedMax + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
             }
         }
 

@@ -21,7 +21,7 @@ namespace SwarmAnalysisEngine
         BoundingBox rect;
 
         public ClusterModule()
-            : base("Cluster Module", 4)
+            : base("Cluster Module", 10)
         {
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
@@ -203,8 +203,8 @@ namespace SwarmAnalysisEngine
             {
                 leftMostX = quadItems.OrderBy(point => point.X).First().X;
                 rightMostX = quadItems.OrderByDescending(point => point.X).First().X;
-                topMostY = quadItems.OrderBy(point => point.Y).First().Y;
-                bottomMostY = quadItems.OrderByDescending(point => point.Y).First().Y;
+                topMostY = quadItems.OrderByDescending(point => point.Y).First().Y;
+                bottomMostY = quadItems.OrderBy(point => point.Y).First().Y;
 
                 Vector3[] positions;
 

@@ -1,6 +1,7 @@
 ﻿using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using XNASwarmsXAML.W8.Authoring.ViewModels;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
@@ -11,6 +12,24 @@ namespace XNASwarmsXAML.W8
     /// </summary>
     sealed partial class App : Application
     {
+        private static WorldControlsViewModel viewModel = null;
+
+        /// <summary>
+        /// A static ViewModel used by the views to bind against.
+        /// </summary>
+        /// <returns>The MainViewModel object.</returns>
+        public static WorldControlsViewModel ViewModel
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (viewModel == null)
+                    viewModel = new WorldControlsViewModel();
+
+                return viewModel;
+            }
+        }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().

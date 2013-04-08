@@ -213,6 +213,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authoring\ViewModels\WorldControlsViewModel.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -260,9 +261,9 @@
     <None Include="XNASwarms.W8_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\LogoAuthoring.png" />
     <Content Include="Assets\SmallLogo.png" />
-    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\SplashScreenAuthoring.png" />
     <Content Include="Assets\StoreLogo.png" />
   </ItemGroup>
   <ItemGroup>
