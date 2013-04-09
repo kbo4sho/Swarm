@@ -159,7 +159,9 @@ namespace SwarmAnalysisEngine
                     }
                     
                 }
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5  });
+                string clusterSpeed = Clusters[i].Average(x => (x.getDx2() * x.getDx2()) + (x.getDy2() * x.getDy2())).ToString(); 
+
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5 + " SPEED : " + clusterSpeed });
             }
             ReadOut.Add(new AnalysisMessage() { Type = "              ", Message = "                                                  " });
             return ReadOut;
