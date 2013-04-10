@@ -1,0 +1,234 @@
+//SOUNDFILE SEGMENT AND LOCALIZE DEMO
+//SEARCH for **INFO** or !!EDIT!!
+
+SetPrintCommands 2;
+
+LoadDSO later.so;
+LoadDSO noise.so;
+LoadDSO reverb.so;
+LoadDSO map.so;
+LoadDSO samp.so;
+LoadDSO msgGroup.so;
+LoadDSO control.so;
+LoadDSO seq.so;
+LoadDSO mixer.so;
+LoadDSO thresh.so;
+
+samp = Create SampleActor;
+
+//SET LOCAL DIRECTORY OF SOUNDFILE LOCATION HERE
+//MUST BE ON SAME MACHINE AS VSS IS RUNNING
+//SetDirectory samp "C:\SOUNDS";
+SetDirectory samp "./SOUNDS";
+
+SetAmp samp 0;
+
+INIT = Create MessageGroup;
+AddMessage INIT LoadFile samp "miriam_sentance_nobreath.aiff";
+
+SendData INIT [1];
+
+//SET SOUNDFILE NAME HERE
+phrase = BeginSoundPaused samp SetFile "miriam_sentance_nobreath.aiff";
+
+//////////////////////////////
+Rev = Create ReverbActor;
+rev = BeginSound Rev; 
+SetAmp rev 1.0 ; 
+SetInput rev phrase;
+SetGain rev 3;
+
+RevGainMap = Create ExponentialMapper;
+SetMapBounds RevGainMap 0.0 1.0 0.0 10 20;
+
+RevMixMap = Create ExponentialMapper;
+SetMapBounds RevMixMap 0.0 1.0 0.0 1.0 5;//5 was 20 - RB 2.2005 
+
+globalrev = BeginSound Rev; 
+SetAmp globalrev 1.0 ;
+SetInput globalrev phrase;
+SetGain globalrev 2.0; // RB was 1.2 -- makes more noticable
+SetMix globalrev 1.0; //NEW RB 2.2005
+
+//Space args: Panning [-1, 1], Distance [0,1]
+
+DistanceMix = Create MessageGroup; //needed to nest to map de-references
+AddMessage DistanceMix MapAndSend RevMixMap SetMix rev @*0;
+
+InvertDistance = Create SegmentMapper;
+SetBreakpoints InvertDistance [-1 1, 0 1, 1 0, 2 0];
+
+SetMyPanning = Create MessageGroup;
+AddMessage SetMyPanning SetPan phrase *0;
+AddMessage SetMyPanning SetPan rev *0;
+AddMessage SetMyPanning SetPan globalrev *0;
+
+SourceAmpMap = Create ExponentialMapper;
+SetMapBounds SourceAmpMap 0.0 1.0 0.0 1.3 5;//1.3 because amp needs to be boosted a bit at max
+
+SetMyDistance = Create MessageGroup;
+AddMessage SetMyDistance MapAndSend InvertDistance SendData DistanceMix [@*0];
+AddMessage SetMyDistance MapAndSend SourceAmpMap SetAmp phrase @*0; //expon amp & atten on source
+
+//!!EDIT!! 
+//ENTER SOUNDFILE SEGMENT DATA INTO THE FIVE ARRAYS BELOW
+//EACH ARRAY BELOW REPRESENTS 12 SOUNDFILE SEGMENTS BUT YOU CAN HAVE ANY NUMBER OF SEGMENTS
+//THE MASTER NUMBER OF SEGMENTS IS SET BELOW AT "MOMENTUM 12" and other places marked by !!EDIT!!
+// (Apologies for not using a MACRO) 
+
+//**INFO** 
+//TO SUPPORT MODULO OPERATION, THERE IS AN ADDED 0th SEGMENT THAT DUPLICATES DATA from the 13th SEGMENT
+//DATA FOR EACH SEGMENT IS PROVIDED VERTICALLY ACROSS FIVE ARRAYS
+
+//////////////////////////////// 
+//Five DataBase Maps: 
+//Phrase args: *0 = Start Position [seconds], *1 = total Duration [seconds], *2 = fadeup in sec
+// *3 = duration before fadeout, *4 = fadeout in sec 
+
+StartPosData = Create SegmentMapper;
+SetBreakpoints StartPosData 	[0. 19.8, 1. 0.0,   2. 1.535, 3. 3.255, 4. 5.33,  5. 6.915, 6. 8.671, 7. 10.624, 8. 12.323, 9. 13.354, 10. 15.368, 11. 16.973, 12. 18.441, 13. 19.8 ];
+
+TotalDurData = Create SegmentMapper;
+SetBreakpoints TotalDurData 	[0. 0.22, 1. 1.535, 2. 1.72,  3. 2.077, 4. 1.582, 5. 1.755, 6. 1.952, 7. 1.699,  8. 1.031,  9. 2.014,  10. 1.604,  11. 1.468,  12. 1.560,  13. 0.22 ];
+
+FadeUpData = Create SegmentMapper;
+SetBreakpoints FadeUpData 	[0. 0.01, 1. 0.05,  2. 0.05,  3. 0.05,  4. 0.05,  5. 0.05,  6. 0.050, 7. 0.050,  8. 0.05,   9. 0.050,  10. 0.050,  11. 0.050,  12. 0.001,  13. 0.01 ]; 
+
+PhraseDurData = Create SegmentMapper;
+SetBreakpoints PhraseDurData 	[0. 0.1,  1. 1.43,  2. 1.6,   3. 1.95,  4. 1.48,  5. 1.64,  6. 1.85,  7. 1.59,   8. 0.90,   9. 1.857,  10. 1.510,  11. 1.38,   12. 1.500,  13. 0.1  ]; 
+
+FadeOutData = Create SegmentMapper;
+SetBreakpoints FadeOutData 	[0. 0.01, 1. 0.05,  2. 0.05,  3. 0.05,  4. 0.05,  5. 0.05,  6. 0.05,  7. 0.020,  8. 0.05,   9. 0.010,  10. 0.010,  11. 0.02,   12. 0.050,  13. 0.01 ];  
+
+//////////////////////////////
+Delay = Create LaterActor;
+
+Attenuate = Create MessageGroup; //needed to nest to map de-references
+AddMessage Attenuate MapAndSend FadeOutData ScaleAmp phrase 0 @*0;
+
+// Event args: *0 = Start Position [seconds], *1 = total Duration [seconds], *2 = fadeup in sec
+// *3 = duration before fadeout, *4 = fadeout in sec
+Event = Create MessageGroup;
+AddMessage Event MapAndSend StartPosData JumpTo phrase @*0;
+AddMessage Event SetPause phrase 0;
+AddMessage Event MapAndSend FadeUpData ScaleAmp phrase 1.0 @*0;
+AddMessage Event MapAndSend PhraseDurData AddMessage Delay @*0 SendData Attenuate [*0];
+AddMessage Event MapAndSend TotalDurData AddMessage Delay @*0 SetPause phrase *1;
+
+////////////////////////
+Momentum = Create LoopActor;
+
+PAUSEFLAG = Create SegmentMapper;
+SetBreakpoints PAUSEFLAG [5.0 0.0, 7.0 0.0];//initialize for no pause 
+//"@6" will be index to dereference -- arbitrary selection
+
+//!!EDIT!! -- to change MOD 12 to another number of segments
+Mod12Map= Create SegmentMapper;
+SetBreakpoints Mod12Map [0. 13.0, 1. 1.0, 12. 12.0, 13. 0.0];
+
+InvertMap = Create SegmentMapper;
+SetBreakpoints InvertMap [-1. 1.0, 0.5 1.0, 0.6 0.0, 2. 0.0]; //invert 0 and 1 for Active Momentum flag
+
+TestLoopActive = Create MessageGroup;
+AddMessage TestLoopActive MapAndSend InvertMap Active Momentum @*0; 
+
+CurrentDataValue = Create SegmentMapper;
+SetBreakpoints CurrentDataValue [3.0 1.0, 5.0 1.0]; //initialize to first data value; @4 is index 
+
+//!!EDIT!! SET THE TOTAL NUMBER OF SEGMENTS + 1 IN THIS ARRAY (currently set for 12 segments)
+IncrementMap = Create SegmentMapper;
+SetBreakpoints IncrementMap [0. 1., 1. 2., 2. 3., 3. 4., 4. 5., 5. 6., 6. 7., 7. 8., 8. 9., 9. 10., 10. 11., 11. 12., 12. 13., 13. 1];
+
+DoIncrement = Create MessageGroup;
+AddMessage DoIncrement MapAndSend IncrementMap SetDataStart Momentum @*0;
+
+TestPauseIncrement = Create ThresholdActor; //this test allows movement forward on Play after a pause
+AddThresholdGT TestPauseIncrement 0.9 MapAndSend CurrentDataValue SendData DoIncrement [@4]; //@4 is index 
+SetInitialVal TestPauseIncrement 0.0;
+
+PlaySegment = Create MessageGroup; //the message to index database and generate a sound segment
+AddMessage PlaySegment MapAndSend Mod12Map SetDataStart Momentum @*0; //modulo of data value in loop actor
+AddMessage PlaySegment MapAndSend TotalDurData SetTimeStep Momentum @*0; //Set Duration of current grain
+AddMessage PlaySegment MapAndSend PAUSEFLAG SendData Event [*0, @6.0]; //*0 = phrase; @6 = PAUSE FLAG for phrase at end
+AddMessage PlaySegment MapAndSend Mod12Map SetBreakpoints CurrentDataValue [3.0 @*0, 5.0 @*0]; //store for external usein loop actor
+AddMessage PlaySegment MapAndSend PAUSEFLAG SendData TestLoopActive [@6.0];  //PAUSE FLAG 1=Pause
+//PAUSE FLAG is set in "PlaySingle" or in "JustPause" and unset in "PlaySeries"
+
+Active Momentum 0;
+SetDataStart Momentum 1.0; //Start Counting at Event 1
+SetDataStep  Momentum 1.0; //Increment phrase database index by 1
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE "Momentum 12" IS DECLARED
+SetNumLoops Momentum 12; //Permanent limit on loops based upon size of dbase
+SetMessageGroup Momentum PlaySegment ;	
+
+
+Debug Momentum 1;																					
+
+///////////////////////
+JustPause = Create MessageGroup;
+AddMessage JustPause SetBreakpoints PAUSEFLAG [5.0 1.0, 7.0 1.0]; //Set PAUSE FLAG positive
+//SetUserFloat Momentum 1.0; -- BROKEN in VSS99
+
+//!!EDIT!! -- This Array must be adjusted for a different number of sound segments (currently good for 12)
+DecrementMap = Create SegmentMapper;
+SetBreakpoints DecrementMap [0. 12, 1. 0., 2. 1., 3. 2., 4. 3., 5. 4., 6. 5., 7. 6., 8. 7., 9. 8., 10. 9., 11. 10., 12. 11., 13. 12.];
+
+DoDecrement = Create MessageGroup;
+AddMessage DoDecrement MapAndSend DecrementMap SetDataStart Momentum @*0;
+
+CurrentDataStep = Create SegmentMapper;
+SetBreakpoints CurrentDataStep [2.0 1, 4.0 1]; //initialize to Forward increment, @3 is index for dereference
+
+TestDataIncrement = Create ThresholdActor; //To see if Data Increment should be permitted at Play
+AddThresholdGT TestDataIncrement 0.9 MapAndSend PAUSEFLAG TestThresholds TestPauseIncrement @6; //@6 is PAUSEFLAG index
+AddThresholdLT TestDataIncrement -0.1 MapAndSend CurrentDataValue SendData DoDecrement [@4]; //@4 is index 
+SetInitialVal TestDataIncrement 0.0;
+
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE NUMBER 12 IS DECLARED
+PlayOne = Create MessageGroup;
+AddMessage PlayOne SetInitialVal TestDataIncrement 0.0;
+AddMessage PlayOne SetInitialVal TestPauseIncrement 0.0; //needed if TestDataIncrement is positive
+AddMessage PlayOne MapAndSend CurrentDataStep TestThresholds TestDataIncrement @3; //test data increment 
+AddMessage PlayOne SetBreakpoints PAUSEFLAG [5.0 1.0, 7.0 1.0]; //PAUSE FLAG to pause phrase and Momentum 
+AddMessage PlayOne SetNumLoops Momentum 12; //in case loop has stopped by DataLimit
+AddMessage PlayOne Active Momentum 1;
+//AddMessage PlayOne SetUserFloat Momentum 1.0; -- BROKEN in VSS99
+
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE "Momentum 12" IS DECLARED
+PlaySeries = Create MessageGroup;
+AddMessage PlaySeries SetInitialVal TestDataIncrement 0.0;
+AddMessage PlaySeries SetInitialVal TestPauseIncrement 0.0; //needed if TestDataIncrement is positive
+AddMessage PlaySeries MapAndSend CurrentDataStep TestThresholds TestDataIncrement @3; //test data increment 
+AddMessage PlaySeries MapAndSend PAUSEFLAG TestThresholds TestPauseIncrement @6;
+AddMessage PlaySeries SetBreakpoints PAUSEFLAG [5.0 0.0, 7.0 0.0]; //Set PAUSE FLAG to unpause 
+AddMessage PlaySeries SetNumLoops Momentum 12; //in case loop has stopped by DataLimit
+AddMessage PlaySeries Active Momentum 1;
+//AddMessage PlaySeries SetUserFloat Momentum 0.0; -- BROKEN in VSS99
+
+PlayFrom = Create MessageGroup;
+AddMessage PlayFrom SetDataStart Momentum *0;
+
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE "Momentum 12" IS DECLARED
+StopAtEnd = Create MessageGroup;
+AddMessage StopAtEnd SetDataLimit Momentum 12;
+
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE "Momentum 12" IS DECLARED
+LoopAtEnd = Create MessageGroup;
+AddMessage LoopAtEnd SetNoDataLimit Momentum ;
+AddMessage LoopAtEnd SetNumLoops Momentum 12; //This is needed because the datalimit sets this to zero
+
+Forward = Create MessageGroup;
+AddMessage Forward SetDataStep Momentum 1;
+AddMessage Forward SetBreakpoints CurrentDataStep [2.0 1, 4.0 1]; //store for use in TestDataIncrement test
+Reverse = Create MessageGroup;
+AddMessage Reverse SetDataStep Momentum -1;
+AddMessage Reverse SetBreakpoints CurrentDataStep [2.0 -1, 4.0 -1]; //store for use in TestDataIncrement test
+PlaySame = Create MessageGroup;
+AddMessage PlaySame SetDataStep Momentum 0;
+AddMessage PlaySame SetBreakpoints CurrentDataStep [2.0 0, 4.0 0]; //store for use in TestDataIncrement test
+
