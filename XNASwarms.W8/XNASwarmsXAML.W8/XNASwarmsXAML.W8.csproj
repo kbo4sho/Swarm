@@ -293,6 +293,10 @@
       <Project>{8ba84de0-e042-403b-9338-15a76f12a14a}</Project>
       <Name>SwarmEngine.W8</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VSS.W8\VSS.W8.csproj">
+      <Project>{b0d3e26d-3caa-433a-91d2-b844eac0a897}</Project>
+      <Name>VSS.W8</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
