@@ -40,15 +40,7 @@ namespace XNASwarmsXAML.W8
             SwarmScreen1 swarmScreen = new SwarmScreen1(StockRecipies.Stable_A, false);
             screenManager.AddScreen(swarmScreen);
 
-            //if (VSSCSharpClient.BeginSoundServerAt("127.0.0.1") != 1)
-            if (VSSCSharpClient.BeginSoundServer() != 1)
-            {
-                //Console.WriteLine("Could Not Connect to VSS...");
-                //Console.WriteLine("Please make sure VSS is running on localhost. also make sure the SOUNDS folder with the audio files for demo is in the same folder as VSS.exe");
-                //Console.WriteLine("If BeginSoundServerAt is called VSS must be running on the specified ip address.");
-                //Console.ReadKey();
-                return;
-            }
+            
             base.Initialize();
         }
 

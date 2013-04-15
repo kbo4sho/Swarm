@@ -4,18 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8BA84DE0-E042-403B-9338-15A76F12A14A}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{45CB82A5-BF5D-4184-AD4B-7D0DEAB2BFBC}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SwarmEngine.W8</RootNamespace>
-    <AssemblyName>SwarmEngine.W8</AssemblyName>
+    <RootNamespace>WindowsStoreTest</RootNamespace>
+    <AssemblyName>WindowsStoreTest</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>WindowsStoreTest_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -99,46 +100,48 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\IContainable.cs">
-      <Link>IContainable.cs</Link>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\Individuals\Individual.cs">
-      <Link>Individuals\Individual.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\Individuals\StockIndividualsFacotry.cs">
-      <Link>Individuals\StockIndividualsFacotry.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\Parameters.cs">
-      <Link>Parameters.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\PopulationSimulator.cs">
-      <Link>PopulationSimulator.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\Populations\Population.cs">
-      <Link>Populations\Population.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\Recipes\Recipe.cs">
-      <Link>Recipes\Recipe.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\Recipes\StockRecipies.cs">
-      <Link>Recipes\StockRecipies.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\Species\Species.cs">
-      <Link>Species\Species.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\Species\StockSpecies.cs">
-      <Link>Species\StockSpecies.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmEngine\WorldParameters.cs">
-      <Link>WorldParameters.cs</Link>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SoultionItems\Windows8\MonoGame.Framework.dll</HintPath>
-    </Reference>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="WindowsStoreTest_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\SmallLogo.png" />
+    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\StoreLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VSS.W8\VSS.W8.csproj">
+      <Project>{b0d3e26d-3caa-433a-91d2-b844eac0a897}</Project>
+      <Name>VSS.W8</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
