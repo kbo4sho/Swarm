@@ -80,6 +80,13 @@ namespace XNASwarms
 
             base.Initialize();
 
+            int handle;
+
+            string audFile = "Soundfile Segment and Localize.aud";
+
+            audFile = "PoemPhrasesDemo.aud";
+            audFile = "PoemGraspThrow_11.22.12.aud";
+
             //if (VSSCSharpClient.BeginSoundServerAt("127.0.0.1") != 1)
             if (VSSCSharpClient.BeginSoundServer() != 1)
             {
@@ -89,6 +96,10 @@ namespace XNASwarms
                 //Console.ReadKey();
                 return;
             }
+
+            handle = VSSCSharpClient.AUDinit(audFile);
+
+
 
         }
 
