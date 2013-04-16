@@ -158,6 +158,10 @@
       <Project>{6C3EFB94-062C-4EF9-9A72-1B561782E1A4}</Project>
       <Name>SwarmEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\VSS\VSS.csproj">
+      <Project>{CAC3FCBE-1C69-4B9A-BB4E-9832CEF1DA6F}</Project>
+      <Name>VSS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XNASwarmsContent\XNASwarmsContent.contentproj">
       <Name>XNASwarmsContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
