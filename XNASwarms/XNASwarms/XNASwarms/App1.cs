@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Media;
 using ScreenSystem.ScreenSystem;
 using ScreenSystem.Debug;
 using SwarmEngine;
+using VSS;
 
 namespace XNASwarms
 {
@@ -76,7 +77,30 @@ namespace XNASwarms
 
             SwarmScreen1 swarmScreen = new SwarmScreen1(StockRecipies.Stable_A, false);
             screenManager.AddScreen(swarmScreen);
+
             base.Initialize();
+
+            int handle;
+
+            string audFile = "Soundfile Segment and Localize.aud";
+
+            audFile = "PoemPhrasesDemo.aud";
+            audFile = "PoemGraspThrow_11.22.12.aud";
+
+            //if (VSSCSharpClient.BeginSoundServerAt("127.0.0.1") != 1)
+            if (VSSCSharpClient.BeginSoundServer() != 1)
+            {
+                //Console.WriteLine("Could Not Connect to VSS...");
+                //Console.WriteLine("Please make sure VSS is running on localhost. also make sure the SOUNDS folder with the audio files for demo is in the same folder as VSS.exe");
+                //Console.WriteLine("If BeginSoundServerAt is called VSS must be running on the specified ip address.");
+                //Console.ReadKey();
+                return;
+            }
+
+            handle = VSSCSharpClient.AUDinit(audFile);
+
+
+
         }
 
         protected override void LoadContent()
