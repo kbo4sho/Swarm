@@ -1,0 +1,13 @@
+audpanel.sliders: 6
+audpanel.presets: ("ModifyFlute")
+
+ModifyFlute.messageGroup: "Modifyflute"
+ModifyFlute.interval: 0.25
+ModifyFlute.labels: 		("Freq" "BrPressure" "JetD" "Noise" "VibAmt" "VibRate")
+ModifyFlute.minValues: 		(0.	0.		0.	0.	0.	0.)
+ModifyFlute.maxValues: 		(5000.	127.		127.	127.	127.	127.)
+ModifyFlute.initialValues: 	(100.	80.		64.	96.	0.	30.)
+ModifyFlute.mappings: (0 1 2 3 4 5)
+ModifyFlute.parameters: 6
+ModifyFlute.defaultValues: 	(100.	80.		64.	96.	0.	30.)
+

@@ -44,7 +44,9 @@
     <Compile Include="VSSCSharpClient.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libsnd.dll" />
+    <Content Include="libsnd.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="vssClient.h" />
   </ItemGroup>
   <ItemGroup>

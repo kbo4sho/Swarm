@@ -10,8 +10,8 @@ namespace SwarmEngine
     {
         public static int numberOfIndividualsMax = 500;
         public static int neighborhoodRadiusMax = 60;
-        public static int normalSpeedMax = 10;
-        public static int maxSpeedMax = 3;
+        public static int normalSpeedMax = 5;
+        public static int maxSpeedMax = 10;
         public static double c1Max = 1;
         public static double c2Max = 1;
         public static double c3Max = 100;

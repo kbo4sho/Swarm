@@ -1,0 +1,156 @@
+SetPrintCommands 1;
+
+LoadDSO msgGroup.so;
+LoadDSO basicIterator.so;
+LoadDSO add.so;
+LoadDSO map.so;
+
+h = Create AddActor;
+
+f0map = Create ExponentialMapper;
+SetMapBounds f0map 0 1  7.8125  31.25 4;	 
+amp0 = Create ExponentialMapper;	
+SetMapBounds  amp0 0 1  0  .009 9.075;
+
+f2map = Create ExponentialMapper;		
+SetMapBounds f2map 0 1  31.25  125 4;			 
+amp2 = Create ExponentialMapper;		
+SetMapBounds  amp2 0 1  .009  .1 9.075;
+
+f4map = Create ExponentialMapper;		
+SetMapBounds f4map 0 1  125  500 4;
+amp4 = Create SegmentMapper;
+SetBreakpoints amp4 [0 .1, 0.5 0.075, 1 .1];
+
+f6map = Create ExponentialMapper;		
+SetMapBounds f6map 0 1  500  2000 4;			 
+amp6 = Create ExponentialMapper;		
+SetMapBounds  amp6 0 1  .1  .009 9.075;
+
+f8map = Create ExponentialMapper;		
+SetMapBounds f8map 0 1  2000  8000 4;			 
+amp8 = Create ExponentialMapper;		
+SetMapBounds  amp8 0 1  .009  0 9.075;
+
+f1map = Create ExponentialMapper;		
+SetMapBounds f1map 0 1  15.625  62.5 4;			 
+amp1 = Create ExponentialMapper;		
+SetMapBounds  amp1 0 1  0.0001  .01 9.075;
+
+f3map = Create ExponentialMapper;		
+SetMapBounds f3map 0 1  62.5  250 4;			 
+amp3 = Create ExponentialMapper;		
+SetMapBounds  amp3 0 1  .01  1. 9.075;
+
+f5map = Create ExponentialMapper;		
+SetMapBounds f5map 0 1  250  1000 4;
+amp5 = Create ExponentialMapper;
+SetMapBounds  amp5 0 1  1.  .01 9.075;
+
+f7map = Create ExponentialMapper;		
+SetMapBounds f7map 0 1  1000  4000 4;			 
+amp7 = Create ExponentialMapper;		
+SetMapBounds  amp7 0 1  .01  0. 9.075;
+
+mg = Create MessageGroup;
+
+iter = Create BasicIterator;
+Active iter 0;
+SetMessageGroup iter mg;
+SetDataStart iter 0.;
+SetDataEnd iter 1.;
+SetLoop iter -1;
+SetTimeIncrement iter 0.05;
+SetDataIncrement iter 0.005;
+EnableDataEnd iter 1;
+
+modify = Create MessageGroup;
+speedMap = Create SegmentMapper;
+SetBreakpoints speedMap [0 0.2, 1 0.005];
+rateMap = Create SegmentMapper;
+SetBreakpoints rateMap [-1 -0.01, 0 0.0, 1 0.01];
+
+AddMessage modify MapAndSend speedMap SetTimeIncrement iter @*0;
+AddMessage modify MapAndSend rateMap SetDataIncrement iter @*1;
+
+s1 = BeginSound h SetAmp 0;			
+AddMessage mg MapAndSend  f1map SetFreq s1 @*0;	
+AddMessage mg MapAndSend  amp1 SetAmp s1 @*0;
+
+s3 = BeginSound h SetAmp 0;			
+AddMessage mg MapAndSend  f3map SetFreq s3 @*0;	
+AddMessage mg MapAndSend  amp3 SetAmp s3 @*0;
+
+s5 = BeginSound h SetAmp 0;			
+AddMessage mg MapAndSend  f5map SetFreq s5 @*0;	
+AddMessage mg MapAndSend  amp5 SetAmp s5 @*0;
+
+s7 = BeginSound h SetAmp 0;			
+AddMessage mg MapAndSend  f7map SetFreq s7 @*0;	
+AddMessage mg MapAndSend  amp7 SetAmp s7 @*0;
+
+s0 = BeginSound h SetAmp 0;			
+AddMessage mg MapAndSend  f0map SetFreq s0 @*0;	
+AddMessage mg MapAndSend  amp0 SetAmp s0 @*0;
+
+s2 = BeginSound h SetAmp 0;			
+AddMessage mg MapAndSend  f2map SetFreq s2 @*0;	
+AddMessage mg MapAndSend  amp2 SetAmp s2 @*0;
+
+s4 = BeginSound h SetAmp 0;			
+AddMessage mg MapAndSend  f4map SetFreq s4 @*0;	
+AddMessage mg MapAndSend  amp4 SetAmp s4 @*0;
+
+s6 = BeginSound h SetAmp 0;			
+AddMessage mg MapAndSend  f6map SetFreq s6 @*0;	
+AddMessage mg MapAndSend  amp6 SetAmp s6 @*0;
+
+s8 = BeginSound h SetAmp 0;			
+AddMessage mg MapAndSend  f8map SetFreq s8 @*0;	
+AddMessage mg MapAndSend  amp8 SetAmp s8 @*0;
+
+Active iter 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
