@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using SwarmEngine;
 using Microsoft.Xna.Framework;
+using SwarmAudio;
+using System.Threading.Tasks;
 
 namespace SwarmAnalysisEngine
 {
@@ -21,16 +23,16 @@ namespace SwarmAnalysisEngine
         BoundingBox rect;
 
         public ClusterModule()
-            : base("Cluster Module", 10)
+            : base("Cluster Module", 1)
         {
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
             analysis = new Analysis();
         }
         
-        protected override Analysis Analyze(List<Individual> indvds)
+        protected override Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
         {
-            return DoAnalysis(indvds);
+            return DoAnalysis(indvds, sendaudiodata);
         }
 
         private void ResetColor(Individual indvd)
@@ -39,7 +41,7 @@ namespace SwarmAnalysisEngine
         }
 
 
-        private Analysis DoAnalysis(List<Individual> indvds)
+        private Analysis DoAnalysis(List<Individual> indvds, bool sendaudiodata)
         {
             Clusters.Clear();
 
@@ -60,8 +62,15 @@ namespace SwarmAnalysisEngine
             analysis.Messages = GenerateMessage();
             analysis.FilterResult = GenerateFilterResult();
 
+            if (sendaudiodata)
+            {
+                SoundEngine.TestData();
+            }
+
             return analysis;
         }
+
+         
 
         private void RemoveSmallClusters()
         {

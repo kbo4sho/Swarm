@@ -73,6 +73,10 @@
     <Compile Include="SpeedModule.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SwarmAudio\SwarmAudio.csproj">
+      <Project>{CF97AA65-F6BF-4F06-B35A-20D3BB09EFF3}</Project>
+      <Name>SwarmAudio</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SwarmEngine\SwarmEngine.csproj">
       <Project>{6C3EFB94-062C-4EF9-9A72-1B561782E1A4}</Project>
       <Name>SwarmEngine</Name>

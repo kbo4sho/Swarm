@@ -8,9 +8,12 @@ namespace SwarmAudio
 {
     public class SoundEngine
     {
+
+        static int handle;
+
         public static void Init()
         {
-            int handle;
+            
 
             string audFile = "Soundfile Segment and Localize.aud";
 
@@ -35,6 +38,11 @@ namespace SwarmAudio
                 Console.ReadKey();
                 return;
             }
+        }
+
+        public static void TestData()
+        {
+            VSSCSharpClient.AUDupdate(handle, "test", 0, new float[] { 0.0f });
         }
     }
 }
