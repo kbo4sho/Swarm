@@ -15,6 +15,7 @@ using ScreenSystem.ScreenSystem;
 using ScreenSystem.Debug;
 using SwarmEngine;
 using SwarmAudio;
+using SwarmAnalysisEngine;
 
 namespace XNASwarms
 {
@@ -55,6 +56,9 @@ namespace XNASwarms
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
             //graphics.ToggleFullScreen();
+
+            Normalizer.Width = GraphicsDevice.Viewport.Width;
+            Normalizer.Height = GraphicsDevice.Viewport.Height;
         }
 
         #endregion

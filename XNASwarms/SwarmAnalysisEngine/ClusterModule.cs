@@ -23,11 +23,12 @@ namespace SwarmAnalysisEngine
         BoundingBox rect;
 
         public ClusterModule()
-            : base("Cluster Module", 1)
+            : base("Cluster Module", 10)
         {
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
             analysis = new Analysis();
+            
         }
         
         protected override Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
@@ -168,7 +169,7 @@ namespace SwarmAnalysisEngine
                     }
                     
                 }
-                string clusterSpeed = Clusters[i].Average(x => (x.getDx2() * x.getDx2()) + (x.getDy2() * x.getDy2())).ToString(); 
+                string clusterSpeed = Clusters[i].Average(x => (x.getDx2() * x.getDx2()) + (x.getDy2() * x.getDy2())).ToString();
 
                 ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5 + " SPEED : " + clusterSpeed });
             }
@@ -179,6 +180,16 @@ namespace SwarmAnalysisEngine
         private FilterResult GenerateFilterResult()
         {
             filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
+
+            string robinstxt = "";
+            if (Clusters.Count == 1)
+            {
+                
+                foreach (var indvd in Clusters[0])
+                {
+                    robinstxt += "(" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeWidthCentered((float)indvd.Y) + "),";
+                }
+            }
 
             foreach (Cluster cluster in Clusters)
             {
@@ -191,6 +202,8 @@ namespace SwarmAnalysisEngine
                 float horizontalCenter = (float)(leftMostX + rightMostX) * .5f;
 
                 AssignClusterCenterPoint(new Vector2(horizontalCenter, verticalCenter));
+
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER CENTER : X-" + horizontalCenter + "  Y-" + verticalCenter});
 
                 //2|1
                 //3|4

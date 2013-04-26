@@ -13,12 +13,10 @@ namespace SwarmAudio
 
         public static void Init()
         {
-            
-
             string audFile = "Soundfile Segment and Localize.aud";
 
-            audFile = "PoemPhrasesDemo.aud";
             audFile = "PoemGraspThrow_11.22.12.aud";
+            audFile = "Cluster_datatest.aud";
 
             //if (VSSCSharpClient.BeginSoundServerAt("127.0.0.1") != 1)
             if (VSSCSharpClient.BeginSoundServer() != 1)
@@ -42,7 +40,8 @@ namespace SwarmAudio
 
         public static void TestData()
         {
-            VSSCSharpClient.AUDupdate(handle, "test", 0, new float[] { 0.0f });
+            //VSSCSharpClient.AUDupdate(handle, "test", 0, new float[] { 0.0f });
+            VSSCSharpClient.AUDupdate(handle, "playSeq", 0, new float[] { 0.0f });
         }
     }
 }

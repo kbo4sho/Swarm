@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSS", "VSS\VSS.csproj", "{C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmAudio", "SwarmAudio\SwarmAudio.csproj", "{CF97AA65-F6BF-4F06-B35A-20D3BB09EFF3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmAudioConsole", "SwarmAudioConsole\SwarmAudioConsole.csproj", "{7AC1321F-ED40-4A47-A397-31F01C0D18BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,18 @@ Global
 		{CF97AA65-F6BF-4F06-B35A-20D3BB09EFF3}.Release|Windows Phone.ActiveCfg = Release|x86
 		{CF97AA65-F6BF-4F06-B35A-20D3BB09EFF3}.Release|x86.ActiveCfg = Release|x86
 		{CF97AA65-F6BF-4F06-B35A-20D3BB09EFF3}.Release|x86.Build.0 = Release|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Debug|x86.ActiveCfg = Debug|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Debug|x86.Build.0 = Debug|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Release|Any CPU.ActiveCfg = Release|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Release|Mixed Platforms.Build.0 = Release|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Release|Windows Phone.ActiveCfg = Release|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Release|x86.ActiveCfg = Release|x86
+		{7AC1321F-ED40-4A47-A397-31F01C0D18BB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
