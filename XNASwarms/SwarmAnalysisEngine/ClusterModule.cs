@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using SwarmEngine;
 using Microsoft.Xna.Framework;
+#if WINDOWS
 using SwarmAudio;
+#endif
 using System.Threading.Tasks;
 
 namespace SwarmAnalysisEngine
@@ -65,7 +67,9 @@ namespace SwarmAnalysisEngine
 
             if (sendaudiodata)
             {
+#if WINDOWS
                 SoundEngine.TestData();
+#endif
             }
 
             return analysis;
@@ -187,7 +191,9 @@ namespace SwarmAnalysisEngine
                 
                 foreach (var indvd in Clusters[0])
                 {
+#if WINDOWS
                     robinstxt += "(" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeWidthCentered((float)indvd.Y) + "),";
+#endif
                 }
             }
 
