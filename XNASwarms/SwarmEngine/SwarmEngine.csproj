@@ -71,6 +71,7 @@
     <Compile Include="Recipes\StockRecipies.cs" />
     <Compile Include="Species\Species.cs" />
     <Compile Include="Species\StockSpecies.cs" />
+    <Compile Include="WorldParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

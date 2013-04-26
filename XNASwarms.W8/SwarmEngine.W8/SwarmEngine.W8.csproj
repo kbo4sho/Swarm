@@ -129,6 +129,9 @@
     <Compile Include="..\..\XNASwarms\SwarmEngine\Species\StockSpecies.cs">
       <Link>Species\StockSpecies.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\WorldParameters.cs">
+      <Link>WorldParameters.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

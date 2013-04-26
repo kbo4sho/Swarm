@@ -1,0 +1,28 @@
+'Test case for audpanel.'
+
+audpanel.title:		"Audpanel Demo"
+'audpanel.sliders:	8'
+audpanel.controllers:	8
+audpanel.presets:	("Preset1" "Preset2")
+audpanel.audHandle:	15
+
+Preset1.messageGroup:	"msg1"
+Preset1.interval:	0.1
+Preset1.type:		(1 	2 	3 	3 	4 	0 0 0)
+Preset1.labels:   ("button" "radio" "slider1" "slider2" "square" "" "" "")
+Preset1.minValues:	(0.0	0.0 	0.0	10.0	0.0	0.0 0.0 0.0)
+Preset1.maxValues:	(0.0	5.0 	3.0	20.0	1.0	0.0 0.0 0.0)
+Preset1.initialValues:	(0.0	1.0 	0.2	15.0	0.0	0.0 0.0 0.0)
+Preset1.mappings:	(0	1	2	3	4	-1 -1 -1)
+Preset1.parameters:	5
+
+Preset2.messageGroup:	"msg2"
+Preset2.interval:	1.0
+Preset2.type:		(3	3	3	3	2	3	3	3)
+Preset2.labels:	("Amp" "CarFreq" "MCRatio" "ModFreq" "RatioMode" "ModIndex" "CarFB" "ModFB")
+Preset2.minValues: 	(0.0	50.0	0.0	10.0	0.0	0.0	0.0	0.0)
+Preset2.maxValues: 	(1.0	5000.0	10.0	1000.0	2.0	50.0	1.0	1.0)
+Preset2.initialValues: 	(0.5	500.0	1.0	100.0	0.0	1.5	0.0	0.0)
+Preset2.defaultValues:	(0.5	500.0	1.0	100.0	0.0	1.5	0.0	0.0)
+Preset2.mappings:	(0	1	2	3	-1	5	6	7)
+Preset2.parameters:	8

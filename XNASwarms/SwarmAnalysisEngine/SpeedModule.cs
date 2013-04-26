@@ -14,7 +14,7 @@ namespace SwarmAnalysisEngine
         {
         }
 
-        protected override Analysis Analyze(List<SwarmEngine.Individual> indvds)
+        protected override Analysis Analyze(List<SwarmEngine.Individual> indvds, bool sendaudiodata)
         {
             
             for (int i = 0; i < indvds.Count; i++)

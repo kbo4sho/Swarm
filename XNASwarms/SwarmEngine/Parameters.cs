@@ -27,51 +27,34 @@ using Microsoft.Xna.Framework;
 namespace SwarmEngine
 {
     public class Parameters : IComparable
-    {
-        public static int numberOfIndividualsMax = 3000;
-
+    {     
         private double neighborhoodRadius;
-        public static double neighborhoodRadiusMax = 150;
-
         private double normalSpeed;
-        public static double normalSpeedMax = 10;
-
         private double maxSpeed;
-        public static double maxSpeedMax = 20;
-
         private double c1;
-        public static double c1Max = 1;
-
         private double c2;
-        public static double c2Max = 1;
-
         private double c3;
-        public static double c3Max = 100;
-
         private double c4;
-        public static double c4Max = 0.5;
-
         private double c5;
-        public static double c5Max = 1;
 
         private Random rand = new Random();
 
         public Parameters()
         {
-            neighborhoodRadius = rand.NextDouble() * neighborhoodRadiusMax;
-            normalSpeed = rand.NextDouble() * normalSpeedMax;
-            maxSpeed = rand.NextDouble() * maxSpeedMax;
-            c1 = rand.NextDouble() * c1Max;
-            c2 = rand.NextDouble() * c2Max;
-            c3 = rand.NextDouble() * c3Max;
-            c4 = rand.NextDouble() * c4Max;
-            c5 = rand.NextDouble() * c5Max;
+            neighborhoodRadius = rand.NextDouble() * WorldParameters.neighborhoodRadiusMax;
+            normalSpeed = rand.NextDouble() * WorldParameters.normalSpeedMax;
+            maxSpeed = rand.NextDouble() * WorldParameters.maxSpeedMax;
+            c1 = rand.NextDouble() * WorldParameters.c1Max;
+            c2 = rand.NextDouble() * WorldParameters.c2Max;
+            c3 = rand.NextDouble() * WorldParameters.c3Max;
+            c4 = rand.NextDouble() * WorldParameters.c4Max;
+            c5 = rand.NextDouble() * WorldParameters.c5Max;
         }
 
         public string getRecipe()
         {
             StringBuilder sb = new StringBuilder("");
-            sb.Append((int)numberOfIndividualsMax);
+            sb.Append((int)WorldParameters.numberOfIndividualsMax);
             sb.Append(", ");
             sb.Append((double)getNeighborhoodRadius());
             sb.Append(", ");
@@ -180,29 +163,29 @@ namespace SwarmEngine
         public void inducePointMutations(double rate, double magnitude)
         {
             if (rand.NextDouble() < rate)
-                neighborhoodRadius += (rand.NextDouble() - 0.5) * neighborhoodRadiusMax
+                neighborhoodRadius += (rand.NextDouble() - 0.5) * WorldParameters.neighborhoodRadiusMax
                         * magnitude;
 
             if (rand.NextDouble() < rate)
-                normalSpeed += (rand.NextDouble() - 0.5) * normalSpeedMax * magnitude;
+                normalSpeed += (rand.NextDouble() - 0.5) * WorldParameters.normalSpeedMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                maxSpeed += (rand.NextDouble() - 0.5) * maxSpeedMax * magnitude;
+                maxSpeed += (rand.NextDouble() - 0.5) * WorldParameters.maxSpeedMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c1 += (rand.NextDouble() - 0.5) * c1Max * magnitude;
+                c1 += (rand.NextDouble() - 0.5) * WorldParameters.c1Max * magnitude;
 
             if (rand.NextDouble() < rate)
-                c2 += (rand.NextDouble() - 0.5) * c2Max * magnitude;
+                c2 += (rand.NextDouble() - 0.5) * WorldParameters.c2Max * magnitude;
 
             if (rand.NextDouble() < rate)
-                c3 += (rand.NextDouble() - 0.5) * c3Max * magnitude;
+                c3 += (rand.NextDouble() - 0.5) * WorldParameters.c3Max * magnitude;
 
             if (rand.NextDouble() < rate)
-                c4 += (rand.NextDouble() - 0.5) * c4Max * magnitude;
+                c4 += (rand.NextDouble() - 0.5) * WorldParameters.c4Max * magnitude;
 
             if (rand.NextDouble() < rate)
-                c5 += (rand.NextDouble() - 0.5) * c5Max * magnitude;
+                c5 += (rand.NextDouble() - 0.5) * WorldParameters.c5Max * magnitude;
 
             boundParameterValues();
         }
@@ -211,49 +194,49 @@ namespace SwarmEngine
         {
             if (neighborhoodRadius < 0)
                 neighborhoodRadius = 0;
-            else if (neighborhoodRadius > neighborhoodRadiusMax)
-                neighborhoodRadius = neighborhoodRadiusMax;
+            else if (neighborhoodRadius > WorldParameters.neighborhoodRadiusMax)
+                neighborhoodRadius = WorldParameters.neighborhoodRadiusMax;
 
             if (normalSpeed < 0)
                 normalSpeed = 0;
-            else if (normalSpeed > normalSpeedMax)
-                normalSpeed = normalSpeedMax;
+            else if (normalSpeed > WorldParameters.normalSpeedMax)
+                normalSpeed = WorldParameters.normalSpeedMax;
 
             if (maxSpeed < 0)
                 maxSpeed = 0;
-            else if (maxSpeed > maxSpeedMax)
-                maxSpeed = maxSpeedMax;
+            else if (maxSpeed > WorldParameters.maxSpeedMax)
+                maxSpeed = WorldParameters.maxSpeedMax;
 
             if (c1 < 0)
                 c1 = 0;
-            else if (c1 > c1Max)
-                c1 = c1Max;
+            else if (c1 > WorldParameters.c1Max)
+                c1 = WorldParameters.c1Max;
 
             if (c2 < 0)
                 c2 = 0;
-            else if (c2 > c2Max)
-                c2 = c2Max;
+            else if (c2 > WorldParameters.c2Max)
+                c2 = WorldParameters.c2Max;
 
             if (c3 < 0)
                 c3 = 0;
-            else if (c3 > c3Max)
-                c3 = c3Max;
+            else if (c3 > WorldParameters.c3Max)
+                c3 = WorldParameters.c3Max;
 
             if (c4 < 0)
                 c4 = 0;
-            else if (c4 > c4Max)
-                c4 = c4Max;
+            else if (c4 > WorldParameters.c4Max)
+                c4 = WorldParameters.c4Max;
 
             if (c5 < 0)
                 c5 = 0;
-            else if (c5 > c5Max)
-                c5 = c5Max;
+            else if (c5 > WorldParameters.c5Max)
+                c5 = WorldParameters.c5Max;
         }
 
         public Color getDisplayColor()
         {
-            return new Color((float)(c1 / c1Max * 0.8),
-                    (float)(c2 / c2Max * 0.8), (float)(c3 / c3Max * 0.8));
+            return new Color((float)(c1 / WorldParameters.c1Max * 0.8),
+                    (float)(c2 / WorldParameters.c2Max * 0.8), (float)(c3 / WorldParameters.c3Max * 0.8));
         }
 
         public double getNeighborhoodRadius()
@@ -295,7 +278,6 @@ namespace SwarmEngine
         {
             return c5;
         }
-
 
         #region IComparable
         public int CompareTo(object obj)

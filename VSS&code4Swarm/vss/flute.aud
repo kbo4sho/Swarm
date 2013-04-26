@@ -1,0 +1,26 @@
+// Print out everything
+SetPrintCommands 1;
+
+// Load the DSOs we need
+LoadDSO perry.so;
+LoadDSO msgGroup.so;
+LoadDSO later.so;
+
+// Create, set up the flute actor
+aflute = Create FluteActor;
+//SetReverb aflute 1;
+clarinote =  BeginSound aflute SetAmp 0.5;
+
+delay = Create LaterActor;
+
+// Create message groups for the interaction
+Modifyflute 	= Create MessageGroup;
+
+// Set up the slider interaction
+AddMessage Modifyflute SetFreq clarinote *0;
+AddMessage Modifyflute SetBreathPressure clarinote *1;
+AddMessage Modifyflute SetJetDelay clarinote *2;
+AddMessage Modifyflute SetNoiseGain clarinote *3;
+AddMessage Modifyflute SetVibGain clarinote *4;
+AddMessage Modifyflute SetVibFreq clarinote *5;
+

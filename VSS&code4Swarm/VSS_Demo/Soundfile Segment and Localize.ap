@@ -1,0 +1,22 @@
+"RadioButtonWidget" 352 96 70 28 0.0 9 "9      " "PlayFrom" 0 9.0 1 
+"RadioButtonWidget" 352 128 77 28 0.0 11 "11      " "PlayFrom" 0 11.0 1 
+"RadioButtonWidget" 352 80 70 28 1.0 8 "8      " "PlayFrom" 0 8.0 1 
+"RadioButtonWidget" 288 96 70 28 0.0 23 "3      " "PlayFrom" 0 3.0 1 
+"ButtonWidget" 168 24 92 42 0.0 27 "Index Fwd" "Forward" 0 0.0 
+"RadioButtonWidget" 288 80 70 28 0.0 22 "2      " "PlayFrom" 0 2.0 1 
+"RadioButtonWidget" 352 112 77 28 0.0 10 "10      " "PlayFrom" 0 10.0 1 
+"RadioButtonWidget" 288 112 70 28 0.0 24 "4      " "PlayFrom" 0 4.0 1 
+"ButtonWidget" 288 24 108 42 0.0 25 "Phrase Index #" "" 0 0.0 
+"RadioButtonWidget" 352 64 70 28 0.0 7 "7      " "PlayFrom" 0 7.0 1 
+"SquareWidget" 424 24 204 204 -0.813 0.858 32 "Direction and Distance" "SetMyPanning" 0 -1.0 1.0 "SetMyDistance" 0 0.0 1.0 
+"ButtonWidget" 168 144 92 42 0.0 33 "Loop On" "LoopAtEnd" 0 13.0 
+"ButtonWidget" 168 104 92 42 0.0 29 "Index Same" "PlaySame" 0 0.0 
+"ButtonWidget" 168 184 92 42 0.0 34 "Loop Off" "StopAtEnd" 0 14.0 
+"RadioButtonWidget" 352 144 77 28 0.0 12 "12      " "PlayFrom" 0 12.0 1 
+"ButtonWidget" 32 64 92 42 0.0 30 "Play Single" "PlayOne" 0 0.0 
+"ButtonWidget" 32 24 92 42 0.0 31 "Play Series" "PlaySeries" 0 0.0 
+"ButtonWidget" 32 104 92 42 0.0 23 "Pause" "JustPause" 0 0.0 
+"RadioButtonWidget" 288 64 70 28 0.0 21 "1      " "PlayFrom" 0 1.0 1 
+"ButtonWidget" 168 64 92 42 0.0 28 "Index Revrs" "Reverse" 0 0.0 
+"RadioButtonWidget" 288 128 70 28 0.0 5 "5      " "PlayFrom" 0 5.0 1 
+"RadioButtonWidget" 288 144 70 28 0.0 6 "6      " "PlayFrom" 0 6.0 1 

@@ -46,7 +46,7 @@ namespace XNASwarms
             {
                 for (int i = 0; i < population[s].Count; i++)
                 {
-                    DrawIndividual(population[s][i], population[s][i].getDisplayColor(), individualTexture);
+                    DrawIndividual(population[s][i], population[s][i].getGenomeColor(), individualTexture);
                 }
             }
 

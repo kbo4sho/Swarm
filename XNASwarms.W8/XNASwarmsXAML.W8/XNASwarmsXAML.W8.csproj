@@ -213,6 +213,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authoring\ViewModels\WorldControlsViewModel.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -260,9 +261,9 @@
     <None Include="XNASwarms.W8_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\LogoAuthoring.png" />
     <Content Include="Assets\SmallLogo.png" />
-    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\SplashScreenAuthoring.png" />
     <Content Include="Assets\StoreLogo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -291,6 +292,10 @@
     <ProjectReference Include="..\SwarmEngine.W8\SwarmEngine.W8.csproj">
       <Project>{8ba84de0-e042-403b-9338-15a76f12a14a}</Project>
       <Name>SwarmEngine.W8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VSS.W8\VSS.W8.csproj">
+      <Project>{b0d3e26d-3caa-433a-91d2-b844eac0a897}</Project>
+      <Name>VSS.W8</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -17,12 +17,12 @@ namespace SwarmAnalysisEngine
             Modules = modules;
         }
     
-        public List<Analysis> Run(List<Individual> indvds, float gametime)
+        public List<Analysis> Run(List<Individual> indvds, float gametime, bool sendaudiodata)
         {
             List<Analysis> analysis = new List<Analysis>();
             for (int i = 0; i < Modules.Count; i++ )
             {
-                analysis.Add(Modules[i].TryAnalysis(indvds, gametime));
+                analysis.Add(Modules[i].TryAnalysis(indvds, gametime, sendaudiodata));
             }
             return analysis;
         }

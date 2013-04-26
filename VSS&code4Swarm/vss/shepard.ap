@@ -1,0 +1,13 @@
+audpanel.title: "Shepard's Tone Demo"
+audpanel.sliders: 2
+audpanel.presets: ("Shepard")
+
+Shepard.messageGroup: "modify"
+Shepard.interval: 0.025
+Shepard.labels: 	("Speed" "Rate")
+Shepard.minValues:	(0.0 0.0)
+Shepard.maxValues:	(1.0 1.0)
+Shepard.initialValues: 	(0.5 0.5)
+Shepard.mappings: (0 1)
+Shepard.parameters: 2
+Shepard.defaultValues: 	(0.5 0.5)

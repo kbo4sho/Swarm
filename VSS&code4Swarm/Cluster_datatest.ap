@@ -1,0 +1,8 @@
+"SliderWidget" 152 16 120 212 118.421 3 "NumberOfAgents" "SendNumAgents" 0 1.0 300.0 
+"SliderWidget" 408 16 96 212 1.468 15 "XYsymmetry" "SendXYsymmetry" 0 0.1 10.0 
+"SliderWidget" 248 16 88 212 88.816 4 "Area" "SendArea" 0 0.0 300.0 
+"RadioButtonWidget" 88 112 82 27 1.0 9 "pause" "stopCluster" 0 0.0 2 
+"SquareWidget" 528 16 212 212 -0.08 0.43 18 "Cluster Position" "SendXYposition" 0 -1.0 1.0 "SendXYposition" 1 0.0 1.0 
+"SliderWidget" 320 16 96 212 627.5 7 "Agent Energy" "SendAgentEnergy" 0 110.0 800.0 
+"SliderWidget" 24 16 72 212 0.0 0 "Amp" "SourceAmp" 0 0.0 2.0 
+"RadioButtonWidget" 88 80 71 27 0.0 8 "play" "startCluster" 0 1.0 2 

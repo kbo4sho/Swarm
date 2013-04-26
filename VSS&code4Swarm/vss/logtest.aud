@@ -1,0 +1,111 @@
+SetPrintCommands 1;
+
+// Load the DSOs we need
+LoadDSO msgGroup.so;
+LoadDSO logistic.so;
+LoadDSO map.so;
+LoadDSO seq.so;
+LoadDSO fm.so;
+LoadDSO later.so;
+
+aFm = Create FmActor;
+sFm = BeginSound aFm SetPause 1, SetCarFreq 200.0, SetMCratio 0.6875, ScaleAmp 0.1;
+al = Create LaterActor;
+
+
+/* following section rescales note envelope according to Tempo
+*/
+
+currentTempo = Create SegmentMapper;
+SetBreakpoints currentTempo [0 60., 2 60.];
+//Dereference with 1
+
+TempoToPitchEnvScale = Create SegmentMapper;
+SetBreakpoints TempoToPitchEnvScale [60 0.8, 120 0.4];
+
+TempoToModEnvScale = Create SegmentMapper;
+SetBreakpoints TempoToModEnvScale [60 0.6, 120 0.3];
+
+TempoToDurScale = Create SegmentMapper;
+SetBreakpoints TempoToDurScale [60 0.9, 120 0.45];
+
+rescalePitchEnv = Create MessageGroup;
+AddMessage rescalePitchEnv MapAndSend TempoToPitchEnvScale SetAmp sFm 0 @*0; //0.8 at tempo=60
+//based upon: AddMessage setFm AddMessage al 0.05 SetAmp sFm 0 0.8;
+
+rescaleModEnv = Create MessageGroup;
+AddMessage rescalePitchEnv MapAndSend TempoToModEnvScale SetModIndex sFm 0 @*0; //0.8 at tempo=60
+
+rescaleDurEnv = Create MessageGroup;
+AddMessage rescaleDurEnv MapAndSend TempoToDurScale AddMessage al @*0 SetPause sFm 1;
+
+setFm = Create MessageGroup;
+AddMessage setFm SetCarFreq sFm *0;
+AddMessage setFm SetModIndex sFm 1.;
+AddMessage setFm SetPause sFm 0;
+AddMessage setFm SetAmp sFm 1 0.01;
+AddMessage setFm AddMessage al 0.02 MapAndSend currentTempo SendData rescalePitchEnv [@1]; //dereference map
+AddMessage setFm AddMessage al 0.02 MapAndSend currentTempo SendData rescaleModEnv [@1];
+AddMessage setFm MapAndSend currentTempo SendData rescaleDurEnv [@1];
+//AddMessage setFm AddMessage al 0.05 SetAmp sFm 0 0.8;
+//AddMessage setFm AddMessage al 0.05 SetModIndex sFm 0 0.6;
+//AddMessage setFm AddMessage al 0.9 SetPause sFm 1;
+
+SetModOnly = Create MessageGroup;
+AddMessage SetModOnly SetMCratio sFm *0;
+
+/* following section sets up the logistic actor and sequencer
+*/
+
+//logistic actor output is range [0,1]
+//mode 3 should create logarithmic output
+//Scale is multiplied by the output range [0,1]
+//Scale 200 = range [0, 200]
+//Offset is the baseine value above 0
+//Scale n and Offset n will create an octave in the range [n, 2xn] Hz
+
+alog = Create LogisticActor;
+SetMessageGroup alog "setFm";
+SetState alog 0.5;
+SetCtrl alog 3.73891;
+SetOutputMode alog 3;
+SetScaleAndOffset alog 200.0 200.0;
+Debug alog 0;
+
+seq = Create SeqActor;
+SetLoopEnd seq 1;
+AddMessage seq 0 GoOnce alog;
+SetNumLoops seq -1;
+Rewind seq;
+Active seq 1;
+
+//invertMap = Create SegmentMapper;
+//SetBreakpoints invertMap [-1 1, 0.5 1, 0.6 0, 1.5 0];
+playSeq = Create MessageGroup;
+//AddMessage playSeq MapAndSend invertMap SetPause sFm @*0;
+AddMessage playSeq Active seq *0;
+
+play = Create MessageGroup;
+AddMessage play ScaleAmp sFm *0;
+AddMessage play SetCtrl alog *1;
+AddMessage play SetState alog *2;
+AddMessage play SetScaleAndOffset alog *3 *4;
+AddMessage play SetNumberOfBins alog *5;
+AddMessage play SetTempo seq *6;
+
+play_Mode = Create MessageGroup;
+AddMessage play_Mode SetOutputMode alog *0;
+
+/*
+alog2 = Create LogisticActor;
+go = Create MessageGroup;
+testmg = Create MessageGroup;
+SetMessageGroup alog2 "testmg";
+Debug alog2 1;
+AddMessage go GoOnce alog2 1;
+
+SetState alog2 .1;
+SetCtrl alog2 3.8;
+SetOutputMode alog2 2;
+SetNumberOfBins alog2 4;
+*/

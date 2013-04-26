@@ -1,42 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-
-  <Identity Name="6597bef5-0139-4838-aeb2-24d537361507"
-            Publisher="CN=kevin_000"
-            Version="1.0.0.0" />
-
+  <Identity Name="6597bef5-0139-4838-aeb2-24d537361507" Publisher="CN=kevin_000" Version="1.0.0.0" />
   <Properties>
     <DisplayName>XNASwarms.W8</DisplayName>
     <PublisherDisplayName>kevin_000</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
   <Prerequisites>
     <OSMinVersion>6.2.1</OSMinVersion>
     <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
-
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
-    <Application Id="App"
-        Executable="$targetnametoken$.exe"
-        EntryPoint="XNASwarms.W8.App">
-        <VisualElements
-            DisplayName="XNASwarms.W8"
-            Logo="Assets\Logo.png"
-            SmallLogo="Assets\SmallLogo.png"
-            Description="XNASwarms.W8"
-            ForegroundText="light"
-            BackgroundColor="#464646">
-            <DefaultTile ShowName="allLogos" />
-            <SplashScreen Image="Assets\SplashScreen.png" />
-        </VisualElements>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="XNASwarms.W8.App">
+      <VisualElements DisplayName="XNASwarms.W8" Logo="Assets\LogoAuthoring.png" SmallLogo="Assets\SmallLogo.png" Description="XNASwarms.W8" ForegroundText="light" BackgroundColor="#464646">
+        <DefaultTile ShowName="allLogos" />
+        <SplashScreen Image="Assets\SplashScreenAuthoring.png" />
+      </VisualElements>
+      <Extensions>
+        <Extension Category="windows.fileOpenPicker">
+          <FileOpenPicker>
+            <SupportedFileTypes>
+              <SupportsAnyFileType />
+            </SupportedFileTypes>
+          </FileOpenPicker>
+        </Extension>
+        <Extension Category="windows.fileSavePicker">
+          <FileSavePicker>
+            <SupportedFileTypes>
+              <SupportsAnyFileType />
+            </SupportedFileTypes>
+          </FileSavePicker>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer" />
+    <Capability Name="internetClientServer" />
+    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

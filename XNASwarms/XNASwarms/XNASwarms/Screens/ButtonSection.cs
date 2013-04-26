@@ -414,6 +414,7 @@ namespace XNASwarms
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[5]), false);
 #endif
                     }
+#if !WINDOWS 
                     else if (menuEntries[_selectedEntry].IsImportLikes())
                     {
                         ImportSwarmSaveData();
@@ -422,6 +423,7 @@ namespace XNASwarms
                     {
                         ExportSwarmSaveData();
                     }
+#endif
                 }
             }
         }

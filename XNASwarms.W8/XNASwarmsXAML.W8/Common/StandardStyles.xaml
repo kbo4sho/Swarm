@@ -66,6 +66,7 @@
         <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
         <Setter Property="TextTrimming" Value="WordEllipsis"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="0,30,0,0"/>
         <Setter Property="Typography.StylisticSet20" Value="True"/>
         <Setter Property="Typography.DiscretionaryLigatures" Value="True"/>
         <Setter Property="Typography.CaseSensitiveForms" Value="True"/>

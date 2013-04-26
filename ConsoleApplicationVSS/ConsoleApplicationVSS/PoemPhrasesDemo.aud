@@ -1,0 +1,525 @@
+//Poem Grasp & Throw demo
+//Based upon PoemPhrasesDemo.aud 
+//Extended poem demonstration for gesture control and telepresence
+//November 2012
+//SOUNDFILE SEGMENT AND LOCALIZE DEMO
+//SEARCH for **INFO** or !!EDIT!!
+
+///////NOTE FOR JEFF: DISTANCE 0 is max and 1 is min !!!
+
+/*
+The attached .aud file uses the same source poem sound file that we have been using. 
+Also attached is a .ap file for using Jaudpanel to test the and file. 
+In the control panel the 2D Distance and Panning control cursor only works while a sound is grasped or thrown.
+
+NEW COMMANDS are provided to fit the scenario of Erik's the new interface with sound objects you can grasp, move, put down, or throw. 
+
+GraspSound1 [N] = this activates the poem starting at the Nth phrase. N is valid in the range [1, 12].
+When the user grasps a sound source object in your interface, you will pass the number of the object as an argument. That number will associate an object to a phrase position. 
+(We had said that we would use 6 sound source objects, but in the attached audfile the mapping is still set up for the original 12 short phrases. You can use only 1-6 if you wish.)
+
+ReleaseSound1 [0] = make this call when a sound object is placed back in a static location. There is no argument value to pass. The command pauses the current grasped sound. 
+
+ThrowSound [0] = make this call when a sound object is thrown. <ThrowSound> MUST FOLLOW <GraspSound1> without any other commands in between (other than SetMyDistance and SetMyPanning â€” see below). There is no argument value to pass. The command puts the sound into a phrase looping mode. 
+
+EndThrow [0] = make this call when a thrown sound object has faded away to nothing. There is no argument value to pass. The command pauses the grasped sound generator.
+
+For Spatialization and Directional Sound Cues:
+When a sound object is Grasped and Thrown, you should iterate several times a second calling the commands <SetMyDistance [N]> and <SetMyPanning [M]>, and pass the sound object's distance and panning position values as arguments N and M. 
+
+PLEASE NOTE: DISTANCE RANGES FROM 1 == NEAREST POINT to 0 == FARTHEST POINT.  (I may have indicated the opposite in my earlier emails.)
+
+Backgrpound Sounds:
+
+The audfile also has quiet background iterations of the poem phrases in irregular order with irregular pauses. 
+These background iterations begin automatically when you start the audfile. The background iterations stop whenever a sound is Grasped or Thrown, and they start again when you Release a sound or when the sounds stops at the end of a Throw. 
+
+To control the background iterations directly you can send the commands <GoToSleep> (the background sounds begin) and <WakeUp> (the background sounds pause).
+
+For now the spatial positions of the background sounds are fixed. In the future we will attach one of these sounds  to each sound object and use the objects' position data to distribute the sounds. 
+*/
+
+/* ADDED FOR GRASP & THROW:
+- sleeping sequence: a loop that iterates over all objects to generate intermittent PlayEventN commands
+- sleeping sequence pauses when a grasp event occurs, and resumes when all grasp and throw events are false
+- sounds are not processed by reverb
+
+- Grasp1: flags which sound has been grasped, and beings playback
+- Release1: pauses the poem playback and resets the object to its initial phrase position
+- Grasp1 and Grasp2 sounds are processed by local reverb but not global reverb
+
+- Grasp2 and Release2: same as Grasp1 and Release1
+
+Client application must keep track of which objects are in Grasp state and must properly alternate calls to Grasp1 or Grasp2
+
+- Throw: Assumes object is already grasped and playing, and enters Phrase Loop mode. 
+- ThrowFlag: allows only one sound object at a time to be assigned to throw state 
+- ThrowDone: pauses thrown sound object, and releases Throwflag
+- Throw sounds are processed by local and global reverb
+*/
+
+
+SetPrintCommands 2;
+
+LoadDSO later.so;
+LoadDSO noise.so;
+LoadDSO reverb.so;
+LoadDSO map.so;
+LoadDSO samp.so;
+LoadDSO msgGroup.so;
+LoadDSO control.so;
+LoadDSO seq.so;
+LoadDSO mixer.so;
+LoadDSO thresh.so;
+
+samp = Create SampleActor;
+
+//SET LOCAL DIRECTORY OF SOUNDFILE LOCATION HERE
+//PATHNAME is with respect to location of VSS
+//MUST BE ON SAME MACHINE AS VSS IS RUNNING
+//SetDirectory samp "C:\SOUNDS";
+SetDirectory samp "./SOUNDS";
+
+SetAmp samp 0;
+
+INIT = Create MessageGroup;
+AddMessage INIT LoadFile samp "miriam_sentance_nobreath.aiff";
+
+SendData INIT [1];
+
+//SET SOUNDFILE NAME HERE
+phrase = BeginSoundPaused samp SetFile "miriam_sentance_nobreath.aiff";
+
+//POLYmode
+samp2 = Create SampleActor;
+SetDirectory samp2 "./SOUNDS";
+SetAmp samp2 0.5;
+LoadFile samp2 "miriam_sentance_nobreath.aiff";
+voice1 = BeginSoundPaused samp2 SetFile "miriam_sentance_nobreath.aiff";
+voice2 = BeginSoundPaused samp2 SetFile "miriam_sentance_nobreath.aiff";
+voice3 = BeginSoundPaused samp2 SetFile "miriam_sentance_nobreath.aiff";
+voice4 = BeginSoundPaused samp2 SetFile "miriam_sentance_nobreath.aiff";
+
+
+//////////////////////////////
+Rev = Create ReverbActor;
+rev = BeginSound Rev; 
+SetAmp rev 1.0 ; 
+SetInput rev phrase;
+SetGain rev 3;
+
+RevGainMap = Create ExponentialMapper;
+SetMapBounds RevGainMap 0.0 1.0 0.0 10 20;
+
+RevMixMap = Create ExponentialMapper;
+SetMapBounds RevMixMap 0.0 1.0 0.0 1.0 5;//5 was 20 - RB 2.2005 
+
+globalrev = BeginSound Rev; 
+SetAmp globalrev 1.0 ;
+SetInput globalrev phrase;
+SetGain globalrev 2.0; // RB was 1.2 -- makes more noticeable
+SetMix globalrev 0.85; //NEW RB 11.2012. WAS 1.0 for Global rev. (2.2005)
+
+//Space args: Panning [-1, 1], Distance [0,1]
+
+DistanceMix = Create MessageGroup; //needed to nest to map de-references
+AddMessage DistanceMix MapAndSend RevMixMap SetMix rev @*0;
+
+InvertDistance = Create SegmentMapper;
+SetBreakpoints InvertDistance [-1 1, 0 1, 1 0, 2 0];
+
+SetMyPanning = Create MessageGroup;
+AddMessage SetMyPanning SetPan phrase *0;
+AddMessage SetMyPanning SetPan rev *0;
+AddMessage SetMyPanning SetPan globalrev *0;
+
+SourceAmpMap = Create ExponentialMapper;
+SetMapBounds SourceAmpMap 0.0 1.0 0.0 1.3 5;//1.3 because amp needs to be boosted a bit at max
+
+SetMyDistance = Create MessageGroup;
+AddMessage SetMyDistance MapAndSend InvertDistance SendData DistanceMix [@*0];
+AddMessage SetMyDistance MapAndSend SourceAmpMap SetAmp phrase @*0; //expon amp & atten on source
+
+//POLYmode
+//separate reverb signal for each voiceN - not including global reverb (will try mixer for that)
+//Use same maps as Monomode reverb above
+
+/*
+rev2 = BeginSound Rev; 
+SetAmp rev2 0.2 ; 
+SetInput rev2 voice2;
+SetGain rev2 1;
+
+rev3 = BeginSound Rev; 
+SetAmp rev3 0.2 ; 
+SetInput rev3 voice3;
+SetGain rev3 1;
+
+rev4 = BeginSound Rev; 
+SetAmp rev4 0.2 ; 
+SetInput rev4 voice4;
+SetGain rev4 1;
+*/
+
+//!!EDIT!! 
+//ENTER SOUNDFILE SEGMENT DATA INTO THE FIVE ARRAYS BELOW
+//EACH ARRAY BELOW REPRESENTS 12 SOUNDFILE SEGMENTS BUT YOU CAN HAVE ANY NUMBER OF SEGMENTS
+//THE MASTER NUMBER OF SEGMENTS IS SET BELOW AT "MOMENTUM 12" and other places marked by !!EDIT!!
+// (Apologies for not using a MACRO) 
+
+//**INFO** 
+//TO SUPPORT MODULO OPERATION, THERE IS AN ADDED 0th SEGMENT THAT DUPLICATES DATA from the 13th SEGMENT
+//DATA FOR EACH SEGMENT IS PROVIDED VERTICALLY ACROSS FIVE ARRAYS
+
+//////////////////////////////// 
+//Five DataBase Maps for 5 Phrase arguments: 
+// *0 = Start Position [seconds], *1 = total Duration [seconds], *2 = fadeup in sec
+// *3 = duration before fadeout, *4 = fadeout in sec 
+// (these are no longer args passed directly *0-*4 in one MG -- instead most are stored in maps)
+
+StartPosData = Create SegmentMapper;
+SetBreakpoints StartPosData 	[0. 19.8, 1. 0.0,   2. 1.535, 3. 3.255, 4. 5.33,  5. 6.915, 6. 8.671, 7. 10.624, 8. 12.323, 9. 13.354, 10. 15.368, 11. 16.973, 12. 18.441, 13. 19.8 ];
+
+TotalDurData = Create SegmentMapper;
+SetBreakpoints TotalDurData 	[0. 0.22, 1. 1.535, 2. 1.72,  3. 2.077, 4. 1.582, 5. 1.755, 6. 1.952, 7. 1.699,  8. 1.031,  9. 2.014,  10. 1.604,  11. 1.468,  12. 1.560,  13. 0.22 ];
+
+FadeUpData = Create SegmentMapper;
+SetBreakpoints FadeUpData 	[0. 0.01, 1. 0.05,  2. 0.05,  3. 0.05,  4. 0.05,  5. 0.05,  6. 0.050, 7. 0.050,  8. 0.05,   9. 0.050,  10. 0.050,  11. 0.050,  12. 0.001,  13. 0.01 ]; 
+
+PhraseDurData = Create SegmentMapper;
+SetBreakpoints PhraseDurData 	[0. 0.1,  1. 1.43,  2. 1.6,   3. 1.95,  4. 1.48,  5. 1.64,  6. 1.85,  7. 1.59,   8. 0.90,   9. 1.857,  10. 1.510,  11. 1.38,   12. 1.500,  13. 0.1  ]; 
+
+FadeOutData = Create SegmentMapper;
+SetBreakpoints FadeOutData 	[0. 0.01, 1. 0.05,  2. 0.05,  3. 0.05,  4. 0.05,  5. 0.05,  6. 0.05,  7. 0.020,  8. 0.05,   9. 0.010,  10. 0.010,  11. 0.02,   12. 0.050,  13. 0.01 ];  
+
+//////////////////////////////
+Delay = Create LaterActor;
+
+Attenuate = Create MessageGroup; //needed to nest to map de-references
+AddMessage Attenuate MapAndSend FadeOutData ScaleAmp phrase 0 @*0;
+
+// ANCIENT Event args: *0 = Start Position [seconds], *1 = total Duration [seconds], *2 = fadeup in sec, *3 = duration before fadeout, *4 = fadeout in sec
+// CURRENT Event args: *0 = Start Position index, *1 = Pause status from PAUSEFLAG
+Event = Create MessageGroup;
+AddMessage Event MapAndSend StartPosData JumpTo phrase @*0;
+AddMessage Event SetPause phrase 0;
+AddMessage Event MapAndSend FadeUpData ScaleAmp phrase 1.0 @*0;
+AddMessage Event MapAndSend PhraseDurData AddMessage Delay @*0 SendData Attenuate [*0];
+AddMessage Event MapAndSend TotalDurData AddMessage Delay @*0 SetPause phrase *1;
+
+//POLYmode
+PolyDelay = Create LaterActor;
+
+/////UNFORTUNATELY .NET CANNOT PARSE CORRECTLY AND BRUTE FORCE IS REQUIRED
+
+//args for SetPolyPanning: *0=pan position, *1=voiceN
+SetPolyPanning = Create MessageGroup;
+AddMessage SetPolyPanning SetPan *1 *0;
+
+//args for SetPolyDistance: *0=distance value (as in mono mode above), *1=voiceN,
+SetPolyDistance = Create MessageGroup;
+AddMessage SetPolyDistance MapAndSend SourceAmpMap SetAmp *1 @*0; //expon amp & atten on source
+
+//PolyAttenuate args: *0=voice source (samp handler), *1 = phrase Position index,
+PolyAttenuate = Create MessageGroup; //needed to nest to map de-references
+AddMessage PolyAttenuate MapAndSend FadeOutData ScaleAmp *0 0 @*1;
+
+// PolyEvent args: *0 =voice source (samp handler), *1 = Start Position index, *2=distance, #3=panning
+PolyEvent = Create MessageGroup;
+AddMessage PolyEvent ScaleAmp *0 0.0 0.01; //in case voice is already playing - no pause & no delay but attempt 1 msec. fadeout
+AddMessage PolyEvent SendData SetPolyDistance [*2 *0]; // *0=distance value [0,1], *1=voiceN
+AddMessage PolyEvent SendData SetPolyPanning [*3 *0]; //*0=pan position [-1, 1], *1=voiceN
+AddMessage PolyEvent MapAndSend StartPosData JumpTo *0 @*1;
+AddMessage PolyEvent SetPause *0 0;
+AddMessage PolyEvent MapAndSend FadeUpData ScaleAmp *0 1.0 @*1;
+AddMessage PolyEvent MapAndSend PhraseDurData AddMessage PolyDelay @*1 SendData PolyAttenuate [*0 *1];
+AddMessage PolyEvent MapAndSend TotalDurData AddMessage PolyDelay @*1 SetPause *0 1;
+
+//////BRUTE FORCE VERSIONS FOLLOW HERE: "voxN" where N=[1,4]
+vox1Attenuate = Create MessageGroup; //needed to nest to map de-references
+AddMessage vox1Attenuate MapAndSend FadeOutData ScaleAmp voice1 0 @*0;
+
+// voxN_Event args: *0 = Start Position index (integer), *1=distance, *2=panning
+vox1Event = Create MessageGroup;
+AddMessage vox1Event ScaleAmp voice1 0.0 0.01; //in case voice is already playing - no pause & no delay but attempt 1 msec. fadeout
+AddMessage vox1Event SetInput globalrev voice1;
+AddMessage vox1Event SetPan globalrev *2;
+AddMessage vox1Event MapAndSend SourceAmpMap SetAmp voice1 @*1; //SetDistance sans reverb
+AddMessage vox1Event SendData SetPan voice1 *2; 
+AddMessage vox1Event MapAndSend StartPosData JumpTo voice1 @*0;
+AddMessage vox1Event SetPause voice1 0;
+AddMessage vox1Event MapAndSend FadeUpData ScaleAmp voice1 1.0 @*0;
+AddMessage vox1Event MapAndSend PhraseDurData AddMessage PolyDelay @*0 SendData vox1Attenuate [*0];
+AddMessage vox1Event MapAndSend TotalDurData AddMessage PolyDelay @*0 SetPause voice1 1;
+
+vox2Attenuate = Create MessageGroup; //needed to nest to map de-references
+AddMessage vox2Attenuate MapAndSend FadeOutData ScaleAmp voice2 0 @*0;
+
+vox2Event = Create MessageGroup;
+AddMessage vox2Event ScaleAmp voice2 0.0 0.01; //in case voice is already playing - no pause & no delay but attempt 1 msec. fadeout
+AddMessage vox2Event SetInput globalrev voice2;
+AddMessage vox2Event SetPan globalrev *2;
+AddMessage vox2Event MapAndSend SourceAmpMap SetAmp voice2 @*1; //SetDistance sans reverb
+AddMessage vox2Event SendData SetPan voice2 *2;
+AddMessage vox2Event MapAndSend StartPosData JumpTo voice2 @*0;
+AddMessage vox2Event SetPause voice2 0;
+AddMessage vox2Event MapAndSend FadeUpData ScaleAmp voice2 1.0 @*0;
+AddMessage vox2Event MapAndSend PhraseDurData AddMessage PolyDelay @*0 SendData vox2Attenuate [*0];
+AddMessage vox2Event MapAndSend TotalDurData AddMessage PolyDelay @*0 SetPause voice2 1;
+
+vox3Attenuate = Create MessageGroup; //needed to nest to map de-references
+AddMessage vox3Attenuate MapAndSend FadeOutData ScaleAmp voice3 0 @*0;
+
+vox3Event = Create MessageGroup;
+AddMessage vox3Event ScaleAmp voice3 0.0 0.01; //in case voice is already playing - no pause & no delay but attempt 1 msec. fadeout
+AddMessage vox3Event MapAndSend SourceAmpMap SetAmp voice3 @*1; //SetDistance sans reverb
+AddMessage vox3Event SendData SetPan voice3 *2;
+AddMessage vox3Event MapAndSend StartPosData JumpTo voice3 @*0;
+AddMessage vox3Event SetPause voice3 0;
+AddMessage vox3Event MapAndSend FadeUpData ScaleAmp voice3 1.0 @*0;
+AddMessage vox3Event MapAndSend PhraseDurData AddMessage PolyDelay @*0 SendData vox3Attenuate [*0];
+AddMessage vox3Event MapAndSend TotalDurData AddMessage PolyDelay @*0 SetPause voice3 1;
+
+vox4Attenuate = Create MessageGroup; //needed to nest to map de-references
+AddMessage vox4Attenuate MapAndSend FadeOutData ScaleAmp voice4 0 @*0;
+
+vox4Event = Create MessageGroup;
+AddMessage vox4Event ScaleAmp voice4 0.0 0.01; //in case voice is already playing - no pause & no delay but attempt 1 msec. fadeout
+AddMessage vox4Event MapAndSend SourceAmpMap SetAmp voice4 @*1; //SetDistance sans reverb
+AddMessage vox4Event SendData SetPan voice4 *2;
+AddMessage vox4Event MapAndSend StartPosData JumpTo voice4 @*0;
+AddMessage vox4Event SetPause voice4 0;
+AddMessage vox4Event MapAndSend FadeUpData ScaleAmp voice4 1.0 @*0;
+AddMessage vox4Event MapAndSend PhraseDurData AddMessage PolyDelay @*0 SendData vox4Attenuate [*0];
+AddMessage vox4Event MapAndSend TotalDurData AddMessage PolyDelay @*0 SetPause voice4 1;
+
+///////////// SLEEPING SEQUENCES
+//voice1: phrase 1, 2, 3
+//voice2: phrase 4, 5, 6
+//voice3: phrase 7, 8, 9
+//voice4: phrase 10, 11, 12
+
+// voxN_Event args: *0 = Start Position index (integer), *1=distance, *2=panning
+SleepSeq1 = Create SeqActor;
+Active SleepSeq1 0;
+SetTempo SleepSeq1 60;
+SetLoopStart SleepSeq1 0;
+SetLoopEnd SleepSeq1 60; //1.2 minutes @ Tempo=50
+SetNumLoops SleepSeq1 -1;
+AddMessage SleepSeq1 2 SendData vox1Event [3, 0.2, -1.0]; //*0 = Start Position index (integer), *1=distance, *2=panning
+AddMessage SleepSeq1 12 SendData vox1Event [1, 0.3, -0.6];
+AddMessage SleepSeq1 26 SendData vox1Event [2, 0.1, 0.8];
+AddMessage SleepSeq1 40 SendData vox1Event [1, 0.3, -0.6];
+AddMessage SleepSeq1 55 SendData vox1Event [3, 0.2, -1.0];
+Rewind SleepSeq1;
+
+SleepSeq2 = Create SeqActor;
+Active SleepSeq2 0;
+SetTempo SleepSeq2 75;
+SetLoopStart SleepSeq2 0;
+SetLoopEnd SleepSeq2 60; //1.1 minutes @ Tempo=55
+SetNumLoops SleepSeq2 -1;
+AddMessage SleepSeq2 8 SendData vox2Event [5, 0.1, 1.0]; //*0 = Start Position index (integer), *1=distance, *2=panning
+AddMessage SleepSeq2 13 SendData vox2Event [4, 0.4, 0.6];
+AddMessage SleepSeq2 25 SendData vox2Event [6, 0.25, -0.8];
+AddMessage SleepSeq2 33 SendData vox2Event [5, 0.1, 1.0];
+AddMessage SleepSeq2 50 SendData vox2Event [6, 0.25, -0.8];
+Rewind SleepSeq2;
+
+SleepSeq3 = Create SeqActor;
+Active SleepSeq3 0;
+SetTempo SleepSeq3 65;
+SetLoopStart SleepSeq3 0;
+SetLoopEnd SleepSeq3 60; //1.3 minutes @ Tempo=45
+SetNumLoops SleepSeq3 -1;
+AddMessage SleepSeq3 9 SendData vox3Event [8, 0.3, -0.7]; //*0 = Start Position index (integer), *1=distance, *2=panning
+AddMessage SleepSeq3 21 SendData vox3Event [7, 0.2, 0.5];
+AddMessage SleepSeq3 35 SendData vox3Event [9, 0.35, -0.3];
+AddMessage SleepSeq3 44 SendData vox3Event [7, 0.1, 0.5];
+AddMessage SleepSeq3 50 SendData vox3Event [8, 0.3, -0.7];
+AddMessage SleepSeq3 58 SendData vox3Event [9, 0.1, -0.3];
+Rewind SleepSeq3;
+
+SleepSeq4 = Create SeqActor;
+Active SleepSeq4 0;
+SetTempo SleepSeq4 70;
+SetLoopStart SleepSeq4 0;
+SetLoopEnd SleepSeq4 60; //1.2 minutes @ Tempo=50
+SetNumLoops SleepSeq4 -1;
+AddMessage SleepSeq4 12 SendData vox4Event [10, 0.2, 0,1]; //*0 = Start Position index (integer), *1=distance, *2=panning
+AddMessage SleepSeq4 20 SendData vox4Event [12, 0.25, -1.5];
+AddMessage SleepSeq4 26 SendData vox4Event [11, 0.1, 0.4];
+AddMessage SleepSeq4 35 SendData vox4Event [10, 0.2, 0.1];
+AddMessage SleepSeq4 59 SendData vox4Event [11, 0.1, 0.4];
+Rewind SleepSeq4;
+
+GoToSleep = Create MessageGroup;
+AddMessage GoToSleep Active SleepSeq1 1;
+AddMessage GoToSleep Active SleepSeq2 1;
+AddMessage GoToSleep Active SleepSeq3 1;
+AddMessage GoToSleep Active SleepSeq4 1;
+
+WakeUp = Create MessageGroup;
+AddMessage WakeUp Active SleepSeq1 0;
+AddMessage WakeUp Active SleepSeq2 0;
+AddMessage WakeUp Active SleepSeq3 0;
+AddMessage WakeUp Active SleepSeq4 0;
+
+
+
+////////////////////////
+Momentum = Create LoopActor;
+
+PAUSEFLAG = Create SegmentMapper;
+SetBreakpoints PAUSEFLAG [5.0 0.0, 7.0 0.0];//initialize for no pause 
+//"@6" will be index to dereference -- arbitrary selection
+
+//!!EDIT!! -- to change MOD 12 to another number of segments
+Mod12Map= Create SegmentMapper;
+SetBreakpoints Mod12Map [0. 13.0, 1. 1.0, 12. 12.0, 13. 0.0];
+
+InvertMap = Create SegmentMapper;
+SetBreakpoints InvertMap [-1. 1.0, 0.5 1.0, 0.6 0.0, 2. 0.0]; //invert 0 and 1 for Active Momentum flag
+
+TestLoopActive = Create MessageGroup;
+AddMessage TestLoopActive MapAndSend InvertMap Active Momentum @*0; 
+
+CurrentDataValue = Create SegmentMapper;
+SetBreakpoints CurrentDataValue [3.0 1.0, 5.0 1.0]; //initialize to first data value; @4 is (arbitrary) index for dereference
+
+//!!EDIT!! SET THE TOTAL NUMBER OF SEGMENTS + 1 IN THIS ARRAY (currently set for 12 segments)
+IncrementMap = Create SegmentMapper;
+SetBreakpoints IncrementMap [0. 1., 1. 2., 2. 3., 3. 4., 4. 5., 5. 6., 6. 7., 7. 8., 8. 9., 9. 10., 10. 11., 11. 12., 12. 13., 13. 1];
+
+DoIncrement = Create MessageGroup;
+AddMessage DoIncrement MapAndSend IncrementMap SetDataStart Momentum @*0;
+
+TestPauseIncrement = Create ThresholdActor; //this test allows movement forward on Play after a pause
+AddThresholdGT TestPauseIncrement 0.9 MapAndSend CurrentDataValue SendData DoIncrement [@4]; //@4 is index 
+SetInitialVal TestPauseIncrement 0.0;
+
+PlaySegment = Create MessageGroup; //the message to index database and generate a sound segment
+AddMessage PlaySegment MapAndSend Mod12Map SetDataStart Momentum @*0; //modulo of data value in loop actor
+AddMessage PlaySegment MapAndSend TotalDurData SetTimeStep Momentum @*0; //Set Duration of current grain
+AddMessage PlaySegment MapAndSend PAUSEFLAG SendData Event [*0, @6.0]; //*0 = phrase; @6 = PAUSE FLAG for phrase at end
+AddMessage PlaySegment MapAndSend Mod12Map SetBreakpoints CurrentDataValue [3.0 @*0, 5.0 @*0]; //store for external use in loop actor
+AddMessage PlaySegment MapAndSend PAUSEFLAG SendData TestLoopActive [@6.0];  //PAUSE FLAG 1=Pause
+//PAUSE FLAG is set in "PlaySingle" or in "JustPause" and unset in "PlaySeries"
+
+Active Momentum 0;
+SetDataStart Momentum 1.0; //Start Counting at Event 1
+SetDataStep  Momentum 1.0; //Increment phrase database index by 1
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE "Momentum 12" IS DECLARED
+SetNumLoops Momentum 12; //Permanent limit on loops based upon size of dbase
+SetMessageGroup Momentum PlaySegment ;	
+
+Debug Momentum 1;																		
+
+///////////////////////
+JustPause = Create MessageGroup;
+AddMessage JustPause SetBreakpoints PAUSEFLAG [5.0 1.0, 7.0 1.0]; //Set PAUSE FLAG positive
+//SetUserFloat Momentum 1.0; -- BROKEN in VSS99
+
+//!!EDIT!! -- This Array must be adjusted for a different number of sound segments (currently good for 12)
+DecrementMap = Create SegmentMapper;
+SetBreakpoints DecrementMap [0. 12, 1. 0., 2. 1., 3. 2., 4. 3., 5. 4., 6. 5., 7. 6., 8. 7., 9. 8., 10. 9., 11. 10., 12. 11., 13. 12.];
+
+DoDecrement = Create MessageGroup;
+AddMessage DoDecrement MapAndSend DecrementMap SetDataStart Momentum @*0;
+
+CurrentDataStep = Create SegmentMapper;
+SetBreakpoints CurrentDataStep [2.0 1, 4.0 1]; //initialize to Forward increment, @3 is index for dereference
+
+TestDataIncrement = Create ThresholdActor; //To see if Data Increment should be permitted at Play
+AddThresholdGT TestDataIncrement 0.9 MapAndSend PAUSEFLAG TestThresholds TestPauseIncrement @6; //@6 is PAUSEFLAG index
+AddThresholdLT TestDataIncrement -0.1 MapAndSend CurrentDataValue SendData DoDecrement [@4]; //@4 is index 
+SetInitialVal TestDataIncrement 0.0;
+
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE NUMBER 12 IS DECLARED
+PlayOne = Create MessageGroup;
+AddMessage PlayOne SetInitialVal TestDataIncrement 0.0;
+AddMessage PlayOne SetInitialVal TestPauseIncrement 0.0; //needed if TestDataIncrement is positive
+AddMessage PlayOne MapAndSend CurrentDataStep TestThresholds TestDataIncrement @3; //test data increment 
+AddMessage PlayOne SetBreakpoints PAUSEFLAG [5.0 1.0, 7.0 1.0]; //PAUSE FLAG to pause phrase and Momentum 
+AddMessage PlayOne SetNumLoops Momentum 12; //in case loop has stopped by DataLimit
+AddMessage PlayOne Active Momentum 1;
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE "Momentum 12" IS DECLARED
+PlaySeries = Create MessageGroup;
+AddMessage PlaySeries SetInitialVal TestDataIncrement 0.0;
+AddMessage PlaySeries SetInitialVal TestPauseIncrement 0.0; //needed if TestDataIncrement is positive
+AddMessage PlaySeries MapAndSend CurrentDataStep TestThresholds TestDataIncrement @3; //test data increment 
+AddMessage PlaySeries MapAndSend PAUSEFLAG TestThresholds TestPauseIncrement @6;
+AddMessage PlaySeries SetBreakpoints PAUSEFLAG [5.0 0.0, 7.0 0.0]; //Set PAUSE FLAG to unpause 
+AddMessage PlaySeries SetNumLoops Momentum 12; //in case loop has stopped by DataLimit
+AddMessage PlaySeries Active Momentum 1;
+
+PlayFrom = Create MessageGroup;
+AddMessage PlayFrom SetDataStart Momentum *0;
+
+			
+///////////// GRASP CONTROL : *0 is Phrase position for current sound object
+// Grasp1 uses original phrase momentum PlaySeries and JustPause commands
+
+Release1 = Create SegmentMapper; //@2 = arbitrary index
+SetBreakpoints Release1 [1.0 1.0, 3.0 1.0]; //Release initialized to positive (objects are sleeping)
+
+Grasp1Phrase = Create SegmentMapper;
+SetBreakpoints Grasp1Phrase [1.0 *0, 3.0 *0]; //@2 = arbitrary index
+
+GraspSound1 = Create MessageGroup;
+AddMessage GraspSound1 SendData WakeUp [0];
+AddMessage GraspSound1 SetInput globalrev phrase;
+AddMessage GraspSound1 SetBreakpoints Grasp1Phrase [1.0 *0, 3.0 *0]; //@4 = arbitrary index
+AddMessage GraspSound1 SetBreakpoints Release1 [0.0 0.0, 2.0 0.0]; //Grasp is true therefor Release is false
+AddMessage GraspSound1 SetDataStart Momentum *0;
+AddMessage GraspSound1 SetBreakpoints CurrentDataStep [2.0 *0, 4.0 *0];
+AddMessage GraspSound1 SendData PlaySeries [0]; 
+
+ReleaseSound1 = Create MessageGroup;
+AddMessage ReleaseSound1 SendData JustPause [0];
+AddMessage ReleaseSound1 SendData GoToSleep [0];
+
+//// TO DO LIST
+// Need to reduce Reverb commitment -- Pause Global Reverb for Grasp1 & Unpause Global Reverb for Throwing
+// Second Grasper would require second sound source + second local reverb -- Pause and Unpause as needed
+// Second Grasper cannot have independent Throwing -- must shift to original phrase source for Throwing
+
+////////// end Grasp Control
+
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE "Momentum 12" IS DECLARED
+StopAtEnd = Create MessageGroup;
+AddMessage StopAtEnd SetDataLimit Momentum 12;
+
+
+//!!EDIT!! SET NUMBER OF SEGMENTS HERE WHERE "Momentum 12" IS DECLARED
+LoopAtEnd = Create MessageGroup;
+AddMessage LoopAtEnd SetNoDataLimit Momentum ;
+AddMessage LoopAtEnd SetNumLoops Momentum 12; //This is needed because the datalimit sets this to zero
+
+Forward = Create MessageGroup;
+AddMessage Forward SetDataStep Momentum 1;
+AddMessage Forward SetBreakpoints CurrentDataStep [2.0 1, 4.0 1]; //store for use in TestDataIncrement test
+Reverse = Create MessageGroup;
+AddMessage Reverse SetDataStep Momentum -1;
+AddMessage Reverse SetBreakpoints CurrentDataStep [2.0 -1, 4.0 -1]; //store for use in TestDataIncrement test
+PlaySame = Create MessageGroup;
+AddMessage PlaySame SetDataStep Momentum 0;
+AddMessage PlaySame SetBreakpoints CurrentDataStep [2.0 0, 4.0 0]; //store for use in TestDataIncrement test
+
+//////// THROW CONTROL
+
+ThrowSound = Create MessageGroup;
+AddMessage ThrowSound SendData PlaySame [0];
+
+EndThrow = Create MessageGroup;
+AddMessage EndThrow SendData JustPause [0];
+AddMessage EndThrow SendData GoToSleep [0];
+
+////////// end Throw Control
+
+///INITIALIZE BACKGROUND
+SendData GoToSleep [0];

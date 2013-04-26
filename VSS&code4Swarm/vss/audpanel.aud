@@ -1,0 +1,30 @@
+// Companion audfile for apdemo.ap
+
+SetPrintCommands 1;
+
+LoadDSO msgGroup.so;
+LoadDSO fm.so;
+
+a = Create FmActor;
+s = BeginSound a SetAmp 0;
+
+msg1 = Create MessageGroup;
+msg1_button = Create MessageGroup;
+msg1_radio = Create MessageGroup;
+msg1_square_Start = Create MessageGroup;
+msg1_square_Stop = Create MessageGroup;
+msg1_square_Move = Create MessageGroup;
+
+msg2 = Create MessageGroup;
+msg2_RatioMode = Create MessageGroup;
+
+AddMessage msg1 SetFoo FooActor *2 *3;
+
+AddMessage msg2 SetAmp s *0;
+AddMessage msg2 SetCarFreq s *1;
+AddMessage msg2 SetMCratio s *2;
+AddMessage msg2 SetModFreq s *3;
+AddMessage msg2_RatioMode SetRatioMode s *0;
+AddMessage msg2 SetModIndex s *5;
+AddMessage msg2 SetCarFeedback s *6;
+AddMessage msg2 SetModFeedback s *7;

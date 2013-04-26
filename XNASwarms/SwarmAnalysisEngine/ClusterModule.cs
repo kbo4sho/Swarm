@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using SwarmEngine;
 using Microsoft.Xna.Framework;
+using SwarmAudio;
+using System.Threading.Tasks;
 
 namespace SwarmAnalysisEngine
 {
@@ -21,16 +23,17 @@ namespace SwarmAnalysisEngine
         BoundingBox rect;
 
         public ClusterModule()
-            : base("Cluster Module", 4)
+            : base("Cluster Module", 10)
         {
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
             analysis = new Analysis();
+            
         }
         
-        protected override Analysis Analyze(List<Individual> indvds)
+        protected override Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
         {
-            return DoAnalysis(indvds);
+            return DoAnalysis(indvds, sendaudiodata);
         }
 
         private void ResetColor(Individual indvd)
@@ -39,7 +42,7 @@ namespace SwarmAnalysisEngine
         }
 
 
-        private Analysis DoAnalysis(List<Individual> indvds)
+        private Analysis DoAnalysis(List<Individual> indvds, bool sendaudiodata)
         {
             Clusters.Clear();
 
@@ -60,8 +63,15 @@ namespace SwarmAnalysisEngine
             analysis.Messages = GenerateMessage();
             analysis.FilterResult = GenerateFilterResult();
 
+            if (sendaudiodata)
+            {
+                SoundEngine.TestData();
+            }
+
             return analysis;
         }
+
+         
 
         private void RemoveSmallClusters()
         {
@@ -159,7 +169,9 @@ namespace SwarmAnalysisEngine
                     }
                     
                 }
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5  });
+                string clusterSpeed = Clusters[i].Average(x => (x.getDx2() * x.getDx2()) + (x.getDy2() * x.getDy2())).ToString();
+
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5 + " SPEED : " + clusterSpeed });
             }
             ReadOut.Add(new AnalysisMessage() { Type = "              ", Message = "                                                  " });
             return ReadOut;
@@ -168,6 +180,16 @@ namespace SwarmAnalysisEngine
         private FilterResult GenerateFilterResult()
         {
             filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
+
+            string robinstxt = "";
+            if (Clusters.Count == 1)
+            {
+                
+                foreach (var indvd in Clusters[0])
+                {
+                    robinstxt += "(" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeWidthCentered((float)indvd.Y) + "),";
+                }
+            }
 
             foreach (Cluster cluster in Clusters)
             {
@@ -180,6 +202,8 @@ namespace SwarmAnalysisEngine
                 float horizontalCenter = (float)(leftMostX + rightMostX) * .5f;
 
                 AssignClusterCenterPoint(new Vector2(horizontalCenter, verticalCenter));
+
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER CENTER : X-" + horizontalCenter + "  Y-" + verticalCenter});
 
                 //2|1
                 //3|4
@@ -203,8 +227,8 @@ namespace SwarmAnalysisEngine
             {
                 leftMostX = quadItems.OrderBy(point => point.X).First().X;
                 rightMostX = quadItems.OrderByDescending(point => point.X).First().X;
-                topMostY = quadItems.OrderBy(point => point.Y).First().Y;
-                bottomMostY = quadItems.OrderByDescending(point => point.Y).First().Y;
+                topMostY = quadItems.OrderByDescending(point => point.Y).First().Y;
+                bottomMostY = quadItems.OrderBy(point => point.Y).First().Y;
 
                 Vector3[] positions;
 
