@@ -36,6 +36,8 @@ namespace XNASwarms.Screens
         Swinger,
         ImportLikes,
         ExportLikes,
+        AudioPlay,
+        AudioPause,
     }
 
     /// <summary>
@@ -297,6 +299,16 @@ namespace XNASwarms.Screens
         internal bool IsExportLikes()
         {
             return _type == EntryType.ExportLikes;
+        }
+
+        internal bool IsAudioPlay()
+        {
+            return _type == EntryType.AudioPlay;
+        }
+
+        internal bool IsAudioPause()
+        {
+            return _type == EntryType.AudioPause;
         }
 
         #endregion

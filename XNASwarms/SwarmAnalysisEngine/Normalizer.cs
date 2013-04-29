@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,44 +12,69 @@ namespace SwarmAnalysisEngine
         public static float Width;
         public static float Height;
 
-       
-
         #region 0 - 1
-        //NOT WORKING
-        //public static float NormalizeWidth(float f)
-        //{
-        //    return f / Width;
-        //}
 
-        //public static float NormalizeHeight(float f)
-        //{
-        //    return f / Height;
-        //}
+        public static float NormalizeWidth(float f)
+        {
+            return KeepValueInBound(((f + Width / 2) / (Width)));
+        }
+
+        public static float NormalizeHeight(float f)
+        {
+            return KeepValueInBound(((f + Height / 2) / (Height)));
+        }
+
+        private static float KeepValueInBound(float value)
+        {
+            if (value < 0)
+            {
+                value = 0;
+            }
+
+            if (value > 1)
+            {
+                value = 1;
+            }
+
+            return value;
+        }
 
         #endregion
 
-        #region -1 - 1
+        #region -1 to 1
 
         public static float NormalizeWidthCentered(float f)
         {
-            return (f * 2 / (Width));
+            return KeepValueInCenteredBound((float)((((f + Width / 2) * 2) / (Width)) - 1));
         }
 
         public static float NormalizeHeightCentered(float f)
         {
-            return (f * 2 / (Height));
+            return KeepValueInCenteredBound((float)((((f + Height / 2) * 2) / (Height)) - 1));
         }
 
-        #endregion
+        private static float KeepValueInCenteredBound(float value)
+        {
+            if (value < -1)
+            {
+                value = -1;
+            }
 
-        //public Vector2 ConvertWorldToScreen(Vector2 location)
-        //{
-        //    Vector3 t = new Vector3(location, 0);
+            if (value > 1)
+            {
+                value = 1;
+            }
 
-        //    t = Graphics.Viewport.Project(t, _projection, _view, Matrix.Identity);
+            return value;
+        }
 
-        //    return new Vector2(t.X, t.Y);
-        //}
+        #endregion        
 
+        public static float NormalizeToScreenArea(float f)
+        {
+            //return KeepValueInBound(((f + max / 2) / (max)));
+            return f * 300 / (Width * Height);
+
+        }
     }
 }

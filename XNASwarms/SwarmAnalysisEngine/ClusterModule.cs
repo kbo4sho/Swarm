@@ -6,6 +6,7 @@ using SwarmEngine;
 using Microsoft.Xna.Framework;
 using SwarmAudio;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SwarmAnalysisEngine
 {
@@ -19,16 +20,13 @@ namespace SwarmAnalysisEngine
         double leftMostX, rightMostX, topMostY, bottomMostY;
         List<Individual> lastfew;
         FilterResult filterresult;
-        BoundingSphere sphere;
-        BoundingBox rect;
 
         public ClusterModule()
-            : base("Cluster Module", 10)
+            : base("Cluster Module", 5)
         {
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
             analysis = new Analysis();
-            
         }
         
         protected override Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
@@ -44,6 +42,12 @@ namespace SwarmAnalysisEngine
 
         private Analysis DoAnalysis(List<Individual> indvds, bool sendaudiodata)
         {
+            string robinstxt = "";
+            foreach (var indvd in indvds)
+            {
+                robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
+            }
+
             Clusters.Clear();
 
             Clusters.Add(new Cluster() { indvds[0] });
@@ -65,13 +69,31 @@ namespace SwarmAnalysisEngine
 
             if (sendaudiodata)
             {
-                SoundEngine.TestData();
+                
+                foreach (var cluster in Clusters)
+                {
+                    
+                    SoundEngine.SendAgentEnergy(300);
+                    SoundEngine.SendXYsymmetry(1);
+                    SoundEngine.SendNumAgents(cluster.Agents);
+                    SoundEngine.SendArea(cluster.Area);
+                    SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
+                    
+                    
+                    
+                    //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
+                    //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
+                }
+                //SoundEngine.StopCluster();
             }
 
             return analysis;
         }
 
-         
+        private void GetArea()
+        {
+
+        }
 
         private void RemoveSmallClusters()
         {
@@ -181,15 +203,33 @@ namespace SwarmAnalysisEngine
         {
             filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
 
+            #region robins strings
             string robinstxt = "";
-            if (Clusters.Count == 1)
-            {
-                
-                foreach (var indvd in Clusters[0])
-                {
-                    robinstxt += "(" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeWidthCentered((float)indvd.Y) + "),";
-                }
-            }
+            //if (Clusters.Count == 1)
+            //{
+            //    foreach (var indvd in Clusters[0])
+            //    {
+            //        robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
+            //    }
+            //}
+
+            //if (Clusters.Count == 2)
+            //{
+
+            //    foreach (var indvd in Clusters[0])
+            //    {
+            //        robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
+            //    }
+
+            //    robinstxt += "|";
+
+            //    foreach (var indvd in Clusters[1])
+            //    {
+            //        robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
+            //    }
+            //}
+
+            #endregion
 
             foreach (Cluster cluster in Clusters)
             {
@@ -201,6 +241,7 @@ namespace SwarmAnalysisEngine
                 float verticalCenter = (float)(topMostY + bottomMostY) * .5f;
                 float horizontalCenter = (float)(leftMostX + rightMostX) * .5f;
 
+                cluster.Center = new Vector2(Normalizer.NormalizeWidthCentered(horizontalCenter), Normalizer.NormalizeHeight(verticalCenter));
                 AssignClusterCenterPoint(new Vector2(horizontalCenter, verticalCenter));
 
                 ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER CENTER : X-" + horizontalCenter + "  Y-" + verticalCenter});
@@ -215,8 +256,14 @@ namespace SwarmAnalysisEngine
                 //3
                 AssignQuadCenterPoint(cluster.Where(i => i.X < horizontalCenter && i.Y > verticalCenter));
                 //4
-                AssignQuadCenterPoint(cluster.Where(i => i.X > horizontalCenter && i.Y > verticalCenter));              
+                AssignQuadCenterPoint(cluster.Where(i => i.X > horizontalCenter && i.Y > verticalCenter));
+
+                ///////////////////////////
+                cluster.SetAreaFromFourPoints(filterresult.ClusterCenters);
             }
+
+            
+
             return filterresult;
         }
 
@@ -253,5 +300,6 @@ namespace SwarmAnalysisEngine
         {
             filterresult.ClusterCenters.Add(clusterCenter);
         }
+
     }
 }

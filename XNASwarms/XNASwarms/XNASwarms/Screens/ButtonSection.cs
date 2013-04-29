@@ -8,6 +8,7 @@ using ScreenSystem.Debug;
 using SwarmEngine;
 using XNASwarms.Screens;
 using System.Threading.Tasks;
+using SwarmAudio;
 
 namespace XNASwarms
 {
@@ -49,12 +50,15 @@ namespace XNASwarms
             //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
             //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
             AddMenuItem("Mutation", EntryType.Game, _screen);
-            AddMenuItem("Stable", EntryType.Stable, _screen);
-            AddMenuItem("Swinger", EntryType.Swinger, _screen);
+            AddMenuItem("Start Cluster", EntryType.AudioPlay, _screen);
+            AddMenuItem("Stop Cluster", EntryType.AudioPause, _screen);
+            //AddMenuItem("Stable", EntryType.Stable, _screen);
+            //AddMenuItem("Swinger", EntryType.Swinger, _screen);
             AddMenuItem("Console", EntryType.Debugger, _screen);
             AddMenuItem("Import", EntryType.ImportLikes, _screen);
             AddMenuItem("Export", EntryType.ExportLikes, _screen);
             AddMenuItem("Like", EntryType.Save, _screen);
+            
         }
 
         public void Load()
@@ -413,6 +417,14 @@ namespace XNASwarms
 #else
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[5]), false);
 #endif
+                    }
+                    else if (menuEntries[_selectedEntry].IsAudioPlay())
+                    {
+                        SoundEngine.Play();
+                    }
+                    else if (menuEntries[_selectedEntry].IsAudioPause())
+                    {
+                        SoundEngine.Pause();
                     }
 #if !WINDOWS 
                     else if (menuEntries[_selectedEntry].IsImportLikes())

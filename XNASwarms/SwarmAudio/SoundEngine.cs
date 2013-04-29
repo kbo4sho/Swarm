@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VSS;
+using Microsoft.Xna.Framework;
 
 namespace SwarmAudio
 {
@@ -42,6 +43,58 @@ namespace SwarmAudio
         {
             //VSSCSharpClient.AUDupdate(handle, "test", 0, new float[] { 0.0f });
             VSSCSharpClient.AUDupdate(handle, "playSeq", 0, new float[] { 0.0f });
+        }
+
+        public static void SendClusterXY(float x, float y)
+        {
+            VSSCSharpClient.AUDupdate(handle, "SendXYposition", 2, new float[] { x, y });
+        }
+
+        public static void StartCluster()
+        {
+            VSSCSharpClient.AUDupdate(handle, "startCluster", 1, new float[] { 1 });
+        }
+
+        public static void StopCluster()
+        {
+            VSSCSharpClient.AUDupdate(handle, "stopCluster", 1, new float[] { 0 });
+        }
+
+        public static void Play()
+        {
+            //VSSCSharpClient.AUDupdate(handle, "playSeq", 0, new float[] { 0.0f });
+            SoundEngine.StartCluster();
+        }
+
+        public static void Pause()
+        {
+            //VSSCSharpClient.AUDupdate(handle, "pause", 0, new float[] { 0 });
+            SoundEngine.StopCluster();
+        }
+
+        public static void UpdateCluster(float numAgents, Vector2 center, float area, float averageAgentEnergy, float clusterVelocity, Vector3 symmetry)
+        {
+            VSSCSharpClient.AUDupdate(handle, "updateCluster", 9, new float[] { numAgents, center.X, center.Y, area, averageAgentEnergy, clusterVelocity, symmetry.X, symmetry.Y, symmetry.Z});
+        }
+
+        public static void SendNumAgents(float numAgents)
+        {
+            VSSCSharpClient.AUDupdate(handle, "SendNumAgents", 1, new float[] { numAgents });
+        }
+
+        public static void SendArea(float area)
+        {
+            VSSCSharpClient.AUDupdate(handle, "SendArea", 1, new float[] { area });
+        }
+
+        public static void SendAgentEnergy(float energy)
+        {
+            VSSCSharpClient.AUDupdate(handle, "SendAgentEnergy", 1, new float[] { energy });
+        }
+
+        public static void SendXYsymmetry(float symmetry)
+        {
+            VSSCSharpClient.AUDupdate(handle, "SendXYsymmetry", 1, new float[] { symmetry });
         }
     }
 }
