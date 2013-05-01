@@ -74,17 +74,14 @@ namespace SwarmAnalysisEngine
                 {
                     
                     SoundEngine.SendAgentEnergy(300);
-                    SoundEngine.SendXYsymmetry(1);
+                    SoundEngine.SendXYsymmetry(cluster.Symmetry);
                     SoundEngine.SendNumAgents(cluster.Agents);
                     SoundEngine.SendArea(cluster.Area);
                     SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
-                    
-                    
-                    
+
                     //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
                     //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
                 }
-                //SoundEngine.StopCluster();
             }
 
             return analysis;
@@ -260,6 +257,7 @@ namespace SwarmAnalysisEngine
 
                 ///////////////////////////
                 cluster.SetAreaFromFourPoints(filterresult.ClusterCenters);
+                cluster.SetSymmetryFromFourPoints(filterresult.ClusterCenters);
             }
 
             

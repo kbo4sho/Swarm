@@ -92,9 +92,9 @@ namespace SwarmAudio
             VSSCSharpClient.AUDupdate(handle, "SendAgentEnergy", 1, new float[] { energy });
         }
 
-        public static void SendXYsymmetry(float symmetry)
+        public static void SendXYsymmetry(Vector3 symmetry)
         {
-            VSSCSharpClient.AUDupdate(handle, "SendXYsymmetry", 1, new float[] { symmetry });
+            VSSCSharpClient.AUDupdate(handle, "SendXYsymmetry", 1, new float[] { symmetry.X, symmetry.Y, symmetry.Z });
         }
     }
 }
