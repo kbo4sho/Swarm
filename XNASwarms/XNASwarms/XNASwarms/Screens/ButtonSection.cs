@@ -420,11 +420,15 @@ namespace XNASwarms
                     }
                     else if (menuEntries[_selectedEntry].IsAudioPlay())
                     {
+#if WINDOWS
                         SoundEngine.Play();
+#endif
                     }
                     else if (menuEntries[_selectedEntry].IsAudioPause())
                     {
+#if WINDOWS
                         SoundEngine.Pause();
+#endif
                     }
 #if !WINDOWS 
                     else if (menuEntries[_selectedEntry].IsImportLikes())

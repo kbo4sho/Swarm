@@ -41,7 +41,6 @@ namespace SwarmAnalysisEngine
             indvd.setDisplayColor(Color.MidnightBlue);
         }
 
-
         private Analysis DoAnalysis(List<Individual> indvds, bool sendaudiodata)
         {
             string robinstxt = "";
@@ -268,7 +267,6 @@ namespace SwarmAnalysisEngine
 
             return filterresult;
         }
-
 
         private void AssignQuadCenterPoint(IEnumerable<Individual> quadItems)
         {
