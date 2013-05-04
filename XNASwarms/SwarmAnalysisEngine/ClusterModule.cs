@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using SwarmEngine;
 using Microsoft.Xna.Framework;
+#if Windows
 using SwarmAudio;
+#endif
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -72,13 +74,13 @@ namespace SwarmAnalysisEngine
                 
                 foreach (var cluster in Clusters)
                 {
-                    
+#if WINDOWS
                     SoundEngine.SendAgentEnergy(300);
                     SoundEngine.SendXYsymmetry(1);
                     SoundEngine.SendNumAgents(cluster.Agents);
                     SoundEngine.SendArea(cluster.Area);
                     SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
-                    
+#endif         
                     
                     
                     //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
