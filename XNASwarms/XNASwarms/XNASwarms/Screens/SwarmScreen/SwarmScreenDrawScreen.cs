@@ -23,7 +23,7 @@ namespace XNASwarms
 
         public override void LoadContent()
         {
-            individualTexture = ScreenManager.Content.Load<Texture2D>("bee");
+            individualTexture = ScreenManager.Content.Load<Texture2D>("point");
             bigIndividualTexture = ScreenManager.Content.Load<Texture2D>("beebig");
             if (Mutate)
             {
@@ -61,7 +61,7 @@ namespace XNASwarms
                         (int)indvd.Y, texture.Width, texture.Height),
                         null,
                         color,
-                        0f,
+                        (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
                         new Vector2(texture.Width / 2, texture.Height / 2),
                         SpriteEffects.None, 0);
         }
