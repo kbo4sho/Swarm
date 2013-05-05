@@ -72,10 +72,7 @@ namespace SwarmAnalysisEngine
 
         public static float NormalizeToScreenArea(float f)
         {
-            //return KeepValueInBound(((f + max / 2) / (max)));
-            //IS THIS RIGHT?
             return (f - 0) * (300 - 0) / ((Width * Height) - 0);
-
         }
 
         public static float NormalizePointOneToTen(float f)

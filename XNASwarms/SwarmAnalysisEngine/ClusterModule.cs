@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using SwarmEngine;
 using Microsoft.Xna.Framework;
+#if Windows
 using SwarmAudio;
+#endif
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -39,7 +41,6 @@ namespace SwarmAnalysisEngine
             indvd.setDisplayColor(Color.MidnightBlue);
         }
 
-
         private Analysis DoAnalysis(List<Individual> indvds, bool sendaudiodata)
         {
             string robinstxt = "";
@@ -72,13 +73,19 @@ namespace SwarmAnalysisEngine
                 
                 foreach (var cluster in Clusters)
                 {
-                    
+#if WINDOWS
                     SoundEngine.SendAgentEnergy(300);
                     SoundEngine.SendXYsymmetry(cluster.Symmetry);
                     SoundEngine.SendNumAgents(cluster.Agents);
                     SoundEngine.SendArea(cluster.Area);
                     SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
+<<<<<<< HEAD
 
+=======
+#endif         
+                    
+                    
+>>>>>>> 11552652a5a14a584c1622cde5052b557506cc07
                     //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
                     //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
                 }
@@ -264,7 +271,6 @@ namespace SwarmAnalysisEngine
 
             return filterresult;
         }
-
 
         private void AssignQuadCenterPoint(IEnumerable<Individual> quadItems)
         {

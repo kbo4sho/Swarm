@@ -22,10 +22,12 @@ namespace SwarmAudio
             //if (VSSCSharpClient.BeginSoundServerAt("127.0.0.1") != 1)
             if (VSSCSharpClient.BeginSoundServer() != 1)
             {
+#if WINDOWS
                 Console.WriteLine("Could Not Connect to VSS...");
                 Console.WriteLine("Please make sure VSS is running on localhost. also make sure the SOUNDS folder with the audio files for demo is in the same folder as VSS.exe");
                 Console.WriteLine("If BeginSoundServerAt is called VSS must be running on the specified ip address.");
                 Console.ReadKey();
+#endif
                 return;
             }
 
@@ -33,8 +35,10 @@ namespace SwarmAudio
 
             if (handle < 0)
             {
+#if WINDOWS
                 Console.WriteLine(string.Format("Failed to load audfile {0}\n", audFile));
                 Console.ReadKey();
+#endif
                 return;
             }
         }
