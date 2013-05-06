@@ -421,13 +421,14 @@ namespace XNASwarms
                     else if (menuEntries[_selectedEntry].IsAudioPlay())
                     {
 #if WINDOWS
-                        SoundEngine.Play();
+                        SoundEngine.PlayPause(1);
 #endif
                     }
                     else if (menuEntries[_selectedEntry].IsAudioPause())
                     {
 #if WINDOWS
-                        SoundEngine.Pause();
+                        SoundEngine.PlayPause(0);
+                        //SoundEngine.Pause();
 #endif
                     }
 #if !WINDOWS 

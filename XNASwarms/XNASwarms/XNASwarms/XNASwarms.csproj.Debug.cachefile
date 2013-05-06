@@ -6,10 +6,11 @@ Content\Menu\button.xnb
 Content\Backgrounds\red.xnb
 Content\beebig.xnb
 Content\centermarker.xnb
+Content\point.xnb
 Content\Fonts\detailsfont.xnb
 Content\Fonts\debugfont.xnb
 Content\Menu\menufont.xnb
-Content\point.xnb
+100AgentsDirectPositionDataTest.aud
 Cluster_datatest.aud
 PoemGraspThrow_11.22.12.aud
 libsnd.dll

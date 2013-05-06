@@ -17,7 +17,7 @@ namespace SwarmAudio
             string audFile = "Soundfile Segment and Localize.aud";
 
             audFile = "PoemGraspThrow_11.22.12.aud";
-            audFile = "Cluster_datatest.aud";
+            audFile = "100AgentsDirectPositionDataTest.aud";
 
             //if (VSSCSharpClient.BeginSoundServerAt("127.0.0.1") != 1)
             if (VSSCSharpClient.BeginSoundServer() != 1)
@@ -30,8 +30,9 @@ namespace SwarmAudio
 #endif
                 return;
             }
-
+            //SoundEngine.PlayPause(1);
             handle = VSSCSharpClient.AUDinit(audFile);
+
 
             if (handle < 0)
             {
@@ -99,6 +100,16 @@ namespace SwarmAudio
         public static void SendXYsymmetry(Vector3 symmetry)
         {
             VSSCSharpClient.AUDupdate(handle, "SendXYsymmetry", 1, new float[] { symmetry.X, symmetry.Y, symmetry.Z });
+        }
+
+        public static void AgentDataRefresh(float[] values)
+        {
+            VSSCSharpClient.AUDupdate(handle, "AgentDataRefresh", 1, values);
+        }
+
+        public static void PlayPause(float value)
+        {
+            VSSCSharpClient.AUDupdate(handle, "PlayPause", 1, new float[] { value });
         }
     }
 }

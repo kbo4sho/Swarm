@@ -29,6 +29,7 @@ namespace SwarmAnalysisEngine
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
             analysis = new Analysis();
+            
         }
         
         protected override Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
@@ -74,11 +75,13 @@ namespace SwarmAnalysisEngine
                 foreach (var cluster in Clusters)
                 {
 #if WINDOWS
-                    SoundEngine.SendAgentEnergy(300);
-                    SoundEngine.SendXYsymmetry(cluster.Symmetry);
-                    SoundEngine.SendNumAgents(cluster.Agents);
-                    SoundEngine.SendArea(cluster.Area);
-                    SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
+                    
+                    SoundEngine.AgentDataRefresh(cluster.GetEveryOtherIndvd());
+                    //SoundEngine.SendAgentEnergy(300);
+                    //SoundEngine.SendXYsymmetry(cluster.Symmetry);
+                    //SoundEngine.SendNumAgents(cluster.Agents);
+                    //SoundEngine.SendArea(cluster.Area);
+                    //SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
 #endif         
                     
                     
