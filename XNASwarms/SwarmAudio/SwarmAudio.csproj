@@ -69,10 +69,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="100AgentsDirectPositionDataTest.aud">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="100AgentsDirectPositionDataTest.aud" />
     <None Include="Cluster_datatest.aud">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Cluster_datatest_OneMessage.aud">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="PoemGraspThrow_11.22.12.aud">

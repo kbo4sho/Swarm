@@ -49,16 +49,26 @@ namespace XNASwarms
 
             //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
             //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
+            //AddMenuItem("Mutation", EntryType.Game, _screen);
+            
+            //AddMenuItem("Stable", EntryType.Stable, _screen);
+            //AddMenuItem("Swinger", EntryType.Swinger, _screen);
+            //AddMenuItem("Console", EntryType.Debugger, _screen);
+            //AddMenuItem("Import", EntryType.ImportLikes, _screen);
+            //AddMenuItem("Export", EntryType.ExportLikes, _screen);
+            //AddMenuItem("Like", EntryType.Save, _screen);
+#if WINDOWS
             AddMenuItem("Mutation", EntryType.Game, _screen);
             AddMenuItem("Start Cluster", EntryType.AudioPlay, _screen);
             AddMenuItem("Stop Cluster", EntryType.AudioPause, _screen);
-            //AddMenuItem("Stable", EntryType.Stable, _screen);
-            //AddMenuItem("Swinger", EntryType.Swinger, _screen);
             AddMenuItem("Console", EntryType.Debugger, _screen);
-            AddMenuItem("Import", EntryType.ImportLikes, _screen);
-            AddMenuItem("Export", EntryType.ExportLikes, _screen);
             AddMenuItem("Like", EntryType.Save, _screen);
-            
+#else
+            AddMenuItem("Mutation", EntryType.Game, _screen);
+            AddMenuItem("Console", EntryType.Debugger, _screen);
+            AddMenuItem("Like", EntryType.Save, _screen);
+#endif
+
         }
 
         public void Load()
@@ -81,6 +91,9 @@ namespace XNASwarms
             {
                 menuEntries[i].Initialize();
             }
+#if WINDOWS
+            LoadSavedSwarms();
+#endif
         }
 
         public void UpdateMenuEntryLocations()
@@ -421,14 +434,15 @@ namespace XNASwarms
                     else if (menuEntries[_selectedEntry].IsAudioPlay())
                     {
 #if WINDOWS
-                        SoundEngine.PlayPause(1);
+                        //SoundEngine.PlayPause(1);
+                        SoundEngine.Play();
 #endif
                     }
                     else if (menuEntries[_selectedEntry].IsAudioPause())
                     {
 #if WINDOWS
-                        SoundEngine.PlayPause(0);
-                        //SoundEngine.Pause();
+                        //SoundEngine.PlayPause(0);
+                        SoundEngine.Pause();
 #endif
                     }
 #if !WINDOWS 

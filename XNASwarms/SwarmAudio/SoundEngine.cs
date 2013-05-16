@@ -16,8 +16,8 @@ namespace SwarmAudio
         {
             string audFile = "Soundfile Segment and Localize.aud";
 
-            audFile = "PoemGraspThrow_11.22.12.aud";
-            audFile = "100AgentsDirectPositionDataTest.aud";
+            audFile = "Cluster_datatest.aud";
+            audFile = "Cluster_datatest_OneMessage.aud";
 
             //if (VSSCSharpClient.BeginSoundServerAt("127.0.0.1") != 1)
             if (VSSCSharpClient.BeginSoundServer() != 1)
@@ -37,8 +37,8 @@ namespace SwarmAudio
             if (handle < 0)
             {
 #if WINDOWS
-                Console.WriteLine(string.Format("Failed to load audfile {0}\n", audFile));
-                Console.ReadKey();
+                //Console.WriteLine(string.Format("Failed to load audfile {0}\n", audFile));
+                //Console.ReadKey();
 #endif
                 return;
             }

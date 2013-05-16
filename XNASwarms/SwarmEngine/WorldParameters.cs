@@ -8,10 +8,10 @@ namespace SwarmEngine
 {
     public static class WorldParameters
     {
-        public static int numberOfIndividualsMax = 100;
-        public static int neighborhoodRadiusMax = 60;
-        public static int normalSpeedMax = 5;
-        public static int maxSpeedMax = 10;
+        public static int numberOfIndividualsMax = 300;
+        public static int neighborhoodRadiusMax = 45;
+        public static int normalSpeedMax = 4;
+        public static int maxSpeedMax = 8;
         public static double c1Max = 1;
         public static double c2Max = 1;
         public static double c3Max = 100;
