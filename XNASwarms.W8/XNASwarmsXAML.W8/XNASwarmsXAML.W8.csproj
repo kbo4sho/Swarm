@@ -159,6 +159,9 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpeciesHelper.cs">
       <Link>SaveSpeciesHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveWorldParameters.cs">
+      <Link>SaveWorldParameters.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Border.cs">
       <Link>Borders\Borders\Border.cs</Link>
     </Compile>
@@ -256,6 +259,9 @@
     </Content>
     <Content Include="..\..\SoultionItems\Content\Content\Menu\menufont.xnb">
       <Link>Content\Menu\menufont.xnb</Link>
+    </Content>
+    <Content Include="..\..\SoultionItems\Content\Content\point.xnb">
+      <Link>Content\point.xnb</Link>
     </Content>
     <None Include="packages.config" />
     <None Include="XNASwarms.W8_TemporaryKey.pfx" />
