@@ -213,9 +213,10 @@ namespace XNASwarms
             {
                 //Replacing
                 SaveSpecies oldestSpecies = allSaved.OrderBy(s => s.CreadtedDt).First();
-                oldestSpecies.SaveWorldParameters = SaveWorld();
                 allSaved.Remove(oldestSpecies);
-                allSaved.Add(_screen.GetPopulationAsSaveSpecies());
+                SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                savespecies.SaveWorldParameters = SaveWorld();
+                allSaved.Add(savespecies);
                 SaveHelper.Save("AllSaved", allSaved);
             }
 
