@@ -69,7 +69,7 @@ namespace SwarmAnalysisEngine
             analysis.Messages = GenerateMessage();
             analysis.FilterResult = GenerateFilterResult();
 
-            if (sendaudiodata)
+            if (sendaudiodata && Clusters.Count > 0)
             {
                 Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
 #if WINDOWS
@@ -268,15 +268,17 @@ namespace SwarmAnalysisEngine
                 cluster.SetAreaFromFourPoints(filterresult.ClusterCenters);
                 cluster.SetSymmetryFromFourPoints(filterresult.ClusterCenters);
             }
+            if (Clusters.Count > 0)
+            {
+                Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
 
-            Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
-
-            ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AVERAGE AGENT ENERGY : " + biggestCluster.AverageAgentEnergy });
-            ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
-            ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED SWARM ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.ClusterVelocity) });
-            ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AGENT SYMMETRY : " + biggestCluster.Symmetry.X + ", " + biggestCluster.Symmetry.Y + ", " + biggestCluster.Symmetry.Z });
-            ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AREA : " + biggestCluster.Area });
-            ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CENTER : " + biggestCluster.Center.X + ", " + biggestCluster.Center.Y });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AVERAGE AGENT ENERGY : " + biggestCluster.AverageAgentEnergy });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED SWARM ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.ClusterVelocity) });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AGENT SYMMETRY : " + biggestCluster.Symmetry.X + ", " + biggestCluster.Symmetry.Y + ", " + biggestCluster.Symmetry.Z });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AREA : " + biggestCluster.Area });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CENTER : " + biggestCluster.Center.X + ", " + biggestCluster.Center.Y });
+            }
 
             return filterresult;
         }
