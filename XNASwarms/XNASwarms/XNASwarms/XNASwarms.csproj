@@ -120,6 +120,7 @@
     <Compile Include="SaveGenome.cs" />
     <Compile Include="SaveSpecies.cs" />
     <Compile Include="SaveHelper.cs" />
+    <Compile Include="SaveWorldParameters.cs" />
     <Compile Include="Screens\Borders\Border.cs" />
     <Compile Include="Screens\Borders\Walls\Wall.cs" />
     <Compile Include="Screens\Borders\Walls\WallFactory.cs" />

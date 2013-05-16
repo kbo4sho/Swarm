@@ -296,6 +296,8 @@ namespace XNASwarms
             
         }
 
+
+
         public void AddMenuItem(string name, EntryType type, ControlScreen screen)
         {
             MenuEntry entry = new MenuEntry(_screen, name, type, screen, _bgSprite);
@@ -399,13 +401,12 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[0].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[0]));
-                            UpdateWorld(saveSpecies);
                             this._screen.ExitScreen();
                         }
 #else
                         UpdateWorld(allSaved[0].SaveWorldParameters);
-                        
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[0]), false);
                        
 #endif
@@ -416,6 +417,7 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[1].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[1]));
                             this._screen.ExitScreen();
                         }
@@ -431,6 +433,7 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[2].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[2]));
                             this._screen.ExitScreen();
                         }
@@ -446,6 +449,7 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[3].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[3]));
                             this._screen.ExitScreen();
                         }
@@ -461,6 +465,7 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[4].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[4]));
                             this._screen.ExitScreen();
                         }
@@ -476,6 +481,7 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[5].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[5]));
                             this._screen.ExitScreen();
                         }
