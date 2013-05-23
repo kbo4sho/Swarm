@@ -80,13 +80,14 @@ namespace SwarmAnalysisEngine
                     //SoundEngine.SendNumAgents(cluster.Agents);
                     //SoundEngine.SendArea(cluster.Area);
                     //SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
-
+                //SoundEngine.StartCluster();
                 SoundEngine.UpdateCluster(biggestCluster.Agents,
                                               biggestCluster.Center,
                                               biggestCluster.Area,
                                               Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
                                               biggestCluster.ClusterVelocity,
                                               new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
+                //SoundEngine.StopCluster();
 #endif         
                     
                     

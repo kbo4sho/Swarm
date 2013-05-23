@@ -73,6 +73,7 @@
     <None Include="Cluster_datatest.aud">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Cluster_datatest_4Cluster.aud" />
     <None Include="Cluster_datatest_OneMessage.aud">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
