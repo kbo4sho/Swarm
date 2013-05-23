@@ -24,7 +24,7 @@ namespace SwarmAnalysisEngine
         FilterResult filterresult;
 
         public ClusterModule()
-            : base("Cluster Module", 4)
+            : base("Cluster Module", 60)
         {
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
