@@ -24,7 +24,7 @@ namespace SwarmAnalysisEngine
         FilterResult filterresult;
 
         public ClusterModule()
-            : base("Cluster Module", 4)
+            : base("Cluster Module", 60)
         {
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
@@ -80,13 +80,14 @@ namespace SwarmAnalysisEngine
                     //SoundEngine.SendNumAgents(cluster.Agents);
                     //SoundEngine.SendArea(cluster.Area);
                     //SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
-
+                //SoundEngine.StartCluster();
                 SoundEngine.UpdateCluster(biggestCluster.Agents,
                                               biggestCluster.Center,
                                               biggestCluster.Area,
                                               Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
                                               biggestCluster.ClusterVelocity,
                                               new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
+                //SoundEngine.StopCluster();
 #endif         
                     
                     

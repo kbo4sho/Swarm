@@ -18,6 +18,7 @@ namespace SwarmAudio
 
             audFile = "Cluster_datatest.aud";
             audFile = "Cluster_datatest_OneMessage.aud";
+            //audFile = "Cluster_datatest_4Cluster.aud";
 
             //if (VSSCSharpClient.BeginSoundServerAt("127.0.0.1") != 1)
             if (VSSCSharpClient.BeginSoundServer() != 1)
@@ -80,6 +81,26 @@ namespace SwarmAudio
         public static void UpdateCluster(float numAgents, Vector2 center, float area, float averageAgentEnergy, float clusterVelocity, Vector3 symmetry)
         {
             VSSCSharpClient.AUDupdate(handle, "updateCluster", 9, new float[] { numAgents, center.X, center.Y, area, averageAgentEnergy, clusterVelocity, symmetry.X, symmetry.Y, symmetry.Z});
+        }
+
+        public static void UpdateCluster_1(float numAgents, Vector2 center, float area, float averageAgentEnergy, float clusterVelocity, Vector3 symmetry)
+        {
+            VSSCSharpClient.AUDupdate(handle, "updateCluster_1", 9, new float[] { numAgents, center.X, center.Y, area, averageAgentEnergy, clusterVelocity, symmetry.X, symmetry.Y, symmetry.Z });
+        }
+
+        public static void UpdateCluster_2(float numAgents, Vector2 center, float area, float averageAgentEnergy, float clusterVelocity, Vector3 symmetry)
+        {
+            VSSCSharpClient.AUDupdate(handle, "updateCluster_2", 9, new float[] { numAgents, center.X, center.Y, area, averageAgentEnergy, clusterVelocity, symmetry.X, symmetry.Y, symmetry.Z });
+        }
+
+        public static void UpdateCluster_3(float numAgents, Vector2 center, float area, float averageAgentEnergy, float clusterVelocity, Vector3 symmetry)
+        {
+            VSSCSharpClient.AUDupdate(handle, "updateCluster_3", 9, new float[] { numAgents, center.X, center.Y, area, averageAgentEnergy, clusterVelocity, symmetry.X, symmetry.Y, symmetry.Z });
+        }
+
+        public static void UpdateCluster_4(float numAgents, Vector2 center, float area, float averageAgentEnergy, float clusterVelocity, Vector3 symmetry)
+        {
+            VSSCSharpClient.AUDupdate(handle, "updateCluster_4", 9, new float[] { numAgents, center.X, center.Y, area, averageAgentEnergy, clusterVelocity, symmetry.X, symmetry.Y, symmetry.Z });
         }
 
         public static void SendNumAgents(float numAgents)
