@@ -1,0 +1,29 @@
+"SliderWidget" 24 16 72 212 0.211 0 "Amp" "SourceAmp" 0 0.0 2.0 
+"SliderWidget" 840 24 120 212 221.316 27 "NumberOfAgents" "updateCluster_2" 0 1.0 300.0 
+"RadioButtonWidget" 88 80 71 27 0.0 8 "play" "startCluster_1" 0 1.0 8 
+"RadioButtonWidget" 88 112 82 27 1.0 9 "pause" "stopCluster_1" 0 0.0 8 
+"SquareWidget" 528 16 212 212 0.02 0.927 18 "Cluster Position" "updateCluster_1" 1 -1.0 1.0 "updateCluster_1" 2 0.0 1.0 
+"RadioButtonWidget" 32 368 71 27 0.0 12 "play" "startCluster_3" 0 1.0 9 
+"SliderWidget" 832 312 120 212 144.599 17 "NumberOfAgents" "updateCluster_4" 0 1.0 300.0 
+"SliderWidget" 928 312 88 212 1.0 18 "Area" "updateCluster_4" 3 1.0 300.0 
+"SliderWidget" 1000 312 96 212 0.125 21 "Agent Energy" "updateCluster_4" 4 0.0 1.0 
+"RadioButtonWidget" 32 400 82 27 1.0 9 "pause" "stopCluster_3" 0 0.0 9 
+"SquareWidget" 472 304 212 212 0.9 0.369 13 "Cluster Position" "updateCluster_3" 1 -1.0 1.0 "updateCluster_3" 2 0.0 1.0 
+"SliderWidget" 320 16 96 212 0.125 7 "Agent Energy" "updateCluster_1" 4 0.0 1.0 
+"SquareWidget" 1208 312 212 212 0.09 0.89 20 "Cluster Position" "updateCluster_4" 1 -1.0 1.0 "updateCluster_4" 2 0.0 1.0 
+"SliderWidget" 1088 312 96 212 1.0 15 "XYsymmetry" "updateCluster_4" 8 0.1 10.0 
+"SliderWidget" 248 16 88 212 1.0 4 "Area" "updateCluster_1" 3 1.0 300.0 
+"SliderWidget" 936 24 88 212 18.704 24 "Area" "updateCluster_2" 3 1.0 300.0 
+"SliderWidget" 264 304 96 212 0.217 8 "Agent Energy" "updateCluster_3" 4 0.0 1.0 
+"RadioButtonWidget" 776 120 82 27 1.0 25 "pause" "stopCluster_2" 0 0.0 10 
+"SliderWidget" 152 16 120 212 189.842 3 "NumberOfAgents" "updateCluster_1" 0 1.0 300.0 
+"RadioButtonWidget" 768 376 71 27 0.0 16 "play" "startCluster_4" 0 1.0 11 
+"SliderWidget" 1096 24 96 212 2.836 22 "XYsymmetry" "updateCluster_2" 8 0.1 10.0 
+"SliderWidget" 352 304 96 212 4.529 14 "XYsymmetry" "updateCluster_3" 8 0.1 10.0 
+"SliderWidget" 192 304 88 212 30.507 10 "Area" "updateCluster_3" 3 1.0 300.0 
+"SquareWidget" 1216 24 212 212 -0.85 0.672 26 "Cluster Position" "updateCluster_2" 1 -1.0 1.0 "updateCluster_2" 2 0.0 1.0 
+"RadioButtonWidget" 776 88 71 27 0.0 23 "play" "startCluster_2" 0 1.0 10 
+"SliderWidget" 408 16 96 212 1.0 15 "XYsymmetry" "updateCluster_1" 8 0.1 10.0 
+"RadioButtonWidget" 768 408 82 27 1.0 19 "pause" "stopCluster_4" 0 0.0 11 
+"SliderWidget" 96 304 120 212 122.961 11 "NumberOfAgents" "updateCluster_3" 0 1.0 300.0 
+"SliderWidget" 1008 24 96 212 0.099 28 "Agent Energy" "updateCluster_2" 4 0.0 1.0 

@@ -49,16 +49,30 @@ namespace XNASwarms
 
             //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
             //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
+            //AddMenuItem("Mutation", EntryType.Game, _screen);
+            
+            //AddMenuItem("Stable", EntryType.Stable, _screen);
+            //AddMenuItem("Swinger", EntryType.Swinger, _screen);
+            //AddMenuItem("Console", EntryType.Debugger, _screen);
+            //AddMenuItem("Import", EntryType.ImportLikes, _screen);
+            //AddMenuItem("Export", EntryType.ExportLikes, _screen);
+            //AddMenuItem("Like", EntryType.Save, _screen);
+#if WINDOWS
             AddMenuItem("Mutation", EntryType.Game, _screen);
             AddMenuItem("Start Cluster", EntryType.AudioPlay, _screen);
             AddMenuItem("Stop Cluster", EntryType.AudioPause, _screen);
-            //AddMenuItem("Stable", EntryType.Stable, _screen);
-            //AddMenuItem("Swinger", EntryType.Swinger, _screen);
+            AddMenuItem("Console", EntryType.Debugger, _screen);
+            AddMenuItem("Like", EntryType.Save, _screen);
+#else
+            AddMenuItem("Stable", EntryType.Stable, _screen);
+            AddMenuItem("Mutation", EntryType.Game, _screen);
             AddMenuItem("Console", EntryType.Debugger, _screen);
             AddMenuItem("Import", EntryType.ImportLikes, _screen);
             AddMenuItem("Export", EntryType.ExportLikes, _screen);
             AddMenuItem("Like", EntryType.Save, _screen);
             
+#endif
+
         }
 
         public void Load()
@@ -81,6 +95,9 @@ namespace XNASwarms
             {
                 menuEntries[i].Initialize();
             }
+#if WINDOWS
+            LoadSavedSwarms();
+#endif
         }
 
         public void UpdateMenuEntryLocations()
@@ -197,7 +214,9 @@ namespace XNASwarms
                 //Replacing
                 SaveSpecies oldestSpecies = allSaved.OrderBy(s => s.CreadtedDt).First();
                 allSaved.Remove(oldestSpecies);
-                allSaved.Add(_screen.GetPopulationAsSaveSpecies());
+                SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                savespecies.SaveWorldParameters = SaveWorld();
+                allSaved.Add(savespecies);
                 SaveHelper.Save("AllSaved", allSaved);
             }
 
@@ -206,30 +225,35 @@ namespace XNASwarms
                 if (allSaved.Count == 1)
                 {
                     SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                    savespecies.SaveWorldParameters = SaveWorld();
                     allSaved.Add(savespecies);
                     SaveHelper.Save("AllSaved", allSaved);
                 }
                 else if (allSaved.Count == 2)
                 {
                     SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                    savespecies.SaveWorldParameters = SaveWorld();
                     allSaved.Add(savespecies);
                     SaveHelper.Save("AllSaved", allSaved);
                 }
                 else if (allSaved.Count == 3)
                 {
                     SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                    savespecies.SaveWorldParameters = SaveWorld();
                     allSaved.Add(savespecies);
                     SaveHelper.Save("AllSaved", allSaved);
                 }
                 else if (allSaved.Count == 4)
                 {
                     SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                    savespecies.SaveWorldParameters = SaveWorld();
                     allSaved.Add(savespecies);
                     SaveHelper.Save("AllSaved", allSaved);
                 }
                 else if (allSaved.Count == 5)
                 {
                     SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                    savespecies.SaveWorldParameters = SaveWorld();
                     allSaved.Add(savespecies);
                     SaveHelper.Save("AllSaved", allSaved);
                 }
@@ -238,10 +262,42 @@ namespace XNASwarms
             {
                 allSaved = new SaveAllSpecies();
                 SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+                savespecies.SaveWorldParameters = SaveWorld();
                 allSaved.Add(savespecies);
                 SaveHelper.Save("AllSaved", allSaved);
             }
         }
+
+        private SaveWorldParameters SaveWorld()
+        {
+            SaveWorldParameters world = new SaveWorldParameters();
+            world.numberOfIndividualsMax = WorldParameters.numberOfIndividualsMax;
+            world.neighborhoodRadiusMax = WorldParameters.neighborhoodRadiusMax;
+            world.normalSpeedMax = WorldParameters.normalSpeedMax;
+            world.maxSpeedMax = WorldParameters.maxSpeedMax;
+            world.c1Max = WorldParameters.c1Max;
+            world.c2Max = WorldParameters.c2Max;
+            world.c3Max = WorldParameters.c3Max;
+            world.c4Max = WorldParameters.c4Max;
+            world.c5Max = WorldParameters.c5Max;
+            return world;
+        }
+
+        private void UpdateWorld(SaveWorldParameters world)
+        {
+            WorldParameters.numberOfIndividualsMax = world.numberOfIndividualsMax;
+            WorldParameters.neighborhoodRadiusMax = world.neighborhoodRadiusMax; 
+            WorldParameters.normalSpeedMax = world.normalSpeedMax;
+            WorldParameters.maxSpeedMax = world.maxSpeedMax;
+            WorldParameters.c1Max = world.c1Max;
+            WorldParameters.c2Max = world.c2Max;
+            WorldParameters.c3Max = world.c3Max;
+            WorldParameters.c4Max = world.c4Max;
+            WorldParameters.c5Max = world.c5Max;
+            
+        }
+
+
 
         public void AddMenuItem(string name, EntryType type, ControlScreen screen)
         {
@@ -346,11 +402,14 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[0].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[0]));
                             this._screen.ExitScreen();
                         }
 #else
+                        UpdateWorld(allSaved[0].SaveWorldParameters);
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[0]), false);
+                       
 #endif
                     }
                     else if (menuEntries[_selectedEntry].IsRecall2())
@@ -359,11 +418,14 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[1].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[1]));
                             this._screen.ExitScreen();
                         }
 #else
+                        UpdateWorld(allSaved[1].SaveWorldParameters);
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[1]), false);
+                        
 #endif
                     }
                     else if (menuEntries[_selectedEntry].IsRecall3())
@@ -372,11 +434,14 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[2].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[2]));
                             this._screen.ExitScreen();
                         }
 #else
+                        UpdateWorld(allSaved[2].SaveWorldParameters);
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[2]), false);
+                        
 #endif
                     }
                     else if (menuEntries[_selectedEntry].IsRecall4())
@@ -385,11 +450,14 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[3].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[3]));
                             this._screen.ExitScreen();
                         }
 #else
+                        UpdateWorld(allSaved[3].SaveWorldParameters);
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[3]), false);
+                        
 #endif
                     }
                     else if (menuEntries[_selectedEntry].IsRecall5())
@@ -398,11 +466,14 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[4].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[4]));
                             this._screen.ExitScreen();
                         }
 #else
+                        UpdateWorld(allSaved[4].SaveWorldParameters);
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[4]), false);
+                        
 #endif
                     }
                     else if (menuEntries[_selectedEntry].IsRecall6())
@@ -411,24 +482,28 @@ namespace XNASwarms
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
                         {
+                            UpdateWorld(saveSpecies[5].SaveWorldParameters);
                             _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[5]));
                             this._screen.ExitScreen();
                         }
 #else
+                        UpdateWorld(allSaved[5].SaveWorldParameters);
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[5]), false);
+                        
 #endif
                     }
                     else if (menuEntries[_selectedEntry].IsAudioPlay())
                     {
 #if WINDOWS
-                        SoundEngine.PlayPause(1);
+                        //SoundEngine.PlayPause(1);
+                        SoundEngine.Play();
 #endif
                     }
                     else if (menuEntries[_selectedEntry].IsAudioPause())
                     {
 #if WINDOWS
-                        SoundEngine.PlayPause(0);
-                        //SoundEngine.Pause();
+                        //SoundEngine.PlayPause(0);
+                        SoundEngine.Pause();
 #endif
                     }
 #if !WINDOWS 

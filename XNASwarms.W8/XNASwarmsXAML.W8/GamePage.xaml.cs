@@ -10,6 +10,7 @@ using System.Xml;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
+using XNASwarmsXAML.W8.Authoring.ViewModels;
 
 
 namespace XNASwarmsXAML.W8
@@ -28,7 +29,14 @@ namespace XNASwarmsXAML.W8
             // Create the game.
             _game = XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, this);
             DataContext = App.ViewModel;
+            myappbar.Tapped += myappbar_Tapped;
         }
+
+        void myappbar_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            DataContext = new WorldControlsViewModel();
+        }
+
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {

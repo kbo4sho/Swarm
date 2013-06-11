@@ -25,7 +25,7 @@ namespace SwarmAnalysisEngine
         FilterResult filterresult;
 
         public ClusterModule()
-            : base("Cluster Module", 5)
+            : base("Cluster Module", 60)
         {
             Clusters = new List<Cluster>();
             List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
@@ -71,25 +71,31 @@ namespace SwarmAnalysisEngine
             analysis.Messages = GenerateMessage();
             analysis.FilterResult = GenerateFilterResult();
 
-            if (sendaudiodata)
+            if (sendaudiodata && Clusters.Count > 0)
             {
-                
-                foreach (var cluster in Clusters)
-                {
+                Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
 #if WINDOWS
                     
-                    SoundEngine.AgentDataRefresh(cluster.GetEveryOtherIndvd());
-                    //SoundEngine.SendAgentEnergy(300);
+                    //SoundEngine.AgentDataRefresh(cluster.GetEveryOtherIndvd());
+                    //SoundEngine.SendAgentEnergy(Normalizer.Normalize120To800(cluster.AverageAgentEnergy));
                     //SoundEngine.SendXYsymmetry(cluster.Symmetry);
                     //SoundEngine.SendNumAgents(cluster.Agents);
                     //SoundEngine.SendArea(cluster.Area);
                     //SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
+                //SoundEngine.StartCluster();
+                SoundEngine.UpdateCluster(biggestCluster.Agents,
+                                              biggestCluster.Center,
+                                              biggestCluster.Area,
+                                              Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
+                                              biggestCluster.ClusterVelocity,
+                                              new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
+                //SoundEngine.StopCluster();
 #endif         
                     
                     
                     //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
                     //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
-                }
+                //}
             }
 
             return analysis;
@@ -259,8 +265,6 @@ namespace SwarmAnalysisEngine
                 cluster.Center = new Vector2(Normalizer.NormalizeWidthCentered(horizontalCenter), Normalizer.NormalizeHeight(verticalCenter));
                 AssignClusterCenterPoint(new Vector2(horizontalCenter, verticalCenter));
 
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER CENTER : X-" + horizontalCenter + "  Y-" + verticalCenter});
-
                 //2|1
                 //3|4
 
@@ -277,8 +281,17 @@ namespace SwarmAnalysisEngine
                 cluster.SetAreaFromFourPoints(filterresult.ClusterCenters);
                 cluster.SetSymmetryFromFourPoints(filterresult.ClusterCenters);
             }
+            if (Clusters.Count > 0)
+            {
+                Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
 
-            
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AVERAGE AGENT ENERGY : " + biggestCluster.AverageAgentEnergy });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED SWARM ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.ClusterVelocity) });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AGENT SYMMETRY : " + biggestCluster.Symmetry.X + ", " + biggestCluster.Symmetry.Y + ", " + biggestCluster.Symmetry.Z });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AREA : " + biggestCluster.Area });
+                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CENTER : " + biggestCluster.Center.X + ", " + biggestCluster.Center.Y });
+            }
 
             return filterresult;
         }

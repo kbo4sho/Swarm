@@ -12,7 +12,6 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
     {
         public WorldControlsViewModel()
         {
-
         }
 
         private double chanceOfRandomSteeringProperty = WorldParameters.c4Max;

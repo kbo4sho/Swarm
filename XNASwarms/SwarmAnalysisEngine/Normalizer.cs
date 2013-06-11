@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
@@ -78,6 +79,30 @@ namespace SwarmAnalysisEngine
         public static float NormalizePointOneToTen(float f)
         {
             return (f - 0) * (10 - (float).1) / (Width - 0);
+        }
+
+        public static float Normalize120To800(float f)
+        {
+            // 5 = min val
+            //40 = max val
+            var value = (f - 5) * (800 - 120) / (40 - 5);
+            if (value > 800)
+            {
+                value = 800;
+            }
+            return value;
+        }
+
+        public static float Normalize0ToOne(float f)
+        {
+            // 5 = min val
+            //40 = max val
+            var value = (f - 5) * (1 - 0) / (40 - 5);
+            if (value > 1)
+            {
+                value = 1;
+            }
+            return value;
         }
     }
 }

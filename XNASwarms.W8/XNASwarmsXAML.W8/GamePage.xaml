@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid>
-        <AppBar VerticalAlignment="Bottom">
+        <AppBar x:Name="myappbar" VerticalAlignment="Bottom">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,20">
                 <StackPanel.Resources>
                     <Style TargetType="Grid">
@@ -25,7 +25,7 @@
                     <TextBlock Text="Agent Count" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                     <Slider Width="300" Value="{Binding NumberOfIndividualsMax, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="10" Maximum="500"/>
                     <TextBlock Text="Neighborhood Radius" Style="{StaticResource BasicTextStyle}" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                    <Slider Width="300" Value="{Binding NeighborhoodRadiusMax, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="200"/>
+                    <Slider Width="300" Value="{Binding NeighborhoodRadiusMax, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="100"/>
                 </Grid>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -35,7 +35,7 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Normal Speed" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                    <Slider Width="300" Value="{Binding NormalSpeed, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="0" Maximum="40" x:Name="NormalSpeedSlider"/>
+                    <Slider Width="300" Value="{Binding NormalSpeed, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="0" Maximum="15" x:Name="NormalSpeedSlider"/>
                     <TextBlock Text="Max Speed" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                     <Slider Width="300" Value="{Binding MaxSpeed, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="{Binding ElementName=NormalSpeedSlider,Path=Value}" Maximum="500"/>
                 </Grid>
@@ -59,7 +59,7 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Seperating Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                    <Slider Width="300" Value="{Binding SperatingForce, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="0" Maximum="100"/>
+                    <Slider Width="300" Value="{Binding SperatingForce, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="25" Maximum="100"/>
                     <TextBlock Text="Chance of Random Steering" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                     <Slider Width="300" Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="1" StepFrequency=".1" />
                 </Grid>
