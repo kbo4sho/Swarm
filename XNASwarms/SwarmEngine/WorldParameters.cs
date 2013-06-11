@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace SwarmEngine
 {
+    /// <summary>
+    /// Static class to hold parameters for game
+    /// </summary>
     public static class WorldParameters
     {
+        //TODO Read values from config file
         public static int numberOfIndividualsMax = 100;
         public static int neighborhoodRadiusMax = 60;
         public static int normalSpeedMax = 5;

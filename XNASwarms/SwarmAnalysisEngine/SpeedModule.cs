@@ -17,6 +17,7 @@ namespace SwarmAnalysisEngine
         protected override Analysis Analyze(List<SwarmEngine.Individual> indvds, bool sendaudiodata)
         {
             
+            //TODO set colors from config file
             for (int i = 0; i < indvds.Count; i++)
             {
                 double d = indvds[i].getDx2() * indvds[i].getDx2() + indvds[i].getDy2() * indvds[i].getDy2();

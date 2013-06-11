@@ -9,12 +9,12 @@ namespace SwarmAnalysisEngine
 {
     public class Cluster : List<Individual>
     {
-        public float Agents{ get{return this.Count();}}
-        public Vector2 Center { get; set; }
-        public float Area { get; set; }
-        public float AverageAgentEnergy { get { return (float)this.Average(i => ((i.getDx2() * i.getDx2()) + (i.getDy2() * i.getDy2()))); } }
+        public float Agents{ get{return this.Count();}}  //Count of agents currently in cluster
+        public Vector2 Center { get; set; } //center of cluster calculated by ??
+        public float Area { get; set; } //
+        public float AverageAgentEnergy { get { return (float)this.Average(i => ((i.getDx2() * i.getDx2()) + (i.getDy2() * i.getDy2()))); } } //uses LINQ to determine average energy if individuals in cluster
         //TODO: This is the same agent velocity for now
-        public float ClusterVelocity { get { return (float)this.Average(i => ((i.getDx2() * i.getDx2()) + (i.getDy2() * i.getDy2()))); } }
+        public float ClusterVelocity { get { return (float)this.Average(i => ((i.getDx2() * i.getDx2()) + (i.getDy2() * i.getDy2()))); } } //uses LINQ to determine average velocity of individuals in a cluster
         public Vector3 Symmetry { get; set; }
 
         #region Symmetry

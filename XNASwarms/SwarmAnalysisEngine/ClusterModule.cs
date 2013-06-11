@@ -14,8 +14,9 @@ namespace SwarmAnalysisEngine
 {
     public class ClusterModule : AnalysisModule
     {
-        int ClusterItemThreshhold = 8;
-        int ClusterBackCount = 30;
+        int ClusterItemThreshhold = 8;      //Number of agents that must be in proximity to be identified as a cluster
+
+        int ClusterBackCount = 30;         //No idea?
         List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
         public List<Cluster> Clusters;
         private Analysis analysis;
@@ -39,6 +40,7 @@ namespace SwarmAnalysisEngine
 
         private void ResetColor(Individual indvd)
         {
+            //TODO Hard coded color should come from config 
             indvd.setDisplayColor(Color.MidnightBlue);
         }
 
@@ -103,6 +105,11 @@ namespace SwarmAnalysisEngine
             Clusters.RemoveAll(s => s.Count() <= ClusterItemThreshhold);
         }
 
+        /// <summary>
+        /// Find if an individual agent is in a cluster
+        /// </summary>
+        /// <param name="individual">Agent in cluster</param>
+        /// <returns></returns>
         private bool InExistingCluster(Individual individual)
         {
             List<int> clustersIds = new List<int>();
@@ -144,6 +151,7 @@ namespace SwarmAnalysisEngine
         {
             for (int clusterid = 0; clusterid < Clusters.Count; clusterid++)
             {
+                //TODO set colors from config file
                 foreach (Individual indvd in Clusters[clusterid])
                 {
                     if (clusterid == 0)
@@ -174,6 +182,10 @@ namespace SwarmAnalysisEngine
             }
         }
 
+        /// <summary>
+        /// Generate Massage for game console
+        /// </summary>
+        /// <returns></returns>
         private List<AnalysisMessage> GenerateMessage()
         {
             ReadOut.Clear();
