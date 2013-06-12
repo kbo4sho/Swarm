@@ -14,23 +14,19 @@ namespace SwarmAnalysisEngine
 {
     public class ClusterModule : AnalysisModule
     {
-        int ClusterItemThreshhold = 8;      //Number of agents that must be in proximity to be identified as a cluster
-
-        int ClusterBackCount = 30;         //No idea?
-        List<AnalysisMessage> ReadOut = new List<AnalysisMessage>(); 
+        int clusterItemThreshhold = 8;//Number of agents that must be in proximity to be identified as a cluster
+        int clusterBackCount = 30;//Number to count back in existing clusters to detect a match, high makes things slow
+        
         public List<Cluster> Clusters;
-        private Analysis analysis;
+        Analysis analysis;
         double leftMostX, rightMostX, topMostY, bottomMostY;
         List<Individual> lastfew;
-        FilterResult filterresult;
 
         public ClusterModule()
-            : base("Cluster Module", 60)
+            : base("Cluster Module", 30)
         {
             Clusters = new List<Cluster>();
-            List<AnalysisMessage> ReadOut = new List<AnalysisMessage>();
             analysis = new Analysis();
-            
         }
         
         protected override Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
@@ -67,9 +63,8 @@ namespace SwarmAnalysisEngine
 
             RemoveSmallClusters();
             SetClusterColor();
-
-            analysis.Messages = GenerateMessage();
-            analysis.FilterResult = GenerateFilterResult();
+            GenerateMessages();
+            GenerateFilterResult();
 
             if (sendaudiodata && Clusters.Count > 0)
             {
@@ -91,8 +86,6 @@ namespace SwarmAnalysisEngine
                                               new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
                 //SoundEngine.StopCluster();
 #endif         
-                    
-                    
                     //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
                     //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
                 //}
@@ -106,9 +99,13 @@ namespace SwarmAnalysisEngine
 
         }
 
+        /// <summary>
+        /// Remove the clusters that are not greater than
+        /// our item threshhold
+        /// </summary>
         private void RemoveSmallClusters()
         {
-            Clusters.RemoveAll(s => s.Count() <= ClusterItemThreshhold);
+            Clusters.RemoveAll(s => s.Count() <= clusterItemThreshhold);
         }
 
         /// <summary>
@@ -123,7 +120,7 @@ namespace SwarmAnalysisEngine
 
             for (int c = 0; c < Clusters.Count; c++)
             {
-                lastfew = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - ClusterBackCount)).Take(ClusterBackCount).ToList();
+                lastfew = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - clusterBackCount)).Take(clusterBackCount).ToList();
 
                 for (int i = 0; i < lastfew.Count(); i++)
                 {
@@ -189,12 +186,12 @@ namespace SwarmAnalysisEngine
         }
 
         /// <summary>
-        /// Generate Massage for game console
+        /// Generate Message for game console
         /// </summary>
         /// <returns></returns>
-        private List<AnalysisMessage> GenerateMessage()
+        private void GenerateMessages()
         {
-            ReadOut.Clear();
+            analysis.Messages.Clear();
 
             for (int i = 0; i < Clusters.Count; i++)
             {
@@ -214,15 +211,14 @@ namespace SwarmAnalysisEngine
                 }
                 string clusterSpeed = Clusters[i].Average(x => (x.getDx2() * x.getDx2()) + (x.getDy2() * x.getDy2())).ToString();
 
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5 + " SPEED : " + clusterSpeed });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5 + " SPEED : " + clusterSpeed });
             }
-            ReadOut.Add(new AnalysisMessage() { Type = "              ", Message = "                                                  " });
-            return ReadOut;
+            analysis.Messages.Add(new AnalysisMessage() { Type = "              ", Message = "                                                  " });
         }
 
-        private FilterResult GenerateFilterResult()
+        private void GenerateFilterResult()
         {
-            filterresult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterCenters = new List<Vector2>() };
+            analysis.FilterResult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterPoints = new List<Vector2>() };
 
             #region robins strings
             string robinstxt = "";
@@ -278,22 +274,20 @@ namespace SwarmAnalysisEngine
                 AssignQuadCenterPoint(cluster.Where(i => i.X > horizontalCenter && i.Y > verticalCenter));
 
                 ///////////////////////////
-                cluster.SetAreaFromFourPoints(filterresult.ClusterCenters);
-                cluster.SetSymmetryFromFourPoints(filterresult.ClusterCenters);
+                cluster.SetAreaFromFourPoints(analysis.FilterResult.ClusterPoints);
+                cluster.SetSymmetryFromFourPoints(analysis.FilterResult.ClusterPoints);
             }
             if (Clusters.Count > 0)
             {
                 Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
 
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AVERAGE AGENT ENERGY : " + biggestCluster.AverageAgentEnergy });
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED SWARM ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.ClusterVelocity) });
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AGENT SYMMETRY : " + biggestCluster.Symmetry.X + ", " + biggestCluster.Symmetry.Y + ", " + biggestCluster.Symmetry.Z });
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AREA : " + biggestCluster.Area });
-                ReadOut.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CENTER : " + biggestCluster.Center.X + ", " + biggestCluster.Center.Y });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AVERAGE AGENT ENERGY : " + biggestCluster.AverageAgentEnergy });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED SWARM ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.ClusterVelocity) });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AGENT SYMMETRY : " + biggestCluster.Symmetry.X + ", " + biggestCluster.Symmetry.Y + ", " + biggestCluster.Symmetry.Z });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AREA : " + biggestCluster.Area });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CENTER : " + biggestCluster.Center.X + ", " + biggestCluster.Center.Y });
             }
-
-            return filterresult;
         }
 
         private void AssignQuadCenterPoint(IEnumerable<Individual> quadItems)
@@ -313,7 +307,8 @@ namespace SwarmAnalysisEngine
                         new Vector3((float)(leftMostX + rightMostX) * .5f, (float)topMostY, 0)
                     };
 
-                filterresult.ClusterCenters.Add(GetSphereDifference(positions));
+                //TODO Couldn't this just be the center of the Quad?
+                analysis.FilterResult.ClusterPoints.Add(GetSphereDifference(positions));
             }
         }
 
@@ -321,12 +316,11 @@ namespace SwarmAnalysisEngine
         {
             BoundingSphere sphere = BoundingSphere.CreateFromPoints(positions);
             return new Vector2(sphere.Center.X,sphere.Center.Y);
-            
         }
 
         private void AssignClusterCenterPoint(Vector2 clusterCenter)
         {
-            filterresult.ClusterCenters.Add(clusterCenter);
+            analysis.FilterResult.ClusterPoints.Add(clusterCenter);
         }
 
     }

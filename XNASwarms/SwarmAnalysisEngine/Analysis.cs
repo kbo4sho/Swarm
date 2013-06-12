@@ -10,5 +10,10 @@ namespace SwarmAnalysisEngine
     {
         public List<AnalysisMessage> Messages;
         public FilterResult FilterResult;
+
+        public Analysis()
+        {
+            Messages = new List<AnalysisMessage>();
+        }
     }
 }

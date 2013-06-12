@@ -119,10 +119,10 @@ namespace ScreenSystem.Debug
             {
                 for (int i = FilterResults.Count - 1; i >= 0; i -= 1)
                 {
-                    for (int c = 0; c < FilterResults[i].ClusterCenters.Count(); c++ )
+                    for (int c = 0; c < FilterResults[i].ClusterPoints.Count(); c++ )
                     {
                         centerXColor = Color.Blue;
-                        screenManager.SpriteBatch.Draw(LineTexture, FilterResults[i].ClusterCenters[c], null, centerXColor, 0, new Vector2(-(screenManager.GraphicsDevice.Viewport.Width / 2), -(screenManager.GraphicsDevice.Viewport.Height / 2)) + new Vector2(5, 5), Vector2.One, SpriteEffects.None, 0);
+                        screenManager.SpriteBatch.Draw(LineTexture, FilterResults[i].ClusterPoints[c], null, centerXColor, 0, new Vector2(-(screenManager.GraphicsDevice.Viewport.Width / 2), -(screenManager.GraphicsDevice.Viewport.Height / 2)) + new Vector2(5, 5), Vector2.One, SpriteEffects.None, 0);
                     }
                 }
                 if (FilterResults.Count > 1)

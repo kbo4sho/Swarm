@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace SwarmAnalysisEngine
 {
+    /// <summary>
+    /// Oject to transport data on the cluster to display 
+    /// as a visual filter
+    /// </summary>
     public class FilterResult
     {
-        public List<Vector2> ClusterCenters
+        public List<Vector2> ClusterPoints
         {
             get;
             set;
