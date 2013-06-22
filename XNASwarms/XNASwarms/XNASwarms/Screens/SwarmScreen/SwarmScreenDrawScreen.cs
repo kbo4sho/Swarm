@@ -72,8 +72,8 @@ namespace XNASwarms
             {
                 foreach (Individual indvdl in spcs)
                 {
-                    indvdl.getGenome().inducePointMutations(rand.NextDouble(), 2);
-                    //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
+                    indvdl.Genome.inducePointMutations(rand.NextDouble(), 2);
+                    //ind.Genome.inducePointMutations(rand.NextDouble(), 3);
                 }
             }
             populationSimulator.DetermineSpecies();

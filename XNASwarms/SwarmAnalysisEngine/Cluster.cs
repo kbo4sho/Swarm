@@ -98,19 +98,19 @@ namespace SwarmAnalysisEngine
 
         public float[] GetEveryOtherIndvd()
         {
-            List<Individual> list = new List<Individual>();
+            List<Individual> indvds = new List<Individual>();
             if (EveryOther)
             {
                 //Odd
-                list = this.ToList().Where((c, k) => k % 2 != 0).ToList<Individual>();
+                indvds = this.ToList().Where((c, k) => k % 2 != 0).ToList<Individual>();
             }
             else
             {
                 //Even
-                list = this.ToList().Where((c, k) => k % 2 == 0).ToList<Individual>();
+                indvds = this.ToList().Where((c, k) => k % 2 == 0).ToList<Individual>();
             }
             EveryOther = !EveryOther;
-            float[] items = GetFloatsFromPostions(list);
+            float[] items = GetFloatsFromPostions(indvds);
             return items;
         }
 
@@ -130,5 +130,7 @@ namespace SwarmAnalysisEngine
         }
 
         #endregion
+
+        
     }
 }

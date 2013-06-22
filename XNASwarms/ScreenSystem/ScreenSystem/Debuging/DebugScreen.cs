@@ -103,11 +103,9 @@ namespace ScreenSystem.Debug
                                                           new Vector2(DebugPanelRectangle.X + PanelPadding, (DebugPanelRectangle.Y + itemSpacer * i) + PanelPadding), DebugItems[i].GetColor());
                 }
 
-
                 DrawAnalysisFilters();
 
                 screenManager.SpriteBatch.End();
-
             }
 
             base.Draw(gameTime);

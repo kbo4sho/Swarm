@@ -32,7 +32,7 @@ namespace SwarmEngine
         private Species swarmInXOrder;
         #region Constuctor
         public PopulationSimulator(int width, int height, params Recipe[] recipes)
-            :this (width, height, new Population(recipes[0].createPopulation(width, height), "CrumpulaAtion"))
+            :this (width, height, new Population(recipes[0].CreatePopulation(width, height), "CrumpulaAtion"))
         {
         }
 
@@ -62,7 +62,7 @@ namespace SwarmEngine
             for (int i = 0; i < numberOfSwarm; i++)
             {
                 currentInd = swarmInBirthOrder[i];
-                param = currentInd.getGenome();
+                param = currentInd.Genome;
                 tempX = currentInd.X;
                 tempY = currentInd.Y;
 
@@ -318,20 +318,20 @@ namespace SwarmEngine
             {
                 allSpecies.AddRange(population[i].ToList());
             }
-            return allSpecies.OrderBy(s=>s.getGenome()).ToList();
+            return allSpecies.OrderBy(s=>s.Genome).ToList();
         }
 
         public void DetermineSpecies()
         {
             //Reorganize the population in to a species
-            List<string> discoverdRecipies = population.Select(s => s.Select(d => d.getGenome().getRecipe()).Distinct().ToList<string>()).First();
+            List<string> discoverdRecipies = population.Select(s => s.Select(d => d.Genome.getRecipe()).Distinct().ToList<string>()).First();
 
             if (discoverdRecipies != null && discoverdRecipies.Count() > 0)
             {
                 List<Species> species = new List<Species>();
                 foreach (var rcpe in discoverdRecipies)
                 {
-                    species.Add(new Species(population.Select(s => s.Where(t => t.getGenome().getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
+                    species.Add(new Species(population.Select(s => s.Where(t => t.Genome.getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
                 }
 
                 population.Clear();
@@ -351,7 +351,7 @@ namespace SwarmEngine
         public void UpdatePopulation(string recipiText, bool mutate)
         {
             ClearPopulation();
-            population = new Population(new Recipe(recipiText).createPopulation(0, 0), "CrumpulaAtion");
+            population = new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion");
             UpdatePopulation(population, mutate);
         }
 
@@ -365,7 +365,7 @@ namespace SwarmEngine
                 {
                     if (mutate)
                     {
-                        population[i][j].getGenome().inducePointMutations(rand.NextDouble(), 1);
+                        population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
                     }
                     addIndividual(population[i][j]);
                 }

@@ -9,12 +9,21 @@ namespace SwarmEngine
 {
      public class Individual: IContainable
      {
-
         private double x, y, dx, dy, dx2, dy2;
-	    public Parameters genome;
 	    private int rankInXOrder, rankInYOrder;
         private Color color;
 
+        public Parameters Genome
+        {
+            get;
+            private set;
+        }
+
+        public int ID
+        {
+            get;
+            private set;
+        }
 
         public double X
         {
@@ -26,19 +35,20 @@ namespace SwarmEngine
           get { return y;}
         }
 
-        public Individual() :  this(0.0, 0.0, 0.0, 0.0, new Parameters())
+        public Individual() :  this(0, 0.0, 0.0, 0.0, 0.0, new Parameters())
         {
             
         }
 
-        public Individual(double xx, double yy, double dxx, double dyy, Parameters g)
+        public Individual(int id, double xx, double yy, double dxx, double dyy, Parameters g)
         {
+            ID = id;
             x = xx;
             y = yy;
             dx = dx2 = dxx;
             dy = dy2 = dyy;
-            genome = g;
-            color = genome.getDisplayColor();
+            Genome = g;
+            color = Genome.getDisplayColor();
             rankInXOrder = 0;
             rankInYOrder = 0;
         }
@@ -76,7 +86,7 @@ namespace SwarmEngine
 
         public Color getGenomeColor()
         {
-            return genome.getDisplayColor();
+            return Genome.getDisplayColor();
         }
 
 	    public int RankInXOrder{
@@ -95,15 +105,6 @@ namespace SwarmEngine
 		    this.rankInYOrder = rankInYOrder;
 	    }
 
-	    /*
-        public double getX() {
-		    return x;
-	    }
-
-	    public double getY() {
-		    return y;
-	    }
-        */
 	    public double getDx() {
 		    return dx;
 	    }
@@ -118,10 +119,6 @@ namespace SwarmEngine
 
 	    public double getDy2() {
 		    return dy2;
-	    }
-
-	    public Parameters getGenome() {
-		    return genome;
 	    }
 
         #region IContainable
@@ -149,7 +146,6 @@ namespace SwarmEngine
             dy2 = -dy2 * 1000;
         }
         #endregion
-
      }
 }
 

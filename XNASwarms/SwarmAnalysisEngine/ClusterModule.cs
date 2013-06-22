@@ -126,7 +126,7 @@ namespace SwarmAnalysisEngine
                 {
                     double newdis = (individual.X - lastfew[i].X) * (individual.X - lastfew[i].X) + (individual.Y - lastfew[i].Y) * (individual.Y - lastfew[i].Y);
 
-                    if (newdis < lastfew[i].getGenome().getNeighborhoodRadius() * lastfew[i].getGenome().getNeighborhoodRadius())
+                    if (newdis < lastfew[i].Genome.getNeighborhoodRadius() * lastfew[i].Genome.getNeighborhoodRadius())
                     {
                         clustersIds.Add(c);
                         break;
@@ -219,34 +219,6 @@ namespace SwarmAnalysisEngine
         private void GenerateFilterResult()
         {
             analysis.FilterResult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterPoints = new List<Vector2>() };
-
-            #region robins strings
-            string robinstxt = "";
-            //if (Clusters.Count == 1)
-            //{
-            //    foreach (var indvd in Clusters[0])
-            //    {
-            //        robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
-            //    }
-            //}
-
-            //if (Clusters.Count == 2)
-            //{
-
-            //    foreach (var indvd in Clusters[0])
-            //    {
-            //        robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
-            //    }
-
-            //    robinstxt += "|";
-
-            //    foreach (var indvd in Clusters[1])
-            //    {
-            //        robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
-            //    }
-            //}
-
-            #endregion
 
             foreach (Cluster cluster in Clusters)
             {

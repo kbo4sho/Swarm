@@ -66,7 +66,7 @@ namespace XNASwarms
             for (int i = 0; i < populationSimulator.GetPopulation().Count(); i++)
             {
                 debugScreen.AddDebugItem("SPECIES " + i.ToString("00") + " COUNT", populationSimulator.GetPopulation()[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
-                debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.GetPopulation()[i].First().getGenome().getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
+                debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.GetPopulation()[i].First().Genome.getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
             }
 
             debugScreen.AddDebugItem("SPECIES COUNT ", populationSimulator.GetPopulation().Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
@@ -95,8 +95,6 @@ namespace XNASwarms
         {
             for (int i = 0; i < Supers.Count; i++)
             {
-                Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2((int)Supers[i].X, (int)Supers[i].Y));
-
                 ScreenManager.SpriteBatch.Draw(superAgentTexture, new Rectangle(
                     (int)Supers[i].X,
                     (int)Supers[i].Y, 6, 6),
@@ -145,7 +143,7 @@ namespace XNASwarms
                 {
                     Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(input.Touches[i].Position.X, input.Touches[i].Position.Y));
 
-                    Supers[i] = new Individual(((double)position.X),
+                    Supers[i] = new Individual(i,((double)position.X),
                          ((double)position.Y),
                          0.0, 0.0, new Parameters());
                 }
@@ -158,7 +156,7 @@ namespace XNASwarms
                 {
                     Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(input.Cursor);
 
-                    Supers[i] = new Individual(((double)position.X),
+                    Supers[i] = new Individual(i, ((double)position.X),
                          ((double)position.Y),
                          0,0, new Parameters());
                 }
@@ -170,44 +168,9 @@ namespace XNASwarms
             
         }
 
-        public Population GetPopulation()
-        {
-            return populationSimulator.GetPopulation();
-        }
-
         public SaveSpecies GetPopulationAsSaveSpecies()
         {
-            SaveSpecies saveSpecies = new SaveSpecies();
-            saveSpecies.CreadtedDt = DateTime.Now;
-            foreach (Species species in populationSimulator.GetPopulation())
-            {
-                saveSpecies.SavedSpecies.Add(GetSavedGenomes(species));
-            }
-            return saveSpecies;
-        }
-
-        private List<SaveGenome> GetSavedGenomes(Species species)
-        {
-            List<SaveGenome> savedGenomes = new List<SaveGenome>();
-            foreach (Individual individual in species)
-            {
-                savedGenomes.Add(GetSavedGenomeFromIndividual(individual));
-            }
-            return savedGenomes;
-        }
-
-        private SaveGenome GetSavedGenomeFromIndividual(Individual individual)
-        {
-            SaveGenome savedGenome = new SaveGenome();
-            savedGenome.neighborhoodRadius = individual.genome.getNeighborhoodRadius();
-            savedGenome.normalSpeed = individual.genome.getNormalSpeed();
-            savedGenome.maxSpeed = individual.genome.getMaxSpeed();
-            savedGenome.c1 = individual.genome.getC1();
-            savedGenome.c2 = individual.genome.getC2();
-            savedGenome.c3 = individual.genome.getC3();
-            savedGenome.c4 = individual.genome.getC4();
-            savedGenome.c5 = individual.genome.getC5();
-            return savedGenome;
+            return SwarmSaveHelper.GetPopulationAsSaveSpecies(populationSimulator.GetPopulation());
         }
 
         internal void UpdatePopulation(string recipiText, bool mutate)

@@ -23,11 +23,11 @@ namespace XNASwarms
         {
             Random rand = new Random();
             Species individuals = new Species();
-            foreach (SaveGenome savegenome in saveGenomes)
+            for (int i = 0; i < saveGenomes.Count; i++ )
             {
-                individuals.Add(new Individual(rand.NextDouble() * 0,
+                individuals.Add(new Individual(i, rand.NextDouble() * 0,
                     rand.NextDouble() * 0, rand.NextDouble() * 10 - 5,
-                    rand.NextDouble() * 10 - 5, new Parameters(savegenome.neighborhoodRadius, savegenome.normalSpeed, savegenome.maxSpeed, savegenome.c1, savegenome.c2, savegenome.c3, savegenome.c4, savegenome.c5)));
+                    rand.NextDouble() * 10 - 5, new Parameters(saveGenomes[i].neighborhoodRadius, saveGenomes[i].normalSpeed, saveGenomes[i].maxSpeed, saveGenomes[i].c1, saveGenomes[i].c2, saveGenomes[i].c3, saveGenomes[i].c4, saveGenomes[i].c5)));
             }
             return individuals;
         }
