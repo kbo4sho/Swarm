@@ -188,6 +188,21 @@
     <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\ControlScreen.cs">
       <Link>Screens\ControlScreen.cs</Link>
     </Compile>
+    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\BrushEmitter.cs">
+      <Link>Screens\Emitters\BrushEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\EmitterBase.cs">
+      <Link>Screens\Emitters\EmitterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\EmitterManager.cs">
+      <Link>Screens\Emitters\EmitterManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\EmitterType.cs">
+      <Link>Screens\Emitters\EmitterType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\IEmitter.cs">
+      <Link>Screens\Emitters\IEmitter.cs</Link>
+    </Compile>
     <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\MenuItem.cs">
       <Link>Screens\MenuItem.cs</Link>
     </Compile>
@@ -214,6 +229,9 @@
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\StockSaveSpecies.cs">
       <Link>StockSaveSpecies.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SwarmSaveHelper.cs">
+      <Link>SwarmSaveHelper.cs</Link>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

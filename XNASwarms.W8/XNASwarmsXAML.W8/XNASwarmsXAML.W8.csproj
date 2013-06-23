@@ -186,6 +186,21 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\ControlScreen.cs">
       <Link>Screens\ControlScreen.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\BrushEmitter.cs">
+      <Link>Screens\Emitters\BrushEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\EmitterBase.cs">
+      <Link>Screens\Emitters\EmitterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\EmitterManager.cs">
+      <Link>Screens\Emitters\EmitterManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\EmitterType.cs">
+      <Link>Screens\Emitters\EmitterType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\IEmitter.cs">
+      <Link>Screens\Emitters\IEmitter.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\MenuItem.cs">
       <Link>Screens\MenuItem.cs</Link>
     </Compile>

@@ -17,13 +17,14 @@ using XNASwarms.Borders.Walls;
 using SwarmEngine;
 using ScreenSystem.Debug;
 using SwarmAnalysisEngine;
+using XNASwarms.Screens.Emitters;
 
 namespace XNASwarms
 {
     public class SwarmScreenBase : ControlScreen
     {
         protected PopulationSimulator populationSimulator;
-        
+        EmitterManager emitterManager;
         Dictionary<int, Individual> Supers;
         public int width, height;
         Texture2D superAgentTexture;
@@ -43,6 +44,7 @@ namespace XNASwarms
             TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
             SwarmInXOrder = new List<Individual>();
+            emitterManager = new EmitterManager(new BrushEmitter());
         }
 
         public override void LoadContent()
@@ -86,6 +88,7 @@ namespace XNASwarms
                 debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
                 populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
                 Border.Update(SwarmInXOrder);
+                emitterManager.Update();
                 Camera.Update(gameTime);
             }
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
@@ -147,9 +150,10 @@ namespace XNASwarms
                          ((double)position.Y),
                          0.0, 0.0, new Parameters());
                 }
-            }
+            }  
             else if (Supers.Count <= 0 && input.Cursor != Vector2.Zero)
             {
+                //Here we should activate the emitters 
                 //Mouse
                 Supers.Add(0, new Individual());
                 for (int i = 0; i < Supers.Count; i++)

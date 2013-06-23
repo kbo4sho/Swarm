@@ -77,7 +77,7 @@ namespace SwarmEngine
                 minY = tempY - param.getNeighborhoodRadius();
                 maxY = tempY + param.getNeighborhoodRadius();
                 minRankInXOrder = currentInd.RankInXOrder;
-                maxRankInXOrder = currentInd.RankInXOrder;
+                maxRankInXOrder = currentInd.RankInXOrder; 
                 minRankInYOrder = currentInd.getRankInYOrder();
                 maxRankInYOrder = currentInd.getRankInYOrder();
 

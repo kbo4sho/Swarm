@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SwarmEngine.Individual" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UACAIBAAABAAgAAAAAAIIABEAAAAAgKgAABgYAAAZRA=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\Individuals\Individual.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SwarmEngine.StockIndividualsFacotry" Collapsed="true">
+    <Position X="7.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAWgAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\Individuals\StockIndividualsFacotry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.Parameters" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAgAAIAAAACAAEQAAAAAACAAQACACAAJAABAQAEEEVI=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\Parameters.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SwarmEngine.Population" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAQEAABEAAAIAAQAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\Populations\Population.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.PopulationSimulator" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>4PgiCIQAU4gCAAAAQAgAIIAAIQAAAAABAMCAQDAgQAA=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\PopulationSimulator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.Recipe" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAwAIAAAAgAAAAAAAAAECAAAAAKAAgAAAAMIACAAAA=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\Recipes\Recipe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.StockRecipies" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAgAAAAAAwAAAAAAAAgAA=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\Recipes\StockRecipies.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.Species" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAQAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\Species\Species.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SwarmEngine.StockSpecies" Collapsed="true">
+    <Position X="5.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\Species\StockSpecies.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwarmEngine.WorldParameters" Collapsed="true">
+    <Position X="7.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAABAEAAAAAAEAAAAJIAAAgAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\WorldParameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="SwarmEngine.IContainable" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAABAAAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\kevin_000\Documents\GitHub\Repos\Swarm\XNASwarms\SwarmEngine\IContainable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
