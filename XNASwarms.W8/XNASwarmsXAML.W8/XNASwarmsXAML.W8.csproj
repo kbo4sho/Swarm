@@ -201,6 +201,9 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\IEmitter.cs">
       <Link>Screens\Emitters\IEmitter.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\IGuideable.cs">
+      <Link>Screens\Emitters\IGuideable.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\MenuItem.cs">
       <Link>Screens\MenuItem.cs</Link>
     </Compile>

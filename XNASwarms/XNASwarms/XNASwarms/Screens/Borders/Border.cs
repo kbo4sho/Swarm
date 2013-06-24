@@ -50,13 +50,13 @@ namespace XNASwarms.Borders
                 {
                     //Right
                     HandleWallAction(borderWalls[2].GetWallActionType(), borderWalls[2].GetWallOrientation(), currentInd);
-                    //debugScreen.AddDebugItem("BORDER RIGHT", currentInd.getX().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
+                    debugScreen.AddDebugItem("BORDER RIGHT", currentInd.X.ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
                 }
                 else if (currentX < -rightBound)
                 {
                     //Left
                     HandleWallAction(borderWalls[0].GetWallActionType(), borderWalls[0].GetWallOrientation(), currentInd);
-                    //debugScreen.AddDebugItem("BORDER LEFT", currentInd.getX().ToString());
+                    debugScreen.AddDebugItem("BORDER LEFT", currentInd.Y.ToString());
 
                 }
 

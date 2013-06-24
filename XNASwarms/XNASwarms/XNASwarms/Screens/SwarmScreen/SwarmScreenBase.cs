@@ -44,11 +44,11 @@ namespace XNASwarms
             TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
             SwarmInXOrder = new List<Individual>();
-            emitterManager = new EmitterManager(new BrushEmitter());
         }
 
         public override void LoadContent()
         {
+            emitterManager = new EmitterManager(populationSimulator);
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
             debugScreen.ResetDebugItemsToNormal();
@@ -85,11 +85,16 @@ namespace XNASwarms
             if (this.IsActive)
             {
                 SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
-                debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
+                //debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
+                if (Supers.Count > 0)
+                {
+                    emitterManager.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
+                }
                 populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
                 Border.Update(SwarmInXOrder);
-                emitterManager.Update();
+                
                 Camera.Update(gameTime);
+                debugScreen.AddDebugItem("POPULATION COUNT", SwarmInXOrder.Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             }
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
@@ -148,10 +153,12 @@ namespace XNASwarms
 
                     Supers[i] = new Individual(i,((double)position.X),
                          ((double)position.Y),
-                         0.0, 0.0, new Parameters());
+                         0.0, 0.0, new SuperParameters());
                 }
             }  
-            else if (Supers.Count <= 0 && input.Cursor != Vector2.Zero)
+            else if (Supers.Count <= 0 &&
+                     (input.Cursor != Vector2.Zero) &&
+                     input.MouseState.LeftButton == ButtonState.Pressed)
             {
                 //Here we should activate the emitters 
                 //Mouse
@@ -162,7 +169,7 @@ namespace XNASwarms
 
                     Supers[i] = new Individual(i, ((double)position.X),
                          ((double)position.Y),
-                         0,0, new Parameters());
+                         0, 0, new SuperParameters());
                 }
             }
 

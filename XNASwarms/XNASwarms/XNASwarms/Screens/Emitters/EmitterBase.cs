@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using SwarmEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +26,19 @@ namespace XNASwarms.Screens.Emitters
         public Vector2 Position
         {
             get;
-            private set;
+            protected set;
         }
 
-        public EmitterBase(EmitterType emitterType)
+        public EmitterBase(EmitterType emitterType, Vector2 position)
         {
             IsActive = true;
             EmitterType = emitterType;
-            Position = new Vector2(0, 0);
+            Position = position;
+        }
+
+        public virtual Individual Update()
+        {
+            return new Individual(0, this.Position.X, this.Position.Y, this.Position.X, this.Position.Y, new SuperParameters());
         }
     }
 }

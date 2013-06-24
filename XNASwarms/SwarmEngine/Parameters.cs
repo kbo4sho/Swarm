@@ -28,14 +28,14 @@ namespace SwarmEngine
 {
     public class Parameters : IComparable
     {     
-        private double neighborhoodRadius;
-        private double normalSpeed;
-        private double maxSpeed;
-        private double c1;
-        private double c2;
-        private double c3;
-        private double c4;
-        private double c5;
+        protected double neighborhoodRadius;
+        protected double normalSpeed;
+        protected double maxSpeed;
+        protected double c1;
+        protected double c2;
+        protected double c3;
+        protected double c4;
+        protected double c5;
 
         private Random rand = new Random();
 

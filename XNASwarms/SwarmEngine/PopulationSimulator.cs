@@ -48,7 +48,7 @@ namespace SwarmEngine
             {
                 for (int j = 0; j < population[i].Count; j++)
                 {
-                    addIndividual(population[i][j]);
+                    AddIndividual(population[i][j]);
                 }
             }
         }
@@ -58,7 +58,6 @@ namespace SwarmEngine
         {
             int numberOfSwarm = swarmInBirthOrder.Count();
 
-            //Parallel.For(0, numberOfSwarm, i => //might need to put back all the instance decalartions to use Parallel might be faster this way
             for (int i = 0; i < numberOfSwarm; i++)
             {
                 currentInd = swarmInBirthOrder[i];
@@ -244,12 +243,25 @@ namespace SwarmEngine
             resetRanks();
         }
 
-        public void addIndividual(Individual b)
+        public void EmitIndividual(Individual indvd)
         {
-            swarmInBirthOrder.Add(b);
-            swarmInXOrder.Add(b);
-            swarmInYOrder.Add(b);
-            //population.Add(b);
+            if (population.Count > 0)
+            {
+                
+                swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
+                swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
+                swarmInBirthOrder.Remove(swarmInBirthOrder.First());
+                population.TryRemoveFromExisitingSpecies();
+            }
+            AddIndividual(indvd);
+        }
+
+        private void AddIndividual(Individual indvd)
+        {
+            swarmInBirthOrder.Add(indvd);
+            swarmInXOrder.Add(indvd);
+            swarmInYOrder.Add(indvd);
+            population.TryAddToExistingSpecies(indvd);
         }
 
         private void sortInternalLists()
@@ -367,7 +379,7 @@ namespace SwarmEngine
                     {
                         population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
                     }
-                    addIndividual(population[i][j]);
+                    AddIndividual(population[i][j]);
                 }
             }
         }

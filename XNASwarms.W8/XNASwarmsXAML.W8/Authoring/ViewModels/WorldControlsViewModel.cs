@@ -154,13 +154,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
         {
             get
             {
-                return numberOfIndividualsMaxProperty;
+                return neighborhoodMaxRadiusProperty;
             }
             set
             {
-                if (value != numberOfIndividualsMaxProperty)
+                if (value != neighborhoodMaxRadiusProperty)
                 {
-                    numberOfIndividualsMaxProperty = value;
+                    neighborhoodMaxRadiusProperty = value;
                     WorldParameters.neighborhoodRadiusMax = value;
                     NotifyPropertyChanged("NeighborhoodRadiusMax");
                 }

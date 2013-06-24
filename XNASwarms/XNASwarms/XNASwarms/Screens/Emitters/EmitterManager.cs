@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using SwarmEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,17 +17,30 @@ namespace XNASwarms.Screens.Emitters
             private set;
         }
 
+        private PopulationSimulator populationSimulator;
+
         //TODO Should have an overload for loading emitters from saves
-        public EmitterManager(EmitterBase emitter)
+        public EmitterManager(PopulationSimulator simulator)
         {
+            populationSimulator = simulator;
             Emitters = new List<EmitterBase>();
-            Emitters.Add(emitter);
+            Emitters.Add(new BrushEmitter(new Vector2(-200,0)));
         }
 
-        public void Update()
+        //TODO this will be a collection of positons 
+        public void Update(Vector2 position)
         {
             foreach(EmitterBase emitter in Emitters)
             {
+                if (emitter is IGuideable)
+                {
+                    ((IGuideable)emitter).UpdatePosition(position);
+                }
+
+                if (emitter.IsActive)
+                {
+                    populationSimulator.EmitIndividual(emitter.Update());
+                }
             }
         }
     }
