@@ -57,18 +57,18 @@ namespace SwarmEngine
         {
             var items = this.Where(y => y.First().Genome.equals(indvd.Genome)).ToList();
 
-            if (items.Count>0)
+            if (items.Count > 0)
             {
                 Species species = items.First<Species>();
-        
-                if (totalAgents <= 501)
+
+                if (totalAgents <= WorldParameters.numberOfIndividualsMax)
                 {
                     species.Add(indvd);
                 }
             }
             else
             {
-                if (totalAgents <= 501)
+                if (totalAgents <= WorldParameters.numberOfIndividualsMax)
                 {
                     this.Add(new Species(new List<Individual>() { indvd }));
                 }
@@ -77,10 +77,15 @@ namespace SwarmEngine
 
         public void TryRemoveFromExisitingSpecies()
         {
-            if (totalAgents > 0)
-            {
-                this.Where(e => e.Count() > 1).First().RemoveAt(0);
-            }
+            
+                this.Where(e => e.Count() > 0).First().RemoveAt(0);
+                CheckForEmptySpecies();
+           
+        }
+
+        private void CheckForEmptySpecies()
+        {
+            this.RemoveAll(s => s.Count == 0);
         }
 
         //public Population(int n, int width, int height, String t)

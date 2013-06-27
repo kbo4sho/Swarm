@@ -48,7 +48,7 @@ namespace SwarmEngine
             {
                 for (int j = 0; j < population[i].Count; j++)
                 {
-                    AddIndividual(population[i][j]);
+                    InitCollections(population[i][j]);
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace SwarmEngine
                 if (maxRankInXOrder - minRankInXOrder < maxRankInYOrder
                         - minRankInYOrder)
                 {
-                    for (int j = minRankInXOrder; j <= maxRankInXOrder; j++)
+                    for (int j = minRankInXOrder; j < maxRankInXOrder; j++)
                     {
                         tempSwarm2 = swarmInXOrder[j];
                         if (currentInd != tempSwarm2)
@@ -130,7 +130,7 @@ namespace SwarmEngine
                 }
                 else
                 {
-                    for (int j = minRankInYOrder; j <= maxRankInYOrder; j++)
+                    for (int j = minRankInYOrder; j < maxRankInYOrder; j++)
                     {
                         tempSwarm2 = swarmInYOrder[j];
                         if (currentInd != tempSwarm2)
@@ -245,23 +245,32 @@ namespace SwarmEngine
 
         public void EmitIndividual(Individual indvd)
         {
-            if (population.Count > 0)
+            AddIndividual(indvd);
+            if (population.Sum(s => s.Count) > WorldParameters.numberOfIndividualsMax -1)
             {
-                
                 swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 swarmInBirthOrder.Remove(swarmInBirthOrder.First());
                 population.TryRemoveFromExisitingSpecies();
             }
-            AddIndividual(indvd);
         }
 
         private void AddIndividual(Individual indvd)
         {
+            if (population.Sum(s => s.Count) < WorldParameters.numberOfIndividualsMax)
+            {
+                swarmInBirthOrder.Add(indvd);
+                swarmInXOrder.Add(indvd);
+                swarmInYOrder.Add(indvd);
+                population.TryAddToExistingSpecies(indvd);
+            }
+        }
+
+        private void InitCollections(Individual indvd)
+        {
             swarmInBirthOrder.Add(indvd);
             swarmInXOrder.Add(indvd);
             swarmInYOrder.Add(indvd);
-            population.TryAddToExistingSpecies(indvd);
         }
 
         private void sortInternalLists()
@@ -379,7 +388,7 @@ namespace SwarmEngine
                     {
                         population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
                     }
-                    AddIndividual(population[i][j]);
+                    InitCollections(population[i][j]);
                 }
             }
         }
