@@ -17,10 +17,10 @@ namespace SwarmEngine
         public static int normalSpeedMax = 4;
         public static int maxSpeedMax = 8;
 
-        public static double c1Max = 1;
-        public static double c2Max = 1;
-        public static double c3Max = 100;
-        public static double c4Max = 0.5;
-        public static double c5Max = 1;
+        public static double CohesiveForceMax = 1;
+        public static double AligningForceMax = 1;
+        public static double SeperatingForceMax = 100;
+        public static double ChanceOfRandomSteeringMax = 0.5;
+        public static double TendencyOfPaceKeepingMax = 1;
     }
 }

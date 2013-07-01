@@ -141,6 +141,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
+      <Link>Emitters\BrushEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterBase.cs">
+      <Link>Emitters\EmitterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterManager.cs">
+      <Link>Emitters\EmitterManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterType.cs">
+      <Link>Emitters\EmitterType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IAudioInfluenced.cs">
+      <Link>Emitters\IAudioInfluenced.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IEmitter.cs">
+      <Link>Emitters\IEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IGuideable.cs">
+      <Link>Emitters\IGuideable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\StillEmitter.cs">
+      <Link>Emitters\StillEmitter.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ImportExportHelper.cs">
       <Link>ImportExportHelper.cs</Link>
     </Compile>
@@ -161,6 +185,9 @@
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveWorldParameters.cs">
       <Link>SaveWorldParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Audio.cs">
+      <Link>Screens\Audio.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Border.cs">
       <Link>Borders\Borders\Border.cs</Link>
@@ -185,24 +212,6 @@
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\ControlScreen.cs">
       <Link>Screens\ControlScreen.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\BrushEmitter.cs">
-      <Link>Screens\Emitters\BrushEmitter.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\EmitterBase.cs">
-      <Link>Screens\Emitters\EmitterBase.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\EmitterManager.cs">
-      <Link>Screens\Emitters\EmitterManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\EmitterType.cs">
-      <Link>Screens\Emitters\EmitterType.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\IEmitter.cs">
-      <Link>Screens\Emitters\IEmitter.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\IGuideable.cs">
-      <Link>Screens\Emitters\IGuideable.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\MenuItem.cs">
       <Link>Screens\MenuItem.cs</Link>
@@ -242,6 +251,7 @@
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Game1.cs" />
+    <Compile Include="MMAudioPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +294,7 @@
     <Content Include="..\..\SoultionItems\Content\Content\point.xnb">
       <Link>Content\point.xnb</Link>
     </Content>
+    <Content Include="Assets\Surface-Movement.mp3" />
     <None Include="packages.config" />
     <None Include="XNASwarms.W8_TemporaryKey.pfx" />
   </ItemGroup>
@@ -308,6 +319,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MMAudioPlayer\MMAudioPlayer.vcxproj">
+      <Project>{3dbadd73-ef51-4445-a3d4-0f0e5197a3c4}</Project>
+      <Name>MMAudioPlayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScreenSystem.W8\ScreenSystem.W8.csproj">
       <Project>{b82f87be-6a82-4240-864a-aac8966a3f0c}</Project>
       <Name>ScreenSystem.W8</Name>

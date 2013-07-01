@@ -14,7 +14,6 @@ namespace XNASwarms.Borders
 {
     public class Border
     {
-
         private GameScreen gameScreen;
         private List<Wall> borderWalls;
         Texture2D borderTexture;
@@ -105,8 +104,6 @@ namespace XNASwarms.Borders
         {
             for (int i = 0; i < borderWalls.Count; i++)
             {
-                //Vector2 position = camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(0, 0));
-
                 spritebatch.Draw(borderTexture, new Rectangle(
                     borderWalls[i].GetX(),
                     borderWalls[i].GetY(), (int)borderWalls[i].GetWidth(), (int)borderWalls[i].GetHeight()),
@@ -137,8 +134,6 @@ namespace XNASwarms.Borders
             {
                 return "";
             }
-
-            return borderWalls[0].GetWallActionType().ToString();
         }
     }
 }

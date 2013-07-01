@@ -13,11 +13,11 @@ namespace SwarmEngine
             neighborhoodRadius = WorldParameters.neighborhoodRadiusMax;
             normalSpeed = WorldParameters.normalSpeedMax;
             maxSpeed = WorldParameters.maxSpeedMax;
-            c1 = WorldParameters.c1Max;
-            c2 = WorldParameters.c2Max;
-            c3 = WorldParameters.c3Max;
-            c4 = WorldParameters.c4Max;
-            c5 = WorldParameters.c5Max;
+            c1 = WorldParameters.CohesiveForceMax;
+            c2 = WorldParameters.AligningForceMax;
+            c3 = WorldParameters.SeperatingForceMax;
+            c4 = WorldParameters.ChanceOfRandomSteeringMax;
+            c5 = WorldParameters.TendencyOfPaceKeepingMax;
         }
     }
 }

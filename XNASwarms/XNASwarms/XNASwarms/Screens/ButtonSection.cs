@@ -36,8 +36,6 @@ namespace XNASwarms
         private IDebugScreen debugScreen;
 
 
-
-
         public ButtonSection(bool flip, Vector2 position, SwarmScreenBase screen, string desc)
         {
             _rect.Width = 100;
@@ -275,11 +273,11 @@ namespace XNASwarms
             world.neighborhoodRadiusMax = WorldParameters.neighborhoodRadiusMax;
             world.normalSpeedMax = WorldParameters.normalSpeedMax;
             world.maxSpeedMax = WorldParameters.maxSpeedMax;
-            world.c1Max = WorldParameters.c1Max;
-            world.c2Max = WorldParameters.c2Max;
-            world.c3Max = WorldParameters.c3Max;
-            world.c4Max = WorldParameters.c4Max;
-            world.c5Max = WorldParameters.c5Max;
+            world.c1Max = WorldParameters.CohesiveForceMax;
+            world.c2Max = WorldParameters.AligningForceMax;
+            world.c3Max = WorldParameters.SeperatingForceMax;
+            world.c4Max = WorldParameters.ChanceOfRandomSteeringMax;
+            world.c5Max = WorldParameters.TendencyOfPaceKeepingMax;
             return world;
         }
 
@@ -289,11 +287,11 @@ namespace XNASwarms
             WorldParameters.neighborhoodRadiusMax = world.neighborhoodRadiusMax; 
             WorldParameters.normalSpeedMax = world.normalSpeedMax;
             WorldParameters.maxSpeedMax = world.maxSpeedMax;
-            WorldParameters.c1Max = world.c1Max;
-            WorldParameters.c2Max = world.c2Max;
-            WorldParameters.c3Max = world.c3Max;
-            WorldParameters.c4Max = world.c4Max;
-            WorldParameters.c5Max = world.c5Max;
+            WorldParameters.CohesiveForceMax = world.c1Max;
+            WorldParameters.AligningForceMax = world.c2Max;
+            WorldParameters.SeperatingForceMax = world.c3Max;
+            WorldParameters.ChanceOfRandomSteeringMax = world.c4Max;
+            WorldParameters.TendencyOfPaceKeepingMax = world.c5Max;
             
         }
 

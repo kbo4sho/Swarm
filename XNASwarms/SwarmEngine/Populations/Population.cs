@@ -77,10 +77,8 @@ namespace SwarmEngine
 
         public void TryRemoveFromExisitingSpecies()
         {
-            
-                this.Where(e => e.Count() > 0).First().RemoveAt(0);
-                CheckForEmptySpecies();
-           
+            this.Where(e => e.Count() > 0).First().RemoveAt(0);
+            CheckForEmptySpecies();  
         }
 
         private void CheckForEmptySpecies()

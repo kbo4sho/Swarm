@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XNASwarms.Screens.Emitters
+namespace XNASwarms.Emitters
 {
-    public interface IEmitter
+    public interface IAudioInfluenced
     {
-       
+        void UpdateByAudio(double[] fftData);
     }
 }

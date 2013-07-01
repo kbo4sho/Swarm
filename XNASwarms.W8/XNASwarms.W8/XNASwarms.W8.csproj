@@ -143,6 +143,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
+      <Link>Emitters\BrushEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterBase.cs">
+      <Link>Emitters\EmitterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterManager.cs">
+      <Link>Emitters\EmitterManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterType.cs">
+      <Link>Emitters\EmitterType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IAudioInfluenced.cs">
+      <Link>Emitters\IAudioInfluenced.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IEmitter.cs">
+      <Link>Emitters\IEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IGuideable.cs">
+      <Link>Emitters\IGuideable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\StillEmitter.cs">
+      <Link>Emitters\StillEmitter.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ImportExportHelper.cs">
       <Link>ImportExportHelper.cs</Link>
     </Compile>
@@ -163,6 +187,9 @@
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveWorldParameters.cs">
       <Link>SaveWorldParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Audio.cs">
+      <Link>Screens\Audio.cs</Link>
     </Compile>
     <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\borders\Border.cs">
       <Link>Screens\Borders\Border.cs</Link>
@@ -187,24 +214,6 @@
     </Compile>
     <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\ControlScreen.cs">
       <Link>Screens\ControlScreen.cs</Link>
-    </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\BrushEmitter.cs">
-      <Link>Screens\Emitters\BrushEmitter.cs</Link>
-    </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\EmitterBase.cs">
-      <Link>Screens\Emitters\EmitterBase.cs</Link>
-    </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\EmitterManager.cs">
-      <Link>Screens\Emitters\EmitterManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\EmitterType.cs">
-      <Link>Screens\Emitters\EmitterType.cs</Link>
-    </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\emitters\IEmitter.cs">
-      <Link>Screens\Emitters\IEmitter.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Emitters\IGuideable.cs">
-      <Link>Screens\Emitters\IGuideable.cs</Link>
     </Compile>
     <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\MenuItem.cs">
       <Link>Screens\MenuItem.cs</Link>
@@ -289,6 +298,10 @@
     <Content Include="Assets\StoreLogo.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MMAudioPlayer\MMAudioPlayer.vcxproj">
+      <Project>{3dbadd73-ef51-4445-a3d4-0f0e5197a3c4}</Project>
+      <Name>MMAudioPlayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScreenSystem.W8\ScreenSystem.W8.csproj">
       <Project>{b82f87be-6a82-4240-864a-aac8966a3f0c}</Project>
       <Name>ScreenSystem.W8</Name>

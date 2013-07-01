@@ -17,7 +17,9 @@ using XNASwarms.Borders.Walls;
 using SwarmEngine;
 using ScreenSystem.Debug;
 using SwarmAnalysisEngine;
-using XNASwarms.Screens.Emitters;
+using XNASwarms.Emitters;
+using XNASwarms.Screens;
+using XNASwarmsXAML.W8;
 
 namespace XNASwarms
 {
@@ -33,6 +35,7 @@ namespace XNASwarms
         private int FramesPerSec;
         float TotalElapsed;
         private IDebugScreen debugScreen;
+        
         List<Individual> SwarmInXOrder;
         AnalysisEngine analysisEngine;
         
@@ -48,7 +51,7 @@ namespace XNASwarms
 
         public override void LoadContent()
         {
-            emitterManager = new EmitterManager(populationSimulator);
+            emitterManager = new EmitterManager(populationSimulator, ScreenManager.Game.Services.GetService(typeof(IAudio)) as IAudio);
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
             debugScreen.ResetDebugItemsToNormal();
@@ -89,6 +92,10 @@ namespace XNASwarms
                 if (Supers.Count > 0)
                 {
                     emitterManager.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
+                }
+                else
+                {
+                    emitterManager.Update(Vector2.Zero);
                 }
                 populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
                 Border.Update(SwarmInXOrder);

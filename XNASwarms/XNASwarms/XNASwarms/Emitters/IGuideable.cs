@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XNASwarms.Screens.Emitters
+namespace XNASwarms.Emitters
 {
     public interface IGuideable
     {

@@ -14,7 +14,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
         {
         }
 
-        private double chanceOfRandomSteeringProperty = WorldParameters.c4Max;
+        private double chanceOfRandomSteeringProperty = WorldParameters.ChanceOfRandomSteeringMax;
 
         public double ChanceOfRandomSteering
         {
@@ -27,13 +27,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != chanceOfRandomSteeringProperty)
                 {
                     chanceOfRandomSteeringProperty = value;
-                    WorldParameters.c4Max = value;
+                    WorldParameters.ChanceOfRandomSteeringMax = value;
                     NotifyPropertyChanged("ChanceOfRandomSteering");
                 }
             }
         }
 
-        private double seperatingForceProperty = WorldParameters.c3Max;
+        private double seperatingForceProperty = WorldParameters.SeperatingForceMax;
 
         public double SperatingForce
         {
@@ -46,13 +46,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != seperatingForceProperty)
                 {
                     seperatingForceProperty = value;
-                    WorldParameters.c3Max = value;
+                    WorldParameters.SeperatingForceMax = value;
                     NotifyPropertyChanged("SperateingForce");
                 }
             }
         }
 
-        private double alligningForceProperty = WorldParameters.c2Max;
+        private double alligningForceProperty = WorldParameters.AligningForceMax;
 
         public double AlligningForce
         {
@@ -65,14 +65,14 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != alligningForceProperty)
                 {
                     alligningForceProperty = value;
-                    WorldParameters.c2Max = value;
+                    WorldParameters.AligningForceMax = value;
                     NotifyPropertyChanged("AlligningForce");
                 }
             }
         }
 
 
-        private double cohesiveForceProperty = WorldParameters.c1Max;
+        private double cohesiveForceProperty = WorldParameters.CohesiveForceMax;
 
         public double CohesiveForce
         {
@@ -85,7 +85,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != cohesiveForceProperty)
                 {
                     cohesiveForceProperty = value;
-                    WorldParameters.c1Max = value;
+                    WorldParameters.CohesiveForceMax = value;
                     NotifyPropertyChanged("CohesiveForce");
                 }
             }

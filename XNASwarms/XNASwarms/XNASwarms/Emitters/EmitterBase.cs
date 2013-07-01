@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XNASwarms.Screens.Emitters;
 
-namespace XNASwarms.Screens.Emitters
+namespace XNASwarms.Emitters
 {
     public abstract class EmitterBase : IEmitter 
     {
@@ -29,11 +28,18 @@ namespace XNASwarms.Screens.Emitters
             protected set;
         }
 
+        public Parameters Parameters
+        {
+            get;
+            protected set;
+        }
+
         public EmitterBase(EmitterType emitterType, Vector2 position)
         {
             IsActive = true;
             EmitterType = emitterType;
             Position = position;
+            Parameters = new SuperParameters();
         }
 
         public virtual Individual Update()

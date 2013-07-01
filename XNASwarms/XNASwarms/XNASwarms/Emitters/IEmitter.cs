@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XNASwarms.Screens.Emitters
+namespace XNASwarms.Emitters
 {
-    public enum EmitterType
+    public interface IEmitter
     {
-        Brush = 1,
+       
     }
 }
