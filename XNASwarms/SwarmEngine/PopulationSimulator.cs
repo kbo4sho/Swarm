@@ -77,8 +77,8 @@ namespace SwarmEngine
                 maxY = tempY + param.getNeighborhoodRadius();
                 minRankInXOrder = currentInd.RankInXOrder;
                 maxRankInXOrder = currentInd.RankInXOrder; 
-                minRankInYOrder = currentInd.getRankInYOrder();
-                maxRankInYOrder = currentInd.getRankInYOrder();
+                minRankInYOrder = currentInd.RankInYOrder;
+                maxRankInYOrder = currentInd.RankInYOrder;
 
                 //TODO: Make this faster
                 for (int j = currentInd.RankInXOrder - 1; j >= 0; j--)
@@ -95,14 +95,14 @@ namespace SwarmEngine
                     else
                         break;
                 }
-                for (int j = currentInd.getRankInYOrder() - 1; j >= 0; j--)
+                for (int j = currentInd.RankInYOrder - 1; j >= 0; j--)
                 {
                     if (swarmInYOrder[j].Y >= minY)
                         minRankInYOrder = j;
                     else
                         break;
                 }
-                for (int j = currentInd.getRankInYOrder() + 1; j < numberOfSwarm; j++)
+                for (int j = currentInd.RankInYOrder + 1; j < numberOfSwarm; j++)
                 {
                     if (swarmInYOrder[j].Y <= maxY)
                         maxRankInYOrder = j;
@@ -117,8 +117,8 @@ namespace SwarmEngine
                     {
                         tempSwarm2 = swarmInXOrder[j];
                         if (currentInd != tempSwarm2)
-                            if (tempSwarm2.getRankInYOrder() >= minRankInYOrder
-                                    && tempSwarm2.getRankInYOrder() <= maxRankInYOrder)
+                            if (tempSwarm2.RankInYOrder >= minRankInYOrder
+                                    && tempSwarm2.RankInYOrder <= maxRankInYOrder)
                             {
                                 if ((tempSwarm2.X - currentInd.X)
                                         * (tempSwarm2.X - currentInd.X)
@@ -177,8 +177,8 @@ namespace SwarmEngine
                         tempSwarm2 = neighbors[j];
                         localCenterX += tempSwarm2.X;
                         localCenterY += tempSwarm2.Y;
-                        localDX += tempSwarm2.getDx();
-                        localDY += tempSwarm2.getDy();
+                        localDX += tempSwarm2.Dx;
+                        localDY += tempSwarm2.Dy;
                     }
                     localCenterX /= n;
                     localCenterY /= n;
@@ -281,7 +281,6 @@ namespace SwarmEngine
             //swarmInYOrder = ((from entry in swarmInYOrder orderby entry.Y descending select entry)
             //.ToList<Individual>()) as Species;
 
-
             swarmInXOrder.Sort((x, y) => x.X.CompareTo(y.X));
             swarmInYOrder.Sort((x, y) => x.Y.CompareTo(y.Y));
             
@@ -302,7 +301,7 @@ namespace SwarmEngine
             for (int i = 0; i < swarmInYOrder.Count(); i++)
             {
                 Individual tempSwarm = swarmInYOrder[i];
-                if (tempSwarm.getRankInYOrder() != -1)
+                if (tempSwarm.RankInYOrder != -1)
                     tempSwarm.setRankInYOrder(i);
                 else
                     swarmInYOrder[i--] = null;

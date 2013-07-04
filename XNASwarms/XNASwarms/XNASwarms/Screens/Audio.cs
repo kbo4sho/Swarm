@@ -65,7 +65,7 @@ namespace XNASwarmsXAML.W8
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
-        async void DoWork()
+        private void DoWork()
         {
             //Update FFT
             // frequency index for current FFT values returned by GetFFT is approx
@@ -78,7 +78,7 @@ namespace XNASwarmsXAML.W8
             // [10] 880 Hz
             // [20] 1760 Hz
             // [41] 3520 Hz
-            await GetMore();
+            fftRawData = player.GetFFT();
 
             //Update FFT Data
             for (int i = 0; i < num_of_fft_bands; i++)
@@ -94,11 +94,6 @@ namespace XNASwarmsXAML.W8
                     fftData[i] = h;
                 }
             }
-        }
-
-        async Task GetMore()
-        {
-            fftRawData = player.GetFFT();
         }
 
         public override void Draw(GameTime gameTime)

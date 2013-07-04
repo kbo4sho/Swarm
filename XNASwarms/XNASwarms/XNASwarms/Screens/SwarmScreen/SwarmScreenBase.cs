@@ -101,7 +101,7 @@ namespace XNASwarms
                 Border.Update(SwarmInXOrder);
                 
                 Camera.Update(gameTime);
-                debugScreen.AddDebugItem("POPULATION COUNT", SwarmInXOrder.Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+                //debugScreen.AddDebugItem("POPULATION COUNT", SwarmInXOrder.Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             }
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }

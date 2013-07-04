@@ -32,7 +32,7 @@ namespace XNASwarms.Emitters
             this.Parameters = new Parameters(WorldParameters.neighborhoodRadiusMax,
                                              fftData[0],
                                              WorldParameters.maxSpeedMax,
-                                             fftData[12],
+                                             WorldParameters.CohesiveForceMax,
                                              WorldParameters.AligningForceMax,
                                              WorldParameters.SeperatingForceMax,
                                              WorldParameters.ChanceOfRandomSteeringMax,

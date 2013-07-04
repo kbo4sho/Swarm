@@ -25,7 +25,7 @@ namespace XNASwarms.Emitters
             audioScreen = audio;
             populationSimulator = simulator;
             Emitters = new List<EmitterBase>();
-            Emitters.Add(new StillEmitter(new Vector2(0, 0)));
+            Emitters.Add(new BrushEmitter(new Vector2(0, 0)));
 
         }
 
