@@ -47,6 +47,11 @@ namespace XNASwarms.Emitters
                     }
                 }
 
+                if (emitter is IMeteredAgents)
+                {
+                    ((IMeteredAgents)emitter).CheckForSafeDistance(position);
+                }
+
                 if (emitter.IsActive)
                 {
                     populationSimulator.EmitIndividual(emitter.Update());

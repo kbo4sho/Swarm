@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace XNASwarms.Emitters
 {
-    public class BrushEmitter : EmitterBase, IGuideable, IAudioInfluenced
+    public class BrushEmitter : EmitterBase, IGuideable, IAudioInfluenced, IMeteredAgents
     {
+        private const float space = 7f;
+
         public BrushEmitter(Vector2 position)
             : base(EmitterType.Brush, position)
         {
@@ -37,6 +39,38 @@ namespace XNASwarms.Emitters
                                              WorldParameters.SeperatingForceMax,
                                              WorldParameters.ChanceOfRandomSteeringMax,
                                              WorldParameters.TendencyOfPaceKeepingMax);
+        }
+
+        public Vector2 lastPosition { get; set; }
+
+        public bool canDraw { get; set; }
+
+        public void CheckForSafeDistance(Vector2 position)
+        {
+            canDraw = false;
+            if (lastPosition == null)
+            {
+                lastPosition = position;
+                canDraw = true;
+            }
+            //TODO: Create helper method to determine this number
+            if ((position.Y > (lastPosition.Y + space)) ||
+                (position.Y < (lastPosition.Y - space)) ||
+                (position.X > (lastPosition.X + space)) ||
+                (position.X < (lastPosition.X - space)))
+            {
+                canDraw = true;
+                lastPosition = position;
+            }
+
+            if (canDraw)
+            {
+                this.SetActive(true);
+            }
+            else
+            {
+                this.SetActive(false);
+            }
         }
     }
 }

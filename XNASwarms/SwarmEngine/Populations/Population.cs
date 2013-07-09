@@ -55,23 +55,11 @@ namespace SwarmEngine
 
         public void TryAddToExistingSpecies(Individual indvd)
         {
-            var items = this.Where(y => y.First().Genome.equals(indvd.Genome)).ToList();
+            Species species = this.First<Species>();
 
-            if (items.Count > 0)
+            if (totalAgents <= WorldParameters.numberOfIndividualsMax)
             {
-                Species species = items.First<Species>();
-
-                if (totalAgents <= WorldParameters.numberOfIndividualsMax)
-                {
-                    species.Add(indvd);
-                }
-            }
-            else
-            {
-                if (totalAgents <= WorldParameters.numberOfIndividualsMax)
-                {
-                    this.Add(new Species(new List<Individual>() { indvd }));
-                }
+                species.Add(indvd);
             }
         }
 

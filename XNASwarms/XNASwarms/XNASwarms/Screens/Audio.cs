@@ -35,6 +35,12 @@ namespace XNASwarmsXAML.W8
         {
             InitAudio();
             fftData = new double[num_of_fft_bands];
+            player.OnEndOfStream += player_OnEndOfStream;
+        }
+
+        void player_OnEndOfStream(MMAudioPlayer.EndOfStreamReason __param0)
+        {
+           
         }
 
         async private void InitAudio()

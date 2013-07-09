@@ -164,6 +164,9 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IGuideable.cs">
       <Link>Emitters\IGuideable.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IMeteredAgents.cs">
+      <Link>Emitters\IMeteredAgents.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\StillEmitter.cs">
       <Link>Emitters\StillEmitter.cs</Link>
     </Compile>

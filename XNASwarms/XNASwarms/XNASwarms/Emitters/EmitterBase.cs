@@ -46,5 +46,10 @@ namespace XNASwarms.Emitters
         {
             return new Individual(0, this.Position.X, this.Position.Y, this.Position.X, this.Position.Y, new SuperParameters());
         }
+
+        protected void SetActive(bool value)
+        {
+            this.IsActive = value;
+        }
     }
 }
