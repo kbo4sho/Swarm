@@ -9,9 +9,8 @@ namespace SwarmEngine
     /// <summary>
     /// Static class to hold parameters for game
     /// </summary>
-    public static class WorldParameters
+    public static class StaticWorldParameters
     {
-
         public static int numberOfIndividualsMax = 300;
         public static int neighborhoodRadiusMax = 45;
         public static int normalSpeedMax = 4;

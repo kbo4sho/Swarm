@@ -11,6 +11,7 @@ namespace XNASwarms.Emitters
     {
         Vector2 lastPosition { get; set; }
         bool canDraw { get; set; }
+        float Space { get; set; }
 
         void CheckForSafeDistance(Vector2 position);
     }

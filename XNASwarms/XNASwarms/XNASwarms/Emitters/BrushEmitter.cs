@@ -10,17 +10,15 @@ namespace XNASwarms.Emitters
 {
     public class BrushEmitter : EmitterBase, IGuideable, IAudioInfluenced, IMeteredAgents
     {
-        private const float space = 7f;
-
         public BrushEmitter(Vector2 position)
-            : base(EmitterType.Brush, position)
+            : base(EmitterType.Brush, position, new BrushParameters())
         {
             
         }
 
         public override Individual Update()
         {
-            return new Individual(0, this.Position.X, this.Position.Y, this.Position.X, this.Position.Y, this.Parameters);
+            return new Individual(0, this.Position.X, this.Position.Y, this.Position.X, this.Position.Y, new BrushParameters());
         }
 
 
@@ -31,14 +29,14 @@ namespace XNASwarms.Emitters
 
         public void UpdateByAudio(double[] fftData)
         {
-            this.Parameters = new Parameters(WorldParameters.neighborhoodRadiusMax,
+            this.Parameters = new Parameters(StaticBrushParameters.neighborhoodRadiusMax,
                                              fftData[0],
-                                             WorldParameters.maxSpeedMax,
-                                             WorldParameters.CohesiveForceMax,
-                                             WorldParameters.AligningForceMax,
-                                             WorldParameters.SeperatingForceMax,
-                                             WorldParameters.ChanceOfRandomSteeringMax,
-                                             WorldParameters.TendencyOfPaceKeepingMax);
+                                             StaticBrushParameters.maxSpeedMax,
+                                             StaticBrushParameters.CohesiveForceMax,
+                                             StaticBrushParameters.AligningForceMax,
+                                             StaticBrushParameters.SeperatingForceMax,
+                                             StaticBrushParameters.ChanceOfRandomSteeringMax,
+                                             StaticBrushParameters.TendencyOfPaceKeepingMax);
         }
 
         public Vector2 lastPosition { get; set; }
@@ -54,10 +52,10 @@ namespace XNASwarms.Emitters
                 canDraw = true;
             }
             //TODO: Create helper method to determine this number
-            if ((position.Y > (lastPosition.Y + space)) ||
-                (position.Y < (lastPosition.Y - space)) ||
-                (position.X > (lastPosition.X + space)) ||
-                (position.X < (lastPosition.X - space)))
+            if ((position.Y > (lastPosition.Y + Space)) ||
+                (position.Y < (lastPosition.Y - Space)) ||
+                (position.X > (lastPosition.X + Space)) ||
+                (position.X < (lastPosition.X - Space)))
             {
                 canDraw = true;
                 lastPosition = position;
@@ -70,6 +68,19 @@ namespace XNASwarms.Emitters
             else
             {
                 this.SetActive(false);
+            }
+        }
+
+
+        public float Space
+        {
+            get
+            {
+               return 7;
+            }
+            set
+            {
+                Space = value;
             }
         }
     }

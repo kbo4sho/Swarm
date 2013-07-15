@@ -13,19 +13,19 @@ namespace XNASwarmsXAML.W8
     /// </summary>
     sealed partial class App : Application
     {
-        private static WorldControlsViewModel viewModel = null;
+        private static AuthoringViewModel viewModel = null;
 
         /// <summary>
         /// A static ViewModel used by the views to bind against.
         /// </summary>
         /// <returns>The MainViewModel object.</returns>
-        public static WorldControlsViewModel ViewModel
+        public static AuthoringViewModel ViewModel
         {
             get
             {
                 // Delay creation of the view model until necessary
                 if (viewModel == null)
-                    viewModel = new WorldControlsViewModel();
+                    viewModel = new AuthoringViewModel();
 
                 return viewModel;
             }

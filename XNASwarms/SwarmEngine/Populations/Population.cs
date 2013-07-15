@@ -57,7 +57,7 @@ namespace SwarmEngine
         {
             Species species = this.First<Species>();
 
-            if (totalAgents <= WorldParameters.numberOfIndividualsMax)
+            if (totalAgents <= StaticWorldParameters.numberOfIndividualsMax)
             {
                 species.Add(indvd);
             }

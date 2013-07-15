@@ -34,7 +34,7 @@ namespace XNASwarmsXAML.W8
 
         void myappbar_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            DataContext = new WorldControlsViewModel();
+            DataContext = new AuthoringViewModel();
         }
 
         

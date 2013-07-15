@@ -144,6 +144,9 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
       <Link>Emitters\BrushEmitter.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushParameters.cs">
+      <Link>Emitters\BrushParameters.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterBase.cs">
       <Link>Emitters\EmitterBase.cs</Link>
     </Compile>
@@ -249,7 +252,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Authoring\ViewModels\WorldControlsViewModel.cs" />
+    <Compile Include="Authoring\ViewModels\AuthoringViewModel.cs" />
+    <Compile Include="Authoring\ViewModels\BrushControlViewModel.cs" />
+    <Compile Include="Authoring\ViewModels\ControlViewModel.cs" />
+    <Compile Include="Authoring\ViewModels\WorldControlViewModel.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>

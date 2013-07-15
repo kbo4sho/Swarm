@@ -42,13 +42,21 @@
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Game Mode" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Height="60">
-                        <RadioButton Content="Swarm" Width="100"/>
-                        <RadioButton Content="Edit(list of emitters)" />
-                    </StackPanel>
+                    <TextBlock Grid.Row="0" Text="Edit Mode" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    <ItemsControl ItemsSource="{Binding ControlViewModels}" Grid.Row="1">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Name}" Width="100"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                 </Grid>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,10,20">
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,10,20"  DataContext="{Binding ControlViewModel}">
                     <StackPanel.Resources>
                         <Style TargetType="Grid">
                             <Setter Property="Margin" Value="30,0,0,40"/>

@@ -1,21 +1,22 @@
-﻿using SwarmEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XNASwarms.Emitters;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {
-    public class WorldControlsViewModel : INotifyPropertyChanged
+    public class BrushControlViewModel : ControlViewModel, INotifyPropertyChanged
     {
-        public WorldControlsViewModel()
+        public BrushControlViewModel()
+            : base("Brush")
         {
+
         }
 
-        private double chanceOfRandomSteeringProperty = WorldParameters.ChanceOfRandomSteeringMax;
-
+        private double chanceOfRandomSteeringProperty = StaticBrushParameters.ChanceOfRandomSteeringMax;
         public double ChanceOfRandomSteering
         {
             get
@@ -27,14 +28,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != chanceOfRandomSteeringProperty)
                 {
                     chanceOfRandomSteeringProperty = value;
-                    WorldParameters.ChanceOfRandomSteeringMax = value;
+                    StaticBrushParameters.ChanceOfRandomSteeringMax = value;
                     NotifyPropertyChanged("ChanceOfRandomSteering");
                 }
             }
         }
 
-        private double seperatingForceProperty = WorldParameters.SeperatingForceMax;
-
+        private double seperatingForceProperty = StaticBrushParameters.SeperatingForceMax;
         public double SperatingForce
         {
             get
@@ -46,14 +46,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != seperatingForceProperty)
                 {
                     seperatingForceProperty = value;
-                    WorldParameters.SeperatingForceMax = value;
+                    StaticBrushParameters.SeperatingForceMax = value;
                     NotifyPropertyChanged("SperateingForce");
                 }
             }
         }
 
-        private double alligningForceProperty = WorldParameters.AligningForceMax;
-
+        private double alligningForceProperty = StaticBrushParameters.AligningForceMax;
         public double AlligningForce
         {
             get
@@ -65,15 +64,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != alligningForceProperty)
                 {
                     alligningForceProperty = value;
-                    WorldParameters.AligningForceMax = value;
+                    StaticBrushParameters.AligningForceMax = value;
                     NotifyPropertyChanged("AlligningForce");
                 }
             }
         }
 
-
-        private double cohesiveForceProperty = WorldParameters.CohesiveForceMax;
-
+        private double cohesiveForceProperty = StaticBrushParameters.CohesiveForceMax;
         public double CohesiveForce
         {
             get
@@ -85,14 +82,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != cohesiveForceProperty)
                 {
                     cohesiveForceProperty = value;
-                    WorldParameters.CohesiveForceMax = value;
+                    StaticBrushParameters.CohesiveForceMax = value;
                     NotifyPropertyChanged("CohesiveForce");
                 }
             }
         }
 
-        private int normalSpeedProperty = WorldParameters.normalSpeedMax;
-
+        private int normalSpeedProperty = StaticBrushParameters.normalSpeedMax;
         public int NormalSpeed
         {
             get
@@ -104,14 +100,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != normalSpeedProperty)
                 {
                     normalSpeedProperty = value;
-                    WorldParameters.normalSpeedMax = value;
+                    StaticBrushParameters.normalSpeedMax = value;
                     NotifyPropertyChanged("NormalSpeed");
                 }
             }
         }
 
-        private int maxSpeedProperty = WorldParameters.maxSpeedMax;
-
+        private int maxSpeedProperty = StaticBrushParameters.maxSpeedMax;
         public int MaxSpeed
         {
             get
@@ -123,14 +118,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != maxSpeedProperty)
                 {
                     maxSpeedProperty = value;
-                    WorldParameters.maxSpeedMax = value;
+                    StaticBrushParameters.maxSpeedMax = value;
                     NotifyPropertyChanged("MaxSpeed");
                 }
             }
         }
 
-        private int numberOfIndividualsMaxProperty = WorldParameters.numberOfIndividualsMax;
-
+        private int numberOfIndividualsMaxProperty = StaticBrushParameters.numberOfIndividualsMax;
         public int NumberOfIndividualsMax
         {
             get
@@ -142,14 +136,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != numberOfIndividualsMaxProperty)
                 {
                     numberOfIndividualsMaxProperty = value;
-                    WorldParameters.numberOfIndividualsMax = value;
+                    StaticBrushParameters.numberOfIndividualsMax = value;
                     NotifyPropertyChanged("NumberOfIndividualsMax");
                 }
             }
         }
 
-        private int neighborhoodMaxRadiusProperty = WorldParameters.neighborhoodRadiusMax;
-
+        private int neighborhoodMaxRadiusProperty = StaticBrushParameters.neighborhoodRadiusMax;
         public int NeighborhoodRadiusMax
         {
             get
@@ -161,7 +154,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != neighborhoodMaxRadiusProperty)
                 {
                     neighborhoodMaxRadiusProperty = value;
-                    WorldParameters.neighborhoodRadiusMax = value;
+                    StaticBrushParameters.neighborhoodRadiusMax = value;
                     NotifyPropertyChanged("NeighborhoodRadiusMax");
                 }
             }

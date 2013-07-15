@@ -10,14 +10,14 @@ namespace SwarmEngine
     {
         public SuperParameters()
         {
-            neighborhoodRadius = WorldParameters.neighborhoodRadiusMax;
-            normalSpeed = WorldParameters.normalSpeedMax;
-            maxSpeed = WorldParameters.maxSpeedMax;
-            c1 = WorldParameters.CohesiveForceMax;
-            c2 = WorldParameters.AligningForceMax;
-            c3 = WorldParameters.SeperatingForceMax;
-            c4 = WorldParameters.ChanceOfRandomSteeringMax;
-            c5 = WorldParameters.TendencyOfPaceKeepingMax;
+            neighborhoodRadius = StaticWorldParameters.neighborhoodRadiusMax;
+            normalSpeed = StaticWorldParameters.normalSpeedMax;
+            maxSpeed = StaticWorldParameters.maxSpeedMax;
+            c1 = StaticWorldParameters.CohesiveForceMax;
+            c2 = StaticWorldParameters.AligningForceMax;
+            c3 = StaticWorldParameters.SeperatingForceMax;
+            c4 = StaticWorldParameters.ChanceOfRandomSteeringMax;
+            c5 = StaticWorldParameters.TendencyOfPaceKeepingMax;
         }
     }
 }

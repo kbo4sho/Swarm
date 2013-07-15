@@ -246,7 +246,7 @@ namespace SwarmEngine
         public void EmitIndividual(Individual indvd)
         {
             AddIndividual(indvd);
-            if (population.Sum(s => s.Count) > WorldParameters.numberOfIndividualsMax -1)
+            if (population.Sum(s => s.Count) > StaticWorldParameters.numberOfIndividualsMax -1)
             {
                 swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
@@ -257,7 +257,7 @@ namespace SwarmEngine
 
         private void AddIndividual(Individual indvd)
         {
-            if (population.Sum(s => s.Count) < WorldParameters.numberOfIndividualsMax)
+            if (population.Sum(s => s.Count) < StaticWorldParameters.numberOfIndividualsMax)
             {
                 swarmInBirthOrder.Add(indvd);
                 swarmInXOrder.Add(indvd);

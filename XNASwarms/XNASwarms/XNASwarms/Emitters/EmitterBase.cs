@@ -35,11 +35,14 @@ namespace XNASwarms.Emitters
         }
 
         public EmitterBase(EmitterType emitterType, Vector2 position)
+            :this(emitterType, position, new SuperParameters()){}
+
+        public EmitterBase(EmitterType emitterType, Vector2 position, Parameters parameters)
         {
             IsActive = true;
             EmitterType = emitterType;
             Position = position;
-            Parameters = new SuperParameters();
+            Parameters = parameters;
         }
 
         public virtual Individual Update()

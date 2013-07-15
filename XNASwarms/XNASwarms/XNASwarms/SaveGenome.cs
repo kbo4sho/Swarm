@@ -28,8 +28,8 @@ namespace XNASwarms
 
         public Color getDisplayColor()
         {
-            return new Color((float)(c1 / WorldParameters.CohesiveForceMax * 0.8),
-                    (float)(c2 / WorldParameters.AligningForceMax * 0.8), (float)(c3 / WorldParameters.SeperatingForceMax * 0.8));
+            return new Color((float)(c1 / StaticWorldParameters.CohesiveForceMax * 0.8),
+                    (float)(c2 / StaticWorldParameters.AligningForceMax * 0.8), (float)(c3 / StaticWorldParameters.SeperatingForceMax * 0.8));
         }
 
         

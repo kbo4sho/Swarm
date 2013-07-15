@@ -24,14 +24,14 @@ namespace XNASwarms.Emitters
 
         public void UpdateByAudio(double[] fftData)
         {
-            this.Parameters = new Parameters(WorldParameters.neighborhoodRadiusMax,
+            this.Parameters = new Parameters(StaticWorldParameters.neighborhoodRadiusMax,
                                              GetTime(fftData[1]),
-                                             WorldParameters.maxSpeedMax,
-                                             WorldParameters.CohesiveForceMax,
-                                             WorldParameters.AligningForceMax,
-                                             WorldParameters.SeperatingForceMax,
-                                             WorldParameters.ChanceOfRandomSteeringMax,
-                                             WorldParameters.TendencyOfPaceKeepingMax);
+                                             StaticWorldParameters.maxSpeedMax,
+                                             StaticWorldParameters.CohesiveForceMax,
+                                             StaticWorldParameters.AligningForceMax,
+                                             StaticWorldParameters.SeperatingForceMax,
+                                             StaticWorldParameters.ChanceOfRandomSteeringMax,
+                                             StaticWorldParameters.TendencyOfPaceKeepingMax);
         }
 
         private int GetTime(double value)

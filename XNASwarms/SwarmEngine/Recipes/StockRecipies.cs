@@ -33,7 +33,7 @@ namespace SwarmEngine
                 string ChanceOfRandomSteering = ".04";
                 string TendencyOfPaceKeeping = ".52";
 
-                return WorldParameters.numberOfIndividualsMax + "," + WorldParameters.neighborhoodRadiusMax + "," + WorldParameters.normalSpeedMax + "," + WorldParameters.maxSpeedMax + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
+                return StaticWorldParameters.numberOfIndividualsMax + "," + StaticWorldParameters.neighborhoodRadiusMax + "," + StaticWorldParameters.normalSpeedMax + "," + StaticWorldParameters.maxSpeedMax + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
             }
         }
 

@@ -269,29 +269,29 @@ namespace XNASwarms
         private SaveWorldParameters SaveWorld()
         {
             SaveWorldParameters world = new SaveWorldParameters();
-            world.numberOfIndividualsMax = WorldParameters.numberOfIndividualsMax;
-            world.neighborhoodRadiusMax = WorldParameters.neighborhoodRadiusMax;
-            world.normalSpeedMax = WorldParameters.normalSpeedMax;
-            world.maxSpeedMax = WorldParameters.maxSpeedMax;
-            world.c1Max = WorldParameters.CohesiveForceMax;
-            world.c2Max = WorldParameters.AligningForceMax;
-            world.c3Max = WorldParameters.SeperatingForceMax;
-            world.c4Max = WorldParameters.ChanceOfRandomSteeringMax;
-            world.c5Max = WorldParameters.TendencyOfPaceKeepingMax;
+            world.numberOfIndividualsMax = StaticWorldParameters.numberOfIndividualsMax;
+            world.neighborhoodRadiusMax = StaticWorldParameters.neighborhoodRadiusMax;
+            world.normalSpeedMax = StaticWorldParameters.normalSpeedMax;
+            world.maxSpeedMax = StaticWorldParameters.maxSpeedMax;
+            world.c1Max = StaticWorldParameters.CohesiveForceMax;
+            world.c2Max = StaticWorldParameters.AligningForceMax;
+            world.c3Max = StaticWorldParameters.SeperatingForceMax;
+            world.c4Max = StaticWorldParameters.ChanceOfRandomSteeringMax;
+            world.c5Max = StaticWorldParameters.TendencyOfPaceKeepingMax;
             return world;
         }
 
         private void UpdateWorld(SaveWorldParameters world)
         {
-            WorldParameters.numberOfIndividualsMax = world.numberOfIndividualsMax;
-            WorldParameters.neighborhoodRadiusMax = world.neighborhoodRadiusMax; 
-            WorldParameters.normalSpeedMax = world.normalSpeedMax;
-            WorldParameters.maxSpeedMax = world.maxSpeedMax;
-            WorldParameters.CohesiveForceMax = world.c1Max;
-            WorldParameters.AligningForceMax = world.c2Max;
-            WorldParameters.SeperatingForceMax = world.c3Max;
-            WorldParameters.ChanceOfRandomSteeringMax = world.c4Max;
-            WorldParameters.TendencyOfPaceKeepingMax = world.c5Max;
+            StaticWorldParameters.numberOfIndividualsMax = world.numberOfIndividualsMax;
+            StaticWorldParameters.neighborhoodRadiusMax = world.neighborhoodRadiusMax; 
+            StaticWorldParameters.normalSpeedMax = world.normalSpeedMax;
+            StaticWorldParameters.maxSpeedMax = world.maxSpeedMax;
+            StaticWorldParameters.CohesiveForceMax = world.c1Max;
+            StaticWorldParameters.AligningForceMax = world.c2Max;
+            StaticWorldParameters.SeperatingForceMax = world.c3Max;
+            StaticWorldParameters.ChanceOfRandomSteeringMax = world.c4Max;
+            StaticWorldParameters.TendencyOfPaceKeepingMax = world.c5Max;
             
         }
 

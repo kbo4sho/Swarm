@@ -41,20 +41,20 @@ namespace SwarmEngine
 
         public Parameters()
         {
-            neighborhoodRadius = rand.NextDouble() * WorldParameters.neighborhoodRadiusMax;
-            normalSpeed = rand.NextDouble() * WorldParameters.normalSpeedMax;
-            maxSpeed = rand.NextDouble() * WorldParameters.maxSpeedMax;
-            c1 = rand.NextDouble() * WorldParameters.CohesiveForceMax;
-            c2 = rand.NextDouble() * WorldParameters.AligningForceMax;
-            c3 = rand.NextDouble() * WorldParameters.SeperatingForceMax;
-            c4 = rand.NextDouble() * WorldParameters.ChanceOfRandomSteeringMax;
-            c5 = rand.NextDouble() * WorldParameters.TendencyOfPaceKeepingMax;
+            neighborhoodRadius = rand.NextDouble() * StaticWorldParameters.neighborhoodRadiusMax;
+            normalSpeed = rand.NextDouble() * StaticWorldParameters.normalSpeedMax;
+            maxSpeed = rand.NextDouble() * StaticWorldParameters.maxSpeedMax;
+            c1 = rand.NextDouble() * StaticWorldParameters.CohesiveForceMax;
+            c2 = rand.NextDouble() * StaticWorldParameters.AligningForceMax;
+            c3 = rand.NextDouble() * StaticWorldParameters.SeperatingForceMax;
+            c4 = rand.NextDouble() * StaticWorldParameters.ChanceOfRandomSteeringMax;
+            c5 = rand.NextDouble() * StaticWorldParameters.TendencyOfPaceKeepingMax;
         }
 
         public string getRecipe()
         {
             StringBuilder sb = new StringBuilder("");
-            sb.Append((int)WorldParameters.numberOfIndividualsMax);
+            sb.Append((int)StaticWorldParameters.numberOfIndividualsMax);
             sb.Append(", ");
             sb.Append((double)getNeighborhoodRadius());
             sb.Append(", ");
@@ -163,29 +163,29 @@ namespace SwarmEngine
         public void inducePointMutations(double rate, double magnitude)
         {
             if (rand.NextDouble() < rate)
-                neighborhoodRadius += (rand.NextDouble() - 0.5) * WorldParameters.neighborhoodRadiusMax
+                neighborhoodRadius += (rand.NextDouble() - 0.5) * StaticWorldParameters.neighborhoodRadiusMax
                         * magnitude;
 
             if (rand.NextDouble() < rate)
-                normalSpeed += (rand.NextDouble() - 0.5) * WorldParameters.normalSpeedMax * magnitude;
+                normalSpeed += (rand.NextDouble() - 0.5) * StaticWorldParameters.normalSpeedMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                maxSpeed += (rand.NextDouble() - 0.5) * WorldParameters.maxSpeedMax * magnitude;
+                maxSpeed += (rand.NextDouble() - 0.5) * StaticWorldParameters.maxSpeedMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c1 += (rand.NextDouble() - 0.5) * WorldParameters.CohesiveForceMax * magnitude;
+                c1 += (rand.NextDouble() - 0.5) * StaticWorldParameters.CohesiveForceMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c2 += (rand.NextDouble() - 0.5) * WorldParameters.AligningForceMax * magnitude;
+                c2 += (rand.NextDouble() - 0.5) * StaticWorldParameters.AligningForceMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c3 += (rand.NextDouble() - 0.5) * WorldParameters.SeperatingForceMax * magnitude;
+                c3 += (rand.NextDouble() - 0.5) * StaticWorldParameters.SeperatingForceMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c4 += (rand.NextDouble() - 0.5) * WorldParameters.ChanceOfRandomSteeringMax * magnitude;
+                c4 += (rand.NextDouble() - 0.5) * StaticWorldParameters.ChanceOfRandomSteeringMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c5 += (rand.NextDouble() - 0.5) * WorldParameters.TendencyOfPaceKeepingMax * magnitude;
+                c5 += (rand.NextDouble() - 0.5) * StaticWorldParameters.TendencyOfPaceKeepingMax * magnitude;
 
             boundParameterValues();
         }
@@ -194,49 +194,49 @@ namespace SwarmEngine
         {
             if (neighborhoodRadius < 0)
                 neighborhoodRadius = 0;
-            else if (neighborhoodRadius > WorldParameters.neighborhoodRadiusMax)
-                neighborhoodRadius = WorldParameters.neighborhoodRadiusMax;
+            else if (neighborhoodRadius > StaticWorldParameters.neighborhoodRadiusMax)
+                neighborhoodRadius = StaticWorldParameters.neighborhoodRadiusMax;
 
             if (normalSpeed < 0)
                 normalSpeed = 0;
-            else if (normalSpeed > WorldParameters.normalSpeedMax)
-                normalSpeed = WorldParameters.normalSpeedMax;
+            else if (normalSpeed > StaticWorldParameters.normalSpeedMax)
+                normalSpeed = StaticWorldParameters.normalSpeedMax;
 
             if (maxSpeed < 0)
                 maxSpeed = 0;
-            else if (maxSpeed > WorldParameters.maxSpeedMax)
-                maxSpeed = WorldParameters.maxSpeedMax;
+            else if (maxSpeed > StaticWorldParameters.maxSpeedMax)
+                maxSpeed = StaticWorldParameters.maxSpeedMax;
 
             if (c1 < 0)
                 c1 = 0;
-            else if (c1 > WorldParameters.CohesiveForceMax)
-                c1 = WorldParameters.CohesiveForceMax;
+            else if (c1 > StaticWorldParameters.CohesiveForceMax)
+                c1 = StaticWorldParameters.CohesiveForceMax;
 
             if (c2 < 0)
                 c2 = 0;
-            else if (c2 > WorldParameters.AligningForceMax)
-                c2 = WorldParameters.AligningForceMax;
+            else if (c2 > StaticWorldParameters.AligningForceMax)
+                c2 = StaticWorldParameters.AligningForceMax;
 
             if (c3 < 0)
                 c3 = 0;
-            else if (c3 > WorldParameters.SeperatingForceMax)
-                c3 = WorldParameters.SeperatingForceMax;
+            else if (c3 > StaticWorldParameters.SeperatingForceMax)
+                c3 = StaticWorldParameters.SeperatingForceMax;
 
             if (c4 < 0)
                 c4 = 0;
-            else if (c4 > WorldParameters.ChanceOfRandomSteeringMax)
-                c4 = WorldParameters.ChanceOfRandomSteeringMax;
+            else if (c4 > StaticWorldParameters.ChanceOfRandomSteeringMax)
+                c4 = StaticWorldParameters.ChanceOfRandomSteeringMax;
 
             if (c5 < 0)
                 c5 = 0;
-            else if (c5 > WorldParameters.TendencyOfPaceKeepingMax)
-                c5 = WorldParameters.TendencyOfPaceKeepingMax;
+            else if (c5 > StaticWorldParameters.TendencyOfPaceKeepingMax)
+                c5 = StaticWorldParameters.TendencyOfPaceKeepingMax;
         }
 
         public Color getDisplayColor()
         {
-            return new Color((float)(c1 / WorldParameters.CohesiveForceMax * 0.8),
-                    (float)(c2 / WorldParameters.AligningForceMax * 0.8), (float)(c3 / WorldParameters.SeperatingForceMax* 0.8));
+            return new Color((float)(c1 / StaticWorldParameters.CohesiveForceMax * 0.8),
+                    (float)(c2 / StaticWorldParameters.AligningForceMax * 0.8), (float)(c3 / StaticWorldParameters.SeperatingForceMax* 0.8));
         }
 
         public double getNeighborhoodRadius()
