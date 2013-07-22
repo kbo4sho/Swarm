@@ -102,6 +102,9 @@
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\AnalysisEngine.cs">
       <Link>AnalysisEngine.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\AnalysisModule.cs">
+      <Link>AnalysisModule.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\AnalysisResult.cs">
       <Link>AnalysisResult.cs</Link>
     </Compile>
@@ -113,9 +116,6 @@
     </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\ClusterModule.cs">
       <Link>ClusterModule.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\IAnalysisModule.cs">
-      <Link>IAnalysisModule.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\NameModule.cs">
       <Link>NameModule.cs</Link>
