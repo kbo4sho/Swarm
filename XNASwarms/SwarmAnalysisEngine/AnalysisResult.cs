@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SwarmAnalysisEngine
 {
-    public struct AnalysisResult
+    public struct AnalysisMessage
     {
         public string Message
         {

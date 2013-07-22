@@ -4,6 +4,7 @@ using ScreenSystem.Debug;
 using ScreenSystem.ScreenSystem;
 using SwarmEngine;
 using System;
+using VSS;
 using XNASwarms;
 
 namespace XNASwarmsXAML.W8
@@ -19,7 +20,6 @@ namespace XNASwarmsXAML.W8
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            //this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 30.0f);
         }
 
         protected override void Initialize()
@@ -30,12 +30,18 @@ namespace XNASwarmsXAML.W8
             var backgroundscreen = new BackgroundScreen();
             screenManager.AddScreen(backgroundscreen);
 
-            var debugScreen = new DebugScreen(screenManager, true);
+            var debugScreen = new DebugScreen(screenManager, false);
             screenManager.Game.Components.Add(debugScreen);
             this.Services.AddService(typeof(IDebugScreen), debugScreen);
 
+            var audioScreen = new Audio();
+            screenManager.AddScreen(audioScreen);
+            this.Services.AddService(typeof(IAudio), audioScreen);
+
             SwarmScreen1 swarmScreen = new SwarmScreen1(StockRecipies.Stable_A, false);
             screenManager.AddScreen(swarmScreen);
+
+            
             base.Initialize();
         }
 

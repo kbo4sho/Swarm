@@ -5,10 +5,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 /*
-
-package swarm.engine;
-
-// SwarmParameters.java
 //
 // Part of:
 // SwarmChemistry.java
@@ -27,57 +23,38 @@ package swarm.engine;
 // For more information about this software, see:
 //   http://bingweb.binghamton.edu/~sayama/SwarmChemistry/
 //
-
-import java.awt.Color; 
-  */
+*/
 namespace SwarmEngine
 {
     public class Parameters : IComparable
-    {
-        public static int numberOfIndividualsMax = 1000;
+    {     
+        protected double neighborhoodRadius;
+        protected double normalSpeed;
+        protected double maxSpeed;
+        protected double c1;
+        protected double c2;
+        protected double c3;
+        protected double c4;
+        protected double c5;
 
-        private double neighborhoodRadius;
-        public static double neighborhoodRadiusMax = 20;
-
-        private double normalSpeed;
-        public static double normalSpeedMax = 10;
-
-        private double maxSpeed;
-        public static double maxSpeedMax = 20;
-
-        private double c1;
-        public static double c1Max = 1;
-
-        private double c2;
-        public static double c2Max = 1;
-
-        private double c3;
-        public static double c3Max = 100;
-
-        private double c4;
-        public static double c4Max = 0.5;
-
-        private double c5;
-        public static double c5Max = 1;
-
-        public Random rand = new Random();
+        private Random rand = new Random();
 
         public Parameters()
         {
-            neighborhoodRadius = rand.NextDouble() * neighborhoodRadiusMax;
-            normalSpeed = rand.NextDouble() * normalSpeedMax;
-            maxSpeed = rand.NextDouble() * maxSpeedMax;
-            c1 = rand.NextDouble() * c1Max;
-            c2 = rand.NextDouble() * c2Max;
-            c3 = rand.NextDouble() * c3Max;
-            c4 = rand.NextDouble() * c4Max;
-            c5 = rand.NextDouble() * c5Max;
+            neighborhoodRadius = rand.NextDouble() * StaticWorldParameters.neighborhoodRadiusMax;
+            normalSpeed = rand.NextDouble() * StaticWorldParameters.normalSpeedMax;
+            maxSpeed = rand.NextDouble() * StaticWorldParameters.maxSpeedMax;
+            c1 = rand.NextDouble() * StaticWorldParameters.CohesiveForceMax;
+            c2 = rand.NextDouble() * StaticWorldParameters.AligningForceMax;
+            c3 = rand.NextDouble() * StaticWorldParameters.SeperatingForceMax;
+            c4 = rand.NextDouble() * StaticWorldParameters.ChanceOfRandomSteeringMax;
+            c5 = rand.NextDouble() * StaticWorldParameters.TendencyOfPaceKeepingMax;
         }
 
         public string getRecipe()
         {
             StringBuilder sb = new StringBuilder("");
-            sb.Append((int)numberOfIndividualsMax);
+            sb.Append((int)StaticWorldParameters.numberOfIndividualsMax);
             sb.Append(", ");
             sb.Append((double)getNeighborhoodRadius());
             sb.Append(", ");
@@ -186,29 +163,29 @@ namespace SwarmEngine
         public void inducePointMutations(double rate, double magnitude)
         {
             if (rand.NextDouble() < rate)
-                neighborhoodRadius += (rand.NextDouble() - 0.5) * neighborhoodRadiusMax
+                neighborhoodRadius += (rand.NextDouble() - 0.5) * StaticWorldParameters.neighborhoodRadiusMax
                         * magnitude;
 
             if (rand.NextDouble() < rate)
-                normalSpeed += (rand.NextDouble() - 0.5) * normalSpeedMax * magnitude;
+                normalSpeed += (rand.NextDouble() - 0.5) * StaticWorldParameters.normalSpeedMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                maxSpeed += (rand.NextDouble() - 0.5) * maxSpeedMax * magnitude;
+                maxSpeed += (rand.NextDouble() - 0.5) * StaticWorldParameters.maxSpeedMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c1 += (rand.NextDouble() - 0.5) * c1Max * magnitude;
+                c1 += (rand.NextDouble() - 0.5) * StaticWorldParameters.CohesiveForceMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c2 += (rand.NextDouble() - 0.5) * c2Max * magnitude;
+                c2 += (rand.NextDouble() - 0.5) * StaticWorldParameters.AligningForceMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c3 += (rand.NextDouble() - 0.5) * c3Max * magnitude;
+                c3 += (rand.NextDouble() - 0.5) * StaticWorldParameters.SeperatingForceMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c4 += (rand.NextDouble() - 0.5) * c4Max * magnitude;
+                c4 += (rand.NextDouble() - 0.5) * StaticWorldParameters.ChanceOfRandomSteeringMax * magnitude;
 
             if (rand.NextDouble() < rate)
-                c5 += (rand.NextDouble() - 0.5) * c5Max * magnitude;
+                c5 += (rand.NextDouble() - 0.5) * StaticWorldParameters.TendencyOfPaceKeepingMax * magnitude;
 
             boundParameterValues();
         }
@@ -217,49 +194,49 @@ namespace SwarmEngine
         {
             if (neighborhoodRadius < 0)
                 neighborhoodRadius = 0;
-            else if (neighborhoodRadius > neighborhoodRadiusMax)
-                neighborhoodRadius = neighborhoodRadiusMax;
+            else if (neighborhoodRadius > StaticWorldParameters.neighborhoodRadiusMax)
+                neighborhoodRadius = StaticWorldParameters.neighborhoodRadiusMax;
 
             if (normalSpeed < 0)
                 normalSpeed = 0;
-            else if (normalSpeed > normalSpeedMax)
-                normalSpeed = normalSpeedMax;
+            else if (normalSpeed > StaticWorldParameters.normalSpeedMax)
+                normalSpeed = StaticWorldParameters.normalSpeedMax;
 
             if (maxSpeed < 0)
                 maxSpeed = 0;
-            else if (maxSpeed > maxSpeedMax)
-                maxSpeed = maxSpeedMax;
+            else if (maxSpeed > StaticWorldParameters.maxSpeedMax)
+                maxSpeed = StaticWorldParameters.maxSpeedMax;
 
             if (c1 < 0)
                 c1 = 0;
-            else if (c1 > c1Max)
-                c1 = c1Max;
+            else if (c1 > StaticWorldParameters.CohesiveForceMax)
+                c1 = StaticWorldParameters.CohesiveForceMax;
 
             if (c2 < 0)
                 c2 = 0;
-            else if (c2 > c2Max)
-                c2 = c2Max;
+            else if (c2 > StaticWorldParameters.AligningForceMax)
+                c2 = StaticWorldParameters.AligningForceMax;
 
             if (c3 < 0)
                 c3 = 0;
-            else if (c3 > c3Max)
-                c3 = c3Max;
+            else if (c3 > StaticWorldParameters.SeperatingForceMax)
+                c3 = StaticWorldParameters.SeperatingForceMax;
 
             if (c4 < 0)
                 c4 = 0;
-            else if (c4 > c4Max)
-                c4 = c4Max;
+            else if (c4 > StaticWorldParameters.ChanceOfRandomSteeringMax)
+                c4 = StaticWorldParameters.ChanceOfRandomSteeringMax;
 
             if (c5 < 0)
                 c5 = 0;
-            else if (c5 > c5Max)
-                c5 = c5Max;
+            else if (c5 > StaticWorldParameters.TendencyOfPaceKeepingMax)
+                c5 = StaticWorldParameters.TendencyOfPaceKeepingMax;
         }
 
         public Color getDisplayColor()
         {
-            return new Color((float)(c1 / c1Max * 0.8),
-                    (float)(c2 / c2Max * 0.8), (float)(c3 / c3Max * 0.8));
+            return new Color((float)(c1 / StaticWorldParameters.CohesiveForceMax * 0.8),
+                    (float)(c2 / StaticWorldParameters.AligningForceMax * 0.8), (float)(c3 / StaticWorldParameters.SeperatingForceMax* 0.8));
         }
 
         public double getNeighborhoodRadius()
@@ -301,7 +278,6 @@ namespace SwarmEngine
         {
             return c5;
         }
-
 
         #region IComparable
         public int CompareTo(object obj)

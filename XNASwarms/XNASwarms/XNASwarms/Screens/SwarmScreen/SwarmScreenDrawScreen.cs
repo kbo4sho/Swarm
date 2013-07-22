@@ -23,7 +23,7 @@ namespace XNASwarms
 
         public override void LoadContent()
         {
-            individualTexture = ScreenManager.Content.Load<Texture2D>("bee");
+            individualTexture = ScreenManager.Content.Load<Texture2D>("point");
             bigIndividualTexture = ScreenManager.Content.Load<Texture2D>("beebig");
             if (Mutate)
             {
@@ -46,7 +46,7 @@ namespace XNASwarms
             {
                 for (int i = 0; i < population[s].Count; i++)
                 {
-                    DrawIndividual(population[s][i], population[s][i].getDisplayColor(), individualTexture);
+                    DrawIndividual(population[s][i], population[s][i].getGenomeColor(), individualTexture);
                 }
             }
 
@@ -57,11 +57,11 @@ namespace XNASwarms
         private void DrawIndividual(Individual indvd,Color color, Texture2D texture)
         {
             ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
-                        (int)indvd.getX(),
-                        (int)indvd.getY(), texture.Width, texture.Height),
+                        (int)indvd.X,
+                        (int)indvd.Y, texture.Width, texture.Height),
                         null,
                         color,
-                        0f,
+                        (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
                         new Vector2(texture.Width / 2, texture.Height / 2),
                         SpriteEffects.None, 0);
         }
@@ -72,8 +72,8 @@ namespace XNASwarms
             {
                 foreach (Individual indvdl in spcs)
                 {
-                    indvdl.getGenome().inducePointMutations(rand.NextDouble(), 2);
-                    //ind.getGenome().inducePointMutations(rand.NextDouble(), 3);
+                    indvdl.Genome.inducePointMutations(rand.NextDouble(), 2);
+                    //ind.Genome.inducePointMutations(rand.NextDouble(), 3);
                 }
             }
             populationSimulator.DetermineSpecies();

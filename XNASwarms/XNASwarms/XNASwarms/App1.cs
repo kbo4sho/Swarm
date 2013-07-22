@@ -14,6 +14,8 @@ using Microsoft.Xna.Framework.Media;
 using ScreenSystem.ScreenSystem;
 using ScreenSystem.Debug;
 using SwarmEngine;
+using SwarmAudio;
+using SwarmAnalysisEngine;
 
 namespace XNASwarms
 {
@@ -53,6 +55,10 @@ namespace XNASwarms
             graphics.PreferredBackBufferHeight = 768;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
+            //graphics.ToggleFullScreen();
+
+            Normalizer.Width = GraphicsDevice.Viewport.Width;
+            Normalizer.Height = GraphicsDevice.Viewport.Height;
         }
 
         #endregion
@@ -75,7 +81,10 @@ namespace XNASwarms
 
             SwarmScreen1 swarmScreen = new SwarmScreen1(StockRecipies.Stable_A, false);
             screenManager.AddScreen(swarmScreen);
+
             base.Initialize();
+            SoundEngine.Init();
+
         }
 
         protected override void LoadContent()

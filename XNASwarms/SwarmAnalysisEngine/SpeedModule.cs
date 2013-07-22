@@ -14,9 +14,10 @@ namespace SwarmAnalysisEngine
         {
         }
 
-        public override List<AnalysisResult> Analyze(List<SwarmEngine.Individual> indvds)
+        protected override Analysis Analyze(List<SwarmEngine.Individual> indvds, bool sendaudiodata)
         {
             
+            //TODO set colors from config file
             for (int i = 0; i < indvds.Count; i++)
             {
                 double d = indvds[i].getDx2() * indvds[i].getDx2() + indvds[i].getDy2() * indvds[i].getDy2();
@@ -38,7 +39,7 @@ namespace SwarmAnalysisEngine
                     indvds[i].setDisplayColor(Color.Aquamarine);
                 }
             }
-            return new List<AnalysisResult>();
+            return new Analysis();
         }
     }
 }

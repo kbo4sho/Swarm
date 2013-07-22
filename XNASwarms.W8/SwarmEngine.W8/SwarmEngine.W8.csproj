@@ -129,12 +129,20 @@
     <Compile Include="..\..\XNASwarms\SwarmEngine\Species\StockSpecies.cs">
       <Link>Species\StockSpecies.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\WorldParameters.cs">
+      <Link>WorldParameters.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SuperParameters.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework.Windows8">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows8\MonoGame.Framework.Windows8.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SoultionItems\Windows8\MonoGame.Framework.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

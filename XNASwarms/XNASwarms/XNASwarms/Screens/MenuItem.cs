@@ -30,8 +30,14 @@ namespace XNASwarms.Screens
         Recall1,
         Recall2,
         Recall3,
+        Recall4,
+        Recall5,
+        Recall6,
         Swinger,
-        FussBudget,
+        ImportLikes,
+        ExportLikes,
+        AudioPlay,
+        AudioPause,
     }
 
     /// <summary>
@@ -137,7 +143,7 @@ namespace XNASwarms.Screens
             SpriteFont font = _menu.ScreenManager.Fonts.MenuSpriteFont;
 
             _menuItemBackground = _menu.ScreenManager.Content.Load<Texture2D>("Menu/button");
-            BackgroundRectangle = new Rectangle(0, 0, 100, 100);
+            BackgroundRectangle = new Rectangle(0, 0, 100, 50);
 
             _baseOrigin = new Vector2(font.MeasureString(Text).X / 2, font.MeasureString(Text).Y / 2);
 
@@ -234,10 +240,6 @@ namespace XNASwarms.Screens
         {
             return _type == EntryType.Swinger;
         }
-        internal bool IsFussBudget()
-        {
-            return _type == EntryType.FussBudget;
-        }
 
         internal bool IsDebugger()
         {
@@ -272,6 +274,41 @@ namespace XNASwarms.Screens
         internal bool IsRecall3()
         {
             return _type == EntryType.Recall3;
+        }
+
+        internal bool IsRecall4()
+        {
+            return _type == EntryType.Recall4;
+        }
+
+        internal bool IsRecall5()
+        {
+            return _type == EntryType.Recall5;
+        }
+
+        internal bool IsRecall6()
+        {
+            return _type == EntryType.Recall6;
+        }
+
+        internal bool IsImportLikes()
+        {
+            return _type == EntryType.ImportLikes;
+        }
+
+        internal bool IsExportLikes()
+        {
+            return _type == EntryType.ExportLikes;
+        }
+
+        internal bool IsAudioPlay()
+        {
+            return _type == EntryType.AudioPlay;
+        }
+
+        internal bool IsAudioPause()
+        {
+            return _type == EntryType.AudioPause;
         }
 
         #endregion

@@ -20,14 +20,13 @@ namespace SwarmAnalysisEngine
             TimePerFrame = (float)1 / fps;
         }
 
-        public virtual List<AnalysisResult> TryAnalysis(List<Individual> indvds, float gametime)
+        public virtual Analysis TryAnalysis(List<Individual> indvds, float gametime, bool sendaudiodata)
         {
             if (CanAnalyize(gametime))
             {
-                return Analyze(indvds);
+                return Analyze(indvds, sendaudiodata);
             }
-
-            return new List<AnalysisResult>();
+            return new Analysis();
         }
 
         private bool CanAnalyize(float gametime)
@@ -42,7 +41,7 @@ namespace SwarmAnalysisEngine
             return false;
         }
 
-        public virtual List<AnalysisResult> Analyze(List<Individual> indvds)
+        protected virtual Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
         {
             return null;
         }

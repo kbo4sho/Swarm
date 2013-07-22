@@ -14,9 +14,9 @@ namespace ScreenSystem.Debug
     {
         void AddDebugItem(string label, string message, DebugFlagType flagtype);
         void AddDebugItem(string label, string message);
-        void AddAnaysisResult(List<AnalysisResult> analysisresult);
+        void AddAnaysisResult(List<Analysis> analysisresult);
         void SetVisiblity();
-        void Reset();
+        void ResetDebugItemsToNormal();
         void AddSpacer();
     }
 
@@ -24,7 +24,9 @@ namespace ScreenSystem.Debug
     public class DebugScreen : DrawableGameComponent, IDebugScreen
     {
         private List<DebugItem> DebugItems;
-        private List<DebugItem> SavedDebugItems;
+
+        private List<FilterResult> FilterResults;
+        private Texture2D LineTexture;
 
         private Rectangle DebugPanelRectangle;
         private Texture2D PanelTexture;
@@ -34,23 +36,24 @@ namespace ScreenSystem.Debug
         private int PanelPadding;
         private int MaxDebugItems;
 
-        private bool IsVisible;
+        Color centerXColor;
+        private bool ConsoleVisible;
 
 
         public DebugScreen(ScreenManager screenmanager, bool visible)
             : base(screenmanager.Game)
         {
             DebugItems = new List<DebugItem>();
-            SavedDebugItems = new List<DebugItem>(); 
+            FilterResults = new List<FilterResult>();
             screenManager = screenmanager;
-            IsVisible = visible;
+            ConsoleVisible = visible;
         }
 
         protected override void LoadContent()
         {
-            frameratecounter = new FrameRateCounter(screenManager, IsVisible);
+            frameratecounter = new FrameRateCounter(screenManager, ConsoleVisible);
             screenManager.Game.Components.Add(frameratecounter);
-
+            LineTexture = screenManager.Content.Load<Texture2D>("centermarker");
             PanelTexture = screenManager.Content.Load<Texture2D>("Backgrounds/gray");
             itemSpacer = 10;
             PanelPadding = 10;
@@ -61,19 +64,18 @@ namespace ScreenSystem.Debug
 
         public override void Update(GameTime gameTime)
         {
-            if (IsVisible)
+            if (ConsoleVisible)
             {
-                Vector2 largestStringSize = new Vector2(30,20);//screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
+                Vector2 largestStringSize = new Vector2(100, 20);//screenManager.Fonts.FrameRateCounterFont.MeasureString(DebugItems.OrderBy(s => s.GetFormatedMessage().Length).Last().GetFormatedMessage().ToString());
                 DebugPanelRectangle.Width = (int)largestStringSize.X + PanelPadding * 3;
                 DebugPanelRectangle.Height = (itemSpacer * DebugItems.Count) + PanelPadding * 3;
 
                 if (DebugItems.Count > MaxDebugItems)
                 {
-                    //DebugItems.RemoveAll(s=>s.GetFlagType() == DebugFlagType.Normal) ..ToList());
                     List<DebugItem> tempItems = new List<DebugItem>();
                     foreach (var item in DebugItems.Skip(MaxDebugItems - DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count()))
                     {
-                        if(item.GetFlagType() == DebugFlagType.Normal)
+                        if (item.GetFlagType() == DebugFlagType.Normal)
                         {
                             tempItems.Add(item);
                         }
@@ -83,8 +85,6 @@ namespace ScreenSystem.Debug
                     {
                         DebugItems.Remove(temp);
                     }
-
-                    //DebugItems.RemoveRange(MaxDebugItems - DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count(), DebugItems.Count - (MaxDebugItems- DebugItems.Where(d => d.GetFlagType() != DebugFlagType.Normal).Count())));
                 }
             }
             base.Update(gameTime);
@@ -92,7 +92,7 @@ namespace ScreenSystem.Debug
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (IsVisible)
+            if (ConsoleVisible)
             {
                 screenManager.SpriteBatch.Begin();
                 screenManager.SpriteBatch.Draw(PanelTexture, DebugPanelRectangle, new Color(20, 20, 20, 170));
@@ -102,10 +102,32 @@ namespace ScreenSystem.Debug
                     screenManager.SpriteBatch.DrawString(screenManager.Fonts.FrameRateCounterFont, DebugItems[i].GetFormatedMessage(),
                                                           new Vector2(DebugPanelRectangle.X + PanelPadding, (DebugPanelRectangle.Y + itemSpacer * i) + PanelPadding), DebugItems[i].GetColor());
                 }
-                screenManager.SpriteBatch.End();
 
+                DrawAnalysisFilters();
+
+                screenManager.SpriteBatch.End();
             }
+
             base.Draw(gameTime);
+        }
+
+        private void DrawAnalysisFilters()
+        {
+            if (FilterResults != null)
+            {
+                for (int i = FilterResults.Count - 1; i >= 0; i -= 1)
+                {
+                    for (int c = 0; c < FilterResults[i].ClusterPoints.Count(); c++ )
+                    {
+                        centerXColor = Color.Blue;
+                        screenManager.SpriteBatch.Draw(LineTexture, FilterResults[i].ClusterPoints[c], null, centerXColor, 0, new Vector2(-(screenManager.GraphicsDevice.Viewport.Width / 2), -(screenManager.GraphicsDevice.Viewport.Height / 2)) + new Vector2(5, 5), Vector2.One, SpriteEffects.None, 0);
+                    }
+                }
+                if (FilterResults.Count > 1)
+                {
+                    FilterResults.Clear();
+                }
+            }
         }
 
         private void AddDebugItemSpacer()
@@ -121,30 +143,44 @@ namespace ScreenSystem.Debug
 
         public void AddDebugItem(string label, string message, DebugFlagType flagtype)
         {
-            
-            switch (flagtype)
+            if (ConsoleVisible)
             {
-                case DebugFlagType.Normal:
-                    DebugItems.Insert(0, new DebugItem(label, message, flagtype));
-                    break;
-                case DebugFlagType.Odd:
-                    DebugItems.Insert(0, new DebugItem(label, message,flagtype));
-                    //SavedDebugItems.Insert(0, new DebugItem(label, message, flagtype));
-                    break;
-                case DebugFlagType.Important:
-                    DebugItems.Insert(0, new DebugItem(label, message, flagtype));
-                    //SavedDebugItems.Insert(0, new DebugItem(label, message, flagtype));
-                    break;
-            }  
+                switch (flagtype)
+                {
+                    case DebugFlagType.Normal:
+                        DebugItems.Insert(0, new DebugItem(label, message, flagtype));
+                        break;
+                    case DebugFlagType.Odd:
+                        DebugItems.Insert(0, new DebugItem(label, message, flagtype));
+                        break;
+                    case DebugFlagType.Important:
+                        DebugItems.Insert(0, new DebugItem(label, message, flagtype));
+                        break;
+                }
+            }
         }
 
-        public void AddAnaysisResult(List<AnalysisResult> analysisresult)
+        public void AddAnaysisResult(List<Analysis> analysisresult)
         {
-            if (this.IsVisible)
+            if (ConsoleVisible)
             {
-                foreach (AnalysisResult result in analysisresult)
+                foreach (Analysis analysis in analysisresult)
                 {
-                    AddDebugItem(result.Type, result.Message);
+                    if (this.ConsoleVisible)
+                    {
+                        if (analysis.Messages != null)
+                        {
+                            foreach (AnalysisMessage message in analysis.Messages)
+                            {
+                                AddDebugItem(message.Type, message.Message, DebugFlagType.Normal);
+                            }
+                        }
+                    }
+
+                    if (analysis.FilterResult != null)
+                    {
+                        FilterResults.Add(analysis.FilterResult);
+                    }
                 }
             }
         }
@@ -152,7 +188,7 @@ namespace ScreenSystem.Debug
         public void SetVisiblity()
         {
             frameratecounter.SetVisiblity();
-            IsVisible = !IsVisible;
+            ConsoleVisible = !ConsoleVisible;
         }
 
         public void AddSpacer()
@@ -160,19 +196,14 @@ namespace ScreenSystem.Debug
             AddDebugItemSpacer();
         }
 
-        public void Reset()
+        public void ResetDebugItemsToNormal()
         {
             foreach (DebugItem item in DebugItems.Where(i=>i.GetFlagType() != DebugFlagType.Normal))
             {
                item.ResetFlag();
             }
         }
-
         #endregion
 
-
-        
-
-       
     }
 }

@@ -34,6 +34,13 @@ namespace SwarmEngine
     {
         private static double maxStartingVelocity = 5;
         private String title;
+        private int totalAgents
+        {
+            get
+            {
+                return this.Sum(s => s.Count);
+            }
+        }
         Random rand = new Random();
 
         public Population():this(new List<Species>(),"kbothing")
@@ -44,6 +51,27 @@ namespace SwarmEngine
         { 
             this.AddRange(species);
             title = t;
+        }
+
+        public void TryAddToExistingSpecies(Individual indvd)
+        {
+            Species species = this.First<Species>();
+
+            if (totalAgents <= StaticWorldParameters.numberOfIndividualsMax)
+            {
+                species.Add(indvd);
+            }
+        }
+
+        public void TryRemoveFromExisitingSpecies()
+        {
+            this.Where(e => e.Count() > 0).First().RemoveAt(0);
+            CheckForEmptySpecies();  
+        }
+
+        private void CheckForEmptySpecies()
+        {
+            this.RemoveAll(s => s.Count == 0);
         }
 
         //public Population(int n, int width, int height, String t)

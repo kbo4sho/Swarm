@@ -1,0 +1,354 @@
+SetPrintCommands 1;
+//Cluster_datatest_Norm.aud
+//uses normalized data values from swarm client
+
+///////////////////
+// Control one sound stream for one cluster
+//	Sound stream is from a logistic map quasi periodic state
+//	SendNumAgents : Number of Agents -- Frequency Scale (width of pitch range_
+//	SendArea: Cluster Area -- Center frequency (offset of pitch range)
+//		NumAgents = Freq Scale and Area = Freq Offset must be set at the same time
+//	SendAgentEnergy: Individual Agent velocity -- Tempo of sequence
+//	SendXYsymmetry: Cluster Symmetry -- c:m ratio - asymmetry distorts above and below 1.0 ratio
+//	XY Position = Panning and distance cues
+/////////////////
+
+// Load the DSOs we need
+LoadDSO msgGroup.so;
+LoadDSO logistic.so;
+LoadDSO map.so;
+LoadDSO seq.so;
+LoadDSO fm.so;
+LoadDSO later.so;
+LoadDSO reverb.so;
+
+aFm = Create FmActor;
+sFm_1 = BeginSound aFm SetAmp 0, SetCarFreq 200.0, SetMCratio 0.6875;
+SetPause sFm_1 1;
+al1 = Create LaterActor;
+sFm_2 = BeginSound aFm SetAmp 0, SetCarFreq 200.0, SetMCratio 0.6875;
+SetPause sFm_2 1;
+al2 = Create LaterActor;
+sFm_3 = BeginSound aFm SetAmp 0, SetCarFreq 200.0, SetMCratio 0.6875;
+SetPause sFm_3 1;
+al3 = Create LaterActor;
+sFm_4 = BeginSound aFm SetAmp 0, SetCarFreq 200.0, SetMCratio 0.6875;
+SetPause sFm_4 1;
+al4 = Create LaterActor;
+
+MasterAMP = Create SegmentMapper;
+SetBreakpoints MasterAMP [0.0 0.2, 2.0 0.2];
+
+/* following section rescales note envelope according to Tempo
+*/
+
+currentTempo = Create SegmentMapper;
+SetBreakpoints currentTempo [0 60., 2 60.];
+//Dereference with 1
+
+TempoToPitchEnvScale = Create SegmentMapper; //Carrier Freq fadeout time
+SetBreakpoints TempoToPitchEnvScale [60 0.8, 120 0.4];
+
+TempoToModEnvScale = Create SegmentMapper; //Mod Freq fadeout time
+SetBreakpoints TempoToModEnvScale [60 0.6, 120 0.3];
+
+TempoToDurScale = Create SegmentMapper; //duration before fadeout
+SetBreakpoints TempoToDurScale [60 0.9, 120 0.45];
+
+rescalePitchEnv = Create MessageGroup; //*1 is Fm handler
+AddMessage rescalePitchEnv MapAndSend TempoToPitchEnvScale SetAmp *1 0 @*0; //0.8 at tempo=60
+//based upon: AddMessage setFm AddMessage al 0.05 SetAmp sFm 0 0.8;
+
+rescaleModEnv = Create MessageGroup; //*1 is Fm handler
+AddMessage rescalePitchEnv MapAndSend TempoToModEnvScale SetModIndex *1 0 @*0; //0.8 at tempo=60
+
+al = Create LaterActor;
+rescaleDurEnv = Create MessageGroup; //*1 is Fm handler
+AddMessage rescaleDurEnv MapAndSend TempoToDurScale AddMessage al @*0 SetPause *1 1;
+
+setFm1 = Create MessageGroup; //This message plays one note with rescalable envelopes to adjust for tempo
+AddMessage setFm1 SetCarFreq sFm_1 *0; //Freq value from logistic data value
+AddMessage setFm1 SetModIndex sFm_1 1.;
+AddMessage setFm1 SetPause sFm_1 0;
+AddMessage setFm1 MapAndSend MasterAMP SetAmp sFm_1 @1 0.01; //0.5 was too loud
+AddMessage setFm1 AddMessage al1 0.02 MapAndSend currentTempo SendData rescalePitchEnv [@1 sFm_1]; //dereference map
+AddMessage setFm1 AddMessage al1 0.02 MapAndSend currentTempo SendData rescaleModEnv [@1 sFm_1];
+AddMessage setFm1 MapAndSend currentTempo SendData rescaleDurEnv [@1 sFm_1];
+//AddMessage setFm AddMessage al 0.05 SetAmp sFm 0 0.8;
+//AddMessage setFm AddMessage al 0.05 SetModIndex sFm 0 0.6;
+//AddMessage setFm AddMessage al 0.9 SetPause sFm 1;
+
+SetModOnly = Create MessageGroup;
+AddMessage SetModOnly SetMCratio sFm *0;
+
+setFm2 = Create MessageGroup; //This message plays one note with rescalable envelopes to adjust for tempo
+AddMessage setFm2 SetCarFreq sFm_2 *0; //Freq value from logistic data value
+AddMessage setFm2 SetModIndex sFm_2 1.;
+AddMessage setFm2 SetPause sFm_2 0;
+AddMessage setFm2 MapAndSend MasterAMP SetAmp sFm_2 @1 0.01; //0.5 was too loud
+AddMessage setFm2 AddMessage al2 0.02 MapAndSend currentTempo SendData rescalePitchEnv [@1 sFm_2]; //dereference map
+AddMessage setFm2 AddMessage al2 0.02 MapAndSend currentTempo SendData rescaleModEnv [@1 sFm_2];
+AddMessage setFm2 MapAndSend currentTempo SendData rescaleDurEnv [@1 sFm_2];
+
+setFm3 = Create MessageGroup; //This message plays one note with rescalable envelopes to adjust for tempo
+AddMessage setFm3 SetCarFreq sFm_3 *0; //Freq value from logistic data value
+AddMessage setFm3 SetModIndex sFm_3 1.;
+AddMessage setFm3 SetPause sFm_3 0;
+AddMessage setFm3 MapAndSend MasterAMP SetAmp sFm_3 @1 0.01; //0.5 was too loud
+AddMessage setFm3 AddMessage al3 0.02 MapAndSend currentTempo SendData rescalePitchEnv [@1 sFm_3]; //dereference map
+AddMessage setFm3 AddMessage al3 0.02 MapAndSend currentTempo SendData rescaleModEnv [@1 sFm_3];
+AddMessage setFm3 MapAndSend currentTempo SendData rescaleDurEnv [@1 sFm_3];
+
+setFm4 = Create MessageGroup; //This message plays one note with rescalable envelopes to adjust for tempo
+AddMessage setFm4 SetCarFreq sFm_4 *0; //Freq value from logistic data value
+AddMessage setFm4 SetModIndex sFm_4 1.;
+AddMessage setFm4 SetPause sFm_4 0;
+AddMessage setFm4 MapAndSend MasterAMP SetAmp sFm_4 @1 0.01; //0.5 was too loud
+AddMessage setFm4 AddMessage al4 0.02 MapAndSend currentTempo SendData rescalePitchEnv [@1 sFm_4]; //dereference map
+AddMessage setFm4 AddMessage al4 0.02 MapAndSend currentTempo SendData rescaleModEnv [@1 sFm_4];
+AddMessage setFm4 MapAndSend currentTempo SendData rescaleDurEnv [@1 sFm_4];
+
+/* following section sets up the logistic actor and sequencer
+*/
+
+//logistic actor output is range [0,1]
+//mode 3 should create logarithmic output
+//Scale is multiplied by the output range [0,1]
+//Scale 200 = range [0, 200]
+//Offset is the baseine value above 0
+//Scale n and Offset n will create an octave in the range [n, 2xn] Hz
+
+alog_1 = Create LogisticActor;
+SetMessageGroup alog_1 "setFm1";
+SetState alog_1 0.5;
+SetCtrl alog_1 3.73891; 
+SetOutputMode alog_1 3;
+SetScaleAndOffset alog_1 200.0 350; //range of 200, base vale of 350
+Debug alog_1 0;
+
+alog_2 = Create LogisticActor;
+SetMessageGroup alog_2 "setFm2";
+SetState alog_2 0.5;
+SetCtrl alog_2 3.73987; //3.73891
+SetOutputMode alog_2 3;
+SetScaleAndOffset alog_2 200.0 350; //range of 200, base vale of 350
+Debug alog_2 0;
+
+alog_3 = Create LogisticActor;
+SetMessageGroup alog_3 "setFm3";
+SetState alog_3 0.5;
+SetCtrl alog_3 3.73924; //3.73891
+SetOutputMode alog_3 3;
+SetScaleAndOffset alog_3 200.0 350; //range of 200, base vale of 350
+Debug alog_3 0;
+
+alog_4 = Create LogisticActor;
+SetMessageGroup alog_4 "setFm4";
+SetState alog_4 0.5;
+SetCtrl alog_4 3.73804; //3.73891
+SetOutputMode alog_4 3;
+SetScaleAndOffset alog_4 200.0 350; //range of 200, base vale of 350
+Debug alog_4 0;
+
+seq_1 = Create SeqActor;
+Active seq_1 0;
+SetLoopEnd seq_1 1;
+AddMessage seq_1 0 GoOnce alog_1;
+SetNumLoops seq_1 -1;
+SetTempo seq_1 126;
+Rewind seq_1;
+//Active seq 1;
+
+seq_2 = Create SeqActor;
+Active seq_2 0;
+SetLoopEnd seq_2 1;
+AddMessage seq_2 0 GoOnce alog_2;
+SetNumLoops seq_2 -1;
+SetTempo seq_2 126;
+Rewind seq_2;
+
+seq_3 = Create SeqActor;
+Active seq_3 0;
+SetLoopEnd seq_3 1;
+AddMessage seq_3 0 GoOnce alog_3;
+SetNumLoops seq_3 -1;
+SetTempo seq_3 126;
+Rewind seq_3;
+
+seq_4 = Create SeqActor;
+Active seq_4 0;
+SetLoopEnd seq_4 1;
+AddMessage seq_4 0 GoOnce alog_4;
+SetNumLoops seq_4 -1;
+SetTempo seq_4 126;
+Rewind seq_4;
+
+//// archaic >>>>>>>>>
+playSeq = Create MessageGroup;
+AddMessage playSeq Active seq_1 *0;
+
+play = Create MessageGroup;
+AddMessage play ScaleAmp sFm_1 *0;
+AddMessage play SetCtrl alog_1 *1;
+AddMessage play SetState alog_1 *2;
+AddMessage play SetScaleAndOffset alog_1 *3 *4;
+AddMessage play SetNumberOfBins alog_1 *5;
+AddMessage play SetTempo seq_1 *6;
+
+play_Mode = Create MessageGroup;
+AddMessage play_Mode SetOutputMode alog_1 *0;
+//// end archaic <<<<<<<<<<
+
+SourceAmp = Create MessageGroup;
+AddMessage SourceAmp SetBreakpoints MasterAMP [0.0 *0, 2.0 *0];
+
+/* following section handles the spatialization and localization 
+*/
+
+Rev = Create ReverbActor;
+rev = BeginSound Rev; 
+SetAmp rev 0.5 ; 
+SetInput rev sFm_1;
+SetGain rev 0.5; //was 2
+
+RevGainMap = Create ExponentialMapper;
+SetMapBounds RevGainMap 0.0 1.0 0.0 10 20;
+
+RevMixMap = Create ExponentialMapper;
+SetMapBounds RevMixMap 0.0 1.0 0.0 1.0 5;//5 was 20 
+
+globalrev = BeginSound Rev; 
+SetAmp globalrev 1.0 ;
+SetInput globalrev sFm_1;
+SetGain globalrev 0.7; //was 1.2 -- makes more noticable
+SetMix globalrev 1.0; 
+
+//Space args: Panning [-1, 1], Distance [0,1]
+
+DistanceMix = Create MessageGroup; //needed to nest to map de-references
+AddMessage DistanceMix MapAndSend RevMixMap SetMix rev @*0;
+
+InvertDistance = Create SegmentMapper;
+SetBreakpoints InvertDistance [-1 1, 0 1, 1 0, 2 0];
+
+SetMyPanning = Create MessageGroup;
+AddMessage SetMyPanning SetPan sFm_1 *0;
+AddMessage SetMyPanning SetPan rev *0;
+AddMessage SetMyPanning SetPan globalrev *0;
+
+SourceAmpMap = Create ExponentialMapper;
+SetMapBounds SourceAmpMap 0.0 1.0 0.0 0.4 5; 
+//add exponential curve to distance onset; adjust max amp to 0.4 (was 0.7) 5.11.13
+
+SetMyDistance = Create MessageGroup;
+AddMessage SetMyDistance MapAndSend InvertDistance SendData DistanceMix [@*0];
+AddMessage SetMyDistance MapAndSend SourceAmpMap ScaleAmp sFm_1 @*0;  
+//NOTE: this was SetAmp for soundfile-based source
+
+
+/* following are MessageGroups for the cluster data
+*/
+
+/* Individual Control Test Messages */
+
+TempoRangeMap = Create SegmentMapper; //JAud assumes 110-800 tempo
+SetBreakpoints TempoRangeMap [0 110, 1 800];
+
+XYsymMap = Create SegmentMapper;
+SetBreakpoints XYsymMap [0.1 0.1, 0.95 1.0, 1.05 1.0, 10 10];//extend stable area around 1.0
+
+//NEED MAPS TO SET MIN FREQ FOR NumAgents = 1.0 AND FOR Area = 1.0  --> "1.0" is a terrible lower limit for freq.
+
+FreqRangeMap = Create ExponentialMapper; //change linear scale to log scale for frequency (x1 x2 y1 y2 expBase) 
+SetMapBounds FreqRangeMap 5.0 5.0, 300 300 2; //init
+//in set function, Freq range should scale with Freq offset to maintain octave-relative range
+
+FreqOffsetMap = Create SegmentMapper;
+SetBreakpoints FreqOffsetMap [1.0 200.0, 300.0 1200.0]; //2 octave range for base freq
+
+//NumAgents and Area must be sent together in this synth method
+//NumAgents = Freq Scale and Area = Freq Offset
+SetNumAgents_Area = Create MessageGroup; //*2 is logistic actor alog_n
+AddMessage SetNumAgents_Area MapAndSend FreqOffsetMap SetScaleAndOffset *2 *0 @*1; //sets base frequency
+
+//// ARCHAIC >>>>>>>>>>>> ONLY WORKS FOR JAudPanel with sFm_1
+SendAgentEnergy = Create MessageGroup; 
+AddMessage SendAgentEnergy MapAndSend TempoRangeMap SetTempo seq_1 @*0;
+SendXYsymmetry = Create MessageGroup;
+AddMessage SendXYsymmetry MapAndSend XYsymMap SetMCratio sFm_1 @*0;
+
+StoreArea = Create SegmentMapper;
+SetBreakpoints StoreArea [0 200, 2 200]; //init only -- Lowest Freq
+StoreNumAgents = Create SegmentMapper;
+SetBreakpoints StoreNumAgents [0 400, 2 400]; //init only -- Range of Freq
+
+//NumAgents data has already been mapped with FreqRangeMap and stored in StoreNumAgents
+SendArea = Create MessageGroup; //one control message sends both data values
+AddMessage SendArea MapAndSend StoreNumAgents SendData SetNumAgents_Area [@1 *0 sFm_1]; //Area data is mapped in SetNumAgents_Area
+AddMessage SendArea SetBreakpoints StoreArea [0 *0, 2 *0]; 
+
+//NumAgents data is mapped with FreqRangeMap then stored in StoreNumAgents
+SendNumAgents = Create MessageGroup; //one control message sends both data values
+//AddMessage SendNumAgents MapAndSend FreqRangeMap SetBreakpoints StoreNumAgents [0 @*0, 2 @*0];
+AddMessage SendNumAgents SetBreakpoints StoreNumAgents [0 *0, 2 *0];
+AddMessage SendNumAgents MapAndSend StoreArea SendData SendArea [@1];
+//this enables newly mapped NumAgents data to be combined with downstream mapping of Area data
+//hopefully no parser recursion as StoreArea is mapping a value to reset itself in SendArea
+
+//Order of arguments: 0 = Xpos [-1, 1], 1 = Ypos [0, 1]
+// NOTE!!! Y axis distance is [0 to 1] not [-1 to 1] !!!
+SendXYposition = Create MessageGroup;
+AddMessage SendXYposition SendData SetMyPanning [*0];
+AddMessage SendXYposition SendData SetMyDistance [*1];
+///// end ARCHAIC <<<<<<<<<<<<<<<
+
+
+/* Comprehensive Control Test Message */
+
+startCluster_1 = Create MessageGroup;
+AddMessage startCluster_1 Active seq_1 1.0;
+startCluster_2 = Create MessageGroup;
+AddMessage startCluster_2 Active seq_2 1.0;
+startCluster_3 = Create MessageGroup;
+AddMessage startCluster_3 Active seq_3 1.0;
+startCluster_4 = Create MessageGroup;
+AddMessage startCluster_4 Active seq_4 1.0;
+
+stopCluster_1 = Create MessageGroup;
+AddMessage stopCluster_1 Active seq_1 0.0;
+stopCluster_2 = Create MessageGroup;
+AddMessage stopCluster_2 Active seq_2 0.0;
+stopCluster_3 = Create MessageGroup;
+AddMessage stopCluster_3 Active seq_3 0.0;
+stopCluster_4 = Create MessageGroup;
+AddMessage stopCluster_4 Active seq_4 0.0;
+
+/* Bssed on specification 4.13 for Kevin B, this is 9 parameters
+   In that spec: Order of Argument Array Positions:
+   0 = NumAgents, 1 = Xpos, 2 = Ypos, 3 = Area, 4 = AgentEnergy, 5 = Velocity, 6-8 = Xsymmetry, Ysymmetry, XYsymmetry 
+*/
+updateCluster_1 = Create MessageGroup;
+//AddMessage updateCluster_1 MapAndSend FreqRangeMap SendData SetNumAgents_Area [@*0 *3];
+AddMessage updateCluster_1 SendData SetNumAgents_Area [*0 *3 alog_1];
+AddMessage updateCluster_1 MapAndSend TempoRangeMap SetTempo seq_1 @*4; 
+AddMessage updateCluster_1 MapAndSend XYsymMap SetMCratio sFm_1 @*8;
+AddMessage updateCluster_1 SendData SetMyPanning [*1];
+AddMessage updateCluster_1 SendData SetMyDistance [*2];
+
+updateCluster_2 = Create MessageGroup;
+AddMessage updateCluster_2 SendData SetNumAgents_Area [*0 *3 alog_2];
+AddMessage updateCluster_2 MapAndSend TempoRangeMap SetTempo seq_2 @*4; 
+AddMessage updateCluster_2 SetMCratio sFm_2 *8;
+AddMessage updateCluster_2 SetPan sFm_2 *1;
+
+updateCluster_3 = Create MessageGroup;
+AddMessage updateCluster_3 SendData SetNumAgents_Area [*0 *3 alog_3];
+AddMessage updateCluster_3 MapAndSend TempoRangeMap SetTempo seq_3 @*4; 
+AddMessage updateCluster_3 SetMCratio sFm_3 *8;
+AddMessage updateCluster_3 SetPan sFm_3 *1;
+
+updateCluster_4 = Create MessageGroup;
+AddMessage updateCluster_4 SendData SetNumAgents_Area [*0 *3 alog_4];
+AddMessage updateCluster_4 MapAndSend TempoRangeMap SetTempo seq_4 @*4; 
+AddMessage updateCluster_4 SetMCratio sFm_4 *8;
+AddMessage updateCluster_4 SetPan sFm_4 *1;

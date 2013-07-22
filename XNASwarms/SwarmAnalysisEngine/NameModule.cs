@@ -13,9 +13,9 @@ namespace SwarmAnalysisEngine
         {
         }
 
-        public override List<AnalysisResult> Analyze(List<Individual> indvds)
+        protected override Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
         {
-            return new List<AnalysisResult>(){new AnalysisResult(){ Type = ModuleName, Message = "//"}};
+            return new Analysis(){ Messages = new List<AnalysisMessage>(){ new AnalysisMessage(){ Type = ModuleName, Message = "//"}}};
         }
     }
 }

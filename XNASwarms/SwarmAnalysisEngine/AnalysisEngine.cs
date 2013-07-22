@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SwarmEngine;
 using Microsoft.Xna.Framework;
+using System.Threading.Tasks;
 
 namespace SwarmAnalysisEngine
 {
@@ -16,14 +17,14 @@ namespace SwarmAnalysisEngine
             Modules = modules;
         }
     
-        public List<AnalysisResult> Run(List<Individual> indvds, float gametime)
+        public List<Analysis> Run(List<Individual> indvds, float gametime, bool sendaudiodata)
         {
-            List<AnalysisResult> results = new List<AnalysisResult>();
+            List<Analysis> analysis = new List<Analysis>();
             for (int i = 0; i < Modules.Count; i++ )
             {
-                results.AddRange(Modules[i].TryAnalysis(indvds, gametime));
+                analysis.Add(Modules[i].TryAnalysis(indvds, gametime, sendaudiodata));
             }
-            return results;
+            return analysis;
         }
 
     }

@@ -26,7 +26,6 @@ namespace XNASwarms
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            ButtonSection.Update();
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 

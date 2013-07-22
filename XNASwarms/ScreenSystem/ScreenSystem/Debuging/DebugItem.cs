@@ -8,7 +8,6 @@ namespace ScreenSystem.Debug
 {
     public enum DebugFlagType
     {
-        
         Normal = 0,
         Odd = 1,
         Important = 2,
@@ -50,7 +49,11 @@ namespace ScreenSystem.Debug
 
         public string GetFormatedMessage()
         {
-            return Label + ":   " + Message;
+            StringBuilder sb = new StringBuilder();
+            sb.Append(Label);
+            sb.Append(":  ");
+            sb.Append(Message);
+            return sb.ToString();
         }
 
         public Color GetColor()
@@ -58,7 +61,7 @@ namespace ScreenSystem.Debug
             switch (DebugFlagType)
             {
                 case Debug.DebugFlagType.Normal:
-                    return Color.LightCyan;                    
+                    return Color.LightBlue;                    
                 case Debug.DebugFlagType.Odd:
                     return Color.LightBlue;
                 case Debug.DebugFlagType.Important:

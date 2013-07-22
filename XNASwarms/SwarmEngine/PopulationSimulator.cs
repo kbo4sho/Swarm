@@ -10,49 +10,30 @@ namespace SwarmEngine
     public class PopulationSimulator
     {
         private Population population;
-        Random rand = new Random();
+        private Random rand = new Random();
+        Individual currentInd;
+        Parameters param;
+        Individual tempSwarm2;
 
-        private Species swarmInBirthOrder, swarmInXOrder,
-                swarmInYOrder;
+        int minRankInXOrder, maxRankInXOrder, minRankInYOrder, maxRankInYOrder;
 
+        double tempX, tempY, minX, maxX, minY, maxY, neighborhoodRadiusSquared;
+        double tempAx, tempAy;
+        double localCenterX = 0;
+        double localCenterY = 0;
+        double localDX = 0;
+        double localDY = 0;
+        double tempDX = 0;
+        double tempDY = 0;
+
+        double tempX2, tempY2;
+
+        private Species swarmInBirthOrder, swarmInYOrder;
+        private Species swarmInXOrder;
         #region Constuctor
-        //public PopulationSimulator(Population newPopulation)
-        //{
-        //    population = newPopulation;
-
-        //    swarmInBirthOrder = new List<Individual>(population.size());
-        //    swarmInXOrder = new List<Individual>(population.size());
-        //    swarmInYOrder = new List<Individual>(population.size());
-
-        //    for (int i = 0; i < population.Count; i++)
-        //    {
-        //        for (int j = 0; j < population[i].Count; j++)
-        //        {
-
-        //            addIndividual(population[i][j]);
-        //        }
-
-        //    }
-        //}
-
         public PopulationSimulator(int width, int height, params Recipe[] recipes)
+            :this (width, height, new Population(recipes[0].CreatePopulation(width, height), "CrumpulaAtion"))
         {
-
-            population = new Population(recipes[0].createPopulation(width, height), "CrumpulaAtion");
-
-            swarmInBirthOrder = new Species();
-            swarmInXOrder = new Species();
-            swarmInYOrder = new Species();
-
-            for (int i = 0; i < population.Count; i++)
-            {
-                for (int j = 0; j < population[i].Count; j++)
-                {
-                    addIndividual(population[i][j]);
-                }
-
-            }
-
         }
 
         public PopulationSimulator(int width, int height, Population pop)
@@ -67,67 +48,63 @@ namespace SwarmEngine
             {
                 for (int j = 0; j < population[i].Count; j++)
                 {
-                    addIndividual(population[i][j]);
+                    InitCollections(population[i][j]);
                 }
-
             }
-
         }
         #endregion
 
         public void stepSimulation(List<Individual> temporaryIndividuals, int weightOfTemporaries)
         {
             int numberOfSwarm = swarmInBirthOrder.Count();
-            
 
             for (int i = 0; i < numberOfSwarm; i++)
             {
-                Individual currentInd = swarmInBirthOrder[i];
-                Parameters param = currentInd.getGenome();
-                double tempX = currentInd.getX();
-                double tempY = currentInd.getY();
+                currentInd = swarmInBirthOrder[i];
+                param = currentInd.Genome;
+                tempX = currentInd.X;
+                tempY = currentInd.Y;
 
-                double neighborhoodRadiusSquared = param.getNeighborhoodRadius()
+                neighborhoodRadiusSquared = param.getNeighborhoodRadius()
                         * param.getNeighborhoodRadius();
 
                 List<Individual> neighbors = new List<Individual>();
 
                 // Detecting neighbors using sorted lists
-
-                double minX = tempX - param.getNeighborhoodRadius();
-                double maxX = tempX + param.getNeighborhoodRadius();
-                double minY = tempY - param.getNeighborhoodRadius();
-                double maxY = tempY + param.getNeighborhoodRadius();
-                int minRankInXOrder = currentInd.getRankInXOrder();
-                int maxRankInXOrder = currentInd.getRankInXOrder();
-                int minRankInYOrder = currentInd.getRankInYOrder();
-                int maxRankInYOrder = currentInd.getRankInYOrder();
+                minX = tempX - param.getNeighborhoodRadius();
+                maxX = tempX + param.getNeighborhoodRadius();
+                minY = tempY - param.getNeighborhoodRadius();
+                maxY = tempY + param.getNeighborhoodRadius();
+                minRankInXOrder = currentInd.RankInXOrder;
+                maxRankInXOrder = currentInd.RankInXOrder; 
+                minRankInYOrder = currentInd.RankInYOrder;
+                maxRankInYOrder = currentInd.RankInYOrder;
 
                 //TODO: Make this faster
-                for (int j = currentInd.getRankInXOrder() - 1; j >= 0; j--)
+                for (int j = currentInd.RankInXOrder - 1; j >= 0; j--)
                 {
-                    if (swarmInXOrder[j].getX() >= minX)
+                    if (swarmInXOrder[j].X >= minX)
                         minRankInXOrder = j;
                     else
                         break;
                 }
-                for (int j = currentInd.getRankInXOrder() + 1; j < numberOfSwarm; j++)
+                for (int j = currentInd.RankInXOrder + 1; j < numberOfSwarm; j++)
                 {
-                    if (swarmInXOrder[j].getX() <= maxX)
+                    if (swarmInXOrder[j].X <= maxX)
                         maxRankInXOrder = j;
                     else
                         break;
                 }
-                for (int j = currentInd.getRankInYOrder() - 1; j >= 0; j--)
+                for (int j = currentInd.RankInYOrder - 1; j >= 0; j--)
                 {
-                    if (swarmInYOrder[j].getY() >= minY)
+                    if (swarmInYOrder[j].Y >= minY)
                         minRankInYOrder = j;
                     else
                         break;
                 }
-                for (int j = currentInd.getRankInYOrder() + 1; j < numberOfSwarm; j++)
+                for (int j = currentInd.RankInYOrder + 1; j < numberOfSwarm; j++)
                 {
-                    if (swarmInYOrder[j].getY() <= maxY)
+                    if (swarmInYOrder[j].Y <= maxY)
                         maxRankInYOrder = j;
                     else
                         break;
@@ -136,34 +113,34 @@ namespace SwarmEngine
                 if (maxRankInXOrder - minRankInXOrder < maxRankInYOrder
                         - minRankInYOrder)
                 {
-                    for (int j = minRankInXOrder; j <= maxRankInXOrder; j++)
+                    for (int j = minRankInXOrder; j < maxRankInXOrder; j++)
                     {
-                        Individual tempSwarm2 = swarmInXOrder[j];
+                        tempSwarm2 = swarmInXOrder[j];
                         if (currentInd != tempSwarm2)
-                            if (tempSwarm2.getRankInYOrder() >= minRankInYOrder
-                                    && tempSwarm2.getRankInYOrder() <= maxRankInYOrder)
+                            if (tempSwarm2.RankInYOrder >= minRankInYOrder
+                                    && tempSwarm2.RankInYOrder <= maxRankInYOrder)
                             {
-                                if ((tempSwarm2.getX() - currentInd.getX())
-                                        * (tempSwarm2.getX() - currentInd.getX())
-                                        + (tempSwarm2.getY() - currentInd.getY())
-                                        * (tempSwarm2.getY() - currentInd.getY()) < neighborhoodRadiusSquared)
+                                if ((tempSwarm2.X - currentInd.X)
+                                        * (tempSwarm2.X - currentInd.X)
+                                        + (tempSwarm2.Y - currentInd.Y)
+                                        * (tempSwarm2.Y - currentInd.Y) < neighborhoodRadiusSquared)
                                     neighbors.Add(tempSwarm2);
                             }
                     }
                 }
                 else
                 {
-                    for (int j = minRankInYOrder; j <= maxRankInYOrder; j++)
+                    for (int j = minRankInYOrder; j < maxRankInYOrder; j++)
                     {
-                        Individual tempSwarm2 = swarmInYOrder[j];
+                        tempSwarm2 = swarmInYOrder[j];
                         if (currentInd != tempSwarm2)
-                            if (tempSwarm2.getRankInXOrder() >= minRankInXOrder
-                                    && tempSwarm2.getRankInXOrder() <= maxRankInXOrder)
+                            if (tempSwarm2.RankInXOrder >= minRankInXOrder
+                                    && tempSwarm2.RankInXOrder <= maxRankInXOrder)
                             {
-                                if ((tempSwarm2.getX() - currentInd.getX())
-                                        * (tempSwarm2.getX() - currentInd.getX())
-                                        + (tempSwarm2.getY() - currentInd.getY())
-                                        * (tempSwarm2.getY() - currentInd.getY()) < neighborhoodRadiusSquared)
+                                if ((tempSwarm2.X - currentInd.X)
+                                        * (tempSwarm2.X - currentInd.X)
+                                        + (tempSwarm2.Y - currentInd.Y)
+                                        * (tempSwarm2.Y - currentInd.Y) < neighborhoodRadiusSquared)
                                     neighbors.Add(tempSwarm2);
                             }
                     }
@@ -171,10 +148,10 @@ namespace SwarmEngine
 
                 for (int k = 0; k < temporaryIndividuals.Count; k++)
                 {
-                    if ((temporaryIndividuals[k].getX() - currentInd.getX())
-                        * (temporaryIndividuals[k].getX() - currentInd.getX())
-                        + (temporaryIndividuals[k].getY() - currentInd.getY())
-                        * (temporaryIndividuals[k].getY() - currentInd.getY()) < neighborhoodRadiusSquared)
+                    if ((temporaryIndividuals[k].X - currentInd.X)
+                        * (temporaryIndividuals[k].X - currentInd.X)
+                        + (temporaryIndividuals[k].Y - currentInd.Y)
+                        * (temporaryIndividuals[k].Y - currentInd.Y) < neighborhoodRadiusSquared)
                         for (int j = 0; j < weightOfTemporaries; j++)
                             neighbors.Add(temporaryIndividuals[k]);
                 }
@@ -183,7 +160,6 @@ namespace SwarmEngine
 
                 int n = neighbors.Count();
 
-                double tempAx, tempAy;
                 if (n == 0)
                 {
 
@@ -192,17 +168,17 @@ namespace SwarmEngine
                 }
                 else
                 {
-                    double localCenterX = 0;
-                    double localCenterY = 0;
-                    double localDX = 0;
-                    double localDY = 0;
+                    localCenterX = 0;
+                    localCenterY = 0;
+                    localDX = 0;
+                    localDY = 0;
                     for (int j = 0; j < n; j++)
                     {
-                        Individual tempSwarm2 = neighbors[j];
-                        localCenterX += tempSwarm2.getX();
-                        localCenterY += tempSwarm2.getY();
-                        localDX += tempSwarm2.getDx();
-                        localDY += tempSwarm2.getDy();
+                        tempSwarm2 = neighbors[j];
+                        localCenterX += tempSwarm2.X;
+                        localCenterY += tempSwarm2.Y;
+                        localDX += tempSwarm2.Dx;
+                        localDY += tempSwarm2.Dy;
                     }
                     localCenterX /= n;
                     localCenterY /= n;
@@ -219,9 +195,9 @@ namespace SwarmEngine
 
                     for (int j = 0; j < n; j++)
                     {
-                        Individual tempSwarm2 = neighbors[j];
-                        double tempX2 = tempSwarm2.getX();
-                        double tempY2 = tempSwarm2.getY();
+                        tempSwarm2 = neighbors[j];
+                        tempX2 = tempSwarm2.X;
+                        tempY2 = tempSwarm2.Y;
                         double d = (tempX - tempX2) * (tempX - tempX2) + (tempY - tempY2)
                                 * (tempY - tempY2);
                         if (d == 0)
@@ -241,8 +217,8 @@ namespace SwarmEngine
 
                 currentInd.accelerate(tempAx, tempAy, param.getMaxSpeed());
 
-                double tempDX = currentInd.getDx2();
-                double tempDY = currentInd.getDy2();
+                tempDX = currentInd.getDx2();
+                tempDY = currentInd.getDy2();
                 double f = Math.Sqrt(tempDX * tempDX + tempDY * tempDY);
                 if (f == 0)
                     f = 0.001;
@@ -251,7 +227,7 @@ namespace SwarmEngine
                         tempDY * (param.getNormalSpeed() - f) / f * param.getC5(),
                         param.getMaxSpeed());
 
-            }
+            };
 
             updateInternalState();
         }
@@ -262,100 +238,61 @@ namespace SwarmEngine
             {
                 swarmInBirthOrder[i].stepSimulation();
             }
-
             sortInternalLists();
 
             resetRanks();
         }
 
-        public void addIndividual(Individual b)
+        public void EmitIndividual(Individual indvd)
         {
-            swarmInBirthOrder.Add(b);
+            AddIndividual(indvd);
+            if (population.Sum(s => s.Count) > StaticWorldParameters.numberOfIndividualsMax -1)
+            {
+                swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
+                swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
+                swarmInBirthOrder.Remove(swarmInBirthOrder.First());
+                population.TryRemoveFromExisitingSpecies();
+            }
+        }
 
-            swarmInXOrder.Add(b);
-            swarmInYOrder.Add(b);
+        private void AddIndividual(Individual indvd)
+        {
+            if (population.Sum(s => s.Count) < StaticWorldParameters.numberOfIndividualsMax)
+            {
+                swarmInBirthOrder.Add(indvd);
+                swarmInXOrder.Add(indvd);
+                swarmInYOrder.Add(indvd);
+                population.TryAddToExistingSpecies(indvd);
+            }
+        }
 
-            //population.Add(b);
-
-            sortInternalLists();
-
-            //if (swarmInXOrder.Count < 1) 
-            //{
-            //    swarmInXOrder.Add(b);
-            //    swarmInYOrder.Add(b);
-            //} else {
-            //    zif ((b.getX() - swarmInXOrder[0].getX()) < (swarmInXOrder[swarmInXOrder.Count - 1].getX() - b.getX())) 
-            //    {
-            //        int i = 0;
-            //        while (i < swarmInXOrder.Count()) 
-            //        {
-            //            if (swarmInXOrder[i].getX() >= b.getX())
-            //                break;
-            //            i++;
-            //        }
-            //        swarmInXOrder.Insert(i, b);
-            //    } 
-            //    else 
-            //    {
-            //        int i = swarmInXOrder.Count;
-            //        while (i > 0) 
-            //        {
-            //            if (swarmInXOrder[i - 1].getX() <= b.getX())
-            //                break;
-            //            i--;
-            //        }
-            //        swarmInXOrder.Insert(i, b);
-            //    }
-
-            //    if ((b.getY() - swarmInYOrder[0].getY()) < (swarmInYOrder[swarmInYOrder.Count - 1].getY() - b.getY())) 
-            //    {
-            //        int i = 0;
-            //        while (i < swarmInYOrder.Count) 
-            //        {
-            //            if (swarmInYOrder[i].getY() >= b.getY())
-            //                break;
-            //            i++;
-            //        }
-            //        swarmInYOrder.Insert(i, b);
-            //    } 
-            //    else 
-            //    {
-            //        int i = swarmInYOrder.Count;
-            //        while (i > 0) 
-            //        {
-            //            if (swarmInYOrder[i - 1].getY() <= b.getY())
-            //                break;
-            //            i--;
-            //        }
-            //        swarmInYOrder.Insert(i, b);
-            //    }
-
-            //}
+        private void InitCollections(Individual indvd)
+        {
+            swarmInBirthOrder.Add(indvd);
+            swarmInXOrder.Add(indvd);
+            swarmInYOrder.Add(indvd);
         }
 
         private void sortInternalLists()
         {
-            swarmInXOrder.Sort((x, y) => x.getX().CompareTo(y.getX()));
-            swarmInYOrder.Sort((x, y) => x.getY().CompareTo(y.getY()));
-            //swarmInXOrder = new Species(swarmInXOrder.AsParallel().OrderByDescending(x => x.getX()).ToList<Individual>());
-            //swarmInYOrder = new Species(swarmInYOrder.AsParallel().OrderByDescending(x => x.getY()).ToList<Individual>());
+            //swarmInXOrder = (from entry in swarmInXOrder orderby entry.Value.X descending select entry)
+            //.ToDictionary(pair => pair.Key, pair => pair.Value);
+
+            //swarmInYOrder = ((from entry in swarmInYOrder orderby entry.Y descending select entry)
+            //.ToList<Individual>()) as Species;
+
+            swarmInXOrder.Sort((x, y) => x.X.CompareTo(y.X));
+            swarmInYOrder.Sort((x, y) => x.Y.CompareTo(y.Y));
+            
+            //swarmInYOrder.OrderBy(x => x.Y).ToList<Individual>();
         }
-
-
-        //public void removeIndividual(Individual b)
-        //{
-        //    swarmInBirthOrder.Remove(b);
-        //    swarmInXOrder.Remove(b);
-        //    swarmInYOrder.Remove(b);
-        //    population.Remove(b);
-        //}
 
         private void resetRanks()
         {
             for (int i = 0; i < swarmInXOrder.Count(); i++)
             {
                 Individual tempSwarm = swarmInXOrder[i];
-                if (tempSwarm.getRankInXOrder() != -1)
+                if (tempSwarm.RankInXOrder != -1)
                     tempSwarm.setRankInXOrder(i);
                 else
                     swarmInXOrder[i--] = null;
@@ -364,7 +301,7 @@ namespace SwarmEngine
             for (int i = 0; i < swarmInYOrder.Count(); i++)
             {
                 Individual tempSwarm = swarmInYOrder[i];
-                if (tempSwarm.getRankInYOrder() != -1)
+                if (tempSwarm.RankInYOrder != -1)
                     tempSwarm.setRankInYOrder(i);
                 else
                     swarmInYOrder[i--] = null;
@@ -373,28 +310,21 @@ namespace SwarmEngine
 
         public List<Individual> GetSwarmInXOrder()
         {
-            sortInternalLists();
+            //sortInternalLists();
             return swarmInXOrder;
         }
 
         public List<Individual> GetSwarmInYOrder()
         {
-            sortInternalLists();
+            //sortInternalLists();
             return swarmInYOrder;
         }
 
         public List<Individual> GetSwarmInBirthOrder()
         {
-            sortInternalLists();
+            //sortInternalLists();
             return swarmInBirthOrder;
         }
-
-        //public List<Individual> GetNeighbors()
-        //{
-        //    return neighbors;
-        //}
-
-
 
         public Population GetPopulation()
         {
@@ -404,24 +334,24 @@ namespace SwarmEngine
         public List<Individual> GetSwarmSortedBySpecies()
         {
             List<Individual> allSpecies = new List<Individual>();
-            foreach (Species spcs in population)
+            for (int i = 0; i < population.Count(); i++)
             {
-                allSpecies.AddRange(spcs.ToList());
+                allSpecies.AddRange(population[i].ToList());
             }
-            return allSpecies.OrderBy(s=>s.getGenome()).ToList();
+            return allSpecies.OrderBy(s=>s.Genome).ToList();
         }
 
         public void DetermineSpecies()
         {
             //Reorganize the population in to a species
-            List<string> discoverdRecipies = population.AsParallel().Select(s => s.Select(d => d.getGenome().getRecipe()).Distinct().ToList<string>()).First();
+            List<string> discoverdRecipies = population.Select(s => s.Select(d => d.Genome.getRecipe()).Distinct().ToList<string>()).First();
 
             if (discoverdRecipies != null && discoverdRecipies.Count() > 0)
             {
                 List<Species> species = new List<Species>();
                 foreach (var rcpe in discoverdRecipies)
                 {
-                    species.Add(new Species(population.AsParallel().Select(s => s.Where(t => t.getGenome().getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
+                    species.Add(new Species(population.Select(s => s.Where(t => t.Genome.getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
                 }
 
                 population.Clear();
@@ -429,6 +359,37 @@ namespace SwarmEngine
             }
             
             
+        }
+
+        private void ClearPopulation()
+        {
+            swarmInBirthOrder.Clear();
+            swarmInXOrder.Clear();
+            swarmInYOrder.Clear();
+        }
+
+        public void UpdatePopulation(string recipiText, bool mutate)
+        {
+            ClearPopulation();
+            population = new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion");
+            UpdatePopulation(population, mutate);
+        }
+
+        public void UpdatePopulation(Population tempPopulation, bool mutate)
+        {
+            ClearPopulation();
+            population = tempPopulation;
+            for (int i = 0; i < population.Count; i++)
+            {
+                for (int j = 0; j < population[i].Count; j++)
+                {
+                    if (mutate)
+                    {
+                        population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
+                    }
+                    InitCollections(population[i][j]);
+                }
+            }
         }
     }
 }

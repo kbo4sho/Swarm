@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>XNASwarmsRelease.W8_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\Users\kevin_000\Desktop\SwarmsPublish\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -101,35 +103,79 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Reference Include="MonoGame.Framework.Windows8">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows8\MonoGame.Framework.Windows8.dll</HintPath>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\..\SoultionItems\Windows8\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows8\SharpDX.dll</HintPath>
+    <Reference Include="SharpDX, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SoultionItems\Windows8\SharpDX.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Input">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows8\SharpDX.Input.dll</HintPath>
+    <Reference Include="SharpDX.Direct2D1, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SoultionItems\Windows8\SharpDX.Direct2D1.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Direct2D1">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows8\SharpDX.Direct2D1.dll</HintPath>
+    <Reference Include="SharpDX.Direct3D11, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SoultionItems\Windows8\SharpDX.Direct3D11.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Direct3D11">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows8\SharpDX.Direct3D11.dll</HintPath>
+    <Reference Include="SharpDX.DXGI, Version=2.4.2.0, Culture=neutral, PublicKeyToken=627a3d6d1956f55a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SoultionItems\Windows8\SharpDX.DXGI.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.DXGL">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows8\SharpDX.DXGL.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.MediaFoundation">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows8\SharpDX.MediaFoundation.dll</HintPath>
+    <Reference Include="SharpDX.MediaFoundation, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SoultionItems\Windows8\SharpDX.MediaFoundation.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Toolkit.Graphics">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows8\SharpDX.Toolkit.Graphics.dll</HintPath>
+      <HintPath>..\..\SoultionItems\Windows8\SharpDX.Toolkit.Graphics.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.XAudio2">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows8\SharpDX.XAudio2.dll</HintPath>
+    <Reference Include="SharpDX.XAudio2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SoultionItems\Windows8\SharpDX.XAudio2.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XInput, Version=2.4.2.0, Culture=neutral, PublicKeyToken=627a3d6d1956f55a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SoultionItems\Windows8\SharpDX.XInput.dll</HintPath>
+    </Reference>
+    <Reference Include="WinRtUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SoultionItems\WinRtUtility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
+      <Link>Emitters\BrushEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushParameters.cs">
+      <Link>Emitters\BrushParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterBase.cs">
+      <Link>Emitters\EmitterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterManager.cs">
+      <Link>Emitters\EmitterManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterType.cs">
+      <Link>Emitters\EmitterType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IAudioInfluenced.cs">
+      <Link>Emitters\IAudioInfluenced.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IEmitter.cs">
+      <Link>Emitters\IEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IGuideable.cs">
+      <Link>Emitters\IGuideable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IMeteredAgents.cs">
+      <Link>Emitters\IMeteredAgents.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\StillEmitter.cs">
+      <Link>Emitters\StillEmitter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ImportExportHelper.cs">
+      <Link>ImportExportHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveAllSpecies.cs">
       <Link>SaveAllSpecies.cs</Link>
     </Compile>
@@ -141,6 +187,15 @@
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpecies.cs">
       <Link>SaveSpecies.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpeciesHelper.cs">
+      <Link>SaveSpeciesHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveWorldParameters.cs">
+      <Link>SaveWorldParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Audio.cs">
+      <Link>Screens\Audio.cs</Link>
     </Compile>
     <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\borders\Border.cs">
       <Link>Screens\Borders\Border.cs</Link>
@@ -193,6 +248,9 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\StockSaveSpecies.cs">
       <Link>StockSaveSpecies.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SwarmSaveHelper.cs">
+      <Link>SwarmSaveHelper.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,35 +259,41 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\black.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Backgrounds\black.xnb">
       <Link>Content\Backgrounds\black.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\gray.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Backgrounds\gray.xnb">
       <Link>Content\Backgrounds\gray.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\logo.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Backgrounds\logo.xnb">
       <Link>Content\Backgrounds\logo.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\backgrounds\red.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Backgrounds\red.xnb">
       <Link>Content\Backgrounds\red.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\bee.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\bee.xnb">
       <Link>Content\bee.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\fonts\debugfont.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\beebig.xnb">
+      <Link>Content\beebig.xnb</Link>
+    </Content>
+    <Content Include="..\..\SoultionItems\Content\Content\centermarker.xnb">
+      <Link>Content\centermarker.xnb</Link>
+    </Content>
+    <Content Include="..\..\SoultionItems\Content\Content\Fonts\debugfont.xnb">
       <Link>Content\Fonts\debugfont.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\fonts\detailsfont.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Fonts\detailsfont.xnb">
       <Link>Content\Fonts\detailsfont.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\menu\button.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Menu\button.xnb">
       <Link>Content\Menu\button.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\swarmresources\content\content\menu\menufont.xnb">
+    <Content Include="..\..\SoultionItems\Content\Content\Menu\menufont.xnb">
       <Link>Content\Menu\menufont.xnb</Link>
     </Content>
-    <Content Include="..\..\..\..\..\SwarmResources\Content\Content\beebig.xnb">
-      <Link>Content\beebig.xnb</Link>
+    <Content Include="..\..\SoultionItems\Content\Content\point.xnb">
+      <Link>Content\point.xnb</Link>
     </Content>
     <None Include="XNASwarmsRelease.W8_TemporaryKey.pfx" />
   </ItemGroup>
@@ -240,6 +304,10 @@
     <Content Include="Assets\StoreLogo.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MMAudioPlayer\MMAudioPlayer.vcxproj">
+      <Project>{3dbadd73-ef51-4445-a3d4-0f0e5197a3c4}</Project>
+      <Name>MMAudioPlayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScreenSystem.W8\ScreenSystem.W8.csproj">
       <Project>{b82f87be-6a82-4240-864a-aac8966a3f0c}</Project>
       <Name>ScreenSystem.W8</Name>
@@ -247,6 +315,10 @@
     <ProjectReference Include="..\SwarmAnalysisEngine.W8\SwarmAnalysisEngine.W8.csproj">
       <Project>{fd87b571-0f0a-4f16-a154-96d94353e52e}</Project>
       <Name>SwarmAnalysisEngine.W8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SwarmAudio.W8\SwarmAudio.W8.csproj">
+      <Project>{4a4c87b8-83f9-450d-9b9c-c3ab26cf87d2}</Project>
+      <Name>SwarmAudio.W8</Name>
     </ProjectReference>
     <ProjectReference Include="..\SwarmEngine.W8\SwarmEngine.W8.csproj">
       <Project>{8ba84de0-e042-403b-9338-15a76f12a14a}</Project>

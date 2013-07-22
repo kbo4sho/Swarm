@@ -1,0 +1,13 @@
+"SliderWidget" 176 16 72 212 0.507 2 "State 0.5" "play" 2 0.0 1.0 
+"SliderWidget" 240 16 80 212 300.0 3 "Scale" "play" 3 0.0 300.0 
+"SliderWidget" 576 16 88 212 3.559 15 "Modulation" "SetModOnly" 0 0.01 10.0 
+"SliderWidget" 312 16 88 212 300.0 4 "Offset" "play" 4 0.0 300.0 
+"RadioButtonWidget" 656 72 82 27 1.0 9 "pause" "playSeq" 0 0.0 2 
+"SliderWidget" 88 16 96 212 3.717 1 "Ctrl 3.73891" "play" 1 0.0 5.0 
+"RadioButtonWidget" 656 168 131 27 0.0 13 "Output Linear" "play_Mode" 0 2.0 3 
+"RadioButtonWidget" 656 192 116 27 1.0 14 "Output Log" "play_Mode" 0 3.0 3 
+"SliderWidget" 392 16 88 212 10.0 6 "NumBins 10" "play" 5 0.0 20.0 
+"SliderWidget" 480 16 80 212 95.822 7 "Tempo" "play" 6 15.0 600.0 
+"RadioButtonWidget" 656 144 127 27 0.0 10 "Output Norm" "play_Mode" 0 1.0 3 
+"SliderWidget" 24 16 72 212 0.303 0 "Amp" "play" 0 0.0 2.0 
+"RadioButtonWidget" 656 48 71 27 0.0 8 "play" "playSeq" 0 1.0 2 

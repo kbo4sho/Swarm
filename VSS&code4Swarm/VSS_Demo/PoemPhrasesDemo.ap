@@ -1,0 +1,34 @@
+"RadioButtonWidget" 288 112 77 27 0.0 24 "4      " "PlayFrom" 0 4.0 2 
+"ButtonWidget" 232 280 92 42 0.0 30 "phrase7" "playEvent7" 0 0.0 
+"ButtonWidget" 288 24 108 42 0.0 25 "Phrase Index #" "" 0 0.0 
+"RadioButtonWidget" 288 64 77 27 0.0 21 "1      " "PlayFrom" 0 1.0 2 
+"RadioButtonWidget" 352 144 85 27 0.0 12 "12      " "PlayFrom" 0 12.0 2 
+"ButtonWidget" 232 320 92 42 0.0 31 "phrase11" "playEvent11" 0 0.0 
+"ButtonWidget" 168 64 92 42 0.0 28 "Index Revrs" "Reverse" 0 0.0 
+"ButtonWidget" 24 320 92 42 0.0 27 "phrase9" "playEvent9" 0 0.0 
+"RadioButtonWidget" 352 96 77 27 0.0 9 "9      " "PlayFrom" 0 9.0 2 
+"SquareWidget" 424 24 204 204 0.0 0.858 32 "Direction and Distance" "SetMyPanning" 0 -1.0 1.0 "SetMyDistance" 0 0.0 1.0 
+"ButtonWidget" 168 184 92 42 0.0 34 "Loop Off" "StopAtEnd" 0 14.0 
+"ButtonWidget" 168 144 92 42 0.0 33 "Loop On" "LoopAtEnd" 0 13.0 
+"ButtonWidget" 24 240 92 42 0.0 22 "phrase1" "playEvent1" 0 0.0 
+"ButtonWidget" 328 320 92 42 0.0 33 "phrase12" "playEvent12" 0 0.0 
+"ButtonWidget" 32 104 92 42 0.0 23 "Pause" "JustPause" 0 0.0 
+"ButtonWidget" 32 24 92 42 0.0 31 "Play Series" "PlaySeries" 0 0.0 
+"ButtonWidget" 168 104 92 42 0.0 29 "Index Same" "PlaySame" 0 0.0 
+"ButtonWidget" 168 24 92 42 0.0 27 "Index Fwd" "Forward" 0 0.0 
+"RadioButtonWidget" 288 144 77 27 0.0 6 "6      " "PlayFrom" 0 6.0 2 
+"RadioButtonWidget" 352 64 77 27 0.0 7 "7      " "PlayFrom" 0 7.0 2 
+"ButtonWidget" 128 280 92 42 0.0 28 "phrase6" "playEvent6" 0 0.0 
+"ButtonWidget" 328 240 92 42 0.0 23 "phrase4" "playEvent4" 0 0.0 
+"RadioButtonWidget" 288 96 77 27 0.0 23 "3      " "PlayFrom" 0 3.0 2 
+"RadioButtonWidget" 288 128 77 27 0.0 5 "5      " "PlayFrom" 0 5.0 2 
+"ButtonWidget" 128 240 92 42 0.0 24 "phrase2" "playEvent2" 0 0.0 
+"RadioButtonWidget" 352 80 77 27 1.0 8 "8      " "PlayFrom" 0 8.0 2 
+"ButtonWidget" 128 320 92 42 0.0 29 "phrase10" "playEvent10" 0 0.0 
+"ButtonWidget" 328 280 92 42 0.0 32 "phrase8" "playEvent8" 0 0.0 
+"ButtonWidget" 24 280 92 42 0.0 26 "phrase5" "playEvent5" 0 0.0 
+"ButtonWidget" 232 240 92 42 0.0 25 "phrase3" "playEvent3" 0 0.0 
+"ButtonWidget" 32 64 92 42 0.0 30 "Play Single" "PlayOne" 0 0.0 
+"RadioButtonWidget" 352 112 85 27 0.0 10 "10      " "PlayFrom" 0 10.0 2 
+"RadioButtonWidget" 352 128 85 27 0.0 11 "11      " "PlayFrom" 0 11.0 2 
+"RadioButtonWidget" 288 80 77 27 0.0 22 "2      " "PlayFrom" 0 2.0 2 

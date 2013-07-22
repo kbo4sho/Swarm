@@ -32,7 +32,7 @@ namespace XNASwarms.W8
             var backgroundscreen = new BackgroundScreen();
             screenManager.AddScreen(backgroundscreen);
 
-            var debugScreen = new DebugScreen(screenManager, true);
+            var debugScreen = new DebugScreen(screenManager, false);
             screenManager.Game.Components.Add(debugScreen);
             this.Services.AddService(typeof(IDebugScreen), debugScreen);
 

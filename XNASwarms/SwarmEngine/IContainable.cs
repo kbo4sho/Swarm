@@ -14,6 +14,5 @@ namespace SwarmEngine
         void TravelThroughYWall();
         void BounceXWall();
         void BounceYWall();
-
     }
 }

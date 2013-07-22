@@ -17,13 +17,16 @@ using XNASwarms.Borders.Walls;
 using SwarmEngine;
 using ScreenSystem.Debug;
 using SwarmAnalysisEngine;
+using XNASwarms.Emitters;
+using XNASwarms.Screens;
+using XNASwarmsXAML.W8;
 
 namespace XNASwarms
 {
     public class SwarmScreenBase : ControlScreen
     {
         protected PopulationSimulator populationSimulator;
-        
+        EmitterManager emitterManager;
         Dictionary<int, Individual> Supers;
         public int width, height;
         Texture2D superAgentTexture;
@@ -32,6 +35,8 @@ namespace XNASwarms
         private int FramesPerSec;
         float TotalElapsed;
         private IDebugScreen debugScreen;
+        
+        List<Individual> SwarmInXOrder;
         AnalysisEngine analysisEngine;
         
 
@@ -41,21 +46,23 @@ namespace XNASwarms
             FramesPerSec = 30;
             TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
+            SwarmInXOrder = new List<Individual>();
         }
 
         public override void LoadContent()
         {
+            emitterManager = new EmitterManager(populationSimulator, ScreenManager.Game.Services.GetService(typeof(IAudio)) as IAudio);
+            Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
-            debugScreen.Reset();
+            debugScreen.ResetDebugItemsToNormal();
             width = ScreenManager.GraphicsDevice.Viewport.Width;
             height = ScreenManager.GraphicsDevice.Viewport.Height;
-
-            Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
+            
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             
             Supers = new Dictionary<int, Individual>();
 
-            Border = new Border(this, WallFactory.FourBouncy(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
+            Border = new Border(this, WallFactory.TopBottomPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
             
             Supers.Add(0, new Individual());
 
@@ -64,9 +71,9 @@ namespace XNASwarms
             for (int i = 0; i < populationSimulator.GetPopulation().Count(); i++)
             {
                 debugScreen.AddDebugItem("SPECIES " + i.ToString("00") + " COUNT", populationSimulator.GetPopulation()[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
-                debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.GetPopulation()[i].First().getGenome().getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
-                
+                debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.GetPopulation()[i].First().Genome.getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
             }
+
             debugScreen.AddDebugItem("SPECIES COUNT ", populationSimulator.GetPopulation().Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             debugScreen.AddDebugItem("RESOLUTION", width.ToString() + "x" + height.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), ScreenSystem.Debug.DebugFlagType.Important);
@@ -78,10 +85,24 @@ namespace XNASwarms
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            debugScreen.AddAnaysisResult(analysisEngine.Run(populationSimulator.GetSwarmInXOrder(), (float)gameTime.ElapsedGameTime.TotalSeconds));
-            populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);
-            Border.Update(populationSimulator.GetSwarmInBirthOrder().ToList<Individual>());
-            Camera.Update(gameTime);
+            if (this.IsActive)
+            {
+                SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
+                //debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
+                if (Supers.Count > 0)
+                {
+                    emitterManager.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
+                }
+                else
+                {
+                    emitterManager.Update(Vector2.Zero);
+                }
+                populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
+                Border.Update(SwarmInXOrder);
+                
+                Camera.Update(gameTime);
+                //debugScreen.AddDebugItem("POPULATION COUNT", SwarmInXOrder.Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+            }
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
@@ -89,11 +110,9 @@ namespace XNASwarms
         {
             for (int i = 0; i < Supers.Count; i++)
             {
-                Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2((int)Supers[i].getX(), (int)Supers[i].getY()));
-
                 ScreenManager.SpriteBatch.Draw(superAgentTexture, new Rectangle(
-                    (int)Supers[i].getX(),
-                    (int)Supers[i].getY(), 6, 6),
+                    (int)Supers[i].X,
+                    (int)Supers[i].Y, 6, 6),
                     null,
                     Color.Red,
                     0f,
@@ -104,6 +123,12 @@ namespace XNASwarms
             Border.Draw(ScreenManager.SpriteBatch, Camera);
 
             base.Draw(gameTime);
+        }
+
+        public override void UnloadContent()
+        {
+            ButtonSection.Dispose();
+            base.UnloadContent();
         }
 
         public override void HandleInput(InputHelper input, Microsoft.Xna.Framework.GameTime gameTime)
@@ -133,41 +158,27 @@ namespace XNASwarms
                 {
                     Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(input.Touches[i].Position.X, input.Touches[i].Position.Y));
 
-                    Supers[i] = new Individual(((double)position.X),
+                    Supers[i] = new Individual(i,((double)position.X),
                          ((double)position.Y),
-                         0.0, 0.0, new Parameters());
+                         0.0, 0.0, new SuperParameters());
                 }
-            }
-            else if (Supers.Count <= 0 && input.Cursor != Vector2.Zero)
+            }  
+            else if (Supers.Count <= 0 &&
+                     (input.Cursor != Vector2.Zero) &&
+                     input.MouseState.LeftButton == ButtonState.Pressed)
             {
+                //Here we should activate the emitters 
                 //Mouse
                 Supers.Add(0, new Individual());
                 for (int i = 0; i < Supers.Count; i++)
                 {
                     Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(input.Cursor);
 
-                    Supers[i] = new Individual(((double)position.X),
+                    Supers[i] = new Individual(i, ((double)position.X),
                          ((double)position.Y),
-                         0,0, new Parameters());
+                         0, 0, new SuperParameters());
                 }
             }
-            //TouchPanel.EnabledGestures = GestureType.Pinch;
-            //while (TouchPanel.IsGestureAvailable)
-            //{
-            //    GestureSample gesture = TouchPanel.ReadGesture();
-
-            //    switch (gesture.GestureType)
-            //    {
-            //        case GestureType.Pinch:
-            //            float scaleFactor = PinchZoom.GetScaleFactor(gesture.Position, gesture.Position2,
-            //                gesture.Delta, gesture.Delta2);
-            //            //Vector2 panDelta = PinchZoom.GetTranslationDelta(gesture.Position, gesture.Position2,
-            //            //    gesture.Delta, gesture.Delta2, spritePos, scaleFactor);
-            //            Camera.Zoom *= scaleFactor;
-            //            //spritePos += panDelta;
-            //            break;
-            //    }
-            //}
 
             ButtonSection.HandleInput(input, gameTime);
 
@@ -175,61 +186,19 @@ namespace XNASwarms
             
         }
 
-        public Population GetPopulation()
-        {
-            return populationSimulator.GetPopulation();
-        }
-
         public SaveSpecies GetPopulationAsSaveSpecies()
         {
-            SaveSpecies saveSpecies = new SaveSpecies();
-            saveSpecies.CreadtedDt = DateTime.Now;
-            foreach (Species species in populationSimulator.GetPopulation())
-            {
-                saveSpecies.SavedSpecies.Add(GetSavedGenomes(species));
-            }
-            return saveSpecies;
+            return SwarmSaveHelper.GetPopulationAsSaveSpecies(populationSimulator.GetPopulation());
         }
 
-        private List<SaveGenome> GetSavedGenomes(Species species)
+        internal void UpdatePopulation(string recipiText, bool mutate)
         {
-            List<SaveGenome> savedGenomes = new List<SaveGenome>();
-            foreach (Individual individual in species)
-            {
-                savedGenomes.Add(GetSavedGenomeFromIndividual(individual));
-            }
-            return savedGenomes;
+            populationSimulator.UpdatePopulation(recipiText, mutate);
         }
 
-        private SaveGenome GetSavedGenomeFromIndividual(Individual individual)
+        internal void UpdatePopulation(Population population, bool mutate)
         {
-            SaveGenome savedGenome = new SaveGenome();
-            savedGenome.neighborhoodRadius = individual.genome.getNeighborhoodRadius();
-            savedGenome.normalSpeed = individual.genome.getNormalSpeed();
-            savedGenome.maxSpeed = individual.genome.getMaxSpeed();
-            savedGenome.c1 = individual.genome.getC1();
-            savedGenome.c2 = individual.genome.getC2();
-            savedGenome.c3 = individual.genome.getC3();
-            savedGenome.c4 = individual.genome.getC4();
-            savedGenome.c5 = individual.genome.getC5();
-            return savedGenome;
+            populationSimulator.UpdatePopulation(population, mutate);
         }
-        //private void UpdateSupers(ReadOnlyTouchPointCollection touches, InputHelper input)
-        //{
-         
-
-        //    for (int i = 0; i < touches.Count; i++)
-        //    {
-        //        Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(touches[i].X,touches[i].Y));
-
-        //        Supers[i] = new Individual(((double)position.X),
-        //             ((double)position.Y),
-        //             0.0, 0.0, new Parameters());
-        //    }
-        //}
-
-
-
-        
     }
 }

@@ -9,7 +9,128 @@ namespace SwarmAnalysisEngine
 {
     public class Cluster : List<Individual>
     {
-        public double MaxHeight;
-        public double MinHeight;
+        public float Agents{ get{return this.Count();}}  //Count of agents currently in cluster
+        public Vector2 Center { get; set; } //center of cluster calculated by ??
+        public float Area { get; set; } //
+        public float AverageAgentEnergy { get { return (float)this.Average(i => ((i.getDx2() * i.getDx2()) + (i.getDy2() * i.getDy2()))); } } //uses LINQ to determine average energy if individuals in cluster
+        //TODO: This is the same agent velocity for now
+        public float ClusterVelocity { get { return (float)this.Average(i => ((i.getDx2() * i.getDx2()) + (i.getDy2() * i.getDy2()))); } } //uses LINQ to determine average velocity of individuals in a cluster
+        public Vector3 Symmetry { get; set; }
+
+        #region Symmetry
+
+        public void SetSymmetryFromFourPoints(List<Vector2> points)
+        {
+            //2|1
+            //3|4
+
+            if (points.Count == 5)
+            {
+                //Top
+                float x2a = Math.Abs(points[1].X - points[2].X);
+                float x2b = Math.Abs(points[1].Y - points[2].Y);
+                float x2c = (float)Math.Sqrt(((x2a * x2a) + (x2b * x2b)));
+                float x2 = Normalizer.NormalizePointOneToTen(x2c);
+                
+                //Bottom
+                float x1a = Math.Abs(points[3].X - points[4].X);
+                float x1b = Math.Abs(points[3].Y - points[4].Y);
+                float x1c = (float)Math.Sqrt(((x1a * x1a) + (x1b * x1b)));
+                float x1 = Normalizer.NormalizePointOneToTen(x1c);
+                
+                float xRatio = x1 / x2;
+
+                //Left
+                float y1a = Math.Abs(points[2].Y - points[3].Y);
+                float y1b = Math.Abs(points[2].X - points[3].X);
+                float y1c = (float)Math.Sqrt(((y1a * y1a) + (y1b * y1b)));
+                float y1 = Normalizer.NormalizePointOneToTen(y1c);
+
+                //Right
+                float y2a = Math.Abs(points[1].Y - points[4].Y);
+                float y2b = Math.Abs(points[1].X - points[4].X);
+                float y2c = (float)Math.Sqrt(((y2a * y2a) + (y2b * y2b)));
+                float y2 = Normalizer.NormalizePointOneToTen(y2c);
+
+
+                float yRatio = y1 / y2;
+
+                float longestX = Math.Max(x1, x2);
+                float longestY = Math.Max(y1, y2);
+
+                float xyRatio = longestX / longestY;
+
+                this.Symmetry = new Vector3(xRatio,yRatio, xyRatio);
+            }
+        }
+
+        #endregion
+
+        #region Area
+        public void SetAreaFromFourPoints(List<Vector2> points)
+        {
+            if (points.Count == 5)
+            {
+                float x2a = Math.Abs(points[1].X - points[2].X);
+                float x2b = Math.Abs(points[1].Y - points[2].Y);
+                float x2c = (float)Math.Sqrt(((x2a * x2a) + (x2b * x2b)));
+                float baseOne = x2c;
+
+                float x1a = Math.Abs(points[3].X - points[4].X);
+                float x1b = Math.Abs(points[3].Y - points[4].Y);
+                float x1c = (float)Math.Sqrt(((x1a * x1a) + (x1b * x1b)));
+                float baseTwo = x1c;
+
+                float height = Math.Abs(points[1].Y - points[3].Y);
+
+                SetArea(baseOne, baseTwo, height);
+            }
+        }
+
+        private void SetArea(float baseOne, float baseTwo, float height)
+        {
+            this.Area = Normalizer.NormalizeToScreenArea((baseOne + baseTwo) / 2 * height);
+        }
+        #endregion
+
+        #region IndvdsLocations
+        private bool EveryOther;
+
+        public float[] GetEveryOtherIndvd()
+        {
+            List<Individual> indvds = new List<Individual>();
+            if (EveryOther)
+            {
+                //Odd
+                indvds = this.ToList().Where((c, k) => k % 2 != 0).ToList<Individual>();
+            }
+            else
+            {
+                //Even
+                indvds = this.ToList().Where((c, k) => k % 2 == 0).ToList<Individual>();
+            }
+            EveryOther = !EveryOther;
+            float[] items = GetFloatsFromPostions(indvds);
+            return items;
+        }
+
+        private float[] GetFloatsFromPostions(List<Individual> list)
+        {
+            float[] items = new float[100];
+            int index = 0;
+            list.RemoveAt(0);
+            foreach (Individual indvd in list)
+            {
+                items[index] = (float)indvd.X;
+                index++;
+                items[index] = (float)indvd.Y;
+                index++;
+            }
+            return items;
+        }
+
+        #endregion
+
+        
     }
 }

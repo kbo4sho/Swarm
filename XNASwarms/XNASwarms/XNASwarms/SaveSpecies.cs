@@ -31,7 +31,7 @@ namespace XNASwarms
         }
 
         public List<List<SaveGenome>> SavedSpecies = new List<List<SaveGenome>>();
-
+        public SaveWorldParameters SaveWorldParameters = new SaveWorldParameters();
         public SaveSpecies()
         {
         }

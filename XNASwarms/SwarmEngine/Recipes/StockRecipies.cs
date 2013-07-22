@@ -23,17 +23,17 @@ namespace SwarmEngine
         {
             get
             {
-                string PopulationSize = "600";
-                string NeighborhoodRadius = "128.08";
+                string PopulationSize = "100";
+                string NeighborhoodRadius = "25";
                 string NormalSpeed = "2.62";
                 string MaxSpeed = "36.46";
                 string CohesiveForce = "0.92";
                 string AligningForce = ".52";
                 string SeperatingForce = "58.63";
                 string ChanceOfRandomSteering = ".04";
-                string TendencyOfPaceKeeping = ".52"; 
+                string TendencyOfPaceKeeping = ".52";
 
-                return PopulationSize + "," + NeighborhoodRadius + "," + NormalSpeed + "," + MaxSpeed + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
+                return StaticWorldParameters.numberOfIndividualsMax + "," + StaticWorldParameters.neighborhoodRadiusMax + "," + StaticWorldParameters.normalSpeedMax + "," + StaticWorldParameters.maxSpeedMax + "," + CohesiveForce + "," + AligningForce + "," + SeperatingForce + "," + ChanceOfRandomSteering + "," + TendencyOfPaceKeeping;
             }
         }
 
@@ -49,7 +49,7 @@ namespace SwarmEngine
         {
             get
             {
-                return "400, 217.14, 12.13, 1.42, 0.59, 0.98, 14.06, 0.04, 0.65";
+                return "400, 20, 12.13, 1.42, 0.59, 0.98, 14.06, 0.04, 0.65";
             }
         }
 

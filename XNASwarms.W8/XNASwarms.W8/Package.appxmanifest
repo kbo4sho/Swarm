@@ -19,6 +19,22 @@
         <DefaultTile ShowName="allLogos" ShortName="Columbia College Swarms" />
         <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#464646" />
       </VisualElements>
+      <Extensions>
+        <Extension Category="windows.fileOpenPicker">
+          <FileOpenPicker>
+            <SupportedFileTypes>
+              <SupportsAnyFileType />
+            </SupportedFileTypes>
+          </FileOpenPicker>
+        </Extension>
+        <Extension Category="windows.fileSavePicker">
+          <FileSavePicker>
+            <SupportedFileTypes>
+              <SupportsAnyFileType />
+            </SupportedFileTypes>
+          </FileSavePicker>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>
