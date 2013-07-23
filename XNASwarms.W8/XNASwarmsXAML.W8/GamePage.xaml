@@ -31,7 +31,7 @@
             </StackPanel>
         </AppBar>
 
-        <AppBar x:Name="myappbar" VerticalAlignment="Bottom">
+        <AppBar x:Name="myappbar" VerticalAlignment="Bottom" IsOpen="True">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -43,20 +43,22 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="Edit Mode" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                    <ItemsControl ItemsSource="{Binding ControlViewModels}" Grid.Row="1">
+                    <ListBox SelectedItem="{Binding ControlViewModel, Mode=TwoWay}" ItemsSource="{Binding ControlViewModels}" Grid.Row="1" HorizontalAlignment="Left">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Content="{Binding Name}" Width="100"/>
+                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <TextBlock Text="{Binding Name}" Width="100" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                                </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
+                        <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"/>
+                                <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="40"/>
                             </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
                 </Grid>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,10,20"  DataContext="{Binding ControlViewModel}">
+                <StackPanel Grid.Row="1" DataContext="{Binding ControlViewModel}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,10,20">
                     <StackPanel.Resources>
                         <Style TargetType="Grid">
                             <Setter Property="Margin" Value="30,0,0,40"/>
@@ -110,9 +112,7 @@
                         <TextBlock Text="Chance of Random Steering" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Width="300" Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="1" StepFrequency=".1" />
                     </Grid>
-              
-
-                
+             
                 </StackPanel>
             </Grid>
         </AppBar>

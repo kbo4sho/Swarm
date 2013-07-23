@@ -16,7 +16,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
         public AuthoringViewModel()
         {
             controlViewModels = new List<ViewModels.ControlViewModel>() { new WorldControlViewModel(), new BrushControlViewModel() };
-            controlViewModel = new WorldControlViewModel();
+            ControlViewModel = controlViewModels[0];
         }
 
         //TODO: Add a collection of control view models

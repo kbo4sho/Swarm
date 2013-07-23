@@ -135,9 +135,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SoultionItems\Windows8\SharpDX.XInput.dll</HintPath>
     </Reference>
-    <Reference Include="WinRtUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ObjectStorageHelper.5.0.0\lib\netcore45\WinRtUtility.dll</HintPath>
+    <Reference Include="WinRtUtility">
+      <HintPath>..\..\SoultionItems\WinRtUtility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
