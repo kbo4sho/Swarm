@@ -24,10 +24,9 @@ namespace XNASwarmsXAML.W8
 
         public GamePage(string launchArguments)
         {
-            this.InitializeComponent();
-            _game = XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, this);
             DataContext = App.ViewModel;
-           
+            _game = XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, this);
+            this.InitializeComponent();
         }
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)

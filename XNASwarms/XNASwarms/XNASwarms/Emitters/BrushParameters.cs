@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 
 namespace XNASwarms.Emitters
 {
@@ -19,6 +20,8 @@ namespace XNASwarms.Emitters
         public static double SeperatingForceMax = 100;
         public static double ChanceOfRandomSteeringMax = 0.5;
         public static double TendencyOfPaceKeepingMax = 1;
+
+        public static Color Color = Colors.Red;
     }
 
     public  class BrushParameters : Parameters

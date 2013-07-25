@@ -101,6 +101,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Reference Include="Coding4Fun.Toolkit.Controls, Version=2.0.6.0, Culture=neutral, PublicKeyToken=c5fd7b72b1a17ce4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.6\lib\windows8\Coding4Fun.Toolkit.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SoultionItems\Windows8\MonoGame.Framework.dll</HintPath>
@@ -251,6 +255,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authoring\EditorControlTemplateSelector.cs" />
+    <Compile Include="Authoring\ParametersToColorConverter.cs" />
     <Compile Include="Authoring\ViewModels\AuthoringViewModel.cs" />
     <Compile Include="Authoring\ViewModels\BrushControlViewModel.cs" />
     <Compile Include="Authoring\ViewModels\ControlViewModel.cs" />
@@ -303,6 +309,7 @@
       <Link>Content\point.xnb</Link>
     </Content>
     <Content Include="Assets\Surface-Movement.mp3" />
+    <Content Include="ReadMe.Coding4Fun.Toolkit.txt" />
     <None Include="packages.config" />
     <None Include="XNASwarms.W8_TemporaryKey.pfx" />
   </ItemGroup>

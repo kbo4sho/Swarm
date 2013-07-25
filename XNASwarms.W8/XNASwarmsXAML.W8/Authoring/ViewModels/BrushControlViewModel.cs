@@ -1,9 +1,11 @@
-﻿using System;
+﻿using SwarmEngine;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 using XNASwarms.Emitters;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
@@ -124,24 +126,6 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             }
         }
 
-        private int numberOfIndividualsMaxProperty = StaticBrushParameters.numberOfIndividualsMax;
-        public int NumberOfIndividualsMax
-        {
-            get
-            {
-                return numberOfIndividualsMaxProperty;
-            }
-            set
-            {
-                if (value != numberOfIndividualsMaxProperty)
-                {
-                    numberOfIndividualsMaxProperty = value;
-                    StaticBrushParameters.numberOfIndividualsMax = value;
-                    NotifyPropertyChanged("NumberOfIndividualsMax");
-                }
-            }
-        }
-
         private int neighborhoodMaxRadiusProperty = StaticBrushParameters.neighborhoodRadiusMax;
         public int NeighborhoodRadiusMax
         {
@@ -156,6 +140,31 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                     neighborhoodMaxRadiusProperty = value;
                     StaticBrushParameters.neighborhoodRadiusMax = value;
                     NotifyPropertyChanged("NeighborhoodRadiusMax");
+                }
+            }
+        }
+
+        private Color brushColorProperty = StaticBrushParameters.Color;
+        public Color BrushColor
+        {
+            get
+            {
+                //TODO: Need a more solid dvisor than staticworld params
+                //TODO: Normalize the values here so they dont go crazy
+                return Windows.UI.Color.FromArgb(255,(byte)(StaticBrushParameters.CohesiveForceMax / StaticWorldParameters.CohesiveForceMax * 0.8),
+                                                     (byte)(StaticBrushParameters.AligningForceMax / StaticWorldParameters.AligningForceMax * 0.8), 
+                                                     (byte)(StaticBrushParameters.SeperatingForceMax / StaticWorldParameters.SeperatingForceMax * 0.8));
+            }
+            set
+            {
+                if (value != brushColorProperty)
+                {
+                    brushColorProperty = value;
+                    CohesiveForce = value.R * StaticWorldParameters.CohesiveForceMax / 0.8;
+                    AlligningForce = value.G * StaticWorldParameters.AligningForceMax/ 0.8;
+                    SperatingForce = value.B * StaticWorldParameters.SeperatingForceMax / 0.8; 
+                    StaticBrushParameters.Color = value;
+                    NotifyPropertyChanged("BrushColor");
                 }
             }
         }
