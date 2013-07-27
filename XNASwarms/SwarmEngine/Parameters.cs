@@ -233,10 +233,20 @@ namespace SwarmEngine
                 c5 = StaticWorldParameters.TendencyOfPaceKeepingMax;
         }
 
-        public Color getDisplayColor()
+        public Color getDisplayColor(EmitterType type)
         {
-            return new Color((float)(c1 / StaticWorldParameters.CohesiveForceMax * 0.8),
-                    (float)(c2 / StaticWorldParameters.AligningForceMax * 0.8), (float)(c3 / StaticWorldParameters.SeperatingForceMax* 0.8));
+            if (type == EmitterType.Brush)
+            {
+                return new Color((float)((StaticBrushParameters.CohesiveForceMax / StaticWorldParameters.CohesiveForceMax)),
+                                 (float)((StaticBrushParameters.AligningForceMax / StaticWorldParameters.AligningForceMax)),
+                                 (float)((StaticBrushParameters.SeperatingForceMax / StaticWorldParameters.SeperatingForceMax)));
+            }
+            else
+            {
+                return new Color((float)((c1 / StaticWorldParameters.CohesiveForceMax)),
+                                 (float)((c2 / StaticWorldParameters.AligningForceMax)),
+                                 (float)((c3 / StaticWorldParameters.SeperatingForceMax)));
+            }
         }
 
         public double getNeighborhoodRadius()

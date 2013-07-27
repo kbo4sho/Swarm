@@ -12,6 +12,11 @@ namespace SwarmEngine
         private double x, y, dx, dy, dx2, dy2;
         private int rankInXOrder, rankInYOrder;
         private Color color;
+        public EmitterType EmitterType
+        {
+            get;
+            private set;
+        }
 
         public Parameters Genome
         {
@@ -61,7 +66,13 @@ namespace SwarmEngine
 
         }
 
-        public Individual(int id, double xx, double yy, double dxx, double dyy, Parameters g)
+        public Individual(int id, double xx, double yy, double dxx, double dyy, Parameters g) 
+            : this (id,xx,yy,dxx,dyy,g, EmitterType.Still)
+        {
+
+        }
+
+        public Individual(int id, double xx, double yy, double dxx, double dyy, Parameters g, EmitterType type)
         {
             ID = id;
             x = xx;
@@ -69,7 +80,8 @@ namespace SwarmEngine
             dx = dx2 = dxx;
             dy = dy2 = dyy;
             Genome = g;
-            color = Genome.getDisplayColor();
+            EmitterType = type;
+            color = Genome.getDisplayColor(type);
             rankInXOrder = 0;
             rankInYOrder = 0;
         }
@@ -108,7 +120,7 @@ namespace SwarmEngine
 
         public Color getGenomeColor()
         {
-            return Genome.getDisplayColor();
+            return Genome.getDisplayColor(this.EmitterType);
         }
 
         public void setRankInXOrder(int rankInXOrder)

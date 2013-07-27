@@ -147,17 +147,11 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
       <Link>Emitters\BrushEmitter.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushParameters.cs">
-      <Link>Emitters\BrushParameters.cs</Link>
-    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterBase.cs">
       <Link>Emitters\EmitterBase.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterManager.cs">
       <Link>Emitters\EmitterManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterType.cs">
-      <Link>Emitters\EmitterType.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IAudioInfluenced.cs">
       <Link>Emitters\IAudioInfluenced.cs</Link>
@@ -266,6 +260,7 @@
     </Compile>
     <Compile Include="Game1.cs" />
     <Compile Include="MMAudioPlayer.cs" />
+    <Compile Include="Normalizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

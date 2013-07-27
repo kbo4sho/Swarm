@@ -46,7 +46,7 @@ namespace XNASwarms
             {
                 for (int i = 0; i < population[s].Count; i++)
                 {
-                    DrawIndividual(population[s][i], population[s][i].getGenomeColor(), individualTexture);
+                    DrawIndividual(population[s][i], population[s][i].getDisplayColor(), individualTexture, population[s][i].EmitterType);
                 }
             }
 
@@ -54,9 +54,22 @@ namespace XNASwarms
             ScreenManager.SpriteBatch.End();
         }
 
-        private void DrawIndividual(Individual indvd,Color color, Texture2D texture)
+        private void DrawIndividual(Individual indvd,Color color, Texture2D texture, EmitterType type)
         {
-            ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
+            if (type == EmitterType.Brush)
+            {
+                ScreenManager.SpriteBatch.Draw(bigIndividualTexture, new Rectangle(
+                        (int)indvd.X,
+                        (int)indvd.Y, bigIndividualTexture.Width, bigIndividualTexture.Height),
+                        null,
+                        color,
+                        (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
+                        new Vector2(bigIndividualTexture.Width / 2, bigIndividualTexture.Height / 2),
+                        SpriteEffects.None, 0);
+            }
+            else
+            {
+                ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
                         (int)indvd.X,
                         (int)indvd.Y, texture.Width, texture.Height),
                         null,
@@ -64,6 +77,7 @@ namespace XNASwarms
                         (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
                         new Vector2(texture.Width / 2, texture.Height / 2),
                         SpriteEffects.None, 0);
+            }
         }
 
         private void DoMutation()

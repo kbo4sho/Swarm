@@ -49,7 +49,8 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 {
                     seperatingForceProperty = value;
                     StaticBrushParameters.SeperatingForceMax = value;
-                    NotifyPropertyChanged("SperateingForce");
+                    NotifyPropertyChanged("SperatingForce");
+                    NotifyPropertyChanged("BrushColor");
                 }
             }
         }
@@ -68,6 +69,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                     alligningForceProperty = value;
                     StaticBrushParameters.AligningForceMax = value;
                     NotifyPropertyChanged("AlligningForce");
+                    NotifyPropertyChanged("BrushColor");
                 }
             }
         }
@@ -86,6 +88,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                     cohesiveForceProperty = value;
                     StaticBrushParameters.CohesiveForceMax = value;
                     NotifyPropertyChanged("CohesiveForce");
+                    NotifyPropertyChanged("BrushColor");
                 }
             }
         }
@@ -149,25 +152,35 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
         {
             get
             {
-                //TODO: Need a more solid dvisor than staticworld params
-                //TODO: Normalize the values here so they dont go crazy
-                return Windows.UI.Color.FromArgb(255,(byte)(StaticBrushParameters.CohesiveForceMax / StaticWorldParameters.CohesiveForceMax * 0.8),
-                                                     (byte)(StaticBrushParameters.AligningForceMax / StaticWorldParameters.AligningForceMax * 0.8), 
-                                                     (byte)(StaticBrushParameters.SeperatingForceMax / StaticWorldParameters.SeperatingForceMax * 0.8));
+                return Windows.UI.Color.FromArgb(255,(byte)((CohesiveForce / StaticWorldParameters.CohesiveForceMax) * 255),
+                                                     (byte)((AlligningForce / StaticWorldParameters.AligningForceMax) * 255),
+                                                     (byte)((SperatingForce / StaticWorldParameters.SeperatingForceMax) * 255));
             }
             set
             {
                 if (value != brushColorProperty)
                 {
                     brushColorProperty = value;
-                    CohesiveForce = value.R * StaticWorldParameters.CohesiveForceMax / 0.8;
-                    AlligningForce = value.G * StaticWorldParameters.AligningForceMax/ 0.8;
-                    SperatingForce = value.B * StaticWorldParameters.SeperatingForceMax / 0.8; 
                     StaticBrushParameters.Color = value;
+
+                    CohesiveForce = value.R * StaticWorldParameters.CohesiveForceMax / 255;
+                    AlligningForce = value.G * StaticWorldParameters.AligningForceMax / 255;
+                    SperatingForce = value.B * StaticWorldParameters.SeperatingForceMax / 255;
                     NotifyPropertyChanged("BrushColor");
+                    
                 }
             }
         }
+
+        //private double GetCohesiveForceParameterFromColor()
+        //{
+        //    //Get a Nuber between 0 and 255
+        //    //return StaticWorldParameters.CohesiveForceMax * 0.8
+
+        //    //return new Windows.UI.Color((float)(c1 / StaticWorldParameters.CohesiveForceMax * 0.8),
+        //    //        (float)(c2 / StaticWorldParameters.AligningForceMax * 0.8), (float)(c3 / StaticWorldParameters.SeperatingForceMax * 0.8));
+
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
