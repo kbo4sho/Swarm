@@ -89,14 +89,7 @@ namespace XNASwarms
             {
                 SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
                 //debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
-                if (Supers.Count > 0)
-                {
-                    emitterManager.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
-                }
-                else
-                {
-                    emitterManager.Update(Vector2.Zero);
-                }
+                UpdateInput();
                 populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
                 Border.Update(SwarmInXOrder);
                 
@@ -129,6 +122,24 @@ namespace XNASwarms
         {
             ButtonSection.Dispose();
             base.UnloadContent();
+        }
+
+        /// <summary>
+        /// Decides how to handle the input based on the
+        /// editing mode that is selected
+        /// </summary>
+        private void UpdateInput()
+        {
+            //Brush
+            //TODO: need a static class for determining what the editing state is
+            if (Supers.Count > 0)
+            {
+                emitterManager.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
+            }
+            else
+            {
+                emitterManager.Update(Vector2.Zero);
+            }
         }
 
         public override void HandleInput(InputHelper input, Microsoft.Xna.Framework.GameTime gameTime)

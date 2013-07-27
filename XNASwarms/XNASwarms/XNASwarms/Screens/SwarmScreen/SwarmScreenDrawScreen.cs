@@ -58,7 +58,9 @@ namespace XNASwarms
         {
             if (type == EmitterType.Brush)
             {
-                ScreenManager.SpriteBatch.Draw(bigIndividualTexture, new Rectangle(
+                if (!indvd.IsMobile)
+                {
+                    ScreenManager.SpriteBatch.Draw(bigIndividualTexture, new Rectangle(
                         (int)indvd.X,
                         (int)indvd.Y, bigIndividualTexture.Width, bigIndividualTexture.Height),
                         null,
@@ -66,6 +68,18 @@ namespace XNASwarms
                         (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
                         new Vector2(bigIndividualTexture.Width / 2, bigIndividualTexture.Height / 2),
                         SpriteEffects.None, 0);
+                }
+                else
+                {
+                    ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
+                        (int)indvd.X,
+                        (int)indvd.Y, texture.Width, texture.Height),
+                        null,
+                        color,
+                        (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
+                        new Vector2(texture.Width / 2, texture.Height / 2),
+                        SpriteEffects.None, 0);
+                }
             }
             else
             {

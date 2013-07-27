@@ -10,7 +10,7 @@
         
     </SwapChainBackgroundPanel.Resources>
     <Grid>
-        <AppBar x:Name="mytopappbar" VerticalAlignment="Top">
+        <!--<AppBar x:Name="mytopappbar" VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,20">
                 <StackPanel.Resources>
                     <Style TargetType="Grid">
@@ -31,7 +31,7 @@
                     </StackPanel>
                 </Grid>
             </StackPanel>
-        </AppBar>
+        </AppBar>-->
 
         <AppBar x:Name="myappbar" VerticalAlignment="Bottom" IsOpen="True">
             <Grid>

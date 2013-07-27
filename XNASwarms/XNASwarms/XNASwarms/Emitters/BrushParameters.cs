@@ -22,20 +22,35 @@ namespace SwarmEngine
         public static double TendencyOfPaceKeepingMax = 1;
 
         public static Color Color = Colors.Red;
+
+        public static bool IsMobile = true;
     }
 
-    public  class BrushParameters : Parameters
+    public class BrushParameters : Parameters
     {
         public BrushParameters()
         {
             neighborhoodRadius = StaticBrushParameters.neighborhoodRadiusMax;
             normalSpeed = StaticBrushParameters.normalSpeedMax;
-            maxSpeed = StaticBrushParameters.maxSpeedMax;
+            maxSpeed = GetMaxSpeed();
             c1 = StaticBrushParameters.CohesiveForceMax;
             c2 = StaticBrushParameters.AligningForceMax;
             c3 = StaticBrushParameters.SeperatingForceMax;
             c4 = StaticBrushParameters.ChanceOfRandomSteeringMax;
             c5 = StaticBrushParameters.TendencyOfPaceKeepingMax;
+        }
+
+        private double GetMaxSpeed()
+        {
+            if (StaticBrushParameters.IsMobile)
+            {
+                return StaticBrushParameters.maxSpeedMax;
+            }
+            else
+            {
+                StaticBrushParameters.maxSpeedMax = 0;
+                return 0;
+            }
         }
     }
 }

@@ -12,6 +12,13 @@ namespace SwarmEngine
         private double x, y, dx, dy, dx2, dy2;
         private int rankInXOrder, rankInYOrder;
         private Color color;
+
+        public bool IsMobile
+        {
+            get;
+            private set;
+        }
+
         public EmitterType EmitterType
         {
             get;
@@ -67,12 +74,12 @@ namespace SwarmEngine
         }
 
         public Individual(int id, double xx, double yy, double dxx, double dyy, Parameters g) 
-            : this (id,xx,yy,dxx,dyy,g, EmitterType.Still)
+            : this (id,xx,yy,dxx,dyy,g, EmitterType.Still, true)
         {
 
         }
 
-        public Individual(int id, double xx, double yy, double dxx, double dyy, Parameters g, EmitterType type)
+        public Individual(int id, double xx, double yy, double dxx, double dyy, Parameters g, EmitterType type, bool isMobile)
         {
             ID = id;
             x = xx;
@@ -81,6 +88,8 @@ namespace SwarmEngine
             dy = dy2 = dyy;
             Genome = g;
             EmitterType = type;
+            IsMobile = isMobile;
+
             color = Genome.getDisplayColor(type);
             rankInXOrder = 0;
             rankInYOrder = 0;

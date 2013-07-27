@@ -172,15 +172,23 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             }
         }
 
-        //private double GetCohesiveForceParameterFromColor()
-        //{
-        //    //Get a Nuber between 0 and 255
-        //    //return StaticWorldParameters.CohesiveForceMax * 0.8
-
-        //    //return new Windows.UI.Color((float)(c1 / StaticWorldParameters.CohesiveForceMax * 0.8),
-        //    //        (float)(c2 / StaticWorldParameters.AligningForceMax * 0.8), (float)(c3 / StaticWorldParameters.SeperatingForceMax * 0.8));
-
-        //}
+        private bool isMobileProperty = StaticBrushParameters.IsMobile;
+        public bool IsMobile
+        {
+            get
+            {
+                return isMobileProperty; 
+            }
+            set
+            {
+                if (value != isMobileProperty)
+                {
+                    isMobileProperty = value;
+                    StaticBrushParameters.IsMobile = value;
+                    NotifyPropertyChanged("IsMobile");
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
