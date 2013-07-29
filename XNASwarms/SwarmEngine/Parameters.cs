@@ -41,14 +41,14 @@ namespace SwarmEngine
 
         public Parameters()
         {
-            neighborhoodRadius = rand.NextDouble() * StaticWorldParameters.neighborhoodRadiusMax;
-            normalSpeed = rand.NextDouble() * StaticWorldParameters.normalSpeedMax;
-            maxSpeed = rand.NextDouble() * StaticWorldParameters.maxSpeedMax;
-            c1 = rand.NextDouble() * StaticWorldParameters.CohesiveForceMax;
-            c2 = rand.NextDouble() * StaticWorldParameters.AligningForceMax;
-            c3 = rand.NextDouble() * StaticWorldParameters.SeperatingForceMax;
-            c4 = rand.NextDouble() * StaticWorldParameters.ChanceOfRandomSteeringMax;
-            c5 = rand.NextDouble() * StaticWorldParameters.TendencyOfPaceKeepingMax;
+            neighborhoodRadius = StaticWorldParameters.neighborhoodRadiusMax;
+            normalSpeed = StaticWorldParameters.normalSpeedMax;
+            maxSpeed = StaticWorldParameters.maxSpeedMax;
+            c1 = StaticWorldParameters.CohesiveForceMax;
+            c2 = StaticWorldParameters.AligningForceMax;
+            c3 = StaticWorldParameters.SeperatingForceMax;
+            c4 = StaticWorldParameters.ChanceOfRandomSteeringMax;
+            c5 = StaticWorldParameters.TendencyOfPaceKeepingMax;
         }
 
         public string getRecipe()
@@ -86,7 +86,7 @@ namespace SwarmEngine
             c4 = p7;
             c5 = p8;
 
-            boundParameterValues();
+            //boundParameterValues();
         }
 
         public Parameters(Parameters parent)
@@ -235,18 +235,21 @@ namespace SwarmEngine
 
         public Color getDisplayColor(EmitterType type)
         {
-            if (type == EmitterType.Brush)
-            {
-                return new Color((float)((StaticBrushParameters.CohesiveForceMax / StaticWorldParameters.CohesiveForceMax)),
-                                 (float)((StaticBrushParameters.AligningForceMax / StaticWorldParameters.AligningForceMax)),
-                                 (float)((StaticBrushParameters.SeperatingForceMax / StaticWorldParameters.SeperatingForceMax)));
-            }
-            else
-            {
-                return new Color((float)((c1 / StaticWorldParameters.CohesiveForceMax)),
-                                 (float)((c2 / StaticWorldParameters.AligningForceMax)),
-                                 (float)((c3 / StaticWorldParameters.SeperatingForceMax)));
-            }
+            return new Color((float)((c1 / StaticWorldParameters.CohesiveForceMax)),
+                                (float)((c2 / StaticWorldParameters.AligningForceMax)),
+                                (float)((c3 / StaticWorldParameters.SeperatingForceMax)));
+            //if (type == EmitterType.Brush)
+            //{
+            //    return new Color((float)((StaticBrushParameters.CohesiveForceMax / StaticWorldParameters.CohesiveForceMax)),
+            //                     (float)((StaticBrushParameters.AligningForceMax / StaticWorldParameters.AligningForceMax)),
+            //                     (float)((StaticBrushParameters.SeperatingForceMax / StaticWorldParameters.SeperatingForceMax)));
+            //}
+            //else
+            //{
+            //    return new Color((float)((c1 / StaticWorldParameters.CohesiveForceMax)),
+            //                     (float)((c2 / StaticWorldParameters.AligningForceMax)),
+            //                     (float)((c3 / StaticWorldParameters.SeperatingForceMax)));
+            //}
         }
 
         public double getNeighborhoodRadius()

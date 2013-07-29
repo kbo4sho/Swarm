@@ -1,4 +1,5 @@
 ﻿using SwarmEngine;
+using SwarmEngine.W8;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +16,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
     {
         public AuthoringViewModel()
         {
-            controlViewModels = new List<ViewModels.ControlViewModel>() { new BrushControlViewModel(), new WorldControlViewModel() };
+            controlViewModels = new List<ViewModels.ControlViewModel>() { new BrushControlViewModel(), new WorldControlViewModel(), new HandControlViewModel() };
             ControlViewModel = controlViewModels[0];
         }
 
@@ -50,6 +51,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != controlViewModel)
                 {
                     controlViewModel = value;
+                    StaticEditModeParameters.SetType(controlViewModel.Name);
                     NotifyPropertyChanged("ControlViewModel");
                 }
             }

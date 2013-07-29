@@ -9,7 +9,11 @@ namespace SwarmEngine
 {
     public class PopulationSimulator
     {
-        private Population population;
+        public Population Population
+        {
+            get;
+            private set;
+        }
         private Random rand = new Random();
         Individual currentInd;
         Parameters param;
@@ -38,17 +42,17 @@ namespace SwarmEngine
 
         public PopulationSimulator(int width, int height, Population pop)
         {
-            population = pop;
+            Population = pop;
 
             swarmInBirthOrder = new Species();
             swarmInXOrder = new Species();
             swarmInYOrder = new Species();
 
-            for (int i = 0; i < population.Count; i++)
+            for (int i = 0; i < Population.Count; i++)
             {
-                for (int j = 0; j < population[i].Count; j++)
+                for (int j = 0; j < Population[i].Count; j++)
                 {
-                    InitCollections(population[i][j]);
+                    InitCollections(Population[i][j]);
                 }
             }
         }
@@ -190,8 +194,8 @@ namespace SwarmEngine
                     tempAx += (localCenterX - tempX) * param.getC1();
                     tempAy += (localCenterY - tempY) * param.getC1();
 
-                    tempAx += (localDX - currentInd.getDx()) * param.getC2();
-                    tempAy += (localDY - currentInd.getDy()) * param.getC2();
+                    tempAx += (localDX - currentInd.Dx) * param.getC2();
+                    tempAy += (localDY - currentInd.Dy) * param.getC2();
 
                     for (int j = 0; j < n; j++)
                     {
@@ -217,8 +221,8 @@ namespace SwarmEngine
 
                 currentInd.accelerate(tempAx, tempAy, param.getMaxSpeed());
 
-                tempDX = currentInd.getDx2();
-                tempDY = currentInd.getDy2();
+                tempDX = currentInd.Dx2;
+                tempDY = currentInd.Dy2;
                 double f = Math.Sqrt(tempDX * tempDX + tempDY * tempDY);
                 if (f == 0)
                     f = 0.001;
@@ -246,23 +250,21 @@ namespace SwarmEngine
         public void EmitIndividual(Individual indvd)
         {
             AddIndividual(indvd);
-            if (population.Sum(s => s.Count) > StaticWorldParameters.numberOfIndividualsMax -1)
+            if (Population.Sum(s => s.Count) > StaticWorldParameters.numberOfIndividualsMax -1)
             {
                 swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 swarmInBirthOrder.Remove(swarmInBirthOrder.First());
-                population.TryRemoveFromExisitingSpecies();
+                Population.TryRemoveFromExisitingSpecies();
             }
         }
 
         private void AddIndividual(Individual indvd)
         {
-            if (population.Sum(s => s.Count) < StaticWorldParameters.numberOfIndividualsMax)
+            if (Population.Sum(s => s.Count) < StaticWorldParameters.numberOfIndividualsMax)
             {
-                swarmInBirthOrder.Add(indvd);
-                swarmInXOrder.Add(indvd);
-                swarmInYOrder.Add(indvd);
-                population.TryAddToExistingSpecies(indvd);
+                InitCollections(indvd);
+                Population.TryAddToExistingSpecies(indvd);
             }
         }
 
@@ -326,39 +328,30 @@ namespace SwarmEngine
             return swarmInBirthOrder;
         }
 
-        public Population GetPopulation()
-        {
-            return population;
-        }
-
         public List<Individual> GetSwarmSortedBySpecies()
         {
             List<Individual> allSpecies = new List<Individual>();
-            for (int i = 0; i < population.Count(); i++)
+            for (int i = 0; i < Population.Count(); i++)
             {
-                allSpecies.AddRange(population[i].ToList());
+                allSpecies.AddRange(Population[i].ToList());
             }
             return allSpecies.OrderBy(s=>s.Genome).ToList();
         }
 
         public void DetermineSpecies()
         {
-            //Reorganize the population in to a species
-            List<string> discoverdRecipies = population.Select(s => s.Select(d => d.Genome.getRecipe()).Distinct().ToList<string>()).First();
+            //ClearPopulation();
+            Population.AddRange(GetSpecies(this.Population));
+        }
 
-            if (discoverdRecipies != null && discoverdRecipies.Count() > 0)
-            {
-                List<Species> species = new List<Species>();
-                foreach (var rcpe in discoverdRecipies)
-                {
-                    species.Add(new Species(population.Select(s => s.Where(t => t.Genome.getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
-                }
+        public Population GetSavablePopulation()
+        {
+            return new Population(GetSpecies(this.Population), "savable copy");
+        }
 
-                population.Clear();
-                population.AddRange(species);
-            }
-            
-            
+        private List<Species> GetSpecies(Population population)
+        {
+            return population;
         }
 
         private void ClearPopulation()
@@ -371,23 +364,23 @@ namespace SwarmEngine
         public void UpdatePopulation(string recipiText, bool mutate)
         {
             ClearPopulation();
-            population = new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion");
-            UpdatePopulation(population, mutate);
+            Population = new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion");
+            UpdatePopulation(Population, mutate);
         }
 
         public void UpdatePopulation(Population tempPopulation, bool mutate)
         {
             ClearPopulation();
-            population = tempPopulation;
-            for (int i = 0; i < population.Count; i++)
+            Population = tempPopulation;
+            for (int i = 0; i < Population.Count; i++)
             {
-                for (int j = 0; j < population[i].Count; j++)
+                for (int j = 0; j < Population[i].Count; j++)
                 {
                     if (mutate)
                     {
-                        population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
+                        Population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
                     }
-                    InitCollections(population[i][j]);
+                    InitCollections(Population[i][j]);
                 }
             }
         }

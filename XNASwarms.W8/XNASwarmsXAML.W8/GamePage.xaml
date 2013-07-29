@@ -44,7 +44,7 @@
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Edit Mode" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    
                     <ListBox SelectedItem="{Binding ControlViewModel, Mode=TwoWay}" ItemsSource="{Binding ControlViewModels}" Grid.Row="1" HorizontalAlignment="Left">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>

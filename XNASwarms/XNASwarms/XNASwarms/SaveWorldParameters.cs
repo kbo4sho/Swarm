@@ -21,6 +21,9 @@ namespace XNASwarms
         public double c4Max;
         public double c5Max;
 
+        public double Width;
+        public double Height;
+
         public SaveWorldParameters()
         {
         }

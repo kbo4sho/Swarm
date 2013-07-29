@@ -13,10 +13,7 @@ namespace XNASwarmsXAML.W8.Authoring
     {
         public DataTemplate WorldEditorTemplate { get; set; }
         public DataTemplate BrushEditorTemplate { get; set; }
-
-        //Declare templates here
-        //One of these methods should work
-        //http://diptimayapatra.wordpress.com/2012/07/24/data-template-selector-in-windows-8-metro-xaml-app/
+        public DataTemplate HandEditorTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
@@ -29,6 +26,10 @@ namespace XNASwarmsXAML.W8.Authoring
                 else if(item is BrushControlViewModel)
                 {
                     return BrushEditorTemplate;
+                }
+                else if (item is HandControlViewModel)
+                {
+                    return HandEditorTemplate;
                 }
             }
 

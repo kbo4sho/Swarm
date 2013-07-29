@@ -9,8 +9,8 @@ namespace SwarmEngine
 {
     public class Individual : IContainable
     {
-        private double x, y, dx, dy, dx2, dy2;
         private int rankInXOrder, rankInYOrder;
+
         private Color color;
 
         public bool IsMobile
@@ -39,12 +39,14 @@ namespace SwarmEngine
 
         public double X
         {
-            get { return x; }
+            get;
+            private set;
         }
 
         public double Y
         {
-            get { return y; }
+            get;
+            private set;
         }
 
         public int RankInXOrder
@@ -59,62 +61,85 @@ namespace SwarmEngine
 
         public double Dx
         {
-            get { return dx; }
+            get;
+            private set;
         }
 
         public double Dy
         {
-            get { return dy; }
+            get;
+            private set;
         }
 
+        public double Dx2
+        {
+            get;
+            private set;
+        }
+
+        public double Dy2
+        {
+            get;
+            private set;
+        }
+
+        #region Constructor
         public Individual()
             : this(0, 0.0, 0.0, 0.0, 0.0, new Parameters())
         {
 
         }
 
-        public Individual(int id, double xx, double yy, double dxx, double dyy, Parameters g) 
-            : this (id,xx,yy,dxx,dyy,g, EmitterType.Still, true)
+        public Individual(int id, double x, double y, double dx, double dy, Parameters g) 
+            : this (id,x,y,dx,dy,g, EmitterType.Still, true)
         {
 
         }
 
-        public Individual(int id, double xx, double yy, double dxx, double dyy, Parameters g, EmitterType type, bool isMobile)
+        public Individual(int id, double x, double y, double dx, double dy, Parameters g, EmitterType emitterType, bool isMobile)
+            : this(id, x, y, dx, dy, dx, dy, g, emitterType, isMobile)
+        {
+
+        }
+
+        public Individual(int id, double x, double y, double dx, double dy, double dx2, double dy2, Parameters g, EmitterType emitterType, bool isMobile)
         {
             ID = id;
-            x = xx;
-            y = yy;
-            dx = dx2 = dxx;
-            dy = dy2 = dyy;
+            X = x;
+            Y = y;
+            Dx = Dx2 = dx;
+            Dy = Dy2 = dy;
             Genome = g;
-            EmitterType = type;
+            EmitterType = emitterType;
             IsMobile = isMobile;
 
-            color = Genome.getDisplayColor(type);
+            color = Genome.getDisplayColor(emitterType);
             rankInXOrder = 0;
             rankInYOrder = 0;
         }
 
+        #endregion
+
         public void accelerate(double ax, double ay, double maxMove)
         {
-            dx2 += ax;
-            dy2 += ay;
+            Dx2 += ax;
+            Dy2 += ay;
 
-            double d = dx2 * dx2 + dy2 * dy2;
+            double d = Dx2 * Dx2 + Dy2 * Dy2;
             if (d > maxMove * maxMove)
             {
                 double normalizationFactor = maxMove / Math.Sqrt(d); //was Math.sqrt(d)
-                dx2 *= normalizationFactor;
-                dy2 *= normalizationFactor;
+                Dx2 *= normalizationFactor;
+                Dy2 *= normalizationFactor;
             }
         }
 
         public void stepSimulation()
         {
-            dx = dx2;
-            dy = dy2;
-            x += dx;
-            y += dy;
+            Dx = Dx2;
+            Dy = Dy2;
+            X += Dx;
+            Y += Dy;
         }
 
         public void setDisplayColor(Color clr)
@@ -142,49 +167,29 @@ namespace SwarmEngine
             this.rankInYOrder = rankInYOrder;
         }
 
-        public double getDx()
-        {
-            return dx;
-        }
-
-        public double getDy()
-        {
-            return dy;
-        }
-
-        public double getDx2()
-        {
-            return dx2;
-        }
-
-        public double getDy2()
-        {
-            return dy2;
-        }
-
         #region IContainable
         public void TravelThroughXWall()
         {
-            x = -x;
-            dx = -dx;
-            dx2 = dx2 * 100;
+            X = -X;
+            Dx = -Dx;
+            Dx2 = Dx2 * 100;
         }
         public void TravelThroughYWall()
         {
-            y = -y;
-            dy = -dy;
-            dy2 = dy2 * 100;
+            Y = -Y;
+            Dy = -Dy;
+            Dy2 = Dy2 * 100;
         }
 
         public void BounceXWall()
         {
-            dx = -dx * 1000;
-            dx2 = -dx2 * 1000;
+            Dx = -Dx * 1000;
+            Dx2 = -Dx2 * 1000;
         }
         public void BounceYWall()
         {
-            dy = -dy * 1000;
-            dy2 = -dy2 * 1000;
+            Dy = -Dy * 1000;
+            Dy2 = -Dy2 * 1000;
         }
         #endregion
     }

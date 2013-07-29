@@ -139,6 +139,7 @@
       <Link>EmitterType.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticEditModeParameters.cs" />
     <Compile Include="SuperParameters.cs" />
   </ItemGroup>
   <ItemGroup>

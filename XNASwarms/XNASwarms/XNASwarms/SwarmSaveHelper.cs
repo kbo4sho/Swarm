@@ -41,6 +41,14 @@ namespace XNASwarms
             savedGenome.c3 = individual.Genome.getC3();
             savedGenome.c4 = individual.Genome.getC4();
             savedGenome.c5 = individual.Genome.getC5();
+            savedGenome.x = individual.X;
+            savedGenome.y = individual.Y;
+            savedGenome.dx = individual.Dx;
+            savedGenome.dy = individual.Dy;
+            savedGenome.dx2 = individual.Dx2;
+            savedGenome.dy2 = individual.Dy2;
+            savedGenome.type = individual.EmitterType;
+            savedGenome.isMobile = individual.IsMobile;
             return savedGenome;
         }
     }

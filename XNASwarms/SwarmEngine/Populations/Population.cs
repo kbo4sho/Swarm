@@ -55,11 +55,20 @@ namespace SwarmEngine
 
         public void TryAddToExistingSpecies(Individual indvd)
         {
-            Species species = this.First<Species>();
+            bool added = false;
 
-            if (totalAgents <= StaticWorldParameters.numberOfIndividualsMax)
+            foreach (var spec in this)
             {
-                species.Add(indvd);
+                if (spec.First().Genome.getRecipe() == indvd.Genome.getRecipe())
+                {
+                    spec.Add(indvd);
+                    added = true;
+                }
+            }
+
+            if (!added)
+            {
+                this.Add(new Species(new List<Individual>() { indvd }));
             }
         }
 

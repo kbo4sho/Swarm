@@ -39,7 +39,7 @@ namespace XNASwarms
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            Population population = populationSimulator.GetPopulation();
+            Population population = populationSimulator.Population;
             ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
 
             for (int s = 0; s < population.Count; s++ )
@@ -54,49 +54,36 @@ namespace XNASwarms
             ScreenManager.SpriteBatch.End();
         }
 
-        private void DrawIndividual(Individual indvd,Color color, Texture2D texture, EmitterType type)
+        private void DrawIndividual(Individual indvd, Color color, Texture2D texture, EmitterType type)
         {
-            if (type == EmitterType.Brush)
+            if (!indvd.IsMobile)
             {
-                if (!indvd.IsMobile)
-                {
-                    ScreenManager.SpriteBatch.Draw(bigIndividualTexture, new Rectangle(
-                        (int)indvd.X,
-                        (int)indvd.Y, bigIndividualTexture.Width, bigIndividualTexture.Height),
-                        null,
-                        color,
-                        (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
-                        new Vector2(bigIndividualTexture.Width / 2, bigIndividualTexture.Height / 2),
-                        SpriteEffects.None, 0);
-                }
-                else
-                {
-                    ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
-                        (int)indvd.X,
-                        (int)indvd.Y, texture.Width, texture.Height),
-                        null,
-                        color,
-                        (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
-                        new Vector2(texture.Width / 2, texture.Height / 2),
-                        SpriteEffects.None, 0);
-                }
+                ScreenManager.SpriteBatch.Draw(bigIndividualTexture, new Rectangle(
+                    (int)indvd.X,
+                    (int)indvd.Y, bigIndividualTexture.Width, bigIndividualTexture.Height),
+                    null,
+                    color,
+                    (float)Math.Atan2(indvd.Dy, indvd.Dx),
+                    new Vector2(bigIndividualTexture.Width / 2, bigIndividualTexture.Height / 2),
+                    SpriteEffects.None, 0);
             }
             else
             {
                 ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
-                        (int)indvd.X,
-                        (int)indvd.Y, texture.Width, texture.Height),
-                        null,
-                        color,
-                        (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
-                        new Vector2(texture.Width / 2, texture.Height / 2),
-                        SpriteEffects.None, 0);
+                    (int)indvd.X,
+                    (int)indvd.Y, texture.Width, texture.Height),
+                    null,
+                    color,
+                    (float)Math.Atan2(indvd.Dy, indvd.Dx),
+                    new Vector2(texture.Width / 2, texture.Height / 2),
+                    SpriteEffects.None, 0);
             }
+
         }
 
         private void DoMutation()
         {
-            foreach (Species spcs in populationSimulator.GetPopulation())
+            foreach (Species spcs in populationSimulator.Population)
             {
                 foreach (Individual indvdl in spcs)
                 {

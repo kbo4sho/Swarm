@@ -82,6 +82,7 @@
                             <RowDefinition Height="2*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
+                        <CheckBox Grid.Row="1"  Content="Mobile" IsChecked="{Binding IsMobile, Mode=TwoWay}"/>
                         <TextBlock Text="Neighborhood Radius" Style="{StaticResource BasicTextStyle}" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Width="150" Value="{Binding NeighborhoodRadiusMax, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="100"/>
                     </Grid>
@@ -121,16 +122,35 @@
                         <TextBlock Text="Chance of Random Steering" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Width="150" Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="1" StepFrequency=".1" />
                     </Grid>
-                    <toolkit:ColorHexagonPicker ColorSize="12" x:Name="colorPicker"  Color="{Binding BrushColor, Mode=TwoWay}" />
-                    <TextBlock Text="{Binding ElementName=colorPicker, Path=Color}"/>
-                    <CheckBox Content="Mobile" IsChecked="{Binding IsMobile, Mode=TwoWay}"/>
+                    <Grid>
+                        <toolkit:ColorHexagonPicker ColorSize="12" x:Name="colorPicker"  Color="{Binding BrushColor, Mode=TwoWay}" />
+                    </Grid>
+                    <Grid>
+                       
+                    </Grid>
+                    <!--TODO: Nob Here-->
+                    <!--<Slider Value="{Binding Direction}"/>-->
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="HandEditorTemplate">
+                <StackPanel Grid.Row="1" DataContext="{Binding}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,10,20">
+                    <StackPanel.Resources>
+                        <Style TargetType="Grid">
+                            <Setter Property="Margin" Value="30,0,0,40"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Grid>
+                        <TextBlock Text="Controls for editing how the influencers behaves here"/>
+                    </Grid>
                 </StackPanel>
             </DataTemplate>
 
             <local:EditorControlTemplateSelector 
                 x:Key="editorControlTemplateSelector" 
                 WorldEditorTemplate="{StaticResource WorldEditorTemplate}"
-                BrushEditorTemplate ="{StaticResource BrushEditorTemplate}"/>
+                BrushEditorTemplate ="{StaticResource BrushEditorTemplate}"
+                HandEditorTemplate ="{StaticResource HandEditorTemplate}"/>
             <ResourceDictionary.MergedDictionaries>
                 
                 <!-- 

@@ -31,25 +31,36 @@ namespace SwarmEngine
         public BrushParameters()
         {
             neighborhoodRadius = StaticBrushParameters.neighborhoodRadiusMax;
-            normalSpeed = StaticBrushParameters.normalSpeedMax;
-            maxSpeed = GetMaxSpeed();
+            normalSpeed = GetSpeed();
+            maxSpeed = StaticBrushParameters.maxSpeedMax;
             c1 = StaticBrushParameters.CohesiveForceMax;
             c2 = StaticBrushParameters.AligningForceMax;
-            c3 = StaticBrushParameters.SeperatingForceMax;
+            c3 = GetSeperatingForce();
             c4 = StaticBrushParameters.ChanceOfRandomSteeringMax;
             c5 = StaticBrushParameters.TendencyOfPaceKeepingMax;
         }
 
-        private double GetMaxSpeed()
+        private double GetSpeed()
         {
             if (StaticBrushParameters.IsMobile)
             {
-                return StaticBrushParameters.maxSpeedMax;
+                return StaticBrushParameters.normalSpeedMax;
             }
             else
             {
-                StaticBrushParameters.maxSpeedMax = 0;
                 return 0;
+            }
+        }
+
+        private double GetSeperatingForce()
+        {
+            if (StaticBrushParameters.SeperatingForceMax < 25)
+            {
+                return 25;
+            }
+            else
+            {
+                return StaticBrushParameters.SeperatingForceMax;
             }
         }
     }

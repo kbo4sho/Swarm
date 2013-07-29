@@ -23,7 +23,7 @@ namespace XNASwarms
         private int _selectedEntry;
         private SpriteFont LabelFont, BigFont;
         SpriteBatch spriteBatch;
-        SaveAllSpecies allSaved;
+       
         private List<MenuEntry> menuEntries = new List<MenuEntry>();
 
         private readonly Vector2 _containerMargin = new Vector2(10, 70);
@@ -35,6 +35,8 @@ namespace XNASwarms
         private readonly int BorderThickness = 4;
         private IDebugScreen debugScreen;
 
+        SaveAllSpecies allSaved;
+
 
         public ButtonSection(bool flip, Vector2 position, SwarmScreenBase screen, string desc)
         {
@@ -44,6 +46,7 @@ namespace XNASwarms
             _innerRect.Width = _rect.Width - BorderThickness;
             _innerRect.Height = _rect.Height - BorderThickness;
             _description = desc;
+            allSaved = new SaveAllSpecies();
 
             //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
             //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
@@ -212,57 +215,51 @@ namespace XNASwarms
                 //Replacing
                 SaveSpecies oldestSpecies = allSaved.OrderBy(s => s.CreadtedDt).First();
                 allSaved.Remove(oldestSpecies);
-                SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
-                savespecies.SaveWorldParameters = SaveWorld();
-                allSaved.Add(savespecies);
-                SaveHelper.Save("AllSaved", allSaved);
+                Save();
             }
 
             if (allSaved != null && allSaved.Count > 0)
             {
                 if (allSaved.Count == 1)
                 {
-                    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
-                    savespecies.SaveWorldParameters = SaveWorld();
-                    allSaved.Add(savespecies);
-                    SaveHelper.Save("AllSaved", allSaved);
+                    Save();
                 }
                 else if (allSaved.Count == 2)
                 {
-                    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
-                    savespecies.SaveWorldParameters = SaveWorld();
-                    allSaved.Add(savespecies);
-                    SaveHelper.Save("AllSaved", allSaved);
+                    Save();
                 }
                 else if (allSaved.Count == 3)
                 {
-                    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
-                    savespecies.SaveWorldParameters = SaveWorld();
-                    allSaved.Add(savespecies);
-                    SaveHelper.Save("AllSaved", allSaved);
+                    Save();
                 }
                 else if (allSaved.Count == 4)
                 {
-                    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
-                    savespecies.SaveWorldParameters = SaveWorld();
-                    allSaved.Add(savespecies);
-                    SaveHelper.Save("AllSaved", allSaved);
+                    Save();
                 }
                 else if (allSaved.Count == 5)
                 {
-                    SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
-                    savespecies.SaveWorldParameters = SaveWorld();
-                    allSaved.Add(savespecies);
-                    SaveHelper.Save("AllSaved", allSaved);
+                    Save();
                 }
             }
             else
             {
-                allSaved = new SaveAllSpecies();
-                SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
-                savespecies.SaveWorldParameters = SaveWorld();
-                allSaved.Add(savespecies);
-                SaveHelper.Save("AllSaved", allSaved);
+                Save();
+            }
+        }
+
+        private void Save()
+        {
+            SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+            savespecies.SaveWorldParameters = SaveWorld();
+            allSaved.Add(savespecies);
+            SaveHelper.Save("AllSaved", allSaved);
+
+            foreach (var species in savespecies.SavedSpecies)
+            {
+                foreach (var indvd in species)
+                {
+                    debugScreen.AddDebugItem("INDVD X", indvd.x.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+                }
             }
         }
 
@@ -280,22 +277,6 @@ namespace XNASwarms
             world.c5Max = StaticWorldParameters.TendencyOfPaceKeepingMax;
             return world;
         }
-
-        private void UpdateWorld(SaveWorldParameters world)
-        {
-            StaticWorldParameters.numberOfIndividualsMax = world.numberOfIndividualsMax;
-            StaticWorldParameters.neighborhoodRadiusMax = world.neighborhoodRadiusMax; 
-            StaticWorldParameters.normalSpeedMax = world.normalSpeedMax;
-            StaticWorldParameters.maxSpeedMax = world.maxSpeedMax;
-            StaticWorldParameters.CohesiveForceMax = world.c1Max;
-            StaticWorldParameters.AligningForceMax = world.c2Max;
-            StaticWorldParameters.SeperatingForceMax = world.c3Max;
-            StaticWorldParameters.ChanceOfRandomSteeringMax = world.c4Max;
-            StaticWorldParameters.TendencyOfPaceKeepingMax = world.c5Max;
-            
-        }
-
-
 
         public void AddMenuItem(string name, EntryType type, ControlScreen screen)
         {
@@ -405,7 +386,7 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        UpdateWorld(allSaved[0].SaveWorldParameters);
+                        allSaved[0].SaveWorldParameters = SaveWorld();
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[0]), false);
                        
 #endif
@@ -421,7 +402,7 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        UpdateWorld(allSaved[1].SaveWorldParameters);
+                        allSaved[1].SaveWorldParameters = SaveWorld();
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[1]), false);
                         
 #endif
@@ -437,7 +418,7 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        UpdateWorld(allSaved[2].SaveWorldParameters);
+                        allSaved[2].SaveWorldParameters = SaveWorld();
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[2]), false);
                         
 #endif
@@ -453,7 +434,7 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        UpdateWorld(allSaved[3].SaveWorldParameters);
+                        allSaved[3].SaveWorldParameters = SaveWorld();
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[3]), false);
                         
 #endif
@@ -469,7 +450,7 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        UpdateWorld(allSaved[4].SaveWorldParameters);
+                        allSaved[4].SaveWorldParameters = SaveWorld();
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[4]), false);
                         
 #endif
@@ -485,7 +466,7 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        UpdateWorld(allSaved[5].SaveWorldParameters);
+                        allSaved[5].SaveWorldParameters = SaveWorld();
                         this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[5]), false);
                         
 #endif

@@ -20,6 +20,7 @@ using SwarmAnalysisEngine;
 using XNASwarms.Emitters;
 using XNASwarms.Screens;
 using XNASwarmsXAML.W8;
+using SwarmEngine.W8;
 
 namespace XNASwarms
 {
@@ -68,13 +69,13 @@ namespace XNASwarms
 
             base.LoadContent();
             
-            for (int i = 0; i < populationSimulator.GetPopulation().Count(); i++)
+            for (int i = 0; i < populationSimulator.Population.Count(); i++)
             {
-                debugScreen.AddDebugItem("SPECIES " + i.ToString("00") + " COUNT", populationSimulator.GetPopulation()[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
-                debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.GetPopulation()[i].First().Genome.getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
+                debugScreen.AddDebugItem("SPECIES " + i.ToString("00") + " COUNT", populationSimulator.Population[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
+                debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.Population[i].First().Genome.getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
             }
 
-            debugScreen.AddDebugItem("SPECIES COUNT ", populationSimulator.GetPopulation().Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+            debugScreen.AddDebugItem("SPECIES COUNT ", populationSimulator.Population.Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             debugScreen.AddDebugItem("RESOLUTION", width.ToString() + "x" + height.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), ScreenSystem.Debug.DebugFlagType.Important);
             
@@ -95,6 +96,8 @@ namespace XNASwarms
                 
                 Camera.Update(gameTime);
                 //debugScreen.AddDebugItem("POPULATION COUNT", SwarmInXOrder.Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+
+                debugScreen.AddDebugItem("Agent1 Dx: ", SwarmInXOrder[0].Dx.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             }
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
@@ -130,15 +133,18 @@ namespace XNASwarms
         /// </summary>
         private void UpdateInput()
         {
-            //Brush
-            //TODO: need a static class for determining what the editing state is
-            if (Supers.Count > 0)
+            if (StaticEditModeParameters.IsBrushMode())
             {
-                emitterManager.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
-            }
-            else
-            {
-                emitterManager.Update(Vector2.Zero);
+                //Brush
+                //TODO: need a static class for determining what the editing state is
+                if (Supers.Count > 0)
+                {
+                    emitterManager.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
+                }
+                else
+                {
+                    emitterManager.Update(Vector2.Zero);
+                }
             }
         }
 
@@ -199,17 +205,26 @@ namespace XNASwarms
 
         public SaveSpecies GetPopulationAsSaveSpecies()
         {
-            return SwarmSaveHelper.GetPopulationAsSaveSpecies(populationSimulator.GetPopulation());
+            return SwarmSaveHelper.GetPopulationAsSaveSpecies(populationSimulator.GetSavablePopulation());
         }
 
-        internal void UpdatePopulation(string recipiText, bool mutate)
+        public void UpdatePopulation(string recipiText, bool mutate)
         {
             populationSimulator.UpdatePopulation(recipiText, mutate);
         }
 
-        internal void UpdatePopulation(Population population, bool mutate)
+        public void UpdatePopulation(Population population, bool mutate)
         {
             populationSimulator.UpdatePopulation(population, mutate);
+
+            foreach (var species in population)
+            {
+                foreach(var spec in species)
+                {
+                    debugScreen.AddDebugItem("INDVD X", spec.X.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+                }
+            }
+            
         }
     }
 }
