@@ -13,7 +13,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
     public class BrushControlViewModel : ControlViewModel, INotifyPropertyChanged
     {
         public BrushControlViewModel()
-            : base("Brush")
+            : base("Brush", "Assets/Icons/Paint.png")
         {
 
         }
@@ -189,6 +189,25 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 }
             }
         }
+
+        private double startingDirectionProperty = StaticBrushParameters.StartingDirection;
+        public double StartingDirection
+        {
+            get
+            {
+                return startingDirectionProperty;
+            }
+            set
+            {
+                if (value != startingDirectionProperty)
+                {
+                    startingDirectionProperty = value;
+                    StaticBrushParameters.StartingDirection = value;
+                    NotifyPropertyChanged("StartingDirection");
+                }
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

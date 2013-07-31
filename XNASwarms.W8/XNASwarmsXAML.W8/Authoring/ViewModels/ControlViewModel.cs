@@ -10,10 +10,12 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
     {
 
         public string Name { get; private set; }
+        public string IconPath { get; private set; }
 
-        public ControlViewModel(string name)
+        public ControlViewModel(string name, string iconPath)
         {
             Name = name;
+            IconPath = iconPath;
         }
     }
 }

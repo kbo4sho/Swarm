@@ -143,8 +143,12 @@ namespace XNASwarms
                 }
                 else
                 {
-                    emitterManager.Update(Vector2.Zero);
+                    //emitterManager.Update(Vector2.Zero);
                 }
+            }
+            else if (StaticEditModeParameters.IsHandMode())
+            {
+                emitterManager.Update(Vector2.Zero);
             }
         }
 

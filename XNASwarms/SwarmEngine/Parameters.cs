@@ -233,7 +233,7 @@ namespace SwarmEngine
                 c5 = StaticWorldParameters.TendencyOfPaceKeepingMax;
         }
 
-        public Color getDisplayColor(EmitterType type)
+        public Color getDisplayColor(EmitterTypes type)
         {
             return new Color((float)((c1 / StaticWorldParameters.CohesiveForceMax)),
                                 (float)((c2 / StaticWorldParameters.AligningForceMax)),

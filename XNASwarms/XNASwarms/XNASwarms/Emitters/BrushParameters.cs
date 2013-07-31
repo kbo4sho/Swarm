@@ -24,6 +24,7 @@ namespace SwarmEngine
         public static Color Color = Colors.Red;
 
         public static bool IsMobile = true;
+        public static double StartingDirection = 0;
     }
 
     public class BrushParameters : Parameters

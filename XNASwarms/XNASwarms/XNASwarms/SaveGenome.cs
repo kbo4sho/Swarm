@@ -28,7 +28,7 @@ namespace XNASwarms
         public double dx2;
         public double dy2;
 
-        public EmitterType type;
+        public EmitterTypes type;
         public bool isMobile;
 
 

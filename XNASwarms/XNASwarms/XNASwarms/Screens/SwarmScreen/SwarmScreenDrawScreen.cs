@@ -54,7 +54,7 @@ namespace XNASwarms
             ScreenManager.SpriteBatch.End();
         }
 
-        private void DrawIndividual(Individual indvd, Color color, Texture2D texture, EmitterType type)
+        private void DrawIndividual(Individual indvd, Color color, Texture2D texture, EmitterTypes type)
         {
             if (!indvd.IsMobile)
             {

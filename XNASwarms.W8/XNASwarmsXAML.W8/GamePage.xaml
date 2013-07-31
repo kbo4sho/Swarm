@@ -5,9 +5,20 @@
     xmlns:local="using:XNASwarmsXAML.W8"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Coding4Fun.Toolkit.Controls"
+    xmlns:authoring="using:XNASwarmsXAML.W8.Authoring"
+    xmlns:localControls="using:XNASwarmsXAML.W8.Authoring.Controls"
     mc:Ignorable="d">
     <SwapChainBackgroundPanel.Resources>
-        
+
+
+        <authoring:EditorControlTemplateSelector 
+                x:Key="editorControlTemplateSelector" 
+                WorldEditorTemplate="{StaticResource WorldEditorTemplate}"
+                BrushEditorTemplate ="{StaticResource BrushEditorTemplate}"
+                HandEditorTemplate ="{StaticResource HandEditorTemplate}"/>
+
+            
     </SwapChainBackgroundPanel.Resources>
     <Grid>
         <!--<AppBar x:Name="mytopappbar" VerticalAlignment="Top">
@@ -48,8 +59,10 @@
                     <ListBox SelectedItem="{Binding ControlViewModel, Mode=TwoWay}" ItemsSource="{Binding ControlViewModels}" Grid.Row="1" HorizontalAlignment="Left">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                    <TextBlock Text="{Binding Name}" Width="100" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="100">
+                                    <Image Source="{Binding IconPath}" Height="20" />
+                    
+                                    <!--<TextBlock Text="{Binding Name}" Width="100" HorizontalAlignment="Stretch" TextAlignment="Center"/>-->
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

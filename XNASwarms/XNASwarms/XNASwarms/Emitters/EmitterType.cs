@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SwarmEngine
 {
-    public enum EmitterType
+    public enum EmitterTypes
     {
         Normal = 0,
         Brush = 1,

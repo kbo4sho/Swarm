@@ -12,7 +12,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
     {
 
         public WorldControlViewModel()
-            :base("World")
+            : base("World", "Assets/Icons/Earth.png")
         {
         }
 

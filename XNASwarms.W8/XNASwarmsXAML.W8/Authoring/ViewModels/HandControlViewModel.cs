@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using XNASwarmsXAML.W8.Authoring.ViewModels;
 
-namespace XNASwarmsXAML.W8.Authoring
+namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {
     public class HandControlViewModel : ControlViewModel, INotifyPropertyChanged
     {
         public HandControlViewModel()
-            : base("Hand")
+            : base("Hand", "Assets/Icons/Games.png")
         {
 
         }

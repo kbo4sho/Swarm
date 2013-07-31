@@ -11,14 +11,14 @@ namespace XNASwarms.Emitters
     public class BrushEmitter : EmitterBase, IGuideable, IAudioInfluenced, IMeteredAgents
     {
         public BrushEmitter(Vector2 position)
-            : base(EmitterType.Brush, position, new BrushParameters())
+            : base(EmitterTypes.Brush, position, new BrushParameters())
         {
             
         }
 
         public override Individual Update()
         {
-            return new Individual(0, this.Position.X, this.Position.Y, this.Position.X, this.Position.Y, new BrushParameters(), EmitterType.Brush, StaticBrushParameters.IsMobile);
+            return new Individual(0, this.Position.X, this.Position.Y, 1, 1, new BrushParameters(), EmitterTypes.Brush, StaticBrushParameters.IsMobile);
         }
 
 
@@ -76,7 +76,7 @@ namespace XNASwarms.Emitters
         {
             get
             {
-               return 7;
+               return 6;
             }
             set
             {

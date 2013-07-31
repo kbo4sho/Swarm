@@ -250,6 +250,7 @@ namespace SwarmEngine
         public void EmitIndividual(Individual indvd)
         {
             AddIndividual(indvd);
+            indvd.accelerate(indvd.Dx*10, indvd.Dy*10, 400);
             if (Population.Sum(s => s.Count) > StaticWorldParameters.numberOfIndividualsMax -1)
             {
                 swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);

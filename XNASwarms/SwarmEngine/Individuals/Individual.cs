@@ -19,7 +19,7 @@ namespace SwarmEngine
             private set;
         }
 
-        public EmitterType EmitterType
+        public EmitterTypes EmitterType
         {
             get;
             private set;
@@ -91,18 +91,18 @@ namespace SwarmEngine
         }
 
         public Individual(int id, double x, double y, double dx, double dy, Parameters g) 
-            : this (id,x,y,dx,dy,g, EmitterType.Still, true)
+            : this (id,x,y,dx,dy,g, EmitterTypes.Still, true)
         {
 
         }
 
-        public Individual(int id, double x, double y, double dx, double dy, Parameters g, EmitterType emitterType, bool isMobile)
+        public Individual(int id, double x, double y, double dx, double dy, Parameters g, EmitterTypes emitterType, bool isMobile)
             : this(id, x, y, dx, dy, dx, dy, g, emitterType, isMobile)
         {
 
         }
 
-        public Individual(int id, double x, double y, double dx, double dy, double dx2, double dy2, Parameters g, EmitterType emitterType, bool isMobile)
+        public Individual(int id, double x, double y, double dx, double dy, double dx2, double dy2, Parameters g, EmitterTypes emitterType, bool isMobile)
         {
             ID = id;
             X = x;
