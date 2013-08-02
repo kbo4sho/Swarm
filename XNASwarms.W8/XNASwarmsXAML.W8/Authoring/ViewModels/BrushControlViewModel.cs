@@ -18,6 +18,8 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
 
         }
 
+        public int thing = 1;
+
         private double chanceOfRandomSteeringProperty = StaticBrushParameters.ChanceOfRandomSteeringMax;
         public double ChanceOfRandomSteering
         {
