@@ -20,7 +20,7 @@ using SwarmAnalysisEngine;
 using XNASwarms.Emitters;
 using XNASwarms.Screens;
 using XNASwarmsXAML.W8;
-using SwarmEngine.W8;
+
 
 namespace XNASwarms
 {
@@ -143,13 +143,14 @@ namespace XNASwarms
                 }
                 else
                 {
-                    //emitterManager.Update(Vector2.Zero);
+                    emitterManager.Update(Vector2.Zero);
                 }
             }
             else if (StaticEditModeParameters.IsHandMode())
             {
                 emitterManager.Update(Vector2.Zero);
             }
+           
         }
 
         public override void HandleInput(InputHelper input, Microsoft.Xna.Framework.GameTime gameTime)

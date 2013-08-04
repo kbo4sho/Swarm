@@ -13,7 +13,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
     public class BrushControlViewModel : ControlViewModel, INotifyPropertyChanged
     {
         public BrushControlViewModel()
-            : base("Brush", "Assets/Icons/Paint.png")
+            : base("Brush", "Paint.png")
         {
 
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SwarmEngine.W8
+namespace SwarmEngine
 {
     public static class StaticEditModeParameters
     {

@@ -15,9 +15,9 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="XNASwarms.W8.App">
-      <VisualElements DisplayName="XNASwarms.W8" Logo="Assets\LogoAuthoring.png" SmallLogo="Assets\SmallLogo.png" Description="XNASwarms.W8" ForegroundText="light" BackgroundColor="#464646">
-        <DefaultTile ShowName="allLogos" />
-        <SplashScreen Image="Assets\SplashScreenAuthoring.png" />
+      <VisualElements DisplayName="XNASwarms.W8" Logo="Assets\LogoAuthoring.png" SmallLogo="Assets\SmallLogo.png" Description="XNASwarms.W8" ForegroundText="light" BackgroundColor="#000000">
+        <DefaultTile ShowName="allLogos" ShortName="Columbia College Swarms" />
+        <SplashScreen Image="Assets\SplashScreenAuthoring.png" BackgroundColor="#464646" />
       </VisualElements>
       <Extensions>
         <Extension Category="windows.fileOpenPicker">

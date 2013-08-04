@@ -11,14 +11,14 @@ namespace XNASwarms.Emitters
     public class BrushEmitter : EmitterBase, IGuideable, IAudioInfluenced, IMeteredAgents
     {
         public BrushEmitter(Vector2 position)
-            : base(EmitterTypes.Brush, position, new BrushParameters())
+            : base(EmitterActionType.Brush, position, new BrushParameters())
         {
             
         }
 
         public override Individual Update()
         {
-            return new Individual(0, this.Position.X, this.Position.Y, 1, 1, new BrushParameters(), EmitterTypes.Brush, StaticBrushParameters.IsMobile);
+            return new Individual(0, this.Position.X, this.Position.Y, StaticBrushParameters.StartingDirection, 1, new BrushParameters(), EmitterActionType.Brush, StaticBrushParameters.IsMobile);
         }
 
 

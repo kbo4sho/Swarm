@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace XNASwarmsXAML.W8.Authoring
 {
     //The converter used to convert the value to the rotation angle.
-    class ValueAngleConverter : IMultiValueConverter
+    class ValueAngleConverter 
     {
         #region IMultiValueConverter Members
 

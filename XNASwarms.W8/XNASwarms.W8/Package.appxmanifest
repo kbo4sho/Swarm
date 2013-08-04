@@ -16,7 +16,7 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="XNASwarmsRelease.W8.App">
       <VisualElements DisplayName="XNASwarmsRelease.W8" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="XNASwarmsRelease.W8" ForegroundText="light" BackgroundColor="#000000">
-        <DefaultTile ShowName="allLogos" ShortName="Columbia College Swarms" />
+        <DefaultTile ShowName="allLogos" ShortName="Columbia College Chicago Swarms" />
         <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#464646" />
       </VisualElements>
       <Extensions>

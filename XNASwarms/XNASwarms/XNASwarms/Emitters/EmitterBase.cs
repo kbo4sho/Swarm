@@ -16,7 +16,7 @@ namespace XNASwarms.Emitters
             private set;
         }
 
-        public EmitterTypes EmitterType
+        public EmitterActionType EmitterType
         {
             get;
             private set;
@@ -34,10 +34,10 @@ namespace XNASwarms.Emitters
             protected set;
         }
 
-        public EmitterBase(EmitterTypes emitterType, Vector2 position)
+        public EmitterBase(EmitterActionType emitterType, Vector2 position)
             :this(emitterType, position, new SuperParameters()){}
 
-        public EmitterBase(EmitterTypes emitterType, Vector2 position, Parameters parameters)
+        public EmitterBase(EmitterActionType emitterType, Vector2 position, Parameters parameters)
         {
             IsActive = true;
             EmitterType = emitterType;

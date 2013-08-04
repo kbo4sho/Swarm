@@ -249,15 +249,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authoring\Controls\JoyStick.xaml.cs">
+      <DependentUpon>JoyStick.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Authoring\Controls\Knob.xaml.cs">
       <DependentUpon>Knob.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authoring\Controls\Util\MathHelper.cs" />
     <Compile Include="Authoring\EditorControlTemplateSelector.cs" />
     <Compile Include="Authoring\ViewModels\HandControlViewModel.cs" />
-    <Compile Include="Authoring\IMultiValueConverter.cs" />
     <Compile Include="Authoring\ParametersToColorConverter.cs" />
     <Compile Include="Authoring\ValueAngleConverter.cs" />
-    <Compile Include="Authoring\ValueTextConverter.cs" />
     <Compile Include="Authoring\ViewModels\AuthoringViewModel.cs" />
     <Compile Include="Authoring\ViewModels\BrushControlViewModel.cs" />
     <Compile Include="Authoring\ViewModels\ControlViewModel.cs" />
@@ -266,7 +268,6 @@
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Game1.cs" />
-    <Compile Include="MMAudioPlayer.cs" />
     <Compile Include="Normalizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -329,6 +330,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Authoring\Controls\JoyStick.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Authoring\Controls\Knob.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

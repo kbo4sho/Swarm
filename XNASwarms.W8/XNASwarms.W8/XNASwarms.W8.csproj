@@ -155,9 +155,6 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterManager.cs">
       <Link>Emitters\EmitterManager.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterType.cs">
-      <Link>Emitters\EmitterType.cs</Link>
-    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IAudioInfluenced.cs">
       <Link>Emitters\IAudioInfluenced.cs</Link>
     </Compile>

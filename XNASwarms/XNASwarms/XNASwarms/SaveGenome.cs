@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using SwarmEngine;
 
+
 namespace XNASwarms
 {
 #if WINDOWS
@@ -28,7 +29,7 @@ namespace XNASwarms
         public double dx2;
         public double dy2;
 
-        public EmitterTypes type;
+        public EmitterActionType type;
         public bool isMobile;
 
 

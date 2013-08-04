@@ -127,28 +127,37 @@
                         <toolkit:ColorHexagonPicker ColorSize="12" x:Name="colorPicker"  Color="{Binding BrushColor, Mode=TwoWay}" />
                     </Grid>
                     <Grid>
-
                         <localControls:Knob x:Name="knob" Angle="{Binding StartingDirection, Mode=TwoWay}" />
                     </Grid>
                     <Grid>
                         <TextBlock Text="{Binding Amount, ElementName=knob}"  />
                     </Grid>
-                    <!--TODO: Nob Here-->
-                    <!--<Slider Value="{Binding Direction}"/>-->
                 </StackPanel>
             </DataTemplate>
 
             <DataTemplate x:Key="HandEditorTemplate">
-                <StackPanel Grid.Row="1" DataContext="{Binding}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,10,20">
-                    <StackPanel.Resources>
-                        <Style TargetType="Grid">
-                            <Setter Property="Margin" Value="30,0,0,40"/>
-                        </Style>
-                    </StackPanel.Resources>
-                    <Grid>
-                        <TextBlock Text="Controls for editing how the influencers behaves here"/>
+                <Grid Grid.Row="1" DataContext="{Binding}" Width="{Binding ActualWidth, ElementName=myappbar}"  VerticalAlignment="Bottom" Margin="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid HorizontalAlignment="Left" Grid.Column="0" Margin="30">
+                        <Grid>
+                            <localControls:JoyStick x:Name="directionstick" Angle="{Binding Direction, Mode=TwoWay}" />
+                        </Grid>
+                        <Grid Width="50">
+                            <TextBlock Text="{Binding Amount, ElementName=directionstick}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        </Grid>
                     </Grid>
-                </StackPanel>
+                    <Grid HorizontalAlignment="Right" Grid.Column="1" Margin="30">
+                        <Grid Width="50">
+                            <TextBlock Text="{Binding Amount, ElementName=aimstick}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        </Grid>
+                        <Grid>
+                            <localControls:JoyStick x:Name="aimstick" Angle="{Binding Aim, Mode=TwoWay}" Width="100" Height="100" />
+                        </Grid>
+                    </Grid>
+                </Grid>
             </DataTemplate>
 
          
