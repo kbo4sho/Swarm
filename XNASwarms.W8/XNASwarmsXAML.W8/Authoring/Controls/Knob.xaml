@@ -10,7 +10,7 @@
     Width="250"
     Name="knob">
     <Grid ManipulationMode="All" ManipulationDelta="Grid_ManipulationDelta">
-        <Ellipse Fill="#FF00A2FF" Margin="30"/>
+        <Ellipse Fill="{StaticResource ListBoxItemSelectedBackgroundThemeBrush}" Margin="30"/>
         <Grid x:Name="transform">
             <Grid.RenderTransform>
                 <CompositeTransform  CenterY="125" CenterX="125" Rotation="{Binding Angle}"/>

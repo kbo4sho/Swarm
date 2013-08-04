@@ -8,7 +8,7 @@ namespace SwarmEngine
 {
     public static class StaticEditModeParameters
     {
-        public static EditType editType;
+        public static EditType editType = EditType.World;
 
         public static bool IsBrushMode()
         {

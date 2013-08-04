@@ -19,7 +19,9 @@ using ScreenSystem.Debug;
 using SwarmAnalysisEngine;
 using XNASwarms.Emitters;
 using XNASwarms.Screens;
+#if NETFX_CORE
 using XNASwarmsXAML.W8;
+#endif
 
 
 namespace XNASwarms
@@ -34,7 +36,6 @@ namespace XNASwarms
         protected Border Border;
         private float TimePerFrame;
         private int FramesPerSec;
-        float TotalElapsed;
         private IDebugScreen debugScreen;
         
         List<Individual> SwarmInXOrder;
@@ -52,7 +53,11 @@ namespace XNASwarms
 
         public override void LoadContent()
         {
+#if NETFX_CORE
             emitterManager = new EmitterManager(populationSimulator, ScreenManager.Game.Services.GetService(typeof(IAudio)) as IAudio);
+#else
+            emitterManager = new EmitterManager(populationSimulator);
+#endif
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
             debugScreen.ResetDebugItemsToNormal();
@@ -146,7 +151,7 @@ namespace XNASwarms
                     emitterManager.Update(Vector2.Zero);
                 }
             }
-            else if (StaticEditModeParameters.IsHandMode())
+            else if (StaticEditModeParameters.IsHandMode() || StaticEditModeParameters.IsWorldMode())
             {
                 emitterManager.Update(Vector2.Zero);
             }
@@ -180,11 +185,11 @@ namespace XNASwarms
                 {
                     Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(input.Touches[i].Position.X, input.Touches[i].Position.Y));
 
-                    Supers[i] = new Individual(i,((double)position.X),
+                    Supers[i] = new Individual(i, ((double)position.X),
                          ((double)position.Y),
                          0.0, 0.0, new SuperParameters());
                 }
-            }  
+            }
             else if (Supers.Count <= 0 &&
                      (input.Cursor != Vector2.Zero) &&
                      input.MouseState.LeftButton == ButtonState.Pressed)
@@ -201,6 +206,20 @@ namespace XNASwarms
                          0, 0, new SuperParameters());
                 }
             }
+
+            //if ((input.Cursor != Vector2.Zero) &&
+            //             input.MouseState.LeftButton == ButtonState.Pressed)
+            //{
+            //    Supers.Add(0, new Individual());
+            //    for (int i = 0; i < Supers.Count; i++)
+            //    {
+            //        Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(input.Cursor);
+
+            //        Supers[i] = new Individual(i, ((double)position.X),
+            //             ((double)position.Y),
+            //             0, 0, new SuperParameters());
+            //    }
+            //}
 
             ButtonSection.HandleInput(input, gameTime);
 

@@ -4,7 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+#if WINDOWS_PHONE
+using System.Windows.Media;
+#else
 using Windows.UI;
+#endif
+
+
 
 namespace SwarmEngine
 {

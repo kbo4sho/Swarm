@@ -8,7 +8,6 @@ using ScreenSystem.Debug;
 using SwarmEngine;
 using XNASwarms.Screens;
 using System.Threading.Tasks;
-using SwarmAudio;
 
 namespace XNASwarms
 {
@@ -485,7 +484,7 @@ namespace XNASwarms
                         SoundEngine.Pause();
 #endif
                     }
-#if !WINDOWS 
+#if NETFX_CORE 
                     else if (menuEntries[_selectedEntry].IsImportLikes())
                     {
                         ImportSwarmSaveData();

@@ -11,45 +11,38 @@
     mc:Ignorable="d">
     <SwapChainBackgroundPanel.Resources>
 
-
         <authoring:EditorControlTemplateSelector 
                 x:Key="editorControlTemplateSelector" 
                 WorldEditorTemplate="{StaticResource WorldEditorTemplate}"
                 BrushEditorTemplate ="{StaticResource BrushEditorTemplate}"
                 HandEditorTemplate ="{StaticResource HandEditorTemplate}"/>
-
-            
+      
     </SwapChainBackgroundPanel.Resources>
     <Grid>
         <AppBar x:Name="myappbar" VerticalAlignment="Bottom" IsOpen="True">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid Margin="0,0,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    
-                    <ListBox SelectedItem="{Binding ControlViewModel, Mode=TwoWay}" ItemsSource="{Binding ControlViewModels}" Grid.Row="1" HorizontalAlignment="Left">
+                <Grid Margin="20,0,0,0">
+                    <ListBox SelectedItem="{Binding ControlViewModel, Mode=TwoWay}" ItemsSource="{Binding ControlViewModels}" HorizontalAlignment="Left">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="100">
-                                    <Image Source="{Binding IconPath}" Height="20" />                  
+                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="36" Width="100">
+                                    <Image Source="{Binding IconPath}" />                  
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="40"/>
+                                <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
                 </Grid>
 
-                <ContentControl Grid.Row="1"  Content="{Binding ControlViewModel}" ContentTemplateSelector="{StaticResource editorControlTemplateSelector}"/>
+                <ContentControl Grid.Row="1"  Content="{Binding ControlViewModel}" ContentTemplateSelector="{StaticResource editorControlTemplateSelector}" Margin="20,0,20,20"/>
                
             </Grid>
         </AppBar>

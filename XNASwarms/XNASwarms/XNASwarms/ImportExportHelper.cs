@@ -13,9 +13,12 @@ namespace XNASwarms
 {
     public static class ImportExportHelper
     {
+#if !WINDOWS_PHONE
         public static async Task<SaveAllSpecies> Export()
         {
+
             FileSavePicker exportPicker = new FileSavePicker();
+
             exportPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             exportPicker.FileTypeChoices.Add("XML", new List<string>() { ".xml" });
             exportPicker.DefaultFileExtension = ".xml";
@@ -44,6 +47,7 @@ namespace XNASwarms
             }
             return null;
         }
+#endif
 
         public static async Task<SaveAllSpecies> Import()
         {

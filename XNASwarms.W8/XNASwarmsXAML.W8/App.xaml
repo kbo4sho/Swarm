@@ -12,10 +12,10 @@
             <!--<local:ParametersToColorConverter x:Key="parametersToColorConverter"/>-->
 
             <DataTemplate x:Key="WorldEditorTemplate">
-                <StackPanel Grid.Row="1" DataContext="{Binding}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,10,20">
+                <StackPanel Grid.Row="1" DataContext="{Binding}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                     <StackPanel.Resources>
                         <Style TargetType="Grid">
-                            <Setter Property="Margin" Value="30,0,0,40"/>
+                            <Setter Property="Margin" Value="0,0,20,0"/>
                         </Style>
                     </StackPanel.Resources>
                     <Grid>
@@ -70,24 +70,25 @@
             </DataTemplate>
 
             <DataTemplate x:Key="BrushEditorTemplate">
-                <StackPanel Grid.Row="1" DataContext="{Binding}" x:Name="brushcontrolroot" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,10,20">
+                <StackPanel Grid.Row="1" DataContext="{Binding}" x:Name="brushcontrolroot" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                     <StackPanel.Resources>
                         <Style TargetType="Grid">
                             <Setter Property="Margin" Value="0,0,0,0"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Grid>
+                    <Grid Margin="0,0,20,0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
                             <RowDefinition Height="1*"/>
-                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        <CheckBox Grid.Row="1"  Content="Mobile" IsChecked="{Binding IsMobile, Mode=TwoWay}"/>
+                        <TextBlock Text="Random Steering" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                        <Slider Width="150" Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="0" Maximum="1" StepFrequency=".1" />
                         <TextBlock Text="Neighborhood Radius" Style="{StaticResource BasicTextStyle}" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Width="150" Value="{Binding NeighborhoodRadiusMax, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="100"/>
                     </Grid>
-                    <Grid>
+                    <Grid Margin="0,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
@@ -99,7 +100,7 @@
                         <TextBlock Text="Max Speed" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Width="150" Value="{Binding MaxSpeed, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="{Binding ElementName=NormalSpeedSlider,Path=Value}" Maximum="500"/>
                     </Grid>
-                    <Grid>
+                    <Grid Margin="0,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
@@ -111,7 +112,7 @@
                         <TextBlock Text="Alligning Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Width="150" Value="{Binding AlligningForce, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="1" StepFrequency=".01" />
                     </Grid>
-                    <Grid>
+                    <Grid Margin="0,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
@@ -120,28 +121,24 @@
                         </Grid.RowDefinitions>
                         <TextBlock Text="Seperating Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Width="150" Value="{Binding SperatingForce, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="25" Maximum="100" StepFrequency=".01"/>
-                        <TextBlock Text="Chance of Random Steering" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="150" Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="1" StepFrequency=".1" />
+                        <CheckBox Grid.Row="2"  Content="Mobile" IsChecked="{Binding IsMobile, Mode=TwoWay}" VerticalAlignment="Bottom"/>
                     </Grid>
-                    <Grid>
+                    <Grid Margin="0,0,20,0">
                         <toolkit:ColorHexagonPicker ColorSize="12" x:Name="colorPicker"  Color="{Binding BrushColor, Mode=TwoWay}" />
                     </Grid>
                     <Grid>
                         <localControls:Knob x:Name="knob" Angle="{Binding StartingDirection, Mode=TwoWay}" />
                     </Grid>
-                    <Grid>
-                        <TextBlock Text="{Binding Amount, ElementName=knob}"  />
-                    </Grid>
                 </StackPanel>
             </DataTemplate>
 
             <DataTemplate x:Key="HandEditorTemplate">
-                <Grid Grid.Row="1" DataContext="{Binding}" Width="{Binding ActualWidth, ElementName=myappbar}"  VerticalAlignment="Bottom" Margin="0">
+                <Grid Grid.Row="1" DataContext="{Binding}" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid HorizontalAlignment="Left" Grid.Column="0" Margin="30">
+                    <Grid HorizontalAlignment="Left" Grid.Column="0" Margin="30,30,30,0">
                         <Grid>
                             <localControls:JoyStick x:Name="directionstick" Angle="{Binding Direction, Mode=TwoWay}" />
                         </Grid>
@@ -168,6 +165,7 @@
                     Required by Visual Studio project and item templates
                  -->
                 <ResourceDictionary Source="Common/StandardStyles.xaml"/>
+                <ResourceDictionary Source="Common/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

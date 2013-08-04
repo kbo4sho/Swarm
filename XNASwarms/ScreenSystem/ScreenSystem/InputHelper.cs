@@ -194,12 +194,12 @@ namespace ScreenSystem.ScreenSystem
             //_cursorSprite = new Sprite(_manager.Content.Load<Texture2D>("Common/cursor"));
 #if WINDOWS_PHONE
             // virtual stick content
-            _phoneStick = new VirtualStick(_manager.Content.Load<Texture2D>("Common/socket"),
-                                           _manager.Content.Load<Texture2D>("Common/stick"), new Vector2(80f, 400f));
+            //_phoneStick = new VirtualStick(_manager.Content.Load<Texture2D>("Common/socket"),
+            //                               _manager.Content.Load<Texture2D>("Common/stick"), new Vector2(80f, 400f));
 
-            Texture2D temp = _manager.Content.Load<Texture2D>("Common/buttons");
-            _phoneA = new VirtualButton(temp, new Vector2(695f, 380f), new Rectangle(0, 0, 40, 40), new Rectangle(0, 40, 40, 40));
-            _phoneB = new VirtualButton(temp, new Vector2(745f, 360f), new Rectangle(40, 0, 40, 40), new Rectangle(40, 40, 40, 40));
+            //Texture2D temp = _manager.Content.Load<Texture2D>("Common/buttons");
+            //_phoneA = new VirtualButton(temp, new Vector2(695f, 380f), new Rectangle(0, 0, 40, 40), new Rectangle(0, 40, 40, 40));
+            //_phoneB = new VirtualButton(temp, new Vector2(745f, 360f), new Rectangle(40, 0, 40, 40), new Rectangle(40, 40, 40, 40));
 #endif
             _viewport = _manager.GraphicsDevice.Viewport;
         }
@@ -218,7 +218,9 @@ namespace ScreenSystem.ScreenSystem
             }
 
             _currentKeyboardState = Keyboard.GetState();
+#if !WINDOWS_PHONE
             _currentGamePadState = GamePad.GetState(PlayerIndex.One);
+#endif
             _currentMouseState = Mouse.GetState();
 
             if (_handleVirtualStick)
@@ -300,14 +302,14 @@ namespace ScreenSystem.ScreenSystem
                 _cursorIsValid = false;
             }
 #elif WINDOWS_PHONE
-            if (_currentMouseState.LeftButton == ButtonState.Pressed)
-            {
-                _cursorIsValid = true;
-            }
-            else
-            {
-                _cursorIsValid = false;
-            }
+            //if (_currentMouseState.LeftButton == ButtonState.Pressed)
+            //{
+            //    _cursorIsValid = true;
+            //}
+            //else
+            //{
+            //    _cursorIsValid = false;
+            //}
 #endif
 
 
@@ -324,14 +326,14 @@ namespace ScreenSystem.ScreenSystem
                 //_manager.SpriteBatch.End();
             }
 #if WINDOWS_PHONE
-            if (_handleVirtualStick)
-            {
-                _manager.SpriteBatch.Begin();
-                _phoneA.Draw(_manager.SpriteBatch);
-                _phoneB.Draw(_manager.SpriteBatch);
-                _phoneStick.Draw(_manager.SpriteBatch);
-                _manager.SpriteBatch.End();
-            }
+            //if (_handleVirtualStick)
+            //{
+            //    _manager.SpriteBatch.Begin();
+            //    _phoneA.Draw(_manager.SpriteBatch);
+            //    _phoneB.Draw(_manager.SpriteBatch);
+            //    _phoneStick.Draw(_manager.SpriteBatch);
+            //    _manager.SpriteBatch.End();
+            //}
 #endif
         }
 
@@ -379,24 +381,24 @@ namespace ScreenSystem.ScreenSystem
             List<Buttons> _buttons = new List<Buttons>();
             Vector2 _stick = Vector2.Zero;
 #if WINDOWS_PHONE
-            _phoneA.Pressed = false;
-            _phoneB.Pressed = false;
-            TouchCollection touchLocations = TouchPanel.GetState();
-            foreach (TouchLocation touchLocation in touchLocations)
-            {
-                _phoneA.Update(touchLocation);
-                _phoneB.Update(touchLocation);
-                _phoneStick.Update(touchLocation);
-            }
-            if (_phoneA.Pressed)
-            {
-                _buttons.Add(Buttons.A);
-            }
-            if (_phoneB.Pressed)
-            {
-                _buttons.Add(Buttons.B);
-            }
-            _stick = _phoneStick.StickPosition;
+            //_phoneA.Pressed = false;
+            //_phoneB.Pressed = false;
+            //TouchCollection touchLocations = TouchPanel.GetState();
+            //foreach (TouchLocation touchLocation in touchLocations)
+            //{
+            //    _phoneA.Update(touchLocation);
+            //    _phoneB.Update(touchLocation);
+            //    _phoneStick.Update(touchLocation);
+            //}
+            //if (_phoneA.Pressed)
+            //{
+            //    _buttons.Add(Buttons.A);
+            //}
+            //if (_phoneB.Pressed)
+            //{
+            //    _buttons.Add(Buttons.B);
+            //}
+            //_stick = _phoneStick.StickPosition;
 #endif
 
             return new GamePadState(_stick, Vector2.Zero, 0f, 0f, _buttons.ToArray());

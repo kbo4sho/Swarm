@@ -30,41 +30,10 @@ namespace XNASwarmsXAML.W8
             _game = XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, this);
             this.InitializeComponent();
         }
-
-        private void directionKnob_ManipulationCompleted(object sender, Windows.UI.Xaml.Input.ManipulationCompletedRoutedEventArgs e)
-        {
-            int fsdfsdf = 1;
-        }
-
-        private void directionKnob_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
-        {
-
-        }
-
-        private void directionKnob_Blinked(object sender, EventArgs e)
-        {
-
-        }
     }
 
     public static class MyHelper
     {
-        //Get the parent of an item.
-        public static T FindParent<T>(FrameworkElement current)
-          where T : FrameworkElement
-        {
-            do
-            {
-                current = VisualTreeHelper.GetParent(current) as FrameworkElement;
-                if (current is T)
-                {
-                    return (T)current;
-                }
-            }
-            while (current != null);
-            return null;
-        }
-
         //Get the rotation angle from the value
         public static double GetAngle(double value, double maximum, double minimum)
         {

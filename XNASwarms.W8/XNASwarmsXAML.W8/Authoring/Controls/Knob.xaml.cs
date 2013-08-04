@@ -29,7 +29,7 @@ namespace XNASwarmsXAML.W8.Authoring.Controls
         private void Grid_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
             this.Angle = MathHelper.GetAngle(e.Position, this.RenderSize);
-            this.Amount = (int)(this.Angle / 360 * 100);
+            //this.Amount = (int)(this.Angle / 360 * 100);
         }
 
         int m_Amount = default(int);
