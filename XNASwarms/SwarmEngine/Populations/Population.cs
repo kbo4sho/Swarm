@@ -216,5 +216,16 @@ namespace SwarmEngine
             this.title = title;
         }
 
+
+        public void ReassignAllColors()
+        {
+            foreach (var spec in this)
+            {
+                foreach (var indvd in spec)
+                {
+                    indvd.ResetColor();
+                }
+            }
+        }
     }
 }

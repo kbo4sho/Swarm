@@ -375,24 +375,26 @@ namespace SwarmEngine
         public void UpdatePopulation(Population tempPopulation, bool mutate)
         {
             ClearPopulation();
-            Population = tempPopulation;
-            for (int i = 0; i < Population.Count; i++)
+       
+            for (int i = 0; i < tempPopulation.Count; i++)
             {
-                for (int j = 0; j < Population[i].Count; j++)
+                for (int j = 0; j < tempPopulation[i].Count; j++)
                 {
                     if (mutate)
                     {
-                        Population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
+                        tempPopulation[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
                     }
-                    InitCollections(Population[i][j]);
+                    //Population.TryAddToExistingSpecies(tempPopulation[i][j]);
+                    InitCollections(tempPopulation[i][j]);
                 }
             }
 
             if (mutate)
             {
-                Population.ReassignSpecies();
+                tempPopulation.ReassignSpecies();
+                tempPopulation.ReassignAllColors();
             }
-
+            Population = tempPopulation;
             //TODO: need to sort the species out of the population here
         }
     }

@@ -120,6 +120,11 @@ namespace SwarmEngine
 
         #endregion
 
+        public void ResetColor()
+        {
+            this.color = Genome.getDisplayColor(EmitterActionType.Normal);
+        }
+
         public void accelerate(double ax, double ay, double maxMove)
         {
             Dx2 += ax;
