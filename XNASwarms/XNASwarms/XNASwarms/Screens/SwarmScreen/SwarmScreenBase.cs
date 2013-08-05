@@ -171,7 +171,7 @@ namespace XNASwarms
                 {
                     Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(surfacetouches[i].X, surfacetouches[i].Y));
 
-                    Supers[i] = new Individual(((double)position.X),
+                    Supers[i] = new Individual(i,((double)position.X),
                          ((double)position.Y),
                          0.0, 0.0, new Parameters());
                 }

@@ -6,14 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+#if NETFX__CORE
 using Windows.Storage;
 using Windows.Storage.Pickers;
+#endif
 
 namespace XNASwarms
 {
     public static class ImportExportHelper
     {
-#if !WINDOWS_PHONE
+#if NETFX__CORE
         public static async Task<SaveAllSpecies> Export()
         {
 
@@ -47,7 +49,6 @@ namespace XNASwarms
             }
             return null;
         }
-#endif
 
         public static async Task<SaveAllSpecies> Import()
         {
@@ -80,5 +81,6 @@ namespace XNASwarms
 
             return null;
         }
+#endif
     }
 }

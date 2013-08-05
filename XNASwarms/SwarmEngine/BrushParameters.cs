@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 #if WINDOWS_PHONE
 using System.Windows.Media;
 #else
+#if NETFX_CORE
 using Windows.UI;
+#endif
 #endif
 
 
@@ -27,7 +29,9 @@ namespace SwarmEngine
         public static double ChanceOfRandomSteeringMax = 0.5;
         public static double TendencyOfPaceKeepingMax = 1;
 
+#if NETFX_CORE || WINDOWS_PHONE
         public static Color Color = Colors.Red;
+#endif
 
         public static bool IsMobile = true;
         public static double StartingDirection = 0;

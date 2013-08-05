@@ -8,6 +8,7 @@ using ScreenSystem.Debug;
 using SwarmEngine;
 using XNASwarms.Screens;
 using System.Threading.Tasks;
+using SwarmAudio;
 
 namespace XNASwarms
 {
@@ -59,11 +60,11 @@ namespace XNASwarms
             //AddMenuItem("Export", EntryType.ExportLikes, _screen);
             //AddMenuItem("Like", EntryType.Save, _screen);
 #if WINDOWS
-            AddMenuItem("Mutation", EntryType.Game, _screen);
-            AddMenuItem("Start Cluster", EntryType.AudioPlay, _screen);
-            AddMenuItem("Stop Cluster", EntryType.AudioPause, _screen);
-            AddMenuItem("Console", EntryType.Debugger, _screen);
-            AddMenuItem("Like", EntryType.Save, _screen);
+            AddMenuItem("Mutation", EntryType.Mutation, screen);
+            AddMenuItem("Start Cluster", EntryType.AudioPlay, screen);
+            AddMenuItem("Stop Cluster", EntryType.AudioPause, screen);
+            AddMenuItem("Console", EntryType.Debugger, screen);
+            AddMenuItem("Like", EntryType.Save, screen);
 #else
             AddMenuItem("Stable", EntryType.Stable, swarmscreen);
             AddMenuItem("Mutation", EntryType.Mutation, swarmscreen);
@@ -362,99 +363,34 @@ namespace XNASwarms
                 }
                 else if (menuEntries[selectedEntry].IsRecall1())
                 {
-#if WINDOWS 
-                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
-                        if (saveSpecies != null)
-                        {
-                            UpdateWorld(saveSpecies[0].SaveWorldParameters);
-                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[0]));
-                            this._screen.ExitScreen();
-                        }
-#else
+
                     allSaved[0].SaveWorldParameters = SaveWorld();
                     this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[0]), false);
-
-#endif
                 }
                 else if (menuEntries[selectedEntry].IsRecall2())
                 {
-#if WINDOWS 
-                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
-                        if (saveSpecies != null)
-                        {
-                            UpdateWorld(saveSpecies[1].SaveWorldParameters);
-                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[1]));
-                            this._screen.ExitScreen();
-                        }
-#else
                     allSaved[1].SaveWorldParameters = SaveWorld();
                     this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[1]), false);
-
-#endif
                 }
                 else if (menuEntries[selectedEntry].IsRecall3())
                 {
-#if WINDOWS 
-                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
-                        if (saveSpecies != null)
-                        {
-                            UpdateWorld(saveSpecies[2].SaveWorldParameters);
-                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[2]));
-                            this._screen.ExitScreen();
-                        }
-#else
                     allSaved[2].SaveWorldParameters = SaveWorld();
                     this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[2]), false);
-
-#endif
                 }
                 else if (menuEntries[selectedEntry].IsRecall4())
                 {
-#if WINDOWS 
-                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
-                        if (saveSpecies != null)
-                        {
-                            UpdateWorld(saveSpecies[3].SaveWorldParameters);
-                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[3]));
-                            this._screen.ExitScreen();
-                        }
-#else
                     allSaved[3].SaveWorldParameters = SaveWorld();
                     this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[3]), false);
-
-#endif
                 }
                 else if (menuEntries[selectedEntry].IsRecall5())
                 {
-#if WINDOWS 
-                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
-                        if (saveSpecies != null)
-                        {
-                            UpdateWorld(saveSpecies[4].SaveWorldParameters);
-                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[4]));
-                            this._screen.ExitScreen();
-                        }
-#else
                     allSaved[4].SaveWorldParameters = SaveWorld();
                     this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[4]), false);
-
-#endif
                 }
                 else if (menuEntries[selectedEntry].IsRecall6())
                 {
-#if WINDOWS 
-                        SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
-                        if (saveSpecies != null)
-                        {
-                            UpdateWorld(saveSpecies[5].SaveWorldParameters);
-                            _screen.ScreenManager.AddScreen(new SwarmScreenFromSavedSpecies(saveSpecies[5]));
-                            this._screen.ExitScreen();
-                        }
-#else
                     allSaved[5].SaveWorldParameters = SaveWorld();
                     this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[5]), false);
-
-#endif
                 }
                 else if (menuEntries[selectedEntry].IsAudioPlay())
                 {
