@@ -41,7 +41,7 @@
                         </ListBox.ItemsPanel>
                     </ListBox>
                 </Grid>
-
+                
                 <ContentControl Grid.Row="1"  Content="{Binding ControlViewModel}" ContentTemplateSelector="{StaticResource editorControlTemplateSelector}" Margin="20,0,20,20"/>
                
             </Grid>

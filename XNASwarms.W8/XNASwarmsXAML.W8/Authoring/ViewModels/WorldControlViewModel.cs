@@ -5,14 +5,16 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XNASwarms;
+using XNASwarmsXAML.W8.Authoring.Commands;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {
     public class WorldControlViewModel : ControlViewModel, INotifyPropertyChanged
     {
 
-        public WorldControlViewModel()
-            : base("World", "Earth.png")
+        public WorldControlViewModel(IControlClient controlClient)
+            : base("World", "Earth.png", controlClient)
         {
         }
 
@@ -159,6 +161,30 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 }
             }
         }
+
+        #region Commands
+        private GeneralCommand generalCmnd;
+        public GeneralCommand GeneralCmnd
+        {
+            get
+            {
+                if (generalCmnd == null)
+                    generalCmnd = new GeneralCommand(this);
+                return generalCmnd;
+            }
+        }
+
+        public void CreateMutation()
+        {
+            controlClient.CreateMutationSwarm();
+        }
+
+        public void CreateStable()
+        {
+            controlClient.CreateStableSwarm();
+        }
+
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

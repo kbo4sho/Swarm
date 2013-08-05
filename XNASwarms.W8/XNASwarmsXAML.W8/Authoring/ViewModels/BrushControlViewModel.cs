@@ -6,14 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
+using XNASwarms;
 using XNASwarms.Emitters;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {
     public class BrushControlViewModel : ControlViewModel, INotifyPropertyChanged
     {
-        public BrushControlViewModel()
-            : base("Brush", "Paint.png")
+        public BrushControlViewModel(IControlClient controlClient)
+            : base("Brush", "Paint.png", controlClient)
         {
 
         }

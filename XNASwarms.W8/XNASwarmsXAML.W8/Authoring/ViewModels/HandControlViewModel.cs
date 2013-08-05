@@ -4,14 +4,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XNASwarms;
 using XNASwarmsXAML.W8.Authoring.ViewModels;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {
     public class HandControlViewModel : ControlViewModel, INotifyPropertyChanged
     {
-        public HandControlViewModel()
-            : base("Hand", "Games.png")
+        public HandControlViewModel(IControlClient controlClient)
+            : base("Hand", "Games.png", controlClient)
         {
 
         }

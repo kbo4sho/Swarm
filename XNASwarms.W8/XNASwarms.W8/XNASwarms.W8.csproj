@@ -143,6 +143,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ControlClient.cs">
+      <Link>ControlClient.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
       <Link>Emitters\BrushEmitter.cs</Link>
     </Compile>

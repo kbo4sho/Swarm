@@ -47,7 +47,7 @@ namespace XNASwarms
             analysisEngine = new ClusterAnaylsisEngine();
             FramesPerSec = 30;
             TimePerFrame = (float)1 / FramesPerSec;
-            ButtonSection = new ButtonSection(false, Vector2.Zero, this, "");
+            ButtonSection = new ButtonSection(false, this, "");
             SwarmInXOrder = new List<Individual>();
         }
 

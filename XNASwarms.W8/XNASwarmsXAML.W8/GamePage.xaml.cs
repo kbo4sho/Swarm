@@ -22,13 +22,20 @@ namespace XNASwarmsXAML.W8
     /// </summary>
     public sealed partial class GamePage : SwapChainBackgroundPanel
     {
-        readonly Game1 _game;
+        readonly Game1 game;
+        IControlClient controlClient;
 
         public GamePage(string launchArguments)
         {
-            DataContext = App.ViewModel;
-            _game = XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, this);
+            game = XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, this);
+            controlClient = game.Services.GetService(typeof(IControlClient)) as IControlClient;
+            DataContext = new AuthoringViewModel(controlClient);
             this.InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            controlClient.CreateStableSwarm();
         }
     }
 

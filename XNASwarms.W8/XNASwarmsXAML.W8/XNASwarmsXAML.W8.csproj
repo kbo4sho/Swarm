@@ -144,6 +144,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ControlClient.cs">
+      <Link>ControlClient.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
       <Link>Emitters\BrushEmitter.cs</Link>
     </Compile>
@@ -249,6 +252,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authoring\Commands\WorldCommands.cs" />
     <Compile Include="Authoring\Controls\JoyStick.xaml.cs">
       <DependentUpon>JoyStick.xaml</DependentUpon>
     </Compile>

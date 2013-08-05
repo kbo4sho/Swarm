@@ -6,21 +6,21 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XNASwarms;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {
-    //TODO: Set up a system for dynamically adding models to the collection,
-    //switching the control panel to support each selection,
-    //handle removing of models 
     public class AuthoringViewModel : INotifyPropertyChanged
     {
-        public AuthoringViewModel()
+        public AuthoringViewModel(IControlClient controlClient)
         {
-            controlViewModels = new List<ViewModels.ControlViewModel>() { new WorldControlViewModel(), new BrushControlViewModel(), new HandControlViewModel() };
+            controlViewModels = new List<ViewModels.ControlViewModel>() { 
+                new WorldControlViewModel(controlClient), 
+                new BrushControlViewModel(controlClient), 
+                new HandControlViewModel(controlClient) 
+            };
             ControlViewModel = controlViewModels[0];
         }
-
-        //TODO: Add a collection of control view models
 
         private List<ControlViewModel> controlViewModels;
         public List<ControlViewModel> ControlViewModels

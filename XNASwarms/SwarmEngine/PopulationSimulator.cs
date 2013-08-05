@@ -352,6 +352,9 @@ namespace SwarmEngine
 
         private List<Species> GetSpecies(Population population)
         {
+            //TODO:
+            //Sort the species out of the population here
+
             return population;
         }
 
@@ -384,6 +387,13 @@ namespace SwarmEngine
                     InitCollections(Population[i][j]);
                 }
             }
+
+            if (mutate)
+            {
+                Population.ReassignSpecies();
+            }
+
+            //TODO: need to sort the species out of the population here
         }
     }
 }

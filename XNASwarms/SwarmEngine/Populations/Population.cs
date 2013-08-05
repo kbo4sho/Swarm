@@ -72,6 +72,24 @@ namespace SwarmEngine
             }
         }
 
+        public void ReassignSpecies()
+        {
+            //Reorganize the population in to a species
+            List<string> discoverdRecipies = this.Select(s => s.Select(d => d.Genome.getRecipe()).Distinct().ToList<string>()).First();
+
+            if (discoverdRecipies != null && discoverdRecipies.Count() > 0)
+            {
+                List<Species> species = new List<Species>();
+                foreach (var rcpe in discoverdRecipies)
+                {
+                    species.Add(new Species(this.Select(s => s.Where(t => t.Genome.getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
+                }
+
+                this.Clear();
+                this.AddRange(species);
+            }
+        }
+
         public void TryRemoveFromExisitingSpecies()
         {
             this.Where(e => e.Count() > 0).First().RemoveAt(0);

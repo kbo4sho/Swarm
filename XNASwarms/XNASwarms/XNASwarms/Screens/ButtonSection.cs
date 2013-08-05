@@ -14,12 +14,12 @@ namespace XNASwarms
     public sealed class ButtonSection : IDisposable
     {
 
-        private SwarmScreenBase _screen;
-        private Vector2 _position;
-        private Texture2D _bgSprite;
-        private Rectangle _rect, _innerRect;
-        private string _description;
-        private int _selectedEntry;
+        private SwarmScreenBase screen;
+        private Vector2 position;
+        private Texture2D bgSprite;
+        private Rectangle rect, innerRect;
+        private string description;
+        private int selectedEntry;
         private SpriteFont LabelFont, BigFont;
         SpriteBatch spriteBatch;
        
@@ -33,18 +33,19 @@ namespace XNASwarms
 
         private readonly int BorderThickness = 4;
         private IDebugScreen debugScreen;
+        private IControlClient controlClient;
 
         SaveAllSpecies allSaved;
 
 
-        public ButtonSection(bool flip, Vector2 position, SwarmScreenBase screen, string desc)
+        public ButtonSection(bool flip, SwarmScreenBase swarmscreen, string desc)
         {
-            _rect.Width = 100;
-            _rect.Height = 360;
-            _screen = screen;
-            _innerRect.Width = _rect.Width - BorderThickness;
-            _innerRect.Height = _rect.Height - BorderThickness;
-            _description = desc;
+            rect.Width = 100;
+            rect.Height = 360;
+            screen = swarmscreen;
+            innerRect.Width = rect.Width - BorderThickness;
+            innerRect.Height = rect.Height - BorderThickness;
+            description = desc;
             allSaved = new SaveAllSpecies();
 
             //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
@@ -64,12 +65,12 @@ namespace XNASwarms
             AddMenuItem("Console", EntryType.Debugger, _screen);
             AddMenuItem("Like", EntryType.Save, _screen);
 #else
-            AddMenuItem("Stable", EntryType.Stable, _screen);
-            AddMenuItem("Mutation", EntryType.Game, _screen);
-            AddMenuItem("Console", EntryType.Debugger, _screen);
-            AddMenuItem("Import", EntryType.ImportLikes, _screen);
-            AddMenuItem("Export", EntryType.ExportLikes, _screen);
-            AddMenuItem("Like", EntryType.Save, _screen);
+            AddMenuItem("Stable", EntryType.Stable, swarmscreen);
+            AddMenuItem("Mutation", EntryType.Mutation, swarmscreen);
+            AddMenuItem("Console", EntryType.Debugger, swarmscreen);
+            AddMenuItem("Import", EntryType.ImportLikes, swarmscreen);
+            AddMenuItem("Export", EntryType.ExportLikes, swarmscreen);
+            AddMenuItem("Like", EntryType.Save, swarmscreen);
             
 #endif
 
@@ -83,13 +84,14 @@ namespace XNASwarms
                 GetLocalSaveSwarmData();
 #endif
             }
-            spriteBatch = new SpriteBatch(_screen.ScreenManager.GraphicsDevice);
-            debugScreen = _screen.ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
-            Viewport viewport = _screen.ScreenManager.GraphicsDevice.Viewport;
-            _position = new Vector2(_screen.ScreenManager.GraphicsDevice.Viewport.Width - _rect.Width, 0);// + _containerMargin;
-            _bgSprite = _screen.ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
-            LabelFont = _screen.ScreenManager.Fonts.DetailsFont;
-            BigFont = _screen.ScreenManager.Fonts.FrameRateCounterFont;
+            spriteBatch = new SpriteBatch(screen.ScreenManager.GraphicsDevice);
+            debugScreen = screen.ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
+            controlClient = screen.ScreenManager.Game.Services.GetService(typeof(IControlClient)) as IControlClient;
+            Viewport viewport = screen.ScreenManager.GraphicsDevice.Viewport;
+            position = new Vector2(screen.ScreenManager.GraphicsDevice.Viewport.Width - rect.Width, 0);// + _containerMargin;
+            bgSprite = screen.ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
+            LabelFont = screen.ScreenManager.Fonts.DetailsFont;
+            BigFont = screen.ScreenManager.Fonts.FrameRateCounterFont;
 
             for (int i = 0; i < menuEntries.Count; ++i)
             {
@@ -105,7 +107,7 @@ namespace XNASwarms
             Vector2 position = Vector2.Zero;
             for (int i = 0; i < menuEntries.Count; ++i)
             {
-                menuEntries[i].Position = new Vector2(_position.X, _position.Y + i * menuEntries[i].GetHeight() + i * _containerPadding.Y);
+                menuEntries[i].Position = new Vector2(position.X, position.Y + i * menuEntries[i].GetHeight() + i * _containerPadding.Y);
             }
         }
 
@@ -113,11 +115,11 @@ namespace XNASwarms
         {
             spriteBatch.Begin();
             UpdateMenuEntryLocations();
-            SpriteFont font = _screen.ScreenManager.Fonts.MenuSpriteFont;
-            var pos = _position;
+            SpriteFont font = screen.ScreenManager.Fonts.MenuSpriteFont;
+            var pos = position;
             for (int i = 0; i < menuEntries.Count; ++i)
             {
-                bool isSelected = _screen.IsActive && (i == _selectedEntry);
+                bool isSelected = screen.IsActive && (i == selectedEntry);
                 menuEntries[i].Draw(spriteBatch);
             }
             spriteBatch.End();
@@ -133,42 +135,42 @@ namespace XNASwarms
             {
                 if (allSaved.Count == 1)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1,allSaved[0].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1,allSaved[0].GetMostUsedColors(), screen);
                 }
                 else if (allSaved.Count == 2)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
                 }
                 else if (allSaved.Count == 3)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), screen);
                 }
                 else if (allSaved.Count == 4)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), screen);
                 }
                 else if (allSaved.Count == 5)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allSaved[4].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allSaved[4].GetMostUsedColors(), screen);
                 }
                 else if (allSaved.Count == 6)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allSaved[4].GetMostUsedColors(), null);
-                    AddSavedSwarm(allSaved[5].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall6, allSaved[5].GetMostUsedColors(), null);
+                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allSaved[4].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allSaved[5].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall6, allSaved[5].GetMostUsedColors(), screen);
                 }
                 
             }
@@ -248,7 +250,7 @@ namespace XNASwarms
 
         private void Save()
         {
-            SaveSpecies savespecies = _screen.GetPopulationAsSaveSpecies();
+            SaveSpecies savespecies = screen.GetPopulationAsSaveSpecies();
             savespecies.SaveWorldParameters = SaveWorld();
             allSaved.Add(savespecies);
             SaveHelper.Save("AllSaved", allSaved);
@@ -279,13 +281,13 @@ namespace XNASwarms
 
         public void AddMenuItem(string name, EntryType type, ControlScreen screen)
         {
-            MenuEntry entry = new MenuEntry(_screen, name, type, screen, _bgSprite);
+            MenuEntry entry = new MenuEntry(screen, name, type, screen, bgSprite);
             menuEntries.Add(entry);
         }
 
         public void AddSavedSwarm(string name, EntryType type, List<Color> colors, ControlScreen screen)
         {
-            SavedSwarmButton entry = new SavedSwarmButton(_screen, name, type, colors, screen, _bgSprite);
+            SavedSwarmButton entry = new SavedSwarmButton(screen, name, type, colors, screen, bgSprite);
             entry.Initialize();
             menuEntries.Add(entry);
         }
@@ -322,60 +324,44 @@ namespace XNASwarms
             int hoverIndex = GetMenuEntryAt(input.Cursor);
             if (hoverIndex >= 0)
             {
-                _selectedEntry = hoverIndex;
+                selectedEntry = hoverIndex;
                 //debugScreen.AddDebugItem("BUTTON HOVER", "Index " + hoverIndex, XnaSwarmsData.Debug.DebugFlagType.Important);
             }
             else
             {
-                _selectedEntry = -1;
+                selectedEntry = -1;
             }
 
             // Accept or cancel the menu? 
-            if (input.IsMenuSelect() && _selectedEntry != -1)
+            if (input.IsMenuSelect() && selectedEntry != -1)
             {
-                if (menuEntries[_selectedEntry].IsExitItem())
+                if (menuEntries[selectedEntry].IsStable())
                 {
-                    _screen.ScreenManager.Game.Exit();
+                    controlClient.CreateStableSwarm();
                 }
-                else
+                else if (menuEntries[selectedEntry].IsMutationGame())
                 {
-                    if (menuEntries[_selectedEntry].IsStable())
-                    {
-                        this._screen.UpdatePopulation(StockRecipies.Stable_A, false);
-                    }
-                    else if (menuEntries[_selectedEntry].IsSwinger())
-                    {
-                        this._screen.UpdatePopulation(StockRecipies.Swinger, false);
-                    }
-                    else if (menuEntries[_selectedEntry].IsGameModeGame())
-                    {
-                        this._screen.UpdatePopulation(StockRecipies.Stable_A, true);
-                    }
-                    else if (menuEntries[_selectedEntry].IsZoomIn())
-                    {
-                        if (this._screen.Camera.Zoom < 1.5)
-                        {
-                            this._screen.Camera.Zoom += .1f;
-                        }
-                    }
-                    else if (menuEntries[_selectedEntry].IsZoomOut())
-                    {
-                        if (this._screen.Camera.Zoom > .5)
-                        {
-                            this._screen.Camera.Zoom -= .1f;
-                        }
-                    }
-                    else if (menuEntries[_selectedEntry].IsDebugger())
-                    {
-                        debugScreen.SetVisiblity();
-                    }
-                    else if (menuEntries[_selectedEntry].IsSave())
-                    {
-                        SaveSwarm();
-                        LoadSavedSwarms();
-                    }
-                    else if (menuEntries[_selectedEntry].IsRecall1())
-                    {
+                    controlClient.CreateMutationSwarm();
+                }
+                else if (menuEntries[selectedEntry].IsZoomIn())
+                {
+                    controlClient.ZoomIn();
+                }
+                else if (menuEntries[selectedEntry].IsZoomOut())
+                {
+                    controlClient.ZoomOut();
+                }
+                else if (menuEntries[selectedEntry].IsDebugger())
+                {
+                    debugScreen.SetVisiblity();
+                }
+                else if (menuEntries[selectedEntry].IsSave())
+                {
+                    SaveSwarm();
+                    LoadSavedSwarms();
+                }
+                else if (menuEntries[selectedEntry].IsRecall1())
+                {
 #if WINDOWS 
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
@@ -385,13 +371,13 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        allSaved[0].SaveWorldParameters = SaveWorld();
-                        this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[0]), false);
-                       
+                    allSaved[0].SaveWorldParameters = SaveWorld();
+                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[0]), false);
+
 #endif
-                    }
-                    else if (menuEntries[_selectedEntry].IsRecall2())
-                    {
+                }
+                else if (menuEntries[selectedEntry].IsRecall2())
+                {
 #if WINDOWS 
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
@@ -401,13 +387,13 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        allSaved[1].SaveWorldParameters = SaveWorld();
-                        this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[1]), false);
-                        
+                    allSaved[1].SaveWorldParameters = SaveWorld();
+                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[1]), false);
+
 #endif
-                    }
-                    else if (menuEntries[_selectedEntry].IsRecall3())
-                    {
+                }
+                else if (menuEntries[selectedEntry].IsRecall3())
+                {
 #if WINDOWS 
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
@@ -417,13 +403,13 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        allSaved[2].SaveWorldParameters = SaveWorld();
-                        this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[2]), false);
-                        
+                    allSaved[2].SaveWorldParameters = SaveWorld();
+                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[2]), false);
+
 #endif
-                    }
-                    else if (menuEntries[_selectedEntry].IsRecall4())
-                    {
+                }
+                else if (menuEntries[selectedEntry].IsRecall4())
+                {
 #if WINDOWS 
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
@@ -433,13 +419,13 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        allSaved[3].SaveWorldParameters = SaveWorld();
-                        this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[3]), false);
-                        
+                    allSaved[3].SaveWorldParameters = SaveWorld();
+                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[3]), false);
+
 #endif
-                    }
-                    else if (menuEntries[_selectedEntry].IsRecall5())
-                    {
+                }
+                else if (menuEntries[selectedEntry].IsRecall5())
+                {
 #if WINDOWS 
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
@@ -449,13 +435,13 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        allSaved[4].SaveWorldParameters = SaveWorld();
-                        this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[4]), false);
-                        
+                    allSaved[4].SaveWorldParameters = SaveWorld();
+                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[4]), false);
+
 #endif
-                    }
-                    else if (menuEntries[_selectedEntry].IsRecall6())
-                    {
+                }
+                else if (menuEntries[selectedEntry].IsRecall6())
+                {
 #if WINDOWS 
                         SaveAllSpecies saveSpecies = SaveHelper.Load("AllSaved");
                         if (saveSpecies != null)
@@ -465,36 +451,36 @@ namespace XNASwarms
                             this._screen.ExitScreen();
                         }
 #else
-                        allSaved[5].SaveWorldParameters = SaveWorld();
-                        this._screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[5]), false);
-                        
+                    allSaved[5].SaveWorldParameters = SaveWorld();
+                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[5]), false);
+
 #endif
-                    }
-                    else if (menuEntries[_selectedEntry].IsAudioPlay())
-                    {
+                }
+                else if (menuEntries[selectedEntry].IsAudioPlay())
+                {
 #if WINDOWS
                         //SoundEngine.PlayPause(1);
                         SoundEngine.Play();
 #endif
-                    }
-                    else if (menuEntries[_selectedEntry].IsAudioPause())
-                    {
+                }
+                else if (menuEntries[selectedEntry].IsAudioPause())
+                {
 #if WINDOWS
                         //SoundEngine.PlayPause(0);
                         SoundEngine.Pause();
 #endif
-                    }
-#if NETFX_CORE 
-                    else if (menuEntries[_selectedEntry].IsImportLikes())
-                    {
-                        ImportSwarmSaveData();
-                    }
-                    else if (menuEntries[_selectedEntry].IsExportLikes())
-                    {
-                        ExportSwarmSaveData();
-                    }
-#endif
                 }
+#if NETFX_CORE
+                else if (menuEntries[selectedEntry].IsImportLikes())
+                {
+                    ImportSwarmSaveData();
+                }
+                else if (menuEntries[selectedEntry].IsExportLikes())
+                {
+                    ExportSwarmSaveData();
+                }
+#endif
+
             }
         }
 
