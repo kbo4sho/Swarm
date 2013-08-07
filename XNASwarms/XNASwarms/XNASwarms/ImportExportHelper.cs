@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-#if NETFX__CORE
+#if NETFX_CORE
 using Windows.Storage;
 using Windows.Storage.Pickers;
 #endif
@@ -15,7 +15,7 @@ namespace XNASwarms
 {
     public static class ImportExportHelper
     {
-#if NETFX__CORE
+#if NETFX_CORE
         public static async Task<SaveAllSpecies> Export()
         {
 

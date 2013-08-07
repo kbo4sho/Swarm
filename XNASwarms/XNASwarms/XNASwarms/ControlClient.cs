@@ -15,6 +15,7 @@ namespace XNASwarms
         void CreateMutationSwarm();
         void ZoomIn();
         void ZoomOut();
+        SaveWorldParameters SaveWorld();
     }
 
     public class ControlClient : IControlClient
@@ -44,6 +45,21 @@ namespace XNASwarms
         public void ZoomOut()
         {
             swarmScreen.Camera.Zoom -= .1f;
+        }
+
+        public SaveWorldParameters SaveWorld()
+        {
+            SaveWorldParameters world = new SaveWorldParameters();
+            world.numberOfIndividualsMax = StaticWorldParameters.numberOfIndividualsMax;
+            world.neighborhoodRadiusMax = StaticWorldParameters.neighborhoodRadiusMax;
+            world.normalSpeedMax = StaticWorldParameters.normalSpeedMax;
+            world.maxSpeedMax = StaticWorldParameters.maxSpeedMax;
+            world.c1Max = StaticWorldParameters.CohesiveForceMax;
+            world.c2Max = StaticWorldParameters.AligningForceMax;
+            world.c3Max = StaticWorldParameters.SeperatingForceMax;
+            world.c4Max = StaticWorldParameters.ChanceOfRandomSteeringMax;
+            world.c5Max = StaticWorldParameters.TendencyOfPaceKeepingMax;
+            return world;
         }
     }
 }
