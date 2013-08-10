@@ -16,9 +16,17 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
         public WorldControlViewModel(IControlClient controlClient)
             : base("World", "Earth.png", controlClient)
         {
+            ChanceOfRandomSteering = controlClient.GetWorldRandomSteering();
+            SperatingForce = controlClient.GetWorldSeperatingForce();
+            AlligningForce = controlClient.GetWorldAligningForce();
+            CohesiveForce = controlClient.GetWorldCohesiveForce();
+            NormalSpeed = controlClient.GetWorldNormalSpeed();
+            MaxSpeed = controlClient.GetWorldMaxSpeed();
+            NumberOfIndividualsMax = controlClient.GetWorldNumberOfIndividuals();
+            NeighborhoodRadiusMax = controlClient.GetWorldNeighborhoodRadius();
         }
 
-        private double chanceOfRandomSteeringProperty = StaticWorldParameters.ChanceOfRandomSteeringMax;
+        private double chanceOfRandomSteeringProperty;
         public double ChanceOfRandomSteering
         {
             get
@@ -36,7 +44,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             }
         }
 
-        private double seperatingForceProperty = StaticWorldParameters.SeperatingForceMax;
+        private double seperatingForceProperty;
         public double SperatingForce
         {
             get
@@ -54,7 +62,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             }
         }
 
-        private double alligningForceProperty = StaticWorldParameters.AligningForceMax;
+        private double alligningForceProperty;
         public double AlligningForce
         {
             get
@@ -72,7 +80,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             }
         }
 
-        private double cohesiveForceProperty = StaticWorldParameters.CohesiveForceMax;
+        private double cohesiveForceProperty;
         public double CohesiveForce
         {
             get
@@ -90,7 +98,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             }
         }
 
-        private int normalSpeedProperty = StaticWorldParameters.normalSpeedMax;
+        private int normalSpeedProperty;
         public int NormalSpeed
         {
             get
@@ -108,7 +116,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             }
         }
 
-        private int maxSpeedProperty = StaticWorldParameters.maxSpeedMax;
+        private int maxSpeedProperty;
         public int MaxSpeed
         {
             get
@@ -126,7 +134,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             }
         }
 
-        private int numberOfIndividualsMaxProperty = StaticWorldParameters.numberOfIndividualsMax;
+        private int numberOfIndividualsMaxProperty;
         public int NumberOfIndividualsMax
         {
             get
@@ -138,13 +146,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != numberOfIndividualsMaxProperty)
                 {
                     numberOfIndividualsMaxProperty = value;
-                    controlClient.ChangeNumberOfIndividuals(value);
+                    controlClient.ChangeWorldNumberOfIndividuals(value);
                     NotifyPropertyChanged("NumberOfIndividualsMax");
                 }
             }
         }
 
-        private int neighborhoodMaxRadiusProperty = StaticWorldParameters.neighborhoodRadiusMax;
+        private int neighborhoodMaxRadiusProperty;
         public int NeighborhoodRadiusMax
         {
             get
@@ -156,7 +164,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != neighborhoodMaxRadiusProperty)
                 {
                     neighborhoodMaxRadiusProperty = value;
-                    controlClient.ChangeNeighborhoodRadius(value);
+                    controlClient.ChangeWorldNeighborhoodRadius(value);
                     NotifyPropertyChanged("NeighborhoodRadiusMax");
                 }
             }

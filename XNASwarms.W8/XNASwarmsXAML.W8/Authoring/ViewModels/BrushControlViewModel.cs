@@ -16,12 +16,21 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
         public BrushControlViewModel(IControlClient controlClient)
             : base("Brush", "Paint.png", controlClient)
         {
-
+            ChanceOfRandomSteering = controlClient.GetBrushRandomSteering();
+            SperatingForce = controlClient.GetBrushSeperatingForce();
+            AlligningForce = controlClient.GetBrushAligningForce();
+            CohesiveForce = controlClient.GetBrushCohesiveForce();
+            NormalSpeed = controlClient.GetBrushNormalSpeed();
+            MaxSpeed = controlClient.GetBrushMaxSpeed();
+            NeighborhoodRadiusMax = controlClient.GetBrushNeighborhoodRadius();
+            BrushColor = controlClient.GetBrushColor();
+            IsMobile = controlClient.GetBrushIsMobile();
+            StartingDirection = controlClient.GetBrushStartingDirection();
         }
 
         public int thing = 1;
 
-        private double chanceOfRandomSteeringProperty = StaticBrushParameters.ChanceOfRandomSteeringMax;
+        private double chanceOfRandomSteeringProperty;
         public double ChanceOfRandomSteering
         {
             get
@@ -33,13 +42,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != chanceOfRandomSteeringProperty)
                 {
                     chanceOfRandomSteeringProperty = value;
-                    StaticBrushParameters.ChanceOfRandomSteeringMax = value;
+                    controlClient.ChangeBrushRandomSteering(value);
                     NotifyPropertyChanged("ChanceOfRandomSteering");
                 }
             }
         }
 
-        private double seperatingForceProperty = StaticBrushParameters.SeperatingForceMax;
+        private double seperatingForceProperty;
         public double SperatingForce
         {
             get
@@ -51,14 +60,14 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != seperatingForceProperty)
                 {
                     seperatingForceProperty = value;
-                    StaticBrushParameters.SeperatingForceMax = value;
+                    controlClient.ChangeBrushSeperatingForce(value);
                     NotifyPropertyChanged("SperatingForce");
                     NotifyPropertyChanged("BrushColor");
                 }
             }
         }
 
-        private double alligningForceProperty = StaticBrushParameters.AligningForceMax;
+        private double alligningForceProperty;
         public double AlligningForce
         {
             get
@@ -70,14 +79,14 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != alligningForceProperty)
                 {
                     alligningForceProperty = value;
-                    StaticBrushParameters.AligningForceMax = value;
+                    controlClient.ChangeBrushAligningForce(value);
                     NotifyPropertyChanged("AlligningForce");
                     NotifyPropertyChanged("BrushColor");
                 }
             }
         }
 
-        private double cohesiveForceProperty = StaticBrushParameters.CohesiveForceMax;
+        private double cohesiveForceProperty;
         public double CohesiveForce
         {
             get
@@ -89,14 +98,14 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != cohesiveForceProperty)
                 {
                     cohesiveForceProperty = value;
-                    StaticBrushParameters.CohesiveForceMax = value;
+                    controlClient.ChangeBrushCohesiveForce(value);
                     NotifyPropertyChanged("CohesiveForce");
                     NotifyPropertyChanged("BrushColor");
                 }
             }
         }
 
-        private int normalSpeedProperty = StaticBrushParameters.normalSpeedMax;
+        private int normalSpeedProperty;
         public int NormalSpeed
         {
             get
@@ -108,13 +117,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != normalSpeedProperty)
                 {
                     normalSpeedProperty = value;
-                    StaticBrushParameters.normalSpeedMax = value;
+                    controlClient.ChangeBrushNormalSpeed(value);
                     NotifyPropertyChanged("NormalSpeed");
                 }
             }
         }
 
-        private int maxSpeedProperty = StaticBrushParameters.maxSpeedMax;
+        private int maxSpeedProperty;
         public int MaxSpeed
         {
             get
@@ -126,13 +135,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != maxSpeedProperty)
                 {
                     maxSpeedProperty = value;
-                    StaticBrushParameters.maxSpeedMax = value;
+                    controlClient.ChangeBrushMaxSpeed(value);
                     NotifyPropertyChanged("MaxSpeed");
                 }
             }
         }
 
-        private int neighborhoodMaxRadiusProperty = StaticBrushParameters.neighborhoodRadiusMax;
+        private int neighborhoodMaxRadiusProperty;
         public int NeighborhoodRadiusMax
         {
             get
@@ -144,13 +153,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != neighborhoodMaxRadiusProperty)
                 {
                     neighborhoodMaxRadiusProperty = value;
-                    StaticBrushParameters.neighborhoodRadiusMax = value;
+                    controlClient.ChangeBrushNeighborhoodRadius(value);
                     NotifyPropertyChanged("NeighborhoodRadiusMax");
                 }
             }
         }
 
-        private Color brushColorProperty = StaticBrushParameters.Color;
+        private Color brushColorProperty;
         public Color BrushColor
         {
             get
@@ -165,17 +174,17 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 {
                     brushColorProperty = value;
                     StaticBrushParameters.Color = value;
-
-                    CohesiveForce = value.R * StaticWorldParameters.CohesiveForceMax / 255;
-                    AlligningForce = value.G * StaticWorldParameters.AligningForceMax / 255;
+                    
                     SperatingForce = value.B * StaticWorldParameters.SeperatingForceMax / 255;
+                    AlligningForce = value.G * StaticWorldParameters.AligningForceMax / 255;
+                    CohesiveForce = value.R * StaticWorldParameters.CohesiveForceMax / 255;
                     NotifyPropertyChanged("BrushColor");
                     
                 }
             }
         }
 
-        private bool isMobileProperty = StaticBrushParameters.IsMobile;
+        private bool isMobileProperty;
         public bool IsMobile
         {
             get
@@ -187,13 +196,13 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != isMobileProperty)
                 {
                     isMobileProperty = value;
-                    StaticBrushParameters.IsMobile = value;
+                    controlClient.ChangeBrushIsMobile(value);
                     NotifyPropertyChanged("IsMobile");
                 }
             }
         }
 
-        private double startingDirectionProperty = StaticBrushParameters.StartingDirection;
+        private double startingDirectionProperty;
         public double StartingDirection
         {
             get
@@ -205,12 +214,11 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != startingDirectionProperty)
                 {
                     startingDirectionProperty = value;
-                    StaticBrushParameters.StartingDirection = value;
+                    controlClient.ChangeBrushStartingDirection(value);
                     NotifyPropertyChanged("StartingDirection");
                 }
             }
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

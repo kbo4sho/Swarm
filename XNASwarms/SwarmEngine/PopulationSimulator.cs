@@ -257,7 +257,6 @@ namespace SwarmEngine
                 swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 Population.TryRemoveFromExisitingSpecies(swarmInBirthOrder.First());
                 swarmInBirthOrder.Remove(swarmInBirthOrder.First());
-                
             }
         }
 

@@ -30,10 +30,51 @@ namespace XNASwarms
         void ChangeWorldCohesiveForce(double value);
         void ChangeWorldNormalSpeed(int value);
         void ChangeWorldMaxSpeed(int value);
-        void ChangeNumberOfIndividuals(int value);
-        void ChangeNeighborhoodRadius(int value);
+        void ChangeWorldNumberOfIndividuals(int value);
+        void ChangeWorldNeighborhoodRadius(int value);
+        double GetWorldRandomSteering();
+        double GetWorldSeperatingForce();
+        double GetWorldAligningForce();
+        double GetWorldCohesiveForce();
+        int GetWorldNormalSpeed();
+        int GetWorldMaxSpeed();
+        int GetWorldNumberOfIndividuals();
+        int GetWorldNeighborhoodRadius();
+
+
+        void ChangeBrushRandomSteering(double value);
+        void ChangeBrushSeperatingForce(double value);
+        void ChangeBrushAligningForce(double value);
+        void ChangeBrushCohesiveForce(double value);
+        void ChangeBrushNormalSpeed(int value);
+        void ChangeBrushMaxSpeed(int value);
+        void ChangeBrushNumberOfIndividuals(int value);
+        void ChangeBrushNeighborhoodRadius(int value);
+        void ChangeBrushIsMobile(bool value);
+        void ChangeBrushStartingDirection(double value);
+        double GetBrushRandomSteering();
+        double GetBrushSeperatingForce();
+        double GetBrushAligningForce();
+        double GetBrushCohesiveForce();
+        int GetBrushNormalSpeed();
+        int GetBrushMaxSpeed();
+        int GetBrushNumberOfIndividuals();
+        int GetBrushNeighborhoodRadius();
+        bool GetBrushIsMobile();
+        double GetBrushStartingDirection();
+
+#if NETFX_CORE || WINDOWS_PHONE
+        void ChangeBrushColor(Windows.UI.Color color);
+        Windows.UI.Color GetBrushColor();
+#endif
     }
 
+    /// <summary>
+    /// Used to funnel all interaction with the world to one class 
+    /// whether those are comming from custom UI's service calls or 
+    /// Monogame controls. The static that hold control vlaues should
+    /// only be alterd from this class
+    /// </summary>
     public class ControlClient : IControlClient
     {
         SwarmScreenBase swarmScreen;
@@ -109,6 +150,7 @@ namespace XNASwarms
             SoundEngine.Pause();
         }
 #endif
+        #region World
         public void ChangeWorldRandomSteering(double value)
         {
             StaticWorldParameters.ChanceOfRandomSteeringMax = value;
@@ -139,14 +181,170 @@ namespace XNASwarms
             StaticWorldParameters.maxSpeedMax = value;
         }
 
-        public void ChangeNumberOfIndividuals(int value)
+        public void ChangeWorldNumberOfIndividuals(int value)
         {
             StaticWorldParameters.numberOfIndividualsMax = value;
         }
 
-        public void ChangeNeighborhoodRadius(int value)
+        public void ChangeWorldNeighborhoodRadius(int value)
         {
             StaticWorldParameters.neighborhoodRadiusMax = value;
         }
+
+        public double GetWorldRandomSteering()
+        {
+            return StaticWorldParameters.ChanceOfRandomSteeringMax;
+        }
+
+        public double GetWorldSeperatingForce()
+        {
+            return StaticWorldParameters.SeperatingForceMax;
+        }
+
+        public double GetWorldAligningForce()
+        {
+            return StaticWorldParameters.AligningForceMax;
+        }
+
+        public double GetWorldCohesiveForce()
+        {
+            return StaticWorldParameters.CohesiveForceMax;
+        }
+
+        public int GetWorldNormalSpeed()
+        {
+            return StaticWorldParameters.normalSpeedMax;
+        }
+
+        public int GetWorldMaxSpeed()
+        {
+            return StaticWorldParameters.maxSpeedMax;
+        }
+
+        public int GetWorldNumberOfIndividuals()
+        {
+            return StaticWorldParameters.numberOfIndividualsMax;
+        }
+
+        public int GetWorldNeighborhoodRadius()
+        {
+            return StaticWorldParameters.neighborhoodRadiusMax;
+        }
+        #endregion
+
+        #region Brush
+        public void ChangeBrushRandomSteering(double value)
+        {
+            StaticBrushParameters.ChanceOfRandomSteeringMax = value;
+        }
+
+        public void ChangeBrushSeperatingForce(double value)
+        {
+            StaticBrushParameters.SeperatingForceMax = value;
+        }
+
+        public void ChangeBrushAligningForce(double value)
+        {
+            StaticBrushParameters.AligningForceMax = value;
+        }
+
+        public void ChangeBrushCohesiveForce(double value)
+        {
+            StaticBrushParameters.CohesiveForceMax = value;
+        }
+
+        public void ChangeBrushNormalSpeed(int value)
+        {
+            StaticBrushParameters.normalSpeedMax = value;
+        }
+
+        public void ChangeBrushMaxSpeed(int value)
+        {
+            StaticBrushParameters.maxSpeedMax = value;
+        }
+
+        public void ChangeBrushNumberOfIndividuals(int value)
+        {
+            StaticBrushParameters.numberOfIndividualsMax = value;
+        }
+
+        public void ChangeBrushNeighborhoodRadius(int value)
+        {
+            StaticBrushParameters.neighborhoodRadiusMax = value;
+        }
+
+        public void ChangeBrushIsMobile(bool value)
+        {
+            StaticBrushParameters.IsMobile = value;
+        }
+
+        public void ChangeBrushStartingDirection(double value)
+        {
+            StaticBrushParameters.StartingDirection = value;
+        }
+
+        public double GetBrushRandomSteering()
+        {
+            return StaticBrushParameters.ChanceOfRandomSteeringMax;
+        }
+
+        public double GetBrushSeperatingForce()
+        {
+            return StaticBrushParameters.SeperatingForceMax;
+        }
+
+        public double GetBrushAligningForce()
+        {
+            return StaticBrushParameters.AligningForceMax;
+        }
+
+        public double GetBrushCohesiveForce()
+        {
+            return StaticBrushParameters.CohesiveForceMax;
+        }
+
+        public int GetBrushNormalSpeed()
+        {
+            return StaticBrushParameters.normalSpeedMax;
+        }
+
+        public int GetBrushMaxSpeed()
+        {
+            return StaticBrushParameters.maxSpeedMax;
+        }
+
+        public int GetBrushNumberOfIndividuals()
+        {
+            return StaticBrushParameters.numberOfIndividualsMax;
+        }
+
+        public int GetBrushNeighborhoodRadius()
+        {
+            return StaticBrushParameters.neighborhoodRadiusMax;
+        }
+
+        public bool GetBrushIsMobile()
+        {
+            return StaticBrushParameters.IsMobile;
+        }
+
+        public double GetBrushStartingDirection()
+        {
+            return StaticBrushParameters.StartingDirection;
+        }
+
+#if NETFX_CORE  || WINDOWS_PHONE
+        public void ChangeBrushColor(Windows.UI.Color color)
+        {
+            StaticBrushParameters.Color = color;
+        }
+
+        public Windows.UI.Color GetBrushColor()
+        {
+            return StaticBrushParameters.Color;
+        }
+#endif
+
+        #endregion
     }
 }
