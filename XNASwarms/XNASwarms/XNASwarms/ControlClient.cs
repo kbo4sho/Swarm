@@ -16,6 +16,14 @@ namespace XNASwarms
         void ZoomIn();
         void ZoomOut();
         SaveWorldParameters SaveWorld();
+        void UpdatePopulation(SaveSpecies saveSpecies, bool mutate);
+#if NETFX_CORE
+        Task<SaveAllSpecies> Import();
+        Task<SaveAllSpecies> Export();
+#elif WINDOWS
+        void StartSoundEngine();
+        void StopSoundEngine();
+#endif
     }
 
     public class ControlClient : IControlClient
@@ -61,5 +69,37 @@ namespace XNASwarms
             world.c5Max = StaticWorldParameters.TendencyOfPaceKeepingMax;
             return world;
         }
+
+        public void UpdatePopulation(SaveSpecies saveSpecies, bool mutate)
+        {
+            swarmScreen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(saveSpecies), mutate);
+        }
+
+#if NETFX_CORE
+        public async Task<SaveAllSpecies> Import()
+        {
+            SaveAllSpecies import = await ImportExportHelper.Import();
+            return import;
+        }
+
+        public async Task<SaveAllSpecies> Export()
+        {
+            SaveAllSpecies export = await ImportExportHelper.Export();
+            return export;
+        }
+
+#elif WINDOWS
+        public void StartSoundEngine()
+        {
+            //SoundEngine.PlayPause(1);
+            SoundEngine.Play();
+        }
+
+        public void StopSoundEngine()
+        {
+            //SoundEngine.PlayPause(0);
+            SoundEngine.Pause();
+        }
+#endif
     }
 }

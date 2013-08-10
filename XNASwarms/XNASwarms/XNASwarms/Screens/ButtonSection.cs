@@ -38,7 +38,7 @@ namespace XNASwarms
         private IDebugScreen debugScreen;
         private IControlClient controlClient;
 
-        SaveAllSpecies allSaved;
+        SaveAllSpecies allLikedItems;
 
 
         public ButtonSection(bool flip, SwarmScreenBase swarmscreen, string desc)
@@ -49,7 +49,7 @@ namespace XNASwarms
             innerRect.Width = rect.Width - BorderThickness;
             innerRect.Height = rect.Height - BorderThickness;
             description = desc;
-            allSaved = new SaveAllSpecies();
+            allLikedItems = new SaveAllSpecies();
 
             //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
             //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
@@ -81,7 +81,7 @@ namespace XNASwarms
 
         public void Load()
         {
-            if (allSaved == null)
+            if (allLikedItems == null)
             {
 #if NETFX_CORE
                 GetLocalSaveSwarmData();
@@ -128,52 +128,52 @@ namespace XNASwarms
             spriteBatch.End();
         }
 
-        private void LoadSavedSwarms()
+        private void UpdateLikedItemsUI()
         {
 #if WINDOWS
-            SaveAllSpecies allSaved = SaveHelper.Load("AllSaved");
+            SaveAllSpecies allLikedItems = SaveHelper.Load("allLikedItems");
 #endif
             menuEntries.RemoveAll(s => s.GetType() == typeof(SavedSwarmButton));
-            if (allSaved != null)
+            if (allLikedItems != null)
             {
-                if (allSaved.Count == 1)
+                if (allLikedItems.Count == 1)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1,allSaved[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1,allLikedItems[0].GetMostUsedColors(), screen);
                 }
-                else if (allSaved.Count == 2)
+                else if (allLikedItems.Count == 2)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allLikedItems[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allLikedItems[1].GetMostUsedColors(), screen);
                 }
-                else if (allSaved.Count == 3)
+                else if (allLikedItems.Count == 3)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allLikedItems[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allLikedItems[1].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allLikedItems[2].GetMostUsedColors(), screen);
                 }
-                else if (allSaved.Count == 4)
+                else if (allLikedItems.Count == 4)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allLikedItems[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allLikedItems[1].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allLikedItems[2].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allLikedItems[3].GetMostUsedColors(), screen);
                 }
-                else if (allSaved.Count == 5)
+                else if (allLikedItems.Count == 5)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allSaved[4].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allLikedItems[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allLikedItems[1].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allLikedItems[2].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allLikedItems[3].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allLikedItems[4].GetMostUsedColors(), screen);
                 }
-                else if (allSaved.Count == 6)
+                else if (allLikedItems.Count == 6)
                 {
-                    AddSavedSwarm(allSaved[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allSaved[0].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allSaved[1].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allSaved[2].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allSaved[3].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allSaved[4].GetMostUsedColors(), screen);
-                    AddSavedSwarm(allSaved[5].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall6, allSaved[5].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allLikedItems[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[1].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall2, allLikedItems[1].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[2].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall3, allLikedItems[2].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[3].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall4, allLikedItems[3].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allLikedItems[4].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[5].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall6, allLikedItems[5].GetMostUsedColors(), screen);
                 }
                 
             }
@@ -182,65 +182,57 @@ namespace XNASwarms
 #if NETFX_CORE
         private async void GetLocalSaveSwarmData()
         {
-            allSaved = await SaveHelper.LoadGameFile("AllSaved");
-            LoadSavedSwarms();
+            allLikedItems = await SaveHelper.LoadGameFile("AllSaved");
+            UpdateLikedItemsUI();
         }
 
         private async void ImportSwarmSaveData()
         {
-            var import = await ImportExportHelper.Import();
-            if (import != null)
-            {
-                allSaved = import;
-            }
-            LoadSavedSwarms();
+            allLikedItems = await controlClient.Import();
+            UpdateLikedItemsUI();
         }
 
         private async void ExportSwarmSaveData()
         {
-            var export =  await ImportExportHelper.Export();
-            if (export != null)
-            {
-                allSaved = export;
-            }
-            LoadSavedSwarms();
+            allLikedItems = await controlClient.Export();
+            UpdateLikedItemsUI();
         }
 #endif
 
         private void SaveSwarm(SaveWorldParameters saveWorldParameters)
         {
 #if WINDOWS
-            SaveAllSpecies allSaved = SaveHelper.Load("AllSaved");
+            SaveAllSpecies allLikedItems = SaveHelper.Load("AllSaved");
 #else
 
 #endif
-            if (allSaved != null && allSaved.Count() >= maxLikedItems)
+            if (allLikedItems != null && allLikedItems.Count() >= maxLikedItems)
             {
                 //Replacing
-                SaveSpecies oldestSpecies = allSaved.OrderBy(s => s.CreadtedDt).First();
-                allSaved.Remove(oldestSpecies);
+                SaveSpecies oldestSpecies = allLikedItems.OrderBy(s => s.CreadtedDt).First();
+                allLikedItems.Remove(oldestSpecies);
                 Save(saveWorldParameters);
             }
 
-            if (allSaved != null && allSaved.Count > 0)
+            if (allLikedItems != null && allLikedItems.Count > 0)
             {
-                if (allSaved.Count == 1)
+                if (allLikedItems.Count == 1)
                 {
                     Save(saveWorldParameters);
                 }
-                else if (allSaved.Count == 2)
+                else if (allLikedItems.Count == 2)
                 {
                     Save(saveWorldParameters);
                 }
-                else if (allSaved.Count == 3)
+                else if (allLikedItems.Count == 3)
                 {
                     Save(saveWorldParameters);
                 }
-                else if (allSaved.Count == 4)
+                else if (allLikedItems.Count == 4)
                 {
                     Save(saveWorldParameters);
                 }
-                else if (allSaved.Count == 5)
+                else if (allLikedItems.Count == 5)
                 {
                     Save(saveWorldParameters);
                 }
@@ -255,19 +247,17 @@ namespace XNASwarms
         {
             SaveSpecies savespecies = screen.GetPopulationAsSaveSpecies();
             savespecies.SaveWorldParameters = saveWorldParameters;
-            allSaved.Add(savespecies);
-            SaveHelper.Save("AllSaved", allSaved);
+            allLikedItems.Add(savespecies);
+            SaveHelper.Save("AllSaved", allLikedItems);
 
             foreach (var species in savespecies.SavedSpecies)
             {
                 foreach (var indvd in species)
                 {
-                    debugScreen.AddDebugItem("INDVD X", indvd.x.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+                    //debugScreen.AddDebugItem("INDVD X", indvd.x.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
                 }
             }
         }
-
-        
 
         public void AddMenuItem(string name, EntryType type, ControlScreen screen)
         {
@@ -348,50 +338,48 @@ namespace XNASwarms
                 else if (menuEntries[selectedEntry].IsSave())
                 {
                     SaveSwarm(controlClient.SaveWorld());
-                    LoadSavedSwarms();
+                    UpdateLikedItemsUI();
                 }
                 else if (menuEntries[selectedEntry].IsRecall1())
                 {
-                    allSaved[0].SaveWorldParameters = controlClient.SaveWorld();
-                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[0]), false);
+                    allLikedItems[0].SaveWorldParameters = controlClient.SaveWorld();
+                    controlClient.UpdatePopulation(allLikedItems[0], false);
                 }
                 else if (menuEntries[selectedEntry].IsRecall2())
                 {
-                    allSaved[1].SaveWorldParameters = controlClient.SaveWorld();
-                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[1]), false);
+                    allLikedItems[1].SaveWorldParameters = controlClient.SaveWorld();
+                    controlClient.UpdatePopulation(allLikedItems[1], false);
                 }
                 else if (menuEntries[selectedEntry].IsRecall3())
                 {
-                    allSaved[2].SaveWorldParameters = controlClient.SaveWorld();
-                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[2]), false);
+                    allLikedItems[2].SaveWorldParameters = controlClient.SaveWorld();
+                    controlClient.UpdatePopulation(allLikedItems[2], false);
                 }
                 else if (menuEntries[selectedEntry].IsRecall4())
                 {
-                    allSaved[3].SaveWorldParameters = controlClient.SaveWorld();
-                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[3]), false);
+                    allLikedItems[3].SaveWorldParameters = controlClient.SaveWorld();
+                    controlClient.UpdatePopulation(allLikedItems[3], false);
                 }
                 else if (menuEntries[selectedEntry].IsRecall5())
                 {
-                    allSaved[4].SaveWorldParameters = controlClient.SaveWorld();
-                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[4]), false);
+                    allLikedItems[4].SaveWorldParameters = controlClient.SaveWorld();
+                    controlClient.UpdatePopulation(allLikedItems[4], false);
                 }
                 else if (menuEntries[selectedEntry].IsRecall6())
                 {
-                    allSaved[5].SaveWorldParameters = controlClient.SaveWorld();
-                    this.screen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(allSaved[5]), false);
+                    allLikedItems[5].SaveWorldParameters = controlClient.SaveWorld();
+                    controlClient.UpdatePopulation(allLikedItems[5], false);
                 }
                 else if (menuEntries[selectedEntry].IsAudioPlay())
                 {
 #if WINDOWS
-                        //SoundEngine.PlayPause(1);
-                        SoundEngine.Play();
+                        controlClient.StartSoundEngine();
 #endif
                 }
                 else if (menuEntries[selectedEntry].IsAudioPause())
                 {
 #if WINDOWS
-                        //SoundEngine.PlayPause(0);
-                        SoundEngine.Pause();
+                        controlClient.StopSoundEngine();
 #endif
                 }
 #if NETFX_CORE
