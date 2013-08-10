@@ -24,6 +24,14 @@ namespace XNASwarms
         void StartSoundEngine();
         void StopSoundEngine();
 #endif
+        void ChangeWorldRandomSteering(double value);
+        void ChangeWorldSeperatingForce(double value);
+        void ChangeWorldAligningForce(double value);
+        void ChangeWorldCohesiveForce(double value);
+        void ChangeWorldNormalSpeed(int value);
+        void ChangeWorldMaxSpeed(int value);
+        void ChangeNumberOfIndividuals(int value);
+        void ChangeNeighborhoodRadius(int value);
     }
 
     public class ControlClient : IControlClient
@@ -101,5 +109,44 @@ namespace XNASwarms
             SoundEngine.Pause();
         }
 #endif
+        public void ChangeWorldRandomSteering(double value)
+        {
+            StaticWorldParameters.ChanceOfRandomSteeringMax = value;
+        }
+
+        public void ChangeWorldSeperatingForce(double value)
+        {
+            StaticWorldParameters.SeperatingForceMax = value;
+        }
+
+        public void ChangeWorldAligningForce(double value)
+        {
+            StaticWorldParameters.AligningForceMax = value;
+        }
+
+        public void ChangeWorldCohesiveForce(double value)
+        {
+            StaticWorldParameters.CohesiveForceMax = value;
+        }
+
+        public void ChangeWorldNormalSpeed(int value)
+        {
+            StaticWorldParameters.normalSpeedMax = value;
+        }
+
+        public void ChangeWorldMaxSpeed(int value)
+        {
+            StaticWorldParameters.maxSpeedMax = value;
+        }
+
+        public void ChangeNumberOfIndividuals(int value)
+        {
+            StaticWorldParameters.numberOfIndividualsMax = value;
+        }
+
+        public void ChangeNeighborhoodRadius(int value)
+        {
+            StaticWorldParameters.neighborhoodRadiusMax = value;
+        }
     }
 }

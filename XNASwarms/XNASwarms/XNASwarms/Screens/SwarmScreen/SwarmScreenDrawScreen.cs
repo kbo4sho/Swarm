@@ -13,11 +13,9 @@ namespace XNASwarms
     {
         Random rand;
         Texture2D individualTexture, bigIndividualTexture;
-        bool Mutate;
 
-        public SwarmScreenDrawScreen(bool mutate)
+        public SwarmScreenDrawScreen()
         {
-            Mutate = mutate;
             rand = new Random();
         }
 
@@ -25,10 +23,6 @@ namespace XNASwarms
         {
             individualTexture = ScreenManager.Content.Load<Texture2D>("point");
             bigIndividualTexture = ScreenManager.Content.Load<Texture2D>("beebig");
-            if (Mutate)
-            {
-                DoMutation();
-            }
             base.LoadContent();
         }
 
@@ -81,18 +75,6 @@ namespace XNASwarms
 
         }
 
-        private void DoMutation()
-        {
-            foreach (Species spcs in populationSimulator.Population)
-            {
-                foreach (Individual indvdl in spcs)
-                {
-                    indvdl.Genome.inducePointMutations(rand.NextDouble(), 2);
-                    //ind.Genome.inducePointMutations(rand.NextDouble(), 3);
-                }
-            }
-            populationSimulator.DetermineSpecies();
-
-        }
+        
     }
 }

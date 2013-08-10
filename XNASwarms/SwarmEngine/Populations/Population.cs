@@ -90,9 +90,13 @@ namespace SwarmEngine
             }
         }
 
-        public void TryRemoveFromExisitingSpecies()
+        public void TryRemoveFromExisitingSpecies(Individual indvd)
         {
-            this.Where(e => e.Count() > 0).First().RemoveAt(0);
+            //Works fine for replaceing one species
+
+            this.Where(e => e.Contains(indvd) == true).First().Remove(indvd);
+                
+            //this.Where(e => e.Count() > 0).First().RemoveAt(0);
             CheckForEmptySpecies();  
         }
 

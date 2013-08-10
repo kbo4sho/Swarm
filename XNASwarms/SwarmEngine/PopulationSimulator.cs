@@ -251,12 +251,13 @@ namespace SwarmEngine
         {
             AddIndividual(indvd);
             indvd.accelerate(indvd.Dx*10, indvd.Dy*10, 400);
-            if (Population.Sum(s => s.Count) > StaticWorldParameters.numberOfIndividualsMax -1)
+            if (Population.Sum(s => s.Count) >= StaticWorldParameters.numberOfIndividualsMax -1)
             {
                 swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
+                Population.TryRemoveFromExisitingSpecies(swarmInBirthOrder.First());
                 swarmInBirthOrder.Remove(swarmInBirthOrder.First());
-                Population.TryRemoveFromExisitingSpecies();
+                
             }
         }
 
@@ -278,16 +279,8 @@ namespace SwarmEngine
 
         private void sortInternalLists()
         {
-            //swarmInXOrder = (from entry in swarmInXOrder orderby entry.Value.X descending select entry)
-            //.ToDictionary(pair => pair.Key, pair => pair.Value);
-
-            //swarmInYOrder = ((from entry in swarmInYOrder orderby entry.Y descending select entry)
-            //.ToList<Individual>()) as Species;
-
             swarmInXOrder.Sort((x, y) => x.X.CompareTo(y.X));
             swarmInYOrder.Sort((x, y) => x.Y.CompareTo(y.Y));
-            
-            //swarmInYOrder.OrderBy(x => x.Y).ToList<Individual>();
         }
 
         private void resetRanks()
@@ -329,35 +322,6 @@ namespace SwarmEngine
             return swarmInBirthOrder;
         }
 
-        public List<Individual> GetSwarmSortedBySpecies()
-        {
-            List<Individual> allSpecies = new List<Individual>();
-            for (int i = 0; i < Population.Count(); i++)
-            {
-                allSpecies.AddRange(Population[i].ToList());
-            }
-            return allSpecies.OrderBy(s=>s.Genome).ToList();
-        }
-
-        public void DetermineSpecies()
-        {
-            //ClearPopulation();
-            Population.AddRange(GetSpecies(this.Population));
-        }
-
-        public Population GetSavablePopulation()
-        {
-            return new Population(GetSpecies(this.Population), "savable copy");
-        }
-
-        private List<Species> GetSpecies(Population population)
-        {
-            //TODO:
-            //Sort the species out of the population here
-
-            return population;
-        }
-
         private void ClearPopulation()
         {
             swarmInBirthOrder.Clear();
@@ -367,7 +331,6 @@ namespace SwarmEngine
 
         public void UpdatePopulation(string recipiText, bool mutate)
         {
-            ClearPopulation();
             Population = new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion");
             UpdatePopulation(Population, mutate);
         }
@@ -384,7 +347,6 @@ namespace SwarmEngine
                     {
                         tempPopulation[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
                     }
-                    //Population.TryAddToExistingSpecies(tempPopulation[i][j]);
                     InitCollections(tempPopulation[i][j]);
                 }
             }
@@ -394,8 +356,8 @@ namespace SwarmEngine
                 tempPopulation.ReassignSpecies();
                 tempPopulation.ReassignAllColors();
             }
+
             Population = tempPopulation;
-            //TODO: need to sort the species out of the population here
         }
     }
 }

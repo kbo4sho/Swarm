@@ -30,7 +30,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != chanceOfRandomSteeringProperty)
                 {
                     chanceOfRandomSteeringProperty = value;
-                    StaticWorldParameters.ChanceOfRandomSteeringMax = value;
+                    controlClient.ChangeWorldRandomSteering(value);
                     NotifyPropertyChanged("ChanceOfRandomSteering");
                 }
             }
@@ -48,7 +48,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != seperatingForceProperty)
                 {
                     seperatingForceProperty = value;
-                    StaticWorldParameters.SeperatingForceMax = value;
+                    controlClient.ChangeWorldSeperatingForce(value);
                     NotifyPropertyChanged("SperateingForce");
                 }
             }
@@ -66,7 +66,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != alligningForceProperty)
                 {
                     alligningForceProperty = value;
-                    StaticWorldParameters.AligningForceMax = value;
+                    controlClient.ChangeWorldAligningForce(value);
                     NotifyPropertyChanged("AlligningForce");
                 }
             }
@@ -84,7 +84,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != cohesiveForceProperty)
                 {
                     cohesiveForceProperty = value;
-                    StaticWorldParameters.CohesiveForceMax = value;
+                    controlClient.ChangeWorldCohesiveForce(value);
                     NotifyPropertyChanged("CohesiveForce");
                 }
             }
@@ -102,7 +102,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != normalSpeedProperty)
                 {
                     normalSpeedProperty = value;
-                    StaticWorldParameters.normalSpeedMax = value;
+                    controlClient.ChangeWorldNormalSpeed(value);
                     NotifyPropertyChanged("NormalSpeed");
                 }
             }
@@ -120,7 +120,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != maxSpeedProperty)
                 {
                     maxSpeedProperty = value;
-                    StaticWorldParameters.maxSpeedMax = value;
+                    controlClient.ChangeWorldMaxSpeed(value);
                     NotifyPropertyChanged("MaxSpeed");
                 }
             }
@@ -138,7 +138,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != numberOfIndividualsMaxProperty)
                 {
                     numberOfIndividualsMaxProperty = value;
-                    StaticWorldParameters.numberOfIndividualsMax = value;
+                    controlClient.ChangeNumberOfIndividuals(value);
                     NotifyPropertyChanged("NumberOfIndividualsMax");
                 }
             }
@@ -156,7 +156,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 if (value != neighborhoodMaxRadiusProperty)
                 {
                     neighborhoodMaxRadiusProperty = value;
-                    StaticWorldParameters.neighborhoodRadiusMax = value;
+                    controlClient.ChangeNeighborhoodRadius(value);
                     NotifyPropertyChanged("NeighborhoodRadiusMax");
                 }
             }

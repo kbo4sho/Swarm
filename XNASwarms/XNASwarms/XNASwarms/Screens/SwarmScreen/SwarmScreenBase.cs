@@ -229,7 +229,7 @@ namespace XNASwarms
 
         public SaveSpecies GetPopulationAsSaveSpecies()
         {
-            return SwarmSaveHelper.GetPopulationAsSaveSpecies(populationSimulator.GetSavablePopulation());
+            return SwarmSaveHelper.GetPopulationAsSaveSpecies(populationSimulator.Population);
         }
 
         public void UpdatePopulation(string recipiText, bool mutate)

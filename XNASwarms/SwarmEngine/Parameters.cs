@@ -235,9 +235,19 @@ namespace SwarmEngine
 
         public Color getDisplayColor(EmitterActionType type)
         {
-            return new Color((float)((c1 / StaticWorldParameters.CohesiveForceMax)),
-                                (float)((c2 / StaticWorldParameters.AligningForceMax)),
-                                (float)((c3 / StaticWorldParameters.SeperatingForceMax)));
+            if (type == EmitterActionType.Brush)
+            {
+                return new Color((float)((c1 / StaticWorldParameters.CohesiveForceMax)),
+                                    (float)((c2 / StaticWorldParameters.AligningForceMax)),
+                                    (float)((c3 / StaticWorldParameters.SeperatingForceMax)));
+            }
+            else
+            {
+                return new Color((float)((c1 / 1)),
+                                    (float)((c2 / 1)),
+                                    (float)((c3 / 100)));
+            }
+
             //if (type == EmitterType.Brush)
             //{
             //    return new Color((float)((StaticBrushParameters.CohesiveForceMax / StaticWorldParameters.CohesiveForceMax)),
