@@ -151,6 +151,13 @@ namespace XNASwarms
                     emitterManager.Update(Vector2.Zero);
                 }
             }
+            else if (StaticEditModeParameters.IsRemoveMode())
+            {
+                if (Supers.Count > 0)
+                {
+                    populationSimulator.EraseIndividual(Supers[0].Position);
+                }
+            }
             else if (StaticEditModeParameters.IsHandMode() || StaticEditModeParameters.IsWorldMode())
             {
                 emitterManager.Update(Vector2.Zero);
@@ -160,7 +167,6 @@ namespace XNASwarms
 
         public override void HandleInput(InputHelper input, Microsoft.Xna.Framework.GameTime gameTime)
         {
-            //debugScreen.AddDebugItem("Dx & Dx2", populationSimulator.GetPopulation().First().First().getDx().ToString() + " & " + populationSimulator.GetPopulation().First().First().getDx2().ToString());
             Supers.Clear();
 #if WINDOWS
             var surfacetouches = input.SurfaceTouches;

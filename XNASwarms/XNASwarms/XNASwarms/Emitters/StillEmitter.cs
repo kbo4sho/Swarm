@@ -17,7 +17,7 @@ namespace XNASwarms.Emitters
             
         }
 
-        public override Individual Update()
+        public override Individual GetIndividual()
         {
             return new Individual(0, this.Position.X, this.Position.Y, this.Position.X, this.Position.Y, this.Parameters);
         }

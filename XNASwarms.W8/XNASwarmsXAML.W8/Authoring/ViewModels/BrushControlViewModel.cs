@@ -26,6 +26,7 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             BrushColor = controlClient.GetBrushColor();
             IsMobile = controlClient.GetBrushIsMobile();
             StartingDirection = controlClient.GetBrushStartingDirection();
+            IsUndo = controlClient.GetBrushIsUndo();
         }
 
         public int thing = 1;
@@ -216,6 +217,24 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                     startingDirectionProperty = value;
                     controlClient.ChangeBrushStartingDirection(value);
                     NotifyPropertyChanged("StartingDirection");
+                }
+            }
+        }
+
+        private bool isUndoProperty;
+        public bool IsUndo
+        {
+            get
+            {
+                return isUndoProperty;
+            }
+            set
+            {
+                if (value != isUndoProperty)
+                {
+                    isUndoProperty = value;
+                    controlClient.ChangeBrushIsUndo(value);
+                    NotifyPropertyChanged("IsUndo");
                 }
             }
         }

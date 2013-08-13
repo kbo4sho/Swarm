@@ -41,7 +41,6 @@ namespace XNASwarms
         int GetWorldNumberOfIndividuals();
         int GetWorldNeighborhoodRadius();
 
-
         void ChangeBrushRandomSteering(double value);
         void ChangeBrushSeperatingForce(double value);
         void ChangeBrushAligningForce(double value);
@@ -52,6 +51,7 @@ namespace XNASwarms
         void ChangeBrushNeighborhoodRadius(int value);
         void ChangeBrushIsMobile(bool value);
         void ChangeBrushStartingDirection(double value);
+        void ChangeBrushIsUndo(bool value);
         double GetBrushRandomSteering();
         double GetBrushSeperatingForce();
         double GetBrushAligningForce();
@@ -62,6 +62,7 @@ namespace XNASwarms
         int GetBrushNeighborhoodRadius();
         bool GetBrushIsMobile();
         double GetBrushStartingDirection();
+        bool GetBrushIsUndo();
 
 #if NETFX_CORE || WINDOWS_PHONE
         void ChangeBrushColor(Windows.UI.Color color);
@@ -283,6 +284,11 @@ namespace XNASwarms
             StaticBrushParameters.StartingDirection = value;
         }
 
+        public void ChangeBrushIsUndo(bool value)
+        {
+            StaticBrushParameters.IsUndo = value;
+        }
+
         public double GetBrushRandomSteering()
         {
             return StaticBrushParameters.ChanceOfRandomSteeringMax;
@@ -331,6 +337,11 @@ namespace XNASwarms
         public double GetBrushStartingDirection()
         {
             return StaticBrushParameters.StartingDirection;
+        }
+
+        public bool GetBrushIsUndo()
+        {
+            return StaticBrushParameters.IsUndo;
         }
 
 #if NETFX_CORE  || WINDOWS_PHONE

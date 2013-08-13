@@ -16,7 +16,8 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
         {
             controlViewModels = new List<ViewModels.ControlViewModel>() { 
                 new WorldControlViewModel(controlClient), 
-                new BrushControlViewModel(controlClient), 
+                new BrushControlViewModel(controlClient),
+                new RemoveControlViewModel(controlClient),
                 new HandControlViewModel(controlClient) 
             };
             ControlViewModel = controlViewModels[0];

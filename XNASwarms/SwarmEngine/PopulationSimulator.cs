@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace SwarmEngine
 {
@@ -245,6 +246,34 @@ namespace SwarmEngine
             sortInternalLists();
 
             resetRanks();
+        }
+
+        public void EraseIndividual(Vector2 position)
+        {
+            //bool match = Population.Select(s => s.Where(i => i.X == position.X && i.Y == position.Y).Any());
+            //if (match)
+            //{
+            //    List<Individual> indvds = Population.Select(s => s.Where(i => i.X == position.X && i.Y == position.Y).First()).ToList();
+
+            //    if (Population.Sum(s => s.Count) >= 2)
+            //    {
+            //        swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(indvds[0])]);
+            //        swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(indvds[0])]);
+            //        Population.TryRemoveFromExisitingSpecies(indvds[0]);
+            //        swarmInBirthOrder.Remove(indvds[0]);
+            //    }
+            //}
+        }
+
+        public void UndoIndividual()
+        {
+            if (Population.Sum(s => s.Count) >= 2)
+            {
+                swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.Last())]);
+                swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.Last())]);
+                Population.TryRemoveFromExisitingSpecies(swarmInBirthOrder.Last());
+                swarmInBirthOrder.Remove(swarmInBirthOrder.Last());
+            }
         }
 
         public void EmitIndividual(Individual indvd)

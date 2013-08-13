@@ -16,7 +16,7 @@ namespace XNASwarms.Emitters
             
         }
 
-        public override Individual Update()
+        public override Individual GetIndividual()
         {
             return new Individual(0, this.Position.X, this.Position.Y, StaticBrushParameters.StartingDirection, 1, new BrushParameters(), EmitterActionType.Brush, StaticBrushParameters.IsMobile);
         }

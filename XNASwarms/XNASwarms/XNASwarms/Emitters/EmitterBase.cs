@@ -45,7 +45,7 @@ namespace XNASwarms.Emitters
             Parameters = parameters;
         }
 
-        public virtual Individual Update()
+        public virtual Individual GetIndividual()
         {
             return new Individual(0, this.Position.X, this.Position.Y, this.Position.X, this.Position.Y, new SuperParameters());
         }

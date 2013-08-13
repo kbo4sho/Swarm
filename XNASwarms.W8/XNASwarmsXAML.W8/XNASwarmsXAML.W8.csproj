@@ -261,6 +261,7 @@
     </Compile>
     <Compile Include="Authoring\Controls\Util\MathHelper.cs" />
     <Compile Include="Authoring\EditorControlTemplateSelector.cs" />
+    <Compile Include="Authoring\ViewModels\EraseControlViewModel.cs" />
     <Compile Include="Authoring\ViewModels\HandControlViewModel.cs" />
     <Compile Include="Authoring\ParametersToColorConverter.cs" />
     <Compile Include="Authoring\ValueAngleConverter.cs" />
@@ -318,6 +319,7 @@
     <Content Include="Assets\Icons\Earth.png" />
     <Content Include="Assets\Icons\Games.png" />
     <Content Include="Assets\Icons\Paint.png" />
+    <Content Include="Assets\Icons\X.png" />
     <Content Include="Assets\Surface-Movement.mp3" />
     <Content Include="ReadMe.Coding4Fun.Toolkit.txt" />
     <None Include="packages.config" />

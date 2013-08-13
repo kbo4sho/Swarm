@@ -35,6 +35,7 @@ namespace SwarmEngine
 
         public static bool IsMobile = true;
         public static double StartingDirection = 0;
+        public static bool IsUndo = false;
     }
 
     public class BrushParameters : Parameters

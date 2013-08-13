@@ -49,6 +49,14 @@ namespace SwarmEngine
             private set;
         }
 
+        public Vector2 Position
+        {
+            get
+            {
+                return new Vector2((float)X, (float)Y);
+            }
+        }
+
         public int RankInXOrder
         {
             get { return rankInXOrder; }

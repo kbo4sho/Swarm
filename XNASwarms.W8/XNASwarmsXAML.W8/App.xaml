@@ -132,6 +132,7 @@
                         <TextBlock Text="Seperating Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Width="150" Value="{Binding SperatingForce, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="25" Maximum="100" StepFrequency=".01"/>
                         <CheckBox Grid.Row="2"  Content="Mobile" IsChecked="{Binding IsMobile, Mode=TwoWay}" VerticalAlignment="Bottom"/>
+                        <CheckBox Grid.Row="3"  Content="Undo" IsChecked="{Binding IsUndo, Mode=TwoWay}" VerticalAlignment="Bottom"/>
                     </Grid>
                     <Grid Margin="0,0,20,0">
                         <toolkit:ColorHexagonPicker ColorSize="12" x:Name="colorPicker"  Color="{Binding BrushColor, Mode=TwoWay}" />

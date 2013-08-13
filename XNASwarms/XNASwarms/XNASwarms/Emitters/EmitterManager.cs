@@ -55,6 +55,7 @@ namespace XNASwarms.Emitters
                 {
                     ((IGuideable)emitter).UpdatePosition(position);
                 }
+
 #if NETFX_CORE
                 if (audioScreen!=null && audioScreen.IsPlaying())
                 {
@@ -72,7 +73,22 @@ namespace XNASwarms.Emitters
 
                 if (emitter.IsActive)
                 {
-                    populationSimulator.EmitIndividual(emitter.Update());
+                    if (emitter is BrushEmitter)
+                    {
+                        if (!StaticBrushParameters.IsUndo)
+                        {
+                            populationSimulator.EmitIndividual(emitter.GetIndividual());
+                        }
+                        else
+                        {
+                            populationSimulator.UndoIndividual();
+                        }
+                    }
+                    //else if(emitter is 
+                    else
+                    {
+                        populationSimulator.EmitIndividual(emitter.GetIndividual());
+                    }
                 }
             }
         }
