@@ -94,7 +94,9 @@ namespace XNASwarms
             if (this.IsActive)
             {
                 SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
-                //debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
+#if WINDOWS
+                debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
+#endif
                 UpdateInput();
                 populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
                 Border.Update(SwarmInXOrder);
