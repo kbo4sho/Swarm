@@ -101,7 +101,7 @@ namespace XNASwarms
                 menuEntries[i].Initialize();
             }
 #if WINDOWS
-            LoadSavedSwarms();
+            UpdateLikedItemsUI();
 #endif
         }
 
