@@ -20,4 +20,19 @@ namespace SwarmEngine
             c5 = StaticWorldParameters.TendencyOfPaceKeepingMax;
         }
     }
+
+    public class ZeroParameters : Parameters
+    {
+        public ZeroParameters()
+        {
+            neighborhoodRadius = 0;
+            normalSpeed = 0;
+            maxSpeed = 0;
+            c1 = 0;
+            c2 = 0;
+            c3 = 0;
+            c4 = 0;
+            c5 = 0;
+        }
+    }
 }

@@ -143,6 +143,19 @@
                 </StackPanel>
             </DataTemplate>
 
+            <DataTemplate x:Key="EraseEditorTemplate">
+                <StackPanel Grid.Row="1" DataContext="{Binding}">
+                    <Grid Margin="0,0,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Erase Diameter" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                        <Slider Width="150" Value="{Binding EraseDiameter, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="5" Maximum="100" StepFrequency="1"/>
+                    </Grid>
+                </StackPanel>
+            </DataTemplate>
+
             <DataTemplate x:Key="HandEditorTemplate">
                 <Grid Grid.Row="1" DataContext="{Binding}" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>

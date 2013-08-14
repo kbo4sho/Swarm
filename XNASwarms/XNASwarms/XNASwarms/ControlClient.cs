@@ -67,6 +67,9 @@ namespace XNASwarms
         double GetBrushStartingDirection();
         bool GetBrushIsUndo();
 
+        void ChangeEraseDiameter(double value);
+        double GetEraseDiameter();
+
 #if NETFX_CORE || WINDOWS_PHONE
         void ChangeBrushColor(Windows.UI.Color color);
         Windows.UI.Color GetBrushColor();
@@ -359,6 +362,18 @@ namespace XNASwarms
         }
 #endif
 
+        #endregion
+
+        #region Erase
+        public void ChangeEraseDiameter(double value)
+        {
+            StaticEraseParameters.Diameter = value;
+        }
+
+        public double GetEraseDiameter()
+        {
+            return StaticEraseParameters.Diameter;
+        }
         #endregion
     }
 }

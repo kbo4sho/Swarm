@@ -15,6 +15,7 @@
                 x:Key="editorControlTemplateSelector" 
                 WorldEditorTemplate="{StaticResource WorldEditorTemplate}"
                 BrushEditorTemplate ="{StaticResource BrushEditorTemplate}"
+                EraseEditorTemplate ="{StaticResource EraseEditorTemplate}"
                 HandEditorTemplate ="{StaticResource HandEditorTemplate}"/>
       
     </SwapChainBackgroundPanel.Resources>

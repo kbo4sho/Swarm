@@ -250,19 +250,23 @@ namespace SwarmEngine
 
         public void EraseIndividual(Vector2 position)
         {
-            //bool match = Population.Select(s => s.Where(i => i.X == position.X && i.Y == position.Y).Any());
-            //if (match)
-            //{
-            //    List<Individual> indvds = Population.Select(s => s.Where(i => i.X == position.X && i.Y == position.Y).First()).ToList();
+            double diameter = StaticEraseParameters.Diameter;
 
-            //    if (Population.Sum(s => s.Count) >= 2)
-            //    {
-            //        swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(indvds[0])]);
-            //        swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(indvds[0])]);
-            //        Population.TryRemoveFromExisitingSpecies(indvds[0]);
-            //        swarmInBirthOrder.Remove(indvds[0]);
-            //    }
-            //}
+            var matchs = Population.SelectMany(s => s
+                                   .Where(i => (int)i.X >= (int)position.X - diameter &&
+                                               (int)i.X <= (int)position.X + diameter &&
+                                               (int)i.Y >= (int)position.Y - diameter &&
+                                               (int)i.Y <= (int)position.Y + diameter)).ToList();
+
+            if (Population.Sum(s => s.Count) >= 2 &&
+                matchs.Count > 0)
+            {
+                swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(matchs[0])]);
+                swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(matchs[0])]);
+                Population.TryRemoveFromExisitingSpecies(matchs[0]);
+                swarmInBirthOrder.Remove(matchs[0]);
+            }
+
         }
 
         public void UndoIndividual()

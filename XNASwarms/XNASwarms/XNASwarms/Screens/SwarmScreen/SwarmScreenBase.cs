@@ -98,7 +98,16 @@ namespace XNASwarms
                 debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
 #endif
                 UpdateInput();
-                populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 10);
+                if (StaticEditModeParameters.IsEraseMode() ||
+                    StaticEditModeParameters.IsBrushMode())
+                {
+                    populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 0);
+                }
+                else
+                {
+                    populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);
+                }
+                
                 Border.Update(SwarmInXOrder);
                 
                 Camera.Update(gameTime);
@@ -153,7 +162,7 @@ namespace XNASwarms
                     emitterManager.Update(Vector2.Zero);
                 }
             }
-            else if (StaticEditModeParameters.IsRemoveMode())
+            else if (StaticEditModeParameters.IsEraseMode())
             {
                 if (Supers.Count > 0)
                 {

@@ -20,9 +20,9 @@ namespace SwarmEngine
             return editType == EditType.World;
         }
 
-        public static bool IsRemoveMode()
+        public static bool IsEraseMode()
         {
-            return editType == EditType.Remove;
+            return editType == EditType.Erase;
         }
 
         public static bool IsHandMode()
@@ -40,9 +40,9 @@ namespace SwarmEngine
             {
                 editType = EditType.World;
             }
-            else if (name == "Remove")
+            else if (name == "Erase")
             {
-                editType = EditType.Remove;
+                editType = EditType.Erase;
             }
             else if (name == "Hand")
             {
@@ -60,7 +60,7 @@ namespace SwarmEngine
         None,
         Brush,
         World,
-        Remove,
+        Erase,
         Hand
     }
 }

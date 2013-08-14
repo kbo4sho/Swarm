@@ -8,12 +8,30 @@ using XNASwarms;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {
-    public class RemoveControlViewModel : ControlViewModel, INotifyPropertyChanged
+    public class EraseControlViewModel : ControlViewModel, INotifyPropertyChanged
     {
-        public RemoveControlViewModel(IControlClient controlClient)
-            : base("Remove", "X.png", controlClient)
+        public EraseControlViewModel(IControlClient controlClient)
+            : base("Erase", "X.png", controlClient)
         {
+            EraseDiameter = controlClient.GetEraseDiameter();
+        }
 
+        private double eraseDiameterProperty;
+        public double EraseDiameter
+        {
+            get
+            {
+                return eraseDiameterProperty;
+            }
+            set
+            {
+                if (value != eraseDiameterProperty)
+                {
+                    eraseDiameterProperty = value;
+                    controlClient.ChangeEraseDiameter(value);
+                    NotifyPropertyChanged("EraseDiameter");
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

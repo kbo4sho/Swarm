@@ -105,6 +105,9 @@
     <Compile Include="..\..\XNASwarms\SwarmEngine\EmitterType.cs">
       <Link>EmitterType.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\EraseParameters.cs">
+      <Link>EraseParameters.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\SwarmEngine\IContainable.cs">
       <Link>IContainable.cs</Link>
     </Compile>

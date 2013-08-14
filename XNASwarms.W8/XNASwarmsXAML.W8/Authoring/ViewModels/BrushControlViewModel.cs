@@ -29,8 +29,6 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
             IsUndo = controlClient.GetBrushIsUndo();
         }
 
-        public int thing = 1;
-
         private double chanceOfRandomSteeringProperty;
         public double ChanceOfRandomSteering
         {
