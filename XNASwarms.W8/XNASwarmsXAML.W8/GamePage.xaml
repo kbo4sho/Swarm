@@ -16,7 +16,7 @@
                 WorldEditorTemplate="{StaticResource WorldEditorTemplate}"
                 BrushEditorTemplate ="{StaticResource BrushEditorTemplate}"
                 EraseEditorTemplate ="{StaticResource EraseEditorTemplate}"
-                HandEditorTemplate ="{StaticResource HandEditorTemplate}"/>
+                GameEditorTemplate ="{StaticResource HandEditorTemplate}"/>
       
     </SwapChainBackgroundPanel.Resources>
     <Grid>

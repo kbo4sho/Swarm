@@ -36,25 +36,4 @@ namespace XNASwarmsXAML.W8.Authoring.Commands
             }
         }
     }
-
-    public class MutateCommand : ICommand
-    {
-        private WorldControlViewModel worldControlViewModel;
-        public MutateCommand(WorldControlViewModel worldControlViewModel)
-        {
-            this.worldControlViewModel = worldControlViewModel;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            this.worldControlViewModel.CreateStable();
-        }
-    }
 }

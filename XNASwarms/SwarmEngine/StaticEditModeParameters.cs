@@ -27,7 +27,7 @@ namespace SwarmEngine
 
         public static bool IsHandMode()
         {
-            return editType == EditType.Hand;
+            return editType == EditType.Game;
         }
 
         public static void SetType(string name)
@@ -44,9 +44,9 @@ namespace SwarmEngine
             {
                 editType = EditType.Erase;
             }
-            else if (name == "Hand")
+            else if (name == "Game")
             {
-                editType = EditType.Hand;
+                editType = EditType.Game;
             }
             else
             {
@@ -61,6 +61,6 @@ namespace SwarmEngine
         Brush,
         World,
         Erase,
-        Hand
+        Game
     }
 }

@@ -108,6 +108,9 @@
     <Compile Include="..\..\XNASwarms\SwarmEngine\EraseParameters.cs">
       <Link>EraseParameters.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmEngine\GameParameters.cs">
+      <Link>GameParameters.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\SwarmEngine\IContainable.cs">
       <Link>IContainable.cs</Link>
     </Compile>

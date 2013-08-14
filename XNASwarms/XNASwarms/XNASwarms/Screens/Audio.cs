@@ -114,12 +114,12 @@ namespace XNASwarmsXAML.W8
 
         public void Play()
         {
-            throw new NotImplementedException();
+            player.Start();
         }
 
         public void Pause()
         {
-            throw new NotImplementedException();
+            player.Stop();
         }
 
         public bool IsPlaying()

@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XNASwarms;
+using XNASwarmsXAML.W8.Authoring.Commands;
 using XNASwarmsXAML.W8.Authoring.ViewModels;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {
-    public class HandControlViewModel : ControlViewModel, INotifyPropertyChanged
+    public class GameControlViewModel : ControlViewModel, INotifyPropertyChanged
     {
-        public HandControlViewModel(IControlClient controlClient)
-            : base("Hand", "Games.png", controlClient)
+        public GameControlViewModel(IControlClient controlClient)
+            : base("Game", "Games.png", controlClient)
         {
 
         }
@@ -60,5 +61,29 @@ namespace XNASwarmsXAML.W8.Authoring.ViewModels
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        #region Commands
+        private GameCommands gameCmnd;
+        public GameCommands GameCmnd
+        {
+            get
+            {
+                if (gameCmnd == null)
+                    gameCmnd = new GameCommands(this);
+                return gameCmnd;
+            }
+        }
+
+        public void PlayMusic()
+        {
+            controlClient.PlayMusic();
+        }
+
+        public void PauseMusic()
+        {
+            controlClient.PauseMusic();
+        }
+        #endregion
+
     }
 }

@@ -39,7 +39,11 @@ namespace XNASwarmsXAML.W8
             SwarmScreen1 swarmScreen = new SwarmScreen1(StockRecipies.Stable_A, false);
             screenManager.AddScreen(swarmScreen);
 
-            ControlClient controlClient = new ControlClient(swarmScreen);
+#if NETFX_CORE
+            ControlClient controlClient = new ControlClient(swarmScreen, this.Services.GetService(typeof(IAudio)) as IAudio);
+#else
+            ControlClient controlClient = new ControlClient(swarmScreen));
+#endif     
             this.Services.AddService(typeof(IControlClient), controlClient);
 
             

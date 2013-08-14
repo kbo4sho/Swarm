@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XNASwarmsXAML.W8;
 #if WINDOWS
 using SwarmAudio;
 #endif
@@ -73,6 +74,9 @@ namespace XNASwarms
 #if NETFX_CORE || WINDOWS_PHONE
         void ChangeBrushColor(Windows.UI.Color color);
         Windows.UI.Color GetBrushColor();
+
+        void PlayMusic();
+        void PauseMusic();
 #endif
     }
 
@@ -85,11 +89,22 @@ namespace XNASwarms
     public class ControlClient : IControlClient
     {
         SwarmScreenBase swarmScreen;
+#if NETFX_CORE
+        private IAudio audioScreen;
+#endif
 
         public ControlClient(SwarmScreenBase swarmscreen)
         {
             swarmScreen = swarmscreen;
         }
+
+#if NETFX_CORE
+        public ControlClient(SwarmScreenBase swarmscreen, IAudio audio)
+        {
+            swarmScreen = swarmscreen;
+            audioScreen = audio;
+        }
+#endif
 
         public void CreateStableSwarm()
         {
@@ -359,6 +374,16 @@ namespace XNASwarms
         public Windows.UI.Color GetBrushColor()
         {
             return StaticBrushParameters.Color;
+        }
+
+        public void PlayMusic()
+        {
+            audioScreen.Play();
+        }
+
+        public void PauseMusic()
+        {
+            audioScreen.Pause();
         }
 #endif
 

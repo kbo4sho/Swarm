@@ -14,7 +14,7 @@ namespace XNASwarmsXAML.W8.Authoring
         public DataTemplate WorldEditorTemplate { get; set; }
         public DataTemplate BrushEditorTemplate { get; set; }
         public DataTemplate EraseEditorTemplate { get; set; }
-        public DataTemplate HandEditorTemplate { get; set; }
+        public DataTemplate GameEditorTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
@@ -32,9 +32,9 @@ namespace XNASwarmsXAML.W8.Authoring
                 {
                     return EraseEditorTemplate;
                 }
-                else if (item is HandControlViewModel)
+                else if (item is GameControlViewModel)
                 {
-                    return HandEditorTemplate;
+                    return GameEditorTemplate;
                 }
             }
 

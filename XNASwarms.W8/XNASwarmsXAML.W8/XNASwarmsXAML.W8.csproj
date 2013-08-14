@@ -254,6 +254,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authoring\Commands\GameCommands.cs" />
     <Compile Include="Authoring\Commands\WorldCommands.cs" />
     <Compile Include="Authoring\Controls\JoyStick.xaml.cs">
       <DependentUpon>JoyStick.xaml</DependentUpon>
@@ -264,7 +265,7 @@
     <Compile Include="Authoring\Controls\Util\MathHelper.cs" />
     <Compile Include="Authoring\EditorControlTemplateSelector.cs" />
     <Compile Include="Authoring\ViewModels\EraseControlViewModel.cs" />
-    <Compile Include="Authoring\ViewModels\HandControlViewModel.cs" />
+    <Compile Include="Authoring\ViewModels\GameControlViewModel.cs" />
     <Compile Include="Authoring\ParametersToColorConverter.cs" />
     <Compile Include="Authoring\ValueAngleConverter.cs" />
     <Compile Include="Authoring\ViewModels\AuthoringViewModel.cs" />

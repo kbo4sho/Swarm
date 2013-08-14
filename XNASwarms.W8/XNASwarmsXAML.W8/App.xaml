@@ -12,7 +12,10 @@
             <!--<local:ParametersToColorConverter x:Key="parametersToColorConverter"/>-->
             <x:String x:Key="StableValue">Stable</x:String>
             <x:String x:Key="MutationValue">Mutation</x:String>
-            
+
+            <x:String x:Key="PlayMusicValue">PlayMusic</x:String>
+            <x:String x:Key="PauseMusicValue">PauseMusic</x:String>
+
             <DataTemplate x:Key="WorldEditorTemplate">
                 <StackPanel Grid.Row="1" DataContext="{Binding}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                     <StackPanel.Resources>
@@ -161,6 +164,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid HorizontalAlignment="Left" Grid.Column="0" Margin="30,30,30,0">
                         <Grid>
@@ -177,6 +181,14 @@
                         <Grid>
                             <localControls:JoyStick x:Name="aimstick" Angle="{Binding Aim, Mode=TwoWay}" Width="100" Height="100" />
                         </Grid>
+                    </Grid>
+                    <Grid HorizontalAlignment="Right" Grid.Column="2" Margin="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Content="Play Music" Command="{Binding GameCmnd}" CommandParameter="{StaticResource PlayMusicValue}"/>
+                        <Button Grid.Row="1" Content="Pause Music" Command="{Binding GameCmnd}" CommandParameter="{StaticResource PauseMusicValue}"/>
                     </Grid>
                 </Grid>
             </DataTemplate>

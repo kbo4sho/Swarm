@@ -31,7 +31,7 @@ namespace XNASwarms.Emitters
             populationSimulator = simulator;
             Emitters = new List<EmitterBase>();
             Emitters.Add(new BrushEmitter(new Vector2(0, 0)));
-
+            Emitters.Add(new StillEmitter(new Vector2(0, 0)));
         }
 #else
         public EmitterManager(PopulationSimulator simulator)
