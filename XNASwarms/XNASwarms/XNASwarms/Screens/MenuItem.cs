@@ -19,7 +19,7 @@ namespace XNASwarms.Screens
         CustomMusic,
         BackgroundMuisc,
         ResumeGame,
-        Game,
+        Mutation,
         FreePlay,
         Disabled,
         Stable,
@@ -227,9 +227,9 @@ namespace XNASwarms.Screens
             return _type == EntryType.BackgroundMuisc;
         }
 
-        public bool IsGameModeGame()
+        public bool IsMutationGame()
         {
-            return _type == EntryType.Game;
+            return _type == EntryType.Mutation;
         }
         internal bool IsStable()
         {

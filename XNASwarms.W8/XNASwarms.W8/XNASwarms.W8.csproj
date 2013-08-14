@@ -143,20 +143,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ControlClient.cs">
+      <Link>ControlClient.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
       <Link>Emitters\BrushEmitter.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushParameters.cs">
-      <Link>Emitters\BrushParameters.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterBase.cs">
       <Link>Emitters\EmitterBase.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterManager.cs">
       <Link>Emitters\EmitterManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterType.cs">
-      <Link>Emitters\EmitterType.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IAudioInfluenced.cs">
       <Link>Emitters\IAudioInfluenced.cs</Link>
@@ -273,12 +270,15 @@
     </Content>
     <Content Include="..\..\SoultionItems\Content\Content\bee.xnb">
       <Link>Content\bee.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\SoultionItems\Content\Content\beebig.xnb">
       <Link>Content\beebig.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\SoultionItems\Content\Content\centermarker.xnb">
       <Link>Content\centermarker.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\SoultionItems\Content\Content\Fonts\debugfont.xnb">
       <Link>Content\Fonts\debugfont.xnb</Link>
@@ -294,6 +294,7 @@
     </Content>
     <Content Include="..\..\SoultionItems\Content\Content\point.xnb">
       <Link>Content\point.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="XNASwarmsRelease.W8_TemporaryKey.pfx" />
   </ItemGroup>

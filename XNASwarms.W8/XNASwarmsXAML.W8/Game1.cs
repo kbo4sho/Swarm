@@ -9,9 +9,7 @@ using XNASwarms;
 
 namespace XNASwarmsXAML.W8
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
+
     public class Game1 : Game
     {
         GraphicsDeviceManager _graphics;
@@ -40,6 +38,9 @@ namespace XNASwarmsXAML.W8
 
             SwarmScreen1 swarmScreen = new SwarmScreen1(StockRecipies.Stable_A, false);
             screenManager.AddScreen(swarmScreen);
+
+            ControlClient controlClient = new ControlClient(swarmScreen);
+            this.Services.AddService(typeof(IControlClient), controlClient);
 
             
             base.Initialize();

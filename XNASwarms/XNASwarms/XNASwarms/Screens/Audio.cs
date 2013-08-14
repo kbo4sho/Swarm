@@ -48,7 +48,7 @@ namespace XNASwarmsXAML.W8
             var file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("Assets\\Surface-Movement.mp3");
             var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
             player.SetAudioData(stream);
-            StartAudio();
+            //StartAudio();
         }
 
         private void StartAudio()

@@ -5,23 +5,35 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using XNASwarmsXAML.W8.Authoring.ViewModels;
 
 namespace XNASwarmsXAML.W8.Authoring
 {
     public class EditorControlTemplateSelector : DataTemplateSelector
     {
-        //Declare templates here
-        //One of these methods should work
-        //http://diptimayapatra.wordpress.com/2012/07/24/data-template-selector-in-windows-8-metro-xaml-app/
-
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
-        {
-            return null;
-        }
+        public DataTemplate WorldEditorTemplate { get; set; }
+        public DataTemplate BrushEditorTemplate { get; set; }
+        public DataTemplate HandEditorTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
- 	         return base.SelectTemplateCore(item, container);
+            if (item != null)
+            {
+                if(item is WorldControlViewModel)
+                {
+                    return WorldEditorTemplate;
+                }
+                else if(item is BrushControlViewModel)
+                {
+                    return BrushEditorTemplate;
+                }
+                else if (item is HandControlViewModel)
+                {
+                    return HandEditorTemplate;
+                }
+            }
+
+ 	        return base.SelectTemplateCore(item, container);
         }
 
     }

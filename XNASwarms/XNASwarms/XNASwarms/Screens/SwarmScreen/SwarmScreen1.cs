@@ -11,7 +11,6 @@ namespace XNASwarms
     class SwarmScreen1 : SwarmScreenDrawScreen
     {
         public SwarmScreen1(string recipe, bool mutate)
-            : base(mutate)
         {
             Recipe[] recipes = new Recipe[1];
             recipes[0] = new Recipe(recipe);

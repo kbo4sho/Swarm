@@ -34,8 +34,7 @@ namespace XNASwarms
             }
 #elif NETFX_CORE
             SaveW8(filename, savespecies);
-#endif
-
+        #endif
         }
 
         #if NETFX_CORE

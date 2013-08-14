@@ -115,11 +115,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ControlClient.cs" />
+    <Compile Include="Emitters\BrushEmitter.cs" />
+    <Compile Include="Emitters\EmitterBase.cs" />
+    <Compile Include="Emitters\EmitterManager.cs" />
+    <Compile Include="Emitters\IAudioInfluenced.cs" />
+    <Compile Include="Emitters\IEmitter.cs" />
+    <Compile Include="Emitters\IGuideable.cs" />
+    <Compile Include="Emitters\IMeteredAgents.cs" />
+    <Compile Include="Emitters\StillEmitter.cs" />
+    <Compile Include="ImportExportHelper.cs" />
     <Compile Include="SaveAllSpecies.cs" />
     <Compile Include="SaveGenome.cs" />
     <Compile Include="SaveSpecies.cs" />
     <Compile Include="SaveHelper.cs" />
+    <Compile Include="SaveSpeciesHelper.cs" />
     <Compile Include="SaveWorldParameters.cs" />
     <Compile Include="Screens\Borders\Border.cs" />
     <Compile Include="Screens\Borders\Walls\Wall.cs" />
@@ -141,6 +151,7 @@
     <Compile Include="Screens\SwarmScreen\SwarmScreenFromPopulation.cs" />
     <Compile Include="Screens\SwarmScreen\SwarmScreenFromSavedSpecies.cs" />
     <Compile Include="StockSaveSpecies.cs" />
+    <Compile Include="SwarmSaveHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Game.ico" />

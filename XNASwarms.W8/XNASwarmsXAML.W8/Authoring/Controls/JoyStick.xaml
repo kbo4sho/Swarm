@@ -1,0 +1,25 @@
+﻿<UserControl
+    x:Class="XNASwarmsXAML.W8.Authoring.Controls.JoyStick"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:XNASwarmsXAML.W8.Authoring.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Height="180"
+    Width="180"
+    Name="joyStick" Loaded="joyStick_Loaded">
+    <Grid ManipulationMode="All" x:Name="wrapper" ManipulationDelta="Grid_ManipulationDelta" PointerReleased="wrapper_PointerReleased" ManipulationCompleted="Grid_ManipulationCompleted" >
+        <Ellipse Fill="{StaticResource ListBoxItemSelectedBackgroundThemeBrush}"/>
+        <Grid x:Name="transform">
+            <Grid.RenderTransform>
+                <CompositeTransform CenterY="{Binding CenterY}" CenterX="{Binding CenterX}" Rotation="{Binding Angle}"/>
+            </Grid.RenderTransform>
+            <Ellipse x:Name="indicator" Fill="White" Width="{Binding IndicatorWidth}" Height="{Binding IndicatorHeight}" Margin="0" VerticalAlignment="Top">
+                 <Ellipse.RenderTransform>
+                    <TranslateTransform Y="{Binding StickCenter}"/>
+            </Ellipse.RenderTransform>
+            </Ellipse>
+        </Grid>
+    </Grid>
+</UserControl>

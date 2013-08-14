@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
 #if WINDOWS
 using Microsoft.Surface.Core;
-#else
+#elif NETFX_CORE
 using ScreenSystem.W8.ScreenSystem;
 #endif
 

@@ -20,7 +20,7 @@ namespace SwarmAnalysisEngine
             //TODO set colors from config file
             for (int i = 0; i < indvds.Count; i++)
             {
-                double d = indvds[i].getDx2() * indvds[i].getDx2() + indvds[i].getDy2() * indvds[i].getDy2();
+                double d = indvds[i].Dx2 * indvds[i].Dx2 + indvds[i].Dy2 * indvds[i].Dy2;
 
                 if (d > 12)
                 {

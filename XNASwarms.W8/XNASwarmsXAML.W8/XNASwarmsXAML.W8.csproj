@@ -101,6 +101,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Reference Include="Coding4Fun.Toolkit.Controls, Version=2.0.6.0, Culture=neutral, PublicKeyToken=c5fd7b72b1a17ce4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.6\lib\windows8\Coding4Fun.Toolkit.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SoultionItems\Windows8\MonoGame.Framework.dll</HintPath>
@@ -140,20 +144,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ControlClient.cs">
+      <Link>ControlClient.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
       <Link>Emitters\BrushEmitter.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushParameters.cs">
-      <Link>Emitters\BrushParameters.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterBase.cs">
       <Link>Emitters\EmitterBase.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterManager.cs">
       <Link>Emitters\EmitterManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterType.cs">
-      <Link>Emitters\EmitterType.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IAudioInfluenced.cs">
       <Link>Emitters\IAudioInfluenced.cs</Link>
@@ -251,7 +252,19 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authoring\Commands\WorldCommands.cs" />
+    <Compile Include="Authoring\Controls\JoyStick.xaml.cs">
+      <DependentUpon>JoyStick.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Authoring\Controls\Knob.xaml.cs">
+      <DependentUpon>Knob.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Authoring\Controls\Util\MathHelper.cs" />
     <Compile Include="Authoring\EditorControlTemplateSelector.cs" />
+    <Compile Include="Authoring\ViewModels\EraseControlViewModel.cs" />
+    <Compile Include="Authoring\ViewModels\HandControlViewModel.cs" />
+    <Compile Include="Authoring\ParametersToColorConverter.cs" />
+    <Compile Include="Authoring\ValueAngleConverter.cs" />
     <Compile Include="Authoring\ViewModels\AuthoringViewModel.cs" />
     <Compile Include="Authoring\ViewModels\BrushControlViewModel.cs" />
     <Compile Include="Authoring\ViewModels\ControlViewModel.cs" />
@@ -260,7 +273,7 @@
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Game1.cs" />
-    <Compile Include="MMAudioPlayer.cs" />
+    <Compile Include="Normalizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -303,7 +316,12 @@
     <Content Include="..\..\SoultionItems\Content\Content\point.xnb">
       <Link>Content\point.xnb</Link>
     </Content>
+    <Content Include="Assets\Icons\Earth.png" />
+    <Content Include="Assets\Icons\Games.png" />
+    <Content Include="Assets\Icons\Paint.png" />
+    <Content Include="Assets\Icons\X.png" />
     <Content Include="Assets\Surface-Movement.mp3" />
+    <Content Include="ReadMe.Coding4Fun.Toolkit.txt" />
     <None Include="packages.config" />
     <None Include="XNASwarms.W8_TemporaryKey.pfx" />
   </ItemGroup>
@@ -318,6 +336,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Authoring\Controls\JoyStick.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Authoring\Controls\Knob.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Common\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

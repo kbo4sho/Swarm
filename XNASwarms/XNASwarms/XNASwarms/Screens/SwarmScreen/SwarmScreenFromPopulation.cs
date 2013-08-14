@@ -9,7 +9,6 @@ namespace XNASwarms
     class SwarmScreenFromPopulation : SwarmScreenDrawScreen
     {
         public SwarmScreenFromPopulation(Population population)
-            : base(false)
         {
             populationSimulator = new PopulationSimulator(0, 0, StockSpecies.Species_A);
         }

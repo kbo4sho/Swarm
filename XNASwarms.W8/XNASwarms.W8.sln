@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSS", "..\ConsoleApplicatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSS.W8", "VSS.W8\VSS.W8.csproj", "{B0D3E26D-3CAA-433A-91D2-B844EAC0A897}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplicationVSSTest", "..\..\..\..\Visual Studio 2012\Projects\ConsoleApplicationVSSTest\ConsoleApplicationVSSTest\ConsoleApplicationVSSTest.csproj", "{338B7834-F865-410E-90C1-43323DB2307D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmAudio.W8", "SwarmAudio.W8\SwarmAudio.W8.csproj", "{4A4C87B8-83F9-450D-9B9C-C3AB26CF87D2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MMAudioPlayer", "MMAudioPlayer\MMAudioPlayer.vcxproj", "{3DBADD73-EF51-4445-A3D4-0F0E5197A3C4}"
@@ -221,22 +219,6 @@ Global
 		{B0D3E26D-3CAA-433A-91D2-B844EAC0A897}.Release|x64.Build.0 = Release|x64
 		{B0D3E26D-3CAA-433A-91D2-B844EAC0A897}.Release|x86.ActiveCfg = Release|x86
 		{B0D3E26D-3CAA-433A-91D2-B844EAC0A897}.Release|x86.Build.0 = Release|x86
-		{338B7834-F865-410E-90C1-43323DB2307D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Release|ARM.ActiveCfg = Release|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Release|Win32.ActiveCfg = Release|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Release|x64.ActiveCfg = Release|Any CPU
-		{338B7834-F865-410E-90C1-43323DB2307D}.Release|x86.ActiveCfg = Release|Any CPU
 		{4A4C87B8-83F9-450D-9B9C-C3AB26CF87D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A4C87B8-83F9-450D-9B9C-C3AB26CF87D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A4C87B8-83F9-450D-9B9C-C3AB26CF87D2}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -287,8 +269,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

@@ -12,12 +12,12 @@ namespace XNASwarms.Emitters
     public class StillEmitter : EmitterBase, IAudioInfluenced
     {
         public StillEmitter(Vector2 position)
-            : base(EmitterType.Still, position)
+            : base(EmitterActionType.Still, position)
         {
             
         }
 
-        public override Individual Update()
+        public override Individual GetIndividual()
         {
             return new Individual(0, this.Position.X, this.Position.Y, this.Position.X, this.Position.Y, this.Parameters);
         }

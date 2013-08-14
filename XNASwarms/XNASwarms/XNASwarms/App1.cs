@@ -82,6 +82,9 @@ namespace XNASwarms
             SwarmScreen1 swarmScreen = new SwarmScreen1(StockRecipies.Stable_A, false);
             screenManager.AddScreen(swarmScreen);
 
+            ControlClient controlClient = new ControlClient(swarmScreen);
+            this.Services.AddService(typeof(IControlClient), controlClient);
+
             base.Initialize();
             SoundEngine.Init();
 

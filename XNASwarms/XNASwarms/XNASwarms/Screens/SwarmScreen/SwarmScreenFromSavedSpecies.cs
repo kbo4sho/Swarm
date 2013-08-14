@@ -9,7 +9,6 @@ namespace XNASwarms
     class SwarmScreenFromSavedSpecies : SwarmScreenDrawScreen
     {
         public SwarmScreenFromSavedSpecies(SaveSpecies savespecies)
-            :base(false)
         {
             populationSimulator = new PopulationSimulator(0, 0, SaveSpeciesHelper.GetPopulationFromSaveSpecies(savespecies));
         }

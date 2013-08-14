@@ -4,12 +4,17 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace SwarmEngine
 {
     public class PopulationSimulator
     {
-        private Population population;
+        public Population Population
+        {
+            get;
+            private set;
+        }
         private Random rand = new Random();
         Individual currentInd;
         Parameters param;
@@ -38,17 +43,17 @@ namespace SwarmEngine
 
         public PopulationSimulator(int width, int height, Population pop)
         {
-            population = pop;
+            Population = pop;
 
             swarmInBirthOrder = new Species();
             swarmInXOrder = new Species();
             swarmInYOrder = new Species();
 
-            for (int i = 0; i < population.Count; i++)
+            for (int i = 0; i < Population.Count; i++)
             {
-                for (int j = 0; j < population[i].Count; j++)
+                for (int j = 0; j < Population[i].Count; j++)
                 {
-                    InitCollections(population[i][j]);
+                    InitCollections(Population[i][j]);
                 }
             }
         }
@@ -190,8 +195,8 @@ namespace SwarmEngine
                     tempAx += (localCenterX - tempX) * param.getC1();
                     tempAy += (localCenterY - tempY) * param.getC1();
 
-                    tempAx += (localDX - currentInd.getDx()) * param.getC2();
-                    tempAy += (localDY - currentInd.getDy()) * param.getC2();
+                    tempAx += (localDX - currentInd.Dx) * param.getC2();
+                    tempAy += (localDY - currentInd.Dy) * param.getC2();
 
                     for (int j = 0; j < n; j++)
                     {
@@ -217,8 +222,8 @@ namespace SwarmEngine
 
                 currentInd.accelerate(tempAx, tempAy, param.getMaxSpeed());
 
-                tempDX = currentInd.getDx2();
-                tempDY = currentInd.getDy2();
+                tempDX = currentInd.Dx2;
+                tempDY = currentInd.Dy2;
                 double f = Math.Sqrt(tempDX * tempDX + tempDY * tempDY);
                 if (f == 0)
                     f = 0.001;
@@ -243,26 +248,53 @@ namespace SwarmEngine
             resetRanks();
         }
 
+        public void EraseIndividual(Vector2 position)
+        {
+            //bool match = Population.Select(s => s.Where(i => i.X == position.X && i.Y == position.Y).Any());
+            //if (match)
+            //{
+            //    List<Individual> indvds = Population.Select(s => s.Where(i => i.X == position.X && i.Y == position.Y).First()).ToList();
+
+            //    if (Population.Sum(s => s.Count) >= 2)
+            //    {
+            //        swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(indvds[0])]);
+            //        swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(indvds[0])]);
+            //        Population.TryRemoveFromExisitingSpecies(indvds[0]);
+            //        swarmInBirthOrder.Remove(indvds[0]);
+            //    }
+            //}
+        }
+
+        public void UndoIndividual()
+        {
+            if (Population.Sum(s => s.Count) >= 2)
+            {
+                swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.Last())]);
+                swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.Last())]);
+                Population.TryRemoveFromExisitingSpecies(swarmInBirthOrder.Last());
+                swarmInBirthOrder.Remove(swarmInBirthOrder.Last());
+            }
+        }
+
         public void EmitIndividual(Individual indvd)
         {
             AddIndividual(indvd);
-            if (population.Sum(s => s.Count) > StaticWorldParameters.numberOfIndividualsMax -1)
+            indvd.accelerate(indvd.Dx*10, indvd.Dy*10, 400);
+            if (Population.Sum(s => s.Count) >= StaticWorldParameters.numberOfIndividualsMax -1)
             {
                 swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
+                Population.TryRemoveFromExisitingSpecies(swarmInBirthOrder.First());
                 swarmInBirthOrder.Remove(swarmInBirthOrder.First());
-                population.TryRemoveFromExisitingSpecies();
             }
         }
 
         private void AddIndividual(Individual indvd)
         {
-            if (population.Sum(s => s.Count) < StaticWorldParameters.numberOfIndividualsMax)
+            if (Population.Sum(s => s.Count) < StaticWorldParameters.numberOfIndividualsMax)
             {
-                swarmInBirthOrder.Add(indvd);
-                swarmInXOrder.Add(indvd);
-                swarmInYOrder.Add(indvd);
-                population.TryAddToExistingSpecies(indvd);
+                InitCollections(indvd);
+                Population.TryAddToExistingSpecies(indvd);
             }
         }
 
@@ -275,16 +307,8 @@ namespace SwarmEngine
 
         private void sortInternalLists()
         {
-            //swarmInXOrder = (from entry in swarmInXOrder orderby entry.Value.X descending select entry)
-            //.ToDictionary(pair => pair.Key, pair => pair.Value);
-
-            //swarmInYOrder = ((from entry in swarmInYOrder orderby entry.Y descending select entry)
-            //.ToList<Individual>()) as Species;
-
             swarmInXOrder.Sort((x, y) => x.X.CompareTo(y.X));
             swarmInYOrder.Sort((x, y) => x.Y.CompareTo(y.Y));
-            
-            //swarmInYOrder.OrderBy(x => x.Y).ToList<Individual>();
         }
 
         private void resetRanks()
@@ -326,41 +350,6 @@ namespace SwarmEngine
             return swarmInBirthOrder;
         }
 
-        public Population GetPopulation()
-        {
-            return population;
-        }
-
-        public List<Individual> GetSwarmSortedBySpecies()
-        {
-            List<Individual> allSpecies = new List<Individual>();
-            for (int i = 0; i < population.Count(); i++)
-            {
-                allSpecies.AddRange(population[i].ToList());
-            }
-            return allSpecies.OrderBy(s=>s.Genome).ToList();
-        }
-
-        public void DetermineSpecies()
-        {
-            //Reorganize the population in to a species
-            List<string> discoverdRecipies = population.Select(s => s.Select(d => d.Genome.getRecipe()).Distinct().ToList<string>()).First();
-
-            if (discoverdRecipies != null && discoverdRecipies.Count() > 0)
-            {
-                List<Species> species = new List<Species>();
-                foreach (var rcpe in discoverdRecipies)
-                {
-                    species.Add(new Species(population.Select(s => s.Where(t => t.Genome.getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
-                }
-
-                population.Clear();
-                population.AddRange(species);
-            }
-            
-            
-        }
-
         private void ClearPopulation()
         {
             swarmInBirthOrder.Clear();
@@ -370,26 +359,33 @@ namespace SwarmEngine
 
         public void UpdatePopulation(string recipiText, bool mutate)
         {
-            ClearPopulation();
-            population = new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion");
-            UpdatePopulation(population, mutate);
+            Population = new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion");
+            UpdatePopulation(Population, mutate);
         }
 
         public void UpdatePopulation(Population tempPopulation, bool mutate)
         {
             ClearPopulation();
-            population = tempPopulation;
-            for (int i = 0; i < population.Count; i++)
+       
+            for (int i = 0; i < tempPopulation.Count; i++)
             {
-                for (int j = 0; j < population[i].Count; j++)
+                for (int j = 0; j < tempPopulation[i].Count; j++)
                 {
                     if (mutate)
                     {
-                        population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
+                        tempPopulation[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
                     }
-                    InitCollections(population[i][j]);
+                    InitCollections(tempPopulation[i][j]);
                 }
             }
+
+            if (mutate)
+            {
+                tempPopulation.ReassignSpecies();
+                tempPopulation.ReassignAllColors();
+            }
+
+            Population = tempPopulation;
         }
     }
 }

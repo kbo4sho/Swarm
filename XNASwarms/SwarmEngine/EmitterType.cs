@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XNASwarms.Emitters
+namespace SwarmEngine
 {
-    public enum EmitterType
+    public enum EmitterActionType
     {
+        Normal = 0,
         Brush = 1,
         Still = 2,
     }

@@ -59,6 +59,8 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrushParameters.cs" />
+    <Compile Include="EmitterType.cs" />
     <Compile Include="IContainable.cs" />
     <Compile Include="Individuals\Individual.cs" />
     <Compile Include="Individuals\StockIndividualsFacotry.cs" />
@@ -71,6 +73,8 @@
     <Compile Include="Recipes\StockRecipies.cs" />
     <Compile Include="Species\Species.cs" />
     <Compile Include="Species\StockSpecies.cs" />
+    <Compile Include="StaticEditModeParameters.cs" />
+    <Compile Include="SuperParameters.cs" />
     <Compile Include="WorldParameters.cs" />
   </ItemGroup>
   <ItemGroup>

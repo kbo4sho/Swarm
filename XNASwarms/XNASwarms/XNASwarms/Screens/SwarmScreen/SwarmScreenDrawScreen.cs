@@ -13,11 +13,9 @@ namespace XNASwarms
     {
         Random rand;
         Texture2D individualTexture, bigIndividualTexture;
-        bool Mutate;
 
-        public SwarmScreenDrawScreen(bool mutate)
+        public SwarmScreenDrawScreen()
         {
-            Mutate = mutate;
             rand = new Random();
         }
 
@@ -25,10 +23,6 @@ namespace XNASwarms
         {
             individualTexture = ScreenManager.Content.Load<Texture2D>("point");
             bigIndividualTexture = ScreenManager.Content.Load<Texture2D>("beebig");
-            if (Mutate)
-            {
-                DoMutation();
-            }
             base.LoadContent();
         }
 
@@ -39,14 +33,14 @@ namespace XNASwarms
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            Population population = populationSimulator.GetPopulation();
+            Population population = populationSimulator.Population;
             ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
 
             for (int s = 0; s < population.Count; s++ )
             {
                 for (int i = 0; i < population[s].Count; i++)
                 {
-                    DrawIndividual(population[s][i], population[s][i].getGenomeColor(), individualTexture);
+                    DrawIndividual(population[s][i], population[s][i].getDisplayColor(), individualTexture, population[s][i].EmitterType);
                 }
             }
 
@@ -54,30 +48,33 @@ namespace XNASwarms
             ScreenManager.SpriteBatch.End();
         }
 
-        private void DrawIndividual(Individual indvd,Color color, Texture2D texture)
+        private void DrawIndividual(Individual indvd, Color color, Texture2D texture, EmitterActionType type)
         {
-            ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
-                        (int)indvd.X,
-                        (int)indvd.Y, texture.Width, texture.Height),
-                        null,
-                        color,
-                        (float)Math.Atan2(indvd.getDy(), indvd.getDx()),
-                        new Vector2(texture.Width / 2, texture.Height / 2),
-                        SpriteEffects.None, 0);
-        }
-
-        private void DoMutation()
-        {
-            foreach (Species spcs in populationSimulator.GetPopulation())
+            if (!indvd.IsMobile)
             {
-                foreach (Individual indvdl in spcs)
-                {
-                    indvdl.Genome.inducePointMutations(rand.NextDouble(), 2);
-                    //ind.Genome.inducePointMutations(rand.NextDouble(), 3);
-                }
+                ScreenManager.SpriteBatch.Draw(bigIndividualTexture, new Rectangle(
+                    (int)indvd.X,
+                    (int)indvd.Y, bigIndividualTexture.Width, bigIndividualTexture.Height),
+                    null,
+                    color,
+                    (float)Math.Atan2(indvd.Dy, indvd.Dx),
+                    new Vector2(bigIndividualTexture.Width / 2, bigIndividualTexture.Height / 2),
+                    SpriteEffects.None, 0);
             }
-            populationSimulator.DetermineSpecies();
+            else
+            {
+                ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
+                    (int)indvd.X,
+                    (int)indvd.Y, texture.Width, texture.Height),
+                    null,
+                    color,
+                    (float)Math.Atan2(indvd.Dy, indvd.Dx),
+                    new Vector2(texture.Width / 2, texture.Height / 2),
+                    SpriteEffects.None, 0);
+            }
 
         }
+
+        
     }
 }

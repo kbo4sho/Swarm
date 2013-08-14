@@ -55,17 +55,44 @@ namespace SwarmEngine
 
         public void TryAddToExistingSpecies(Individual indvd)
         {
-            Species species = this.First<Species>();
+            bool added = false;
 
-            if (totalAgents <= StaticWorldParameters.numberOfIndividualsMax)
+            foreach (var spec in this)
             {
-                species.Add(indvd);
+                if (spec.First().Genome.getRecipe() == indvd.Genome.getRecipe())
+                {
+                    spec.Add(indvd);
+                    added = true;
+                }
+            }
+
+            if (!added)
+            {
+                this.Add(new Species(new List<Individual>() { indvd }));
             }
         }
 
-        public void TryRemoveFromExisitingSpecies()
+        public void ReassignSpecies()
         {
-            this.Where(e => e.Count() > 0).First().RemoveAt(0);
+            //Reorganize the population in to a species
+            List<string> discoverdRecipies = this.Select(s => s.Select(d => d.Genome.getRecipe()).Distinct().ToList<string>()).First();
+
+            if (discoverdRecipies != null && discoverdRecipies.Count() > 0)
+            {
+                List<Species> species = new List<Species>();
+                foreach (var rcpe in discoverdRecipies)
+                {
+                    species.Add(new Species(this.Select(s => s.Where(t => t.Genome.getRecipe().ToString() == rcpe.ToString()).ToList()).First()));
+                }
+
+                this.Clear();
+                this.AddRange(species);
+            }
+        }
+
+        public void TryRemoveFromExisitingSpecies(Individual indvd)
+        {
+            this.Where(e => e.Contains(indvd) == true).First().Remove(indvd);
             CheckForEmptySpecies();  
         }
 
@@ -189,5 +216,16 @@ namespace SwarmEngine
             this.title = title;
         }
 
+
+        public void ReassignAllColors()
+        {
+            foreach (var spec in this)
+            {
+                foreach (var indvd in spec)
+                {
+                    indvd.ResetColor();
+                }
+            }
+        }
     }
 }
