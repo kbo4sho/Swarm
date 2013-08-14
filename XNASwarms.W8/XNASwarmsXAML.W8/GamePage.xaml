@@ -58,6 +58,8 @@
                         </ListBox.ItemsPanel>
                     </ListBox>
                 </Grid>
+
+                <ContentControl ContentTemplateSelector="" DataContext="{Binding ControlViewModel}"/>
                 <StackPanel Grid.Row="1" DataContext="{Binding ControlViewModel}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,10,20">
                     <StackPanel.Resources>
                         <Style TargetType="Grid">
@@ -112,8 +114,8 @@
                         <TextBlock Text="Chance of Random Steering" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Width="300" Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="1" StepFrequency=".1" />
                     </Grid>
-             
                 </StackPanel>
+                
             </Grid>
         </AppBar>
     </Grid>

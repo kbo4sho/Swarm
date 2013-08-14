@@ -251,6 +251,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Authoring\EditorControlTemplateSelector.cs" />
     <Compile Include="Authoring\ViewModels\AuthoringViewModel.cs" />
     <Compile Include="Authoring\ViewModels\BrushControlViewModel.cs" />
     <Compile Include="Authoring\ViewModels\ControlViewModel.cs" />
