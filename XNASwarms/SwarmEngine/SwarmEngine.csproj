@@ -61,6 +61,8 @@
   <ItemGroup>
     <Compile Include="BrushParameters.cs" />
     <Compile Include="EmitterType.cs" />
+    <Compile Include="EraseParameters.cs" />
+    <Compile Include="GameParameters.cs" />
     <Compile Include="IContainable.cs" />
     <Compile Include="Individuals\Individual.cs" />
     <Compile Include="Individuals\StockIndividualsFacotry.cs" />
