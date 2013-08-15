@@ -30,7 +30,7 @@ namespace XNASwarms.Emitters
         public void UpdateByAudio(double[] fftData)
         {
             this.Parameters = new Parameters(StaticBrushParameters.neighborhoodRadiusMax,
-                                             fftData[0],
+                                             StaticBrushParameters.normalSpeedMax,
                                              StaticBrushParameters.maxSpeedMax,
                                              StaticBrushParameters.CohesiveForceMax,
                                              StaticBrushParameters.AligningForceMax,

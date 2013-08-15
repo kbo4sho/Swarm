@@ -23,7 +23,7 @@ namespace XNASwarmsXAML.W8
     /// </summary>
     public class Audio : GameScreen, IAudio
     {
-        public const int num_of_fft_bands = 10; //count of  bands returned by GetFFT
+        public const int num_of_fft_bands = 200; //count of  bands returned by GetFFT
 
         float[] fftRawData;
         double[] fftData;
@@ -46,19 +46,13 @@ namespace XNASwarmsXAML.W8
         async private void InitAudio()
         {
             var file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("Assets\\Surface-Movement.mp3");
+            //var file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("Assets\\sweep20-20klog.mp3");
             var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
             player.SetAudioData(stream);
-            //StartAudio();
-        }
-
-        private void StartAudio()
-        {
-            player.Start();
         }
 
         public override void LoadContent()
         {
-            
             //Load Songs
         }
 

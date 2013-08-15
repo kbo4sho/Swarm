@@ -169,11 +169,14 @@ namespace XNASwarms
                     populationSimulator.EraseIndividual(Supers[0].Position);
                 }
             }
-            else if (StaticEditModeParameters.IsHandMode() || StaticEditModeParameters.IsWorldMode())
+            else if (StaticEditModeParameters.IsGameMode())
+            {
+                emitterManager.UpdateAudioEmmiter(Vector2.Zero);
+            }
+            else if (StaticEditModeParameters.IsWorldMode())
             {
                 emitterManager.Update(Vector2.Zero);
             }
-           
         }
 
         public override void HandleInput(InputHelper input, Microsoft.Xna.Framework.GameTime gameTime)

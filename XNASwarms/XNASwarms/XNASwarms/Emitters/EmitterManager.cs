@@ -31,7 +31,7 @@ namespace XNASwarms.Emitters
             populationSimulator = simulator;
             Emitters = new List<EmitterBase>();
             Emitters.Add(new BrushEmitter(new Vector2(0, 0)));
-            Emitters.Add(new StillEmitter(new Vector2(0, 0)));
+            Emitters.Add(new AudioEmitter(new Vector2(0, 0)));
         }
 #else
         public EmitterManager(PopulationSimulator simulator)
@@ -49,47 +49,60 @@ namespace XNASwarms.Emitters
         //TODO this will be a collection of positons 
         public void Update(Vector2 position)
         {
-            foreach(EmitterBase emitter in Emitters)
+            
+            if (Emitters[0] is IGuideable)
             {
-                if (emitter is IGuideable)
-                {
-                    ((IGuideable)emitter).UpdatePosition(position);
-                }
+                ((IGuideable)Emitters[0]).UpdatePosition(position);
+            }
 
-#if NETFX_CORE
-                if (audioScreen!=null && audioScreen.IsPlaying())
+            if (Emitters[0] is IMeteredAgents)
+            {
+                ((IMeteredAgents)Emitters[0]).CheckForSafeDistance(position);
+            }
+
+            if (Emitters[0].IsActive)
+            {
+                if (Emitters[0] is BrushEmitter)
                 {
-                    if (emitter is IAudioInfluenced)
+                    if (!StaticBrushParameters.IsUndo)
                     {
-                        ((IAudioInfluenced)emitter).UpdateByAudio(audioScreen.GetFFTData());
+                        populationSimulator.EmitIndividual(Emitters[0].GetIndividual());
                     }
-                }
-#endif
-
-                if (emitter is IMeteredAgents)
-                {
-                    ((IMeteredAgents)emitter).CheckForSafeDistance(position);
-                }
-
-                if (emitter.IsActive)
-                {
-                    if (emitter is BrushEmitter)
-                    {
-                        if (!StaticBrushParameters.IsUndo)
-                        {
-                            populationSimulator.EmitIndividual(emitter.GetIndividual());
-                        }
-                        else
-                        {
-                            populationSimulator.UndoIndividual();
-                        }
-                    }
-                    //else if(emitter is 
                     else
                     {
-                        populationSimulator.EmitIndividual(emitter.GetIndividual());
+                        populationSimulator.UndoIndividual();
                     }
                 }
+                //else if(emitter is 
+                else
+                {
+                    populationSimulator.EmitIndividual(Emitters[0].GetIndividual());
+                }
+            }
+            
+        }
+
+        public void UpdateAudioEmmiter(Vector2 position)
+        {
+
+            if (Emitters[1] is IGuideable)
+            {
+                ((IGuideable)Emitters[1]).UpdatePosition(position);
+            }
+
+
+#if NETFX_CORE
+            if (audioScreen != null && audioScreen.IsPlaying())
+            {
+                if (Emitters[1] is IAudioInfluenced)
+                {
+                    ((IAudioInfluenced)Emitters[1]).UpdateByAudio(audioScreen.GetFFTData());
+                }
+            }
+#endif
+            if (Emitters[1].IsActive)
+            {
+                populationSimulator.EmitIndividual(Emitters[1].GetIndividual());
             }
         }
     }

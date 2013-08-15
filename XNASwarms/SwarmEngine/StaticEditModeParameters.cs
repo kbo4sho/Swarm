@@ -25,7 +25,7 @@ namespace SwarmEngine
             return editType == EditType.Erase;
         }
 
-        public static bool IsHandMode()
+        public static bool IsGameMode()
         {
             return editType == EditType.Game;
         }

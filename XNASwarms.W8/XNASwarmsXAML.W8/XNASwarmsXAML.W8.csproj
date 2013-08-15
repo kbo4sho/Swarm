@@ -324,6 +324,7 @@
     <Content Include="Assets\Icons\Paint.png" />
     <Content Include="Assets\Icons\X.png" />
     <Content Include="Assets\Surface-Movement.mp3" />
+    <Content Include="Assets\sweep20-20klog.mp3" />
     <Content Include="ReadMe.Coding4Fun.Toolkit.txt" />
     <None Include="packages.config" />
     <None Include="XNASwarms.W8_TemporaryKey.pfx" />

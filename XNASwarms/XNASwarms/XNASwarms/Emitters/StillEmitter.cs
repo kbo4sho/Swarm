@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XNASwarms.Emitters;
+using XNASwarmsXAML.W8;
 
 namespace XNASwarms.Emitters
 {
-    public class StillEmitter : EmitterBase, IAudioInfluenced
+    public class AudioEmitter : EmitterBase, IAudioInfluenced
     {
-        public StillEmitter(Vector2 position)
+        public AudioEmitter(Vector2 position)
             : base(EmitterActionType.Still, position)
         {
             
@@ -24,12 +25,24 @@ namespace XNASwarms.Emitters
 
         public void UpdateByAudio(double[] fftData)
         {
+            //25-100
+            var b = fftData.Take(66).Average();
+            b = Normalizer.Normalize(25, 100, .01f, 45f, b);
+            //0-1
+            var g = fftData.Skip(66).Take(66).Average();
+            g = Normalizer.Normalize(0, 1, .01f, 6f, g);
+            
+            //0-1
+            var r = fftData.Skip(132).Take(66).Average();
+            r = Normalizer.Normalize(0, 1, .001f, 2.5f, r);
+
+
             this.Parameters = new Parameters(StaticWorldParameters.neighborhoodRadiusMax,
-                                             GetTime(fftData[1]),
+                                             StaticWorldParameters.normalSpeedMax,
                                              StaticWorldParameters.maxSpeedMax,
-                                             StaticWorldParameters.CohesiveForceMax,
-                                             StaticWorldParameters.AligningForceMax,
-                                             StaticWorldParameters.SeperatingForceMax,
+                                             r,
+                                             g,
+                                             b,
                                              StaticWorldParameters.ChanceOfRandomSteeringMax,
                                              StaticWorldParameters.TendencyOfPaceKeepingMax);
         }
