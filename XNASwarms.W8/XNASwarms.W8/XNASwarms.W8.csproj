@@ -173,6 +173,9 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ImportExportHelper.cs">
       <Link>ImportExportHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Normalizer.cs">
+      <Link>Normalizer.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveAllSpecies.cs">
       <Link>SaveAllSpecies.cs</Link>
     </Compile>
@@ -232,15 +235,6 @@
     </Compile>
     <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\swarmscreen\SwarmScreenBase.cs">
       <Link>Screens\SwarmScreen\SwarmScreenBase.cs</Link>
-    </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\swarmscreen\SwarmScreenDrawScreen.cs">
-      <Link>Screens\SwarmScreen\SwarmScreenDrawScreen.cs</Link>
-    </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\swarmscreen\SwarmScreenFromPopulation.cs">
-      <Link>Screens\SwarmScreen\SwarmScreenFromPopulation.cs</Link>
-    </Compile>
-    <Compile Include="..\..\xnaswarms\xnaswarms\xnaswarms\screens\swarmscreen\SwarmScreenFromSavedSpecies.cs">
-      <Link>Screens\SwarmScreen\SwarmScreenFromSavedSpecies.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\StockSaveSpecies.cs">
       <Link>StockSaveSpecies.cs</Link>

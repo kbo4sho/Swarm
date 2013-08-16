@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XNASwarmsXAML.W8
+namespace XNASwarms
 {
     public static class Normalizer
     {
         public static float Normalize(int from, int to, float min, float max, double toNormalize)
         {
-
             if (toNormalize < min)
             {
                 toNormalize = min;
@@ -20,7 +19,6 @@ namespace XNASwarmsXAML.W8
             {
                 toNormalize = max;
             }
-
 
             var value = (toNormalize - min) * (to - from) / (max - min);
             return (float)value;

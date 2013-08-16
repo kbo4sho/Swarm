@@ -6,75 +6,16 @@ using Microsoft.Xna.Framework.Graphics;
 using SwarmEngine;
 using Microsoft.Xna.Framework;
 using SwarmAnalysisEngine;
+using XNASwarms.Emitters;
 
 namespace XNASwarms
 {
     class SwarmScreenDrawScreen : SwarmScreenBase
     {
-        Random rand;
-        Texture2D individualTexture, bigIndividualTexture;
-
-        public SwarmScreenDrawScreen()
+        public SwarmScreenDrawScreen(IEmitterComponent emitterComponent, PopulationSimulator populationSimulator)
+            : base(emitterComponent, populationSimulator)
         {
-            rand = new Random();
-        }
-
-        public override void LoadContent()
-        {
-            individualTexture = ScreenManager.Content.Load<Texture2D>("point");
-            bigIndividualTexture = ScreenManager.Content.Load<Texture2D>("beebig");
-            base.LoadContent();
-        }
-
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
-        {
-            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-        }
-
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
-        {
-            Population population = populationSimulator.Population;
-            ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
-
-            for (int s = 0; s < population.Count; s++ )
-            {
-                for (int i = 0; i < population[s].Count; i++)
-                {
-                    DrawIndividual(population[s][i], population[s][i].getDisplayColor(), individualTexture, population[s][i].EmitterType);
-                }
-            }
-
-            base.Draw(gameTime);
-            ScreenManager.SpriteBatch.End();
-        }
-
-        private void DrawIndividual(Individual indvd, Color color, Texture2D texture, EmitterActionType type)
-        {
-            if (!indvd.IsMobile)
-            {
-                ScreenManager.SpriteBatch.Draw(bigIndividualTexture, new Rectangle(
-                    (int)indvd.X,
-                    (int)indvd.Y, bigIndividualTexture.Width, bigIndividualTexture.Height),
-                    null,
-                    color,
-                    (float)Math.Atan2(indvd.Dy, indvd.Dx),
-                    new Vector2(bigIndividualTexture.Width / 2, bigIndividualTexture.Height / 2),
-                    SpriteEffects.None, 0);
-            }
-            else
-            {
-                ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
-                    (int)indvd.X,
-                    (int)indvd.Y, texture.Width, texture.Height),
-                    null,
-                    color,
-                    (float)Math.Atan2(indvd.Dy, indvd.Dx),
-                    new Vector2(texture.Width / 2, texture.Height / 2),
-                    SpriteEffects.None, 0);
-            }
 
         }
-
-        
     }
 }

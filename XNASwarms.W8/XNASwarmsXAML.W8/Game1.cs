@@ -6,6 +6,7 @@ using SwarmEngine;
 using System;
 using VSS;
 using XNASwarms;
+using XNASwarms.Emitters;
 
 namespace XNASwarmsXAML.W8
 {
@@ -36,7 +37,11 @@ namespace XNASwarmsXAML.W8
             screenManager.AddScreen(audioScreen);
             this.Services.AddService(typeof(IAudio), audioScreen);
 
-            SwarmScreen1 swarmScreen = new SwarmScreen1(StockRecipies.Stable_A, false);
+            Recipe[] recipes = new Recipe[1];
+            recipes[0] = new Recipe(StockRecipies.Stable_A);
+            PopulationSimulator populationSimulator = new PopulationSimulator(0, 0, recipes);
+
+            SwarmScreen1 swarmScreen = new SwarmScreen1(new SwarmEmitterComponent(populationSimulator), populationSimulator);
             screenManager.AddScreen(swarmScreen);
 
 #if NETFX_CORE

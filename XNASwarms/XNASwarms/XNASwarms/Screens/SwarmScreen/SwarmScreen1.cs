@@ -5,17 +5,17 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SwarmEngine;
+using XNASwarms.Emitters;
 
 namespace XNASwarms
 {
-    class SwarmScreen1 : SwarmScreenDrawScreen
+    class SwarmScreen1 : SwarmScreenBase
     {
-        public SwarmScreen1(string recipe, bool mutate)
+        public SwarmScreen1(IEmitterComponent emitterComponent, PopulationSimulator populationSimulator)
+            : base(emitterComponent, populationSimulator)
         {
-            Recipe[] recipes = new Recipe[1];
-            recipes[0] = new Recipe(recipe);
-            populationSimulator = new PopulationSimulator(0, 0, recipes);
+
+            
         }
-        
     }
 }

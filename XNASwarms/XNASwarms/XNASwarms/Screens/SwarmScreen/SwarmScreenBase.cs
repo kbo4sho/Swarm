@@ -28,36 +28,32 @@ namespace XNASwarms
 {
     public class SwarmScreenBase : ControlScreen
     {
-        protected PopulationSimulator populationSimulator;
-        EmitterManager emitterManager;
+        PopulationSimulator populationSimulator;
+        IEmitterComponent emitterComponent;
         Dictionary<int, Individual> Supers;
         public int width, height;
         Texture2D superAgentTexture;
+        Texture2D individualTexture, bigIndividualTexture;
         protected Border Border;
-        private float TimePerFrame;
-        private int FramesPerSec;
         private IDebugScreen debugScreen;
         
         List<Individual> SwarmInXOrder;
         AnalysisEngine analysisEngine;
-        
 
-        public SwarmScreenBase()
+
+        public SwarmScreenBase(IEmitterComponent emitterComponent, PopulationSimulator populationSimulator)
         {
             analysisEngine = new ClusterAnaylsisEngine();
-            FramesPerSec = 30;
-            TimePerFrame = (float)1 / FramesPerSec;
             ButtonSection = new ButtonSection(false, this, "");
             SwarmInXOrder = new List<Individual>();
+            this.emitterComponent = emitterComponent;
+            this.populationSimulator = populationSimulator;
         }
 
         public override void LoadContent()
         {
-#if NETFX_CORE
-            emitterManager = new EmitterManager(populationSimulator, ScreenManager.Game.Services.GetService(typeof(IAudio)) as IAudio);
-#else
-            emitterManager = new EmitterManager(populationSimulator);
-#endif
+            individualTexture = ScreenManager.Content.Load<Texture2D>("point");
+            bigIndividualTexture = ScreenManager.Content.Load<Texture2D>("beebig");
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
             debugScreen.ResetDebugItemsToNormal();
@@ -120,6 +116,8 @@ namespace XNASwarms
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            ScreenManager.SpriteBatch.Begin(0, null, null, null, null, null, Camera.View);
+
             for (int i = 0; i < Supers.Count; i++)
             {
                 ScreenManager.SpriteBatch.Draw(superAgentTexture, new Rectangle(
@@ -132,9 +130,45 @@ namespace XNASwarms
                     SpriteEffects.None, 0);
             }
 
+            for (int s = 0; s < populationSimulator.Population.Count; s++)
+            {
+                for (int i = 0; i < populationSimulator.Population[s].Count; i++)
+                {
+                    DrawIndividual(populationSimulator.Population[s][i], populationSimulator.Population[s][i].getDisplayColor(), individualTexture, populationSimulator.Population[s][i].EmitterType);
+                }
+            }
+
             Border.Draw(ScreenManager.SpriteBatch, Camera);
 
             base.Draw(gameTime);
+            ScreenManager.SpriteBatch.End();
+        }
+
+        private void DrawIndividual(Individual indvd, Color color, Texture2D texture, EmitterActionType type)
+        {
+            if (!indvd.IsMobile)
+            {
+                ScreenManager.SpriteBatch.Draw(bigIndividualTexture, new Rectangle(
+                    (int)indvd.X,
+                    (int)indvd.Y, bigIndividualTexture.Width, bigIndividualTexture.Height),
+                    null,
+                    color,
+                    (float)Math.Atan2(indvd.Dy, indvd.Dx),
+                    new Vector2(bigIndividualTexture.Width / 2, bigIndividualTexture.Height / 2),
+                    SpriteEffects.None, 0);
+            }
+            else
+            {
+                ScreenManager.SpriteBatch.Draw(texture, new Rectangle(
+                    (int)indvd.X,
+                    (int)indvd.Y, texture.Width, texture.Height),
+                    null,
+                    color,
+                    (float)Math.Atan2(indvd.Dy, indvd.Dx),
+                    new Vector2(texture.Width / 2, texture.Height / 2),
+                    SpriteEffects.None, 0);
+            }
+
         }
 
         public override void UnloadContent()
@@ -155,11 +189,11 @@ namespace XNASwarms
                 //TODO: need a static class for determining what the editing state is
                 if (Supers.Count > 0)
                 {
-                    emitterManager.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
+                    emitterComponent.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
                 }
                 else
                 {
-                    emitterManager.Update(Vector2.Zero);
+                    emitterComponent.Update(Vector2.Zero);
                 }
             }
             else if (StaticEditModeParameters.IsEraseMode())
@@ -171,11 +205,11 @@ namespace XNASwarms
             }
             else if (StaticEditModeParameters.IsGameMode())
             {
-                emitterManager.UpdateAudioEmmiter(Vector2.Zero);
+                //emitterComponent.UpdateAudioEmmiter(Vector2.Zero);
             }
             else if (StaticEditModeParameters.IsWorldMode())
             {
-                emitterManager.Update(Vector2.Zero);
+                emitterComponent.Update(Vector2.Zero);
             }
         }
 

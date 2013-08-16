@@ -6,11 +6,11 @@ using SwarmEngine;
 
 namespace XNASwarms
 {
-    class SwarmScreenFromPopulation : SwarmScreenDrawScreen
-    {
-        public SwarmScreenFromPopulation(Population population)
-        {
-            populationSimulator = new PopulationSimulator(0, 0, StockSpecies.Species_A);
-        }
-    }
+    //class SwarmScreenFromPopulation : SwarmScreenDrawScreen
+    //{
+    //    public SwarmScreenFromPopulation(Population population)
+    //    {
+    //        populationSimulator = new PopulationSimulator(0, 0, StockSpecies.Species_A);
+    //    }
+    //}
 }

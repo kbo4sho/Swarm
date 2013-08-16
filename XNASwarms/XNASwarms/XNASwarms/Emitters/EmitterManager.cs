@@ -11,11 +11,13 @@ using XNASwarmsXAML.W8;
 
 namespace XNASwarms.Emitters
 {
-    public class EmitterManager
+    public interface IEmitterComponent
     {
-#if NETFX_CORE
-        private IAudio audioScreen;
-#endif
+        void Update(Vector2 position);
+    }
+
+    public class SwarmEmitterComponent : IEmitterComponent
+    {
         public List<EmitterBase> Emitters
         {
             get;
@@ -23,28 +25,14 @@ namespace XNASwarms.Emitters
         }
         private PopulationSimulator populationSimulator;
 
-#if NETFX_CORE
         //TODO Should have an overload for loading emitters from saves
-        public EmitterManager(PopulationSimulator simulator, IAudio audio)
+        public SwarmEmitterComponent(PopulationSimulator simulator)
         {
-            audioScreen = audio;
             populationSimulator = simulator;
             Emitters = new List<EmitterBase>();
             Emitters.Add(new BrushEmitter(new Vector2(0, 0)));
             Emitters.Add(new AudioEmitter(new Vector2(0, 0)));
         }
-#else
-        public EmitterManager(PopulationSimulator simulator)
-        {
-#if NETFX_CORE
-            audioScreen = audio;
-#endif
-            populationSimulator = simulator;
-            Emitters = new List<EmitterBase>();
-            Emitters.Add(new BrushEmitter(new Vector2(0, 0)));
-
-        }
-#endif
 
         //TODO this will be a collection of positons 
         public void Update(Vector2 position)
@@ -78,11 +66,34 @@ namespace XNASwarms.Emitters
                 {
                     populationSimulator.EmitIndividual(Emitters[0].GetIndividual());
                 }
-            }
-            
+            }   
         }
+    }
 
-        public void UpdateAudioEmmiter(Vector2 position)
+public class SwarmAudioEmitterComponent : IEmitterComponent
+    {
+
+#if NETFX_CORE
+        private IAudio audioScreen;
+#endif
+        public List<EmitterBase> Emitters
+        {
+            get;
+            private set;
+        }
+        private PopulationSimulator populationSimulator;
+
+#if NETFX_CORE
+        public SwarmAudioEmitterComponent(PopulationSimulator simulator, IAudio audio)
+        {
+            audioScreen = audio;
+            populationSimulator = simulator;
+            Emitters = new List<EmitterBase>();
+            Emitters.Add(new BrushEmitter(new Vector2(0, 0)));
+            Emitters.Add(new AudioEmitter(new Vector2(0, 0)));
+        }
+#endif
+        public void Update(Vector2 position)
         {
 
             if (Emitters[1] is IGuideable)
@@ -105,5 +116,6 @@ namespace XNASwarms.Emitters
                 populationSimulator.EmitIndividual(Emitters[1].GetIndividual());
             }
         }
+
     }
 }
