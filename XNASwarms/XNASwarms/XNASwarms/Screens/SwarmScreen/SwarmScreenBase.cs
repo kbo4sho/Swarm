@@ -10,90 +10,69 @@ using Microsoft.Xna.Framework.Input.Touch;
 #if WINDOWS
 using Microsoft.Surface.Core;
 #endif
+#if NETFX_CORE
+using XNASwarmsXAML.W8;
+#endif
 using Microsoft.Xna.Framework.Input;
 using System.Collections;
-using XNASwarms.Borders;
-using XNASwarms.Borders.Walls;
 using SwarmEngine;
 using ScreenSystem.Debug;
 using SwarmAnalysisEngine;
 using XNASwarms.Emitters;
 using XNASwarms.Screens;
-#if NETFX_CORE
-using XNASwarmsXAML.W8;
-#endif
+using XNASwarms.Screens.Borders;
+using XNASwarms.Analysis.Components;
+using XNASwarms.Screens.UI;
+using XNASwarms.Saving;
 
 
-namespace XNASwarms
+
+namespace XNASwarms.Screens.SwarmScreen
 {
     public class SwarmScreenBase : ControlScreen
     {
         PopulationSimulator populationSimulator;
         IEmitterComponent emitterComponent;
+        IAnalysisComponent analysisComponent;
         Dictionary<int, Individual> Supers;
-        public int width, height;
-        Texture2D superAgentTexture;
-        Texture2D individualTexture, bigIndividualTexture;
+        Texture2D individualTexture, bigIndividualTexture, superAgentTexture;
         protected Border Border;
         private IDebugScreen debugScreen;
-        
-        List<Individual> SwarmInXOrder;
-        AnalysisEngine analysisEngine;
+        List<Individual> swarmInXOrder;
 
-
-        public SwarmScreenBase(IEmitterComponent emitterComponent, PopulationSimulator populationSimulator)
+        public SwarmScreenBase(IEmitterComponent emitterComponent, IAnalysisComponent analysisComponent, PopulationSimulator populationSimulator)
         {
-            analysisEngine = new ClusterAnaylsisEngine();
             ButtonSection = new ButtonSection(false, this, "");
-            SwarmInXOrder = new List<Individual>();
+            swarmInXOrder = new List<Individual>();
+            Supers = new Dictionary<int, Individual>();
             this.emitterComponent = emitterComponent;
             this.populationSimulator = populationSimulator;
+            this.analysisComponent = analysisComponent;
         }
 
         public override void LoadContent()
         {
             individualTexture = ScreenManager.Content.Load<Texture2D>("point");
             bigIndividualTexture = ScreenManager.Content.Load<Texture2D>("beebig");
-            Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
-            debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
-            debugScreen.ResetDebugItemsToNormal();
-            width = ScreenManager.GraphicsDevice.Viewport.Width;
-            height = ScreenManager.GraphicsDevice.Viewport.Height;
-            
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             
-            Supers = new Dictionary<int, Individual>();
-
-            Border = new Border(this, WallFactory.TopBottomPortal(ScreenManager.GraphicsDevice.Viewport.Width / 2, ScreenManager.GraphicsDevice.Viewport.Height / 2, 2), ScreenManager);
+            debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
             
-            Supers.Add(0, new Individual());
-
+            Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
+            Border = new Border(ScreenManager);
             base.LoadContent();
-            
-            for (int i = 0; i < populationSimulator.Population.Count(); i++)
-            {
-                debugScreen.AddDebugItem("SPECIES " + i.ToString("00") + " COUNT", populationSimulator.Population[i].Count().ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
-                debugScreen.AddDebugItem("SPECIES " + i.ToString("00"), populationSimulator.Population[i].First().Genome.getRecipe(), ScreenSystem.Debug.DebugFlagType.Odd);
-            }
-
-            debugScreen.AddDebugItem("SPECIES COUNT ", populationSimulator.Population.Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
-            debugScreen.AddDebugItem("RESOLUTION", width.ToString() + "x" + height.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
-            debugScreen.AddDebugItem("BORDER", Border.GetWallTypeAsText(), ScreenSystem.Debug.DebugFlagType.Important);
-            
-            debugScreen.AddSpacer();
         }
-
-        
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             if (this.IsActive)
             {
-                SwarmInXOrder = populationSimulator.GetSwarmInXOrder();
-#if WINDOWS
-                debugScreen.AddAnaysisResult(analysisEngine.Run(SwarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
-#endif
-                UpdateInput();
+                swarmInXOrder = populationSimulator.GetSwarmInXOrder();
+                
+                analysisComponent.Update(swarmInXOrder, gameTime);
+                Border.Update(swarmInXOrder);
+                emitterComponent.UpdateInput(Supers);
+
                 if (StaticEditModeParameters.IsEraseMode() ||
                     StaticEditModeParameters.IsBrushMode())
                 {
@@ -103,13 +82,8 @@ namespace XNASwarms
                 {
                     populationSimulator.stepSimulation(Supers.Values.ToList<Individual>(), 20);
                 }
-                
-                Border.Update(SwarmInXOrder);
-                
+               
                 Camera.Update(gameTime);
-                //debugScreen.AddDebugItem("POPULATION COUNT", SwarmInXOrder.Count().ToString(), ScreenSystem.Debug.DebugFlagType.Important);
-
-                debugScreen.AddDebugItem("Agent1 Dx: ", SwarmInXOrder[0].Dx.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
             }
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
@@ -140,8 +114,8 @@ namespace XNASwarms
 
             Border.Draw(ScreenManager.SpriteBatch, Camera);
 
-            base.Draw(gameTime);
             ScreenManager.SpriteBatch.End();
+            base.Draw(gameTime);
         }
 
         private void DrawIndividual(Individual indvd, Color color, Texture2D texture, EmitterActionType type)
@@ -171,48 +145,6 @@ namespace XNASwarms
 
         }
 
-        public override void UnloadContent()
-        {
-            ButtonSection.Dispose();
-            base.UnloadContent();
-        }
-
-        /// <summary>
-        /// Decides how to handle the input based on the
-        /// editing mode that is selected
-        /// </summary>
-        private void UpdateInput()
-        {
-            if (StaticEditModeParameters.IsBrushMode())
-            {
-                //Brush
-                //TODO: need a static class for determining what the editing state is
-                if (Supers.Count > 0)
-                {
-                    emitterComponent.Update(new Vector2((float)Supers[0].X, (float)Supers[0].Y));
-                }
-                else
-                {
-                    emitterComponent.Update(Vector2.Zero);
-                }
-            }
-            else if (StaticEditModeParameters.IsEraseMode())
-            {
-                if (Supers.Count > 0)
-                {
-                    populationSimulator.EraseIndividual(Supers[0].Position);
-                }
-            }
-            else if (StaticEditModeParameters.IsGameMode())
-            {
-                //emitterComponent.UpdateAudioEmmiter(Vector2.Zero);
-            }
-            else if (StaticEditModeParameters.IsWorldMode())
-            {
-                emitterComponent.Update(Vector2.Zero);
-            }
-        }
-
         public override void HandleInput(InputHelper input, Microsoft.Xna.Framework.GameTime gameTime)
         {
             Supers.Clear();
@@ -240,15 +172,14 @@ namespace XNASwarms
                     Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(new Vector2(input.Touches[i].Position.X, input.Touches[i].Position.Y));
 
                     Supers[i] = new Individual(i, ((double)position.X),
-                         ((double)position.Y),
-                         0.0, 0.0, new SuperParameters());
+                                              ((double)position.Y),
+                                              0.0, 0.0, new SuperParameters());
                 }
             }
             else if (Supers.Count <= 0 &&
-                     (input.Cursor != Vector2.Zero) &&
-                     input.MouseState.LeftButton == ButtonState.Pressed)
+                    (input.Cursor != Vector2.Zero) &&
+                    input.MouseState.LeftButton == ButtonState.Pressed)
             {
-                //Here we should activate the emitters 
                 //Mouse
                 Supers.Add(0, new Individual());
                 for (int i = 0; i < Supers.Count; i++)
@@ -261,24 +192,8 @@ namespace XNASwarms
                 }
             }
 
-            //if ((input.Cursor != Vector2.Zero) &&
-            //             input.MouseState.LeftButton == ButtonState.Pressed)
-            //{
-            //    Supers.Add(0, new Individual());
-            //    for (int i = 0; i < Supers.Count; i++)
-            //    {
-            //        Vector2 position = Camera.ConvertScreenToWorldAndDisplayUnits(input.Cursor);
-
-            //        Supers[i] = new Individual(i, ((double)position.X),
-            //             ((double)position.Y),
-            //             0, 0, new SuperParameters());
-            //    }
-            //}
-
             ButtonSection.HandleInput(input, gameTime);
-
             base.HandleInput(input, gameTime);
-            
         }
 
         public SaveSpecies GetPopulationAsSaveSpecies()

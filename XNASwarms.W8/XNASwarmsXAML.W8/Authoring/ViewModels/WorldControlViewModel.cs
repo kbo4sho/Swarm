@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XNASwarms;
+using XNASwarms.Util;
 using XNASwarmsXAML.W8.Authoring.Commands;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels

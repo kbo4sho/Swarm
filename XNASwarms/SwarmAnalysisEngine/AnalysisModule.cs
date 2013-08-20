@@ -43,7 +43,7 @@ namespace SwarmAnalysisEngine
 
         protected virtual Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
         {
-            return null;
+            return new Analysis();
         }
 
         

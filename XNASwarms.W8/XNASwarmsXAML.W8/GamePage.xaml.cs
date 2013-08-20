@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 using XNASwarmsXAML.W8.Authoring.ViewModels;
 using Windows.Foundation;
 using Windows.UI.Xaml.Media;
+using XNASwarms.Util;
 
 
 namespace XNASwarmsXAML.W8

@@ -5,8 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
 #if WINDOWS
 using Microsoft.Surface.Core;
-#elif NETFX_CORE
-using ScreenSystem.W8.ScreenSystem;
 #endif
 
 
@@ -337,32 +335,5 @@ namespace ScreenSystem.ScreenSystem
                 this.AddScreen(pasuescreen);
             }
         }
-
-#if NETFX_CORE 
-        public void AddSnappedScreen(SnappedScreen snappedscreen)
-        {
-            var screen = _screens[_screens.Count - 1] as SnappedScreen;
-            //////////////////////////////////////
-            //Check if Pause Screen Already exists
-            //////////////////////////////////////
-            if (screen == null)
-            {
-                this.AddScreen(snappedscreen);
-            }
-        }
-
-        public void RemoveSnappedScreen()
-        {
-            var screen = _screens[_screens.Count - 1] as SnappedScreen;
-            
-            if (screen != null)
-            {
-                //////////////////////////////////////
-                //Remove Snapped screen if we have one
-                //////////////////////////////////////
-                this.RemoveScreen(screen);
-            }
-        }
-#endif
     }
 }

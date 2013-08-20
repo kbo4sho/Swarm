@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.Xna.Framework;
 
-namespace XNASwarms.Borders.Walls
+namespace XNASwarms.Screens.Borders.Walls
 {
     public class Wall
     {

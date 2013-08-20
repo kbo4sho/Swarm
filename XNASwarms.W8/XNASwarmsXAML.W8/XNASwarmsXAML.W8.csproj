@@ -146,17 +146,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Analysis\Components\IAnalysisComponent.cs">
+      <Link>Analysis\Components\IAnalysisComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Analysis\Components\SwarmAnalysisComponent.cs">
+      <Link>Analysis\Components\SwarmAnalysisComponent.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ControlClient.cs">
-      <Link>ControlClient.cs</Link>
+      <Link>Util\ControlClient.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\BrushEmitter.cs">
       <Link>Emitters\BrushEmitter.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\Components\IEmitterComponent.cs">
+      <Link>Emitters\Components\IEmitterComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\Components\SwarmAudioEmitterComponent.cs">
+      <Link>Emitters\Components\SwarmAudioEmitterComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\Components\SwarmEmmiterComponent.cs">
+      <Link>Emitters\Components\SwarmEmmiterComponent.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterBase.cs">
       <Link>Emitters\EmitterBase.cs</Link>
-    </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\EmitterManager.cs">
-      <Link>Emitters\EmitterManager.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IAudioInfluenced.cs">
       <Link>Emitters\IAudioInfluenced.cs</Link>
@@ -174,34 +186,34 @@
       <Link>Emitters\StillEmitter.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ImportExportHelper.cs">
-      <Link>ImportExportHelper.cs</Link>
+      <Link>Saves\ImportExportHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Normalizer.cs">
-      <Link>Normalizer.cs</Link>
+      <Link>Util\Normalizer.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveAllSpecies.cs">
-      <Link>SaveAllSpecies.cs</Link>
+      <Link>Saves\SaveAllSpecies.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveGenome.cs">
-      <Link>SaveGenome.cs</Link>
+      <Link>Saves\SaveGenome.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveHelper.cs">
-      <Link>SaveHelper.cs</Link>
+      <Link>Saves\SaveHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpecies.cs">
-      <Link>SaveSpecies.cs</Link>
+      <Link>Saves\SaveSpecies.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpeciesHelper.cs">
-      <Link>SaveSpeciesHelper.cs</Link>
+      <Link>Saves\SaveSpeciesHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveWorldParameters.cs">
-      <Link>SaveWorldParameters.cs</Link>
+      <Link>Saves\SaveWorldParameters.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Audio.cs">
       <Link>Screens\Audio.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Border.cs">
-      <Link>Borders\Borders\Border.cs</Link>
+      <Link>Screens\Borders\Border.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Borders\Walls\Wall.cs">
       <Link>Screens\Borders\Walls\Wall.cs</Link>
@@ -219,16 +231,16 @@
       <Link>Screens\Borders\Walls\WallSideType.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\ButtonSection.cs">
-      <Link>Screens\ButtonSection.cs</Link>
+      <Link>Screens\UI\ButtonSection.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\ControlScreen.cs">
       <Link>Screens\ControlScreen.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\MenuItem.cs">
-      <Link>Screens\MenuItem.cs</Link>
+      <Link>Screens\UI\MenuItem.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SavedSwarmButton.cs">
-      <Link>Screens\SavedSwarmButton.cs</Link>
+      <Link>Screens\UI\SavedSwarmButton.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SwarmsCamera.cs">
       <Link>Screens\SwarmsCamera.cs</Link>
@@ -240,10 +252,10 @@
       <Link>Screens\SwarmScreen\SwarmScreenBase.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\StockSaveSpecies.cs">
-      <Link>StockSaveSpecies.cs</Link>
+      <Link>Saves\StockSaveSpecies.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SwarmSaveHelper.cs">
-      <Link>SwarmSaveHelper.cs</Link>
+      <Link>Saves\SwarmSaveHelper.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

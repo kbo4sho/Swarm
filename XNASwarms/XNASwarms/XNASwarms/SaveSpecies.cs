@@ -6,7 +6,7 @@ using SwarmEngine;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 
-namespace XNASwarms
+namespace XNASwarms.Saving
 {
 #if WINDOWS
     [Serializable]

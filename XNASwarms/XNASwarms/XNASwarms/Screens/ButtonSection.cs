@@ -9,12 +9,14 @@ using SwarmEngine;
 using XNASwarms.Screens;
 using System.Threading.Tasks;
 using SwarmAudio;
+using XNASwarms.Screens.SwarmScreen;
+using XNASwarms.Saving;
+using XNASwarms.Util;
 
-namespace XNASwarms
+namespace XNASwarms.Screens.UI
 {
-    public sealed class ButtonSection : IDisposable
+    public sealed class ButtonSection
     {
-
         private SwarmScreenBase screen;
         private Vector2 position;
         private Texture2D bgSprite;
@@ -394,10 +396,6 @@ namespace XNASwarms
 #endif
 
             }
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

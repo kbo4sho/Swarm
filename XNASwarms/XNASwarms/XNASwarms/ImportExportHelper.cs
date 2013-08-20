@@ -11,8 +11,9 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 #endif
 
-namespace XNASwarms
+namespace XNASwarms.Saving
 {
+    //TODO: SINGLETON!!!
     public static class ImportExportHelper
     {
 #if NETFX_CORE

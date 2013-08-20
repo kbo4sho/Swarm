@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI;
 using XNASwarms;
 using XNASwarms.Emitters;
+using XNASwarms.Util;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {

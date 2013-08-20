@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XNASwarms
+namespace XNASwarms.Saving
 {
     public static class SaveSpeciesHelper
     {

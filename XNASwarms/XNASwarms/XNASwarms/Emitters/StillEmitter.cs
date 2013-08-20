@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XNASwarms.Emitters;
+using XNASwarms.Util;
 using XNASwarmsXAML.W8;
 
 namespace XNASwarms.Emitters
@@ -35,7 +36,6 @@ namespace XNASwarms.Emitters
             //0-1
             var r = fftData.Skip(132).Take(66).Average();
             r = Normalizer.Normalize(0, 1, .001f, 2.5f, r);
-
 
             this.Parameters = new Parameters(StaticWorldParameters.neighborhoodRadiusMax,
                                              StaticWorldParameters.normalSpeedMax,

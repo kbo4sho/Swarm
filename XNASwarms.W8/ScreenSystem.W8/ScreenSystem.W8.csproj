@@ -163,7 +163,8 @@
       <Link>ScreenSystem\VirtualStick.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScreenSystem\SnappedScreen.cs" />
+    <Compile Include="ScreenSystem\Debuging\DebugOverlayScreen.cs" />
+    <Compile Include="ScreenSystem\Debuging\IDebugComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">

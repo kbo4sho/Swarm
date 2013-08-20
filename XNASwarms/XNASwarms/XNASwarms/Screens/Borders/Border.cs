@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ScreenSystem.ScreenSystem;
-using XNASwarms.Borders.Walls;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SwarmEngine;
 using ScreenSystem.Debug;
 using System.Threading.Tasks;
+using XNASwarms.Screens.Borders.Walls;
 
-namespace XNASwarms.Borders
+namespace XNASwarms.Screens.Borders
 {
     public class Border
     {
-        private GameScreen gameScreen;
         private List<Wall> borderWalls;
         Texture2D borderTexture;
         int rightBound, bottomBound;
         private IDebugScreen debugScreen;
         Individual currentInd;
 
-        public Border(GameScreen gamescreen, List<Wall> borderwalls, ScreenManager screenmanger)
-        {
-            debugScreen = gamescreen.ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
 
-            gameScreen = gamescreen;
-            borderWalls = borderwalls;
-            borderTexture = screenmanger.Content.Load<Texture2D>("Backgrounds/gray");
+        public Border(ScreenManager screenManager)
+        {
+            debugScreen = screenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
+
+            borderWalls = WallFactory.TopBottomPortal(screenManager.GraphicsDevice.Viewport.Width / 2, screenManager.GraphicsDevice.Viewport.Height / 2, 2);
+            borderTexture = screenManager.Content.Load<Texture2D>("Backgrounds/gray");
 
             rightBound = borderWalls.Where(s => s.GetWallOrientation() == WallOrientationType.Horizontal).First().GetLength();
             bottomBound = borderWalls.Where(s => s.GetWallOrientation() == WallOrientationType.Vertical).First().GetLength();
