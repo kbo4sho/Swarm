@@ -17,12 +17,37 @@ namespace XNASwarms.Emitters
             private set;
         }
         private PopulationSimulator populationSimulator;
+        private Random rand = new Random();
 
         public SwarmEmitterComponent(PopulationSimulator simulator)
         {
             populationSimulator = simulator;
             Emitters = new List<EmitterBase>();
             Emitters.Add(new BrushEmitter(new Vector2(0, 0)));
+        }
+
+        public void BatchEmit(Population population, bool mutate)
+        {
+            if (mutate)
+            {
+                for (int i = 0; i < population.Count; i++)
+                {
+                    for (int j = 0; j < population[i].Count; j++)
+                    {
+                        population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
+                    }
+                }
+                population.ReassignSpecies();
+                population.ReassignAllColors();
+            }
+
+            foreach (var spec in population)
+            {
+                foreach (var indvd in spec)
+                {
+                    EmitIndividual(indvd);
+                }
+            }
         }
 
         /// <summary>
@@ -73,7 +98,7 @@ namespace XNASwarms.Emitters
                 {
                     if (!StaticBrushParameters.IsUndo)
                     {
-                        populationSimulator.EmitIndividual(Emitters[0].GetIndividual());
+                        EmitIndividual(Emitters[0].GetIndividual());
                     }
                     else
                     {
@@ -82,8 +107,33 @@ namespace XNASwarms.Emitters
                 }
                 else
                 {
-                    populationSimulator.EmitIndividual(Emitters[0].GetIndividual());
+                    EmitIndividual(Emitters[0].GetIndividual());
                 }
+            }
+        }
+
+        private void EmitIndividual(Individual indvd)
+        {
+            indvd.ID = GetNextIndividualID();
+            populationSimulator.EmitIndividual(indvd);
+        }
+
+        private int GetNextIndividualID()
+        {
+            int tempID = 1;
+            return TryIterate(tempID);
+        }
+
+        private int TryIterate(int tempID)
+        {
+            if (!populationSimulator.Population.SelectMany(s => s.Where(i => i.ID == tempID)).Any())
+            {
+                return tempID;
+            }
+            else
+            {
+                tempID++;
+                return TryIterate(tempID);
             }
         }
     }

@@ -11,5 +11,6 @@ namespace XNASwarms.Analysis.Components
     public interface IAnalysisComponent
     {
         void Update(List<Individual> swarmInXOrder, GameTime gameTime);
+        void SetVisiblity();
     }
 }

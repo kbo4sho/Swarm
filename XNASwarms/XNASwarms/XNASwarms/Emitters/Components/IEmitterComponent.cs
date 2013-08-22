@@ -13,6 +13,7 @@ namespace XNASwarms.Emitters
 {
     public interface IEmitterComponent
     {
+        void BatchEmit(Population population, bool mutate);
         void UpdateInput(Dictionary<int, Individual> supers);
     }
 }

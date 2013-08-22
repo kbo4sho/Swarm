@@ -39,9 +39,9 @@ namespace XNASwarms.W8
             screenManager.Game.Components.Add(debugScreen);
             this.Services.AddService(typeof(IDebugScreen), debugScreen);
 
-            Recipe[] recipes = new Recipe[1];
-            recipes[0] = new Recipe(StockRecipies.Stable_A);
-            PopulationSimulator populationSimulator = new PopulationSimulator(0, 0, recipes);
+            //Recipe[] recipes = new Recipe[1];
+            //recipes[0] = new Recipe(StockRecipies.Stable_A);
+            PopulationSimulator populationSimulator = new PopulationSimulator(0, 0);
 
             var swarmEmitterComponent = new SwarmEmitterComponent(populationSimulator);
 

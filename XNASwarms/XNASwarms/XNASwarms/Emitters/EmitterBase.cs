@@ -34,6 +34,8 @@ namespace XNASwarms.Emitters
             protected set;
         }
 
+        
+
         public EmitterBase(EmitterActionType emitterType, Vector2 position)
             :this(emitterType, position, new SuperParameters()){}
 
@@ -47,6 +49,7 @@ namespace XNASwarms.Emitters
 
         public virtual Individual GetIndividual()
         {
+            
             return new Individual(0, this.Position.X, this.Position.Y, this.Position.X, this.Position.Y, new SuperParameters());
         }
 

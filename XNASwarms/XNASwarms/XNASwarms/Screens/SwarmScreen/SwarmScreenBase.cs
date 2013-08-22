@@ -1,30 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using ScreenSystem.ScreenSystem;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input.Touch;
+
 #if WINDOWS
 using Microsoft.Surface.Core;
 #endif
 #if NETFX_CORE
-using XNASwarmsXAML.W8;
+
 #endif
 using Microsoft.Xna.Framework.Input;
-using System.Collections;
 using SwarmEngine;
 using ScreenSystem.Debug;
-using SwarmAnalysisEngine;
 using XNASwarms.Emitters;
-using XNASwarms.Screens;
 using XNASwarms.Screens.Borders;
 using XNASwarms.Analysis.Components;
 using XNASwarms.Screens.UI;
 using XNASwarms.Saving;
-
 
 
 namespace XNASwarms.Screens.SwarmScreen
@@ -37,7 +31,7 @@ namespace XNASwarms.Screens.SwarmScreen
         Dictionary<int, Individual> Supers;
         Texture2D individualTexture, bigIndividualTexture, superAgentTexture;
         protected Border Border;
-        private IDebugScreen debugScreen;
+        private IDebugScreen debugComponent;
         List<Individual> swarmInXOrder;
 
         public SwarmScreenBase(IEmitterComponent emitterComponent, IAnalysisComponent analysisComponent, PopulationSimulator populationSimulator)
@@ -56,7 +50,7 @@ namespace XNASwarms.Screens.SwarmScreen
             bigIndividualTexture = ScreenManager.Content.Load<Texture2D>("beebig");
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             
-            debugScreen = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
+            debugComponent = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
             
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             Border = new Border(ScreenManager);
@@ -69,6 +63,17 @@ namespace XNASwarms.Screens.SwarmScreen
             {
                 swarmInXOrder = populationSimulator.GetSwarmInXOrder();
                 
+                foreach(var indvd in swarmInXOrder.OrderBy(i => i.ID))
+                {
+                    //THIS CHECK FOR DUPLICATE IDS IN THE POPULATION
+                    //if (populationSimulator.Population.SelectMany(s => s.GroupBy(i => i).Where(d => d.Count() > 1)).Count() > 0)
+                    //{
+                    //    debugComponent.AddDebugItem("AGENT ID", indvd.ID.ToString());
+                    //}
+
+                    debugComponent.AddDebugItem("AGENT ID", indvd.ID.ToString());
+                }
+
                 analysisComponent.Update(swarmInXOrder, gameTime);
                 Border.Update(swarmInXOrder);
                 emitterComponent.UpdateInput(Supers);
@@ -192,6 +197,16 @@ namespace XNASwarms.Screens.SwarmScreen
                 }
             }
 
+            if (input.IsNewKeyPress(Keys.A))
+            {
+                analysisComponent.SetVisiblity();
+            }
+
+            if (input.IsNewKeyPress(Keys.C))
+            {
+                debugComponent.SetVisiblity();
+            }
+
             ButtonSection.HandleInput(input, gameTime);
             base.HandleInput(input, gameTime);
         }
@@ -203,21 +218,20 @@ namespace XNASwarms.Screens.SwarmScreen
 
         public void UpdatePopulation(string recipiText, bool mutate)
         {
-            populationSimulator.UpdatePopulation(recipiText, mutate);
+            emitterComponent.BatchEmit(new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion"), mutate);
         }
 
         public void UpdatePopulation(Population population, bool mutate)
         {
-            populationSimulator.UpdatePopulation(population, mutate);
+            emitterComponent.BatchEmit(population, mutate);
 
             foreach (var species in population)
             {
-                foreach(var spec in species)
+                foreach (var spec in species)
                 {
-                    debugScreen.AddDebugItem("INDVD X", spec.X.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
+                    debugComponent.AddDebugItem("INDVD X", spec.X.ToString(), ScreenSystem.Debug.DebugFlagType.Important);
                 }
             }
-            
         }
     }
 }

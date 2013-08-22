@@ -35,27 +35,17 @@ namespace SwarmEngine
 
         private Species swarmInBirthOrder, swarmInYOrder;
         private Species swarmInXOrder;
+
+
         #region Constuctor
-        public PopulationSimulator(int width, int height, params Recipe[] recipes)
-            :this (width, height, new Population(recipes[0].CreatePopulation(width, height), "CrumpulaAtion"))
-        {
-        }
 
-        public PopulationSimulator(int width, int height, Population pop)
+        public PopulationSimulator(int width, int height)
         {
-            Population = pop;
-
             swarmInBirthOrder = new Species();
             swarmInXOrder = new Species();
             swarmInYOrder = new Species();
+            Population = new Population();
 
-            for (int i = 0; i < Population.Count; i++)
-            {
-                for (int j = 0; j < Population[i].Count; j++)
-                {
-                    InitCollections(Population[i][j]);
-                }
-            }
         }
         #endregion
 
@@ -283,8 +273,7 @@ namespace SwarmEngine
         public void EmitIndividual(Individual indvd)
         {
             AddIndividual(indvd);
-            indvd.accelerate(indvd.Dx*10, indvd.Dy*10, 400);
-            if (Population.Sum(s => s.Count) >= StaticWorldParameters.numberOfIndividualsMax -1)
+            if (Population.Sum(s => s.Count) > StaticWorldParameters.numberOfIndividualsMax -1)
             {
                 swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
@@ -292,6 +281,8 @@ namespace SwarmEngine
                 swarmInBirthOrder.Remove(swarmInBirthOrder.First());
             }
         }
+
+        
 
         private void AddIndividual(Individual indvd)
         {
@@ -360,37 +351,41 @@ namespace SwarmEngine
             swarmInXOrder.Clear();
             swarmInYOrder.Clear();
         }
+        //public void UpdatePopulation(string recipiText, bool mutate)
+        //{
+        //    foreach(var spec in new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion"))
+        //    {
+        //        foreach (var indvd in spec)
+        //        {
+        //            EmitIndividual(indvd);
+        //        }
+        //    }
+        //    UpdatePopulation(mutate);
+        //}
 
-        public void UpdatePopulation(string recipiText, bool mutate)
-        {
-            Population = new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion");
-            UpdatePopulation(Population, mutate);
-        }
+        //public void UpdatePopulation(bool mutate)
+        //{
+        //    //ClearPopulation();
 
-        public void UpdatePopulation(Population tempPopulation, bool mutate)
-        {
-            ClearPopulation();
-       
-            for (int i = 0; i < tempPopulation.Count; i++)
-            {
-                for (int j = 0; j < tempPopulation[i].Count; j++)
-                {
-                    if (mutate)
-                    {
-                        tempPopulation[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
-                    }
-                    InitCollections(tempPopulation[i][j]);
-                }
-            }
+        //    for (int i = 0; i < Population.Count; i++)
+        //    {
+        //        for (int j = 0; j < Population[i].Count; j++)
+        //        {
+        //            if (mutate)
+        //            {
+        //                Population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
+        //            }
+        //        }
+        //    }
 
-            if (mutate)
-            {
-                tempPopulation.ReassignSpecies();
-                tempPopulation.ReassignAllColors();
-            }
+        //    if (mutate)
+        //    {
+        //        Population.ReassignSpecies();
+        //        Population.ReassignAllColors();
+        //    }
 
-            Population = tempPopulation;
-        }
+        //    //Population = tempPopulation;
+        //}
     }
 }
 

@@ -40,9 +40,7 @@ namespace XNASwarmsXAML.W8
             screenManager.AddScreen(audioScreen);
             this.Services.AddService(typeof(IAudio), audioScreen);
 
-            Recipe[] recipes = new Recipe[1];
-            recipes[0] = new Recipe(StockRecipies.Stable_A);
-            PopulationSimulator populationSimulator = new PopulationSimulator(0, 0, recipes);
+            PopulationSimulator populationSimulator = new PopulationSimulator(0, 0);
 
             var swarmEmitterComponent = new SwarmEmitterComponent(populationSimulator);
 
