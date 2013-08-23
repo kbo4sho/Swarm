@@ -115,22 +115,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlClient.cs" />
+    <Compile Include="Analysis\Components\IAnalysisComponent.cs" />
+    <Compile Include="Analysis\Components\SwarmAnalysisComponent.cs" />
+    <Compile Include="Util\Normalizer.cs" />
+    <Compile Include="Util\ControlClient.cs" />
+    <Compile Include="Emitters\AudioEmitter.cs" />
     <Compile Include="Emitters\BrushEmitter.cs" />
+    <Compile Include="Emitters\Components\IEmitterComponent.cs" />
+    <Compile Include="Emitters\Components\SwarmAudioEmitterComponent.cs" />
+    <Compile Include="Emitters\Components\SwarmEmmiterComponent.cs" />
     <Compile Include="Emitters\EmitterBase.cs" />
-    <Compile Include="Emitters\EmitterManager.cs" />
     <Compile Include="Emitters\IAudioInfluenced.cs" />
     <Compile Include="Emitters\IEmitter.cs" />
     <Compile Include="Emitters\IGuideable.cs" />
     <Compile Include="Emitters\IMeteredAgents.cs" />
-    <Compile Include="Emitters\StillEmitter.cs" />
-    <Compile Include="ImportExportHelper.cs" />
-    <Compile Include="SaveAllSpecies.cs" />
-    <Compile Include="SaveGenome.cs" />
-    <Compile Include="SaveSpecies.cs" />
-    <Compile Include="SaveHelper.cs" />
-    <Compile Include="SaveSpeciesHelper.cs" />
-    <Compile Include="SaveWorldParameters.cs" />
+    <Compile Include="Saving\ImportExportHelper.cs" />
+    <Compile Include="Saving\SaveAllSpecies.cs" />
+    <Compile Include="Saving\SaveGenome.cs" />
+    <Compile Include="Saving\SaveSpecies.cs" />
+    <Compile Include="Saving\SaveHelper.cs" />
+    <Compile Include="Saving\SaveSpeciesHelper.cs" />
+    <Compile Include="Saving\SaveWorldParameters.cs" />
     <Compile Include="Screens\Borders\Border.cs" />
     <Compile Include="Screens\Borders\Walls\Wall.cs" />
     <Compile Include="Screens\Borders\Walls\WallFactory.cs" />
@@ -147,11 +152,8 @@
     <Compile Include="Screens\SwarmsCamera.cs" />
     <Compile Include="Screens\SwarmScreen\SwarmScreen1.cs" />
     <Compile Include="Screens\SwarmScreen\SwarmScreenBase.cs" />
-    <Compile Include="Screens\SwarmScreen\SwarmScreenDrawScreen.cs" />
-    <Compile Include="Screens\SwarmScreen\SwarmScreenFromPopulation.cs" />
-    <Compile Include="Screens\SwarmScreen\SwarmScreenFromSavedSpecies.cs" />
-    <Compile Include="StockSaveSpecies.cs" />
-    <Compile Include="SwarmSaveHelper.cs" />
+    <Compile Include="Saving\StockSaveSpecies.cs" />
+    <Compile Include="Saving\SwarmSaveHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Game.ico" />

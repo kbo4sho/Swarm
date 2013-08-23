@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 #if NETFX_CORE
 using XNASwarmsXAML.W8;
-using XNASwarms.Screens.SwarmScreen;
-using XNASwarms.Saving;
 #endif
 #if WINDOWS
+using XNASwarms.Screens.SwarmScreen;
+using XNASwarms.Saving;
 using SwarmAudio;
 #endif
 
