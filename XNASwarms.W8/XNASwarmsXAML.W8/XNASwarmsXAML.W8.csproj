@@ -152,9 +152,6 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Analysis\Components\SwarmAnalysisComponent.cs">
       <Link>Analysis\Components\SwarmAnalysisComponent.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ControlClient.cs">
-      <Link>Util\ControlClient.cs</Link>
-    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\AudioEmitter.cs">
       <Link>Emitters\AudioEmitter.cs</Link>
     </Compile>
@@ -185,29 +182,32 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\IMeteredAgents.cs">
       <Link>Emitters\IMeteredAgents.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\ImportExportHelper.cs">
-      <Link>Saves\ImportExportHelper.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Saving\ImportExportHelper.cs">
+      <Link>Saving\ImportExportHelper.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Normalizer.cs">
-      <Link>Util\Normalizer.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Saving\SaveAllSpecies.cs">
+      <Link>Saving\SaveAllSpecies.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveAllSpecies.cs">
-      <Link>Saves\SaveAllSpecies.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Saving\SaveGenome.cs">
+      <Link>Saving\SaveGenome.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveGenome.cs">
-      <Link>Saves\SaveGenome.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Saving\SaveHelper.cs">
+      <Link>Saving\SaveHelper.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveHelper.cs">
-      <Link>Saves\SaveHelper.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Saving\SaveSpecies.cs">
+      <Link>Saving\SaveSpecies.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpecies.cs">
-      <Link>Saves\SaveSpecies.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Saving\SaveSpeciesHelper.cs">
+      <Link>Saving\SaveSpeciesHelper.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveSpeciesHelper.cs">
-      <Link>Saves\SaveSpeciesHelper.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Saving\SaveWorldParameters.cs">
+      <Link>Saving\SaveWorldParameters.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SaveWorldParameters.cs">
-      <Link>Saves\SaveWorldParameters.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Saving\StockSaveSpecies.cs">
+      <Link>Saving\StockSaveSpecies.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Saving\SwarmSaveHelper.cs">
+      <Link>Saving\SwarmSaveHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\Audio.cs">
       <Link>Screens\Audio.cs</Link>
@@ -251,11 +251,11 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Screens\SwarmScreen\SwarmScreenBase.cs">
       <Link>Screens\SwarmScreen\SwarmScreenBase.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\StockSaveSpecies.cs">
-      <Link>Saves\StockSaveSpecies.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Util\ControlClient.cs">
+      <Link>Util\ControlClient.cs</Link>
     </Compile>
-    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\SwarmSaveHelper.cs">
-      <Link>Saves\SwarmSaveHelper.cs</Link>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Util\Normalizer.cs">
+      <Link>Util\Normalizer.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

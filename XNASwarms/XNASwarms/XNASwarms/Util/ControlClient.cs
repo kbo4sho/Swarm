@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 #if NETFX_CORE
 using XNASwarmsXAML.W8;
 #endif
-#if WINDOWS
 using XNASwarms.Screens.SwarmScreen;
 using XNASwarms.Saving;
 using SwarmAudio;
-#endif
 
 namespace XNASwarms.Util
 {

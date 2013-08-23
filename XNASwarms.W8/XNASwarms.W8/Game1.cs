@@ -7,7 +7,9 @@ using System;
 using XNASwarms;
 using XNASwarms.Emitters;
 using XNASwarms.Screens.SwarmScreen;
+using XNASwarms.Util;
 using XNASwarms.W8.Analysis.Components;
+using XNASwarmsXAML.W8;
 
 namespace XNASwarms.W8
 {
@@ -49,6 +51,14 @@ namespace XNASwarms.W8
 
             SwarmScreen1 swarmScreen = new SwarmScreen1(swarmEmitterComponent, swarmAnalysisComponent, populationSimulator);
             screenManager.AddScreen(swarmScreen);
+
+#if NETFX_CORE
+            ControlClient controlClient = new ControlClient(swarmScreen, this.Services.GetService(typeof(IAudio)) as IAudio);
+#else
+            ControlClient controlClient = new ControlClient(swarmScreen));
+#endif  
+            this.Services.AddService(typeof(IControlClient), controlClient);
+
             base.Initialize();
         }
 
