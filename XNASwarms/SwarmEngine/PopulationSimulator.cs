@@ -282,8 +282,6 @@ namespace SwarmEngine
             }
         }
 
-        
-
         private void AddIndividual(Individual indvd)
         {
             if (Population.Sum(s => s.Count) < StaticWorldParameters.numberOfIndividualsMax)
