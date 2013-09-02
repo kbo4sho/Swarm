@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XNASwarms.Common;
 using XNASwarms.Emitters;
 
 namespace XNASwarms.Emitters
@@ -26,7 +27,7 @@ namespace XNASwarms.Emitters
             Emitters.Add(new BrushEmitter(new Vector2(0, 0)));
         }
 
-        public void BatchEmit(Population population, bool mutate, Dictionary<int, string> groups)
+        public void BatchEmit(Population population, bool mutate, ControlGroups groups)
         {
             if (mutate)
             {
@@ -54,7 +55,7 @@ namespace XNASwarms.Emitters
         /// Decides how to handle the input based on the
         /// editing mode that is selected
         /// </summary>
-        public void UpdateInput(Dictionary<int, Individual> supers, Dictionary<int, string> groups)
+        public void UpdateInput(Dictionary<int, Individual> supers, ControlGroups groups)
         {
             if (StaticEditModeParameters.IsBrushMode())
             {
@@ -71,7 +72,7 @@ namespace XNASwarms.Emitters
             {
                 if (supers.Count > 0)
                 {
-                    EraseIndividual(supers[0].Position);
+                    EraseIndividual(supers[0].Position, groups);
                 }
             }
             else if (StaticEditModeParameters.IsWorldMode())
@@ -80,7 +81,7 @@ namespace XNASwarms.Emitters
             }
         }
 
-        private void Update(Vector2 position, Dictionary<int, string> groups)
+        private void Update(Vector2 position, ControlGroups groups)
         {
             foreach (EmitterBase emitter in Emitters)
             {
@@ -115,16 +116,28 @@ namespace XNASwarms.Emitters
             }
         }
 
-        private void EmitIndividual(Individual indvd, string group, Dictionary<int, string> groups)
+        private void EmitIndividual(Individual indvd, string group, ControlGroups groups)
         {
             indvd.ID = GetNextIndividualID();
             populationSimulator.EmitIndividual(indvd);
             groups.Add(indvd.ID, group);
         }
 
-        private void EraseIndividual(Vector2 position)
+        private void EraseIndividual(Vector2 position, ControlGroups groups)
         {
-            populationSimulator.EraseIndividual(position);
+            double diameter = StaticEraseParameters.Diameter;
+
+            List<Individual> matches = populationSimulator.Population.SelectMany(s => s
+                                   .Where(i => (int)i.X >= (int)position.X - diameter &&
+                                               (int)i.X <= (int)position.X + diameter &&
+                                               (int)i.Y >= (int)position.Y - diameter &&
+                                               (int)i.Y <= (int)position.Y + diameter)).ToList();
+
+            if (matches.Any())
+            {
+                populationSimulator.EraseIndividual(matches.First());
+                groups.Remove(matches.First().ID);
+            }
         }
 
         private int GetNextIndividualID()

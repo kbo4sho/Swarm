@@ -15,6 +15,7 @@ using XNASwarms.Screens.Borders;
 using XNASwarms.Analysis.Components;
 using XNASwarms.Screens.UI;
 using XNASwarms.Saving;
+using XNASwarms.Common;
 
 
 namespace XNASwarms.Screens.SwarmScreen
@@ -25,7 +26,7 @@ namespace XNASwarms.Screens.SwarmScreen
         IEmitterComponent emitterComponent;
         IAnalysisComponent analysisComponent;
         Dictionary<int, Individual> supers;
-        Dictionary<int, string> groups;
+        ControlGroups groups;
         Texture2D individualTexture, bigIndividualTexture, superAgentTexture;
         protected Border Border;
         private IDebugScreen debugComponent;
@@ -36,7 +37,7 @@ namespace XNASwarms.Screens.SwarmScreen
             ButtonSection = new ButtonSection(false, this, "");
             swarmInXOrder = new List<Individual>();
             supers = new Dictionary<int, Individual>();
-            groups = new Dictionary<int, string>();
+            groups = new ControlGroups();
             this.emitterComponent = emitterComponent;
             this.populationSimulator = populationSimulator;
             this.analysisComponent = analysisComponent;

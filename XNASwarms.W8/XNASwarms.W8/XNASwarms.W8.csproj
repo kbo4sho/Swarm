@@ -149,6 +149,9 @@
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Analysis\Components\SwarmAnalysisComponent.cs">
       <Link>Analysis\Components\SwarmAnalysisComponent.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Common\ControlGroups.cs">
+      <Link>Common\ControlGroups.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\XNASwarms\XNASwarms\Emitters\AudioEmitter.cs">
       <Link>Emitters\AudioEmitter.cs</Link>
     </Compile>
