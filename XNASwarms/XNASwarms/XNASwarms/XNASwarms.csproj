@@ -117,6 +117,7 @@
   <ItemGroup>
     <Compile Include="Analysis\Components\IAnalysisComponent.cs" />
     <Compile Include="Analysis\Components\SwarmAnalysisComponent.cs" />
+    <Compile Include="Common\ControlGroups.cs" />
     <Compile Include="Util\Normalizer.cs" />
     <Compile Include="Util\ControlClient.cs" />
     <Compile Include="Emitters\AudioEmitter.cs" />

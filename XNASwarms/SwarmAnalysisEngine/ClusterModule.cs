@@ -42,56 +42,60 @@ namespace SwarmAnalysisEngine
 
         private Analysis DoAnalysis(List<Individual> indvds, bool sendaudiodata)
         {
-            string robinstxt = "";
-            foreach (var indvd in indvds)
+            if (indvds.Count() > 0)
             {
-                robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
-            }
-
-            Clusters.Clear();
-
-            Clusters.Add(new Cluster() { indvds[0] });
-
-            for (int i = 0; i < indvds.Count; i++)
-            {
-                ResetColor(indvds[i]);
-                if (!InExistingCluster(indvds[i]))
+                string robinstxt = "";
+                foreach (var indvd in indvds)
                 {
-                    Clusters.Add(new Cluster() { indvds[i] });
+                    robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
                 }
-            }
 
-            RemoveSmallClusters();
-            SetClusterColor();
-            GenerateMessages();
-            GenerateFilterResult();
+                Clusters.Clear();
 
-            if (sendaudiodata && Clusters.Count > 0)
-            {
-                Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
+                Clusters.Add(new Cluster() { indvds[0] });
+
+                for (int i = 0; i < indvds.Count; i++)
+                {
+                    ResetColor(indvds[i]);
+                    if (!InExistingCluster(indvds[i]))
+                    {
+                        Clusters.Add(new Cluster() { indvds[i] });
+                    }
+                }
+
+                RemoveSmallClusters();
+                SetClusterColor();
+                GenerateMessages();
+                GenerateFilterResult();
+
+                if (sendaudiodata && Clusters.Count > 0)
+                {
+                    Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
 #if WINDOWS
-                    
+
                     //SoundEngine.AgentDataRefresh(cluster.GetEveryOtherIndvd());
                     //SoundEngine.SendAgentEnergy(Normalizer.Normalize120To800(cluster.AverageAgentEnergy));
                     //SoundEngine.SendXYsymmetry(cluster.Symmetry);
                     //SoundEngine.SendNumAgents(cluster.Agents);
                     //SoundEngine.SendArea(cluster.Area);
                     //SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
-                //SoundEngine.StartCluster();
-                SoundEngine.UpdateCluster(biggestCluster.Agents,
+                    //SoundEngine.StartCluster();
+                    SoundEngine.UpdateCluster(biggestCluster.Agents,
                                               biggestCluster.Center,
                                               biggestCluster.Area,
                                               Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
                                               biggestCluster.ClusterVelocity,
                                               new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
-                //SoundEngine.StopCluster();
-#endif         
+                    //SoundEngine.StopCluster();
+#endif
                     //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
                     //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
-                //}
-            }
+                    //}
+                }
 
-            return analysis;
+                return analysis;
+            }
+            return null;
         }
 
         private void GetArea()
