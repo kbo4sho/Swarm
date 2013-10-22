@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ScreenSystem.Debug;
 using ScreenSystem.ScreenSystem;
+using SwarmAudio;
 using SwarmEngine;
 using System;
 using XNASwarms;
@@ -60,6 +61,7 @@ namespace XNASwarms.W8
             this.Services.AddService(typeof(IControlClient), controlClient);
 
             base.Initialize();
+            SoundEngine.Init();
         }
 
         protected override void LoadContent()

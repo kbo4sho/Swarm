@@ -26,10 +26,10 @@ namespace XNASwarms.Util
 #if NETFX_CORE
         Task<SaveAllSpecies> Import();
         Task<SaveAllSpecies> Export();
-#elif WINDOWS
+
         void StartSoundEngine();
         void StopSoundEngine();
-#endif
+        
         void ChangeWorldRandomSteering(double value);
         void ChangeWorldSeperatingForce(double value);
         void ChangeWorldAligningForce(double value);
@@ -148,7 +148,6 @@ namespace XNASwarms.Util
             swarmScreen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(saveSpecies), mutate);
         }
 
-#if NETFX_CORE
         public async Task<SaveAllSpecies> Import()
         {
             SaveAllSpecies import = await ImportExportHelper.Import();
@@ -161,7 +160,6 @@ namespace XNASwarms.Util
             return export;
         }
 
-#elif WINDOWS
         public void StartSoundEngine()
         {
             //SoundEngine.PlayPause(1);
@@ -173,7 +171,7 @@ namespace XNASwarms.Util
             //SoundEngine.PlayPause(0);
             SoundEngine.Pause();
         }
-#endif
+
         #region World
         public void ChangeWorldRandomSteering(double value)
         {
@@ -402,5 +400,7 @@ namespace XNASwarms.Util
             return StaticEraseParameters.Diameter;
         }
         #endregion
+
+#endif
     }
 }

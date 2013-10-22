@@ -374,15 +374,11 @@ namespace XNASwarms.Screens.UI
                 }
                 else if (menuEntries[selectedEntry].IsAudioPlay())
                 {
-#if WINDOWS
-                        controlClient.StartSoundEngine();
-#endif
+                    controlClient.StartSoundEngine();
                 }
                 else if (menuEntries[selectedEntry].IsAudioPause())
                 {
-#if WINDOWS
-                        controlClient.StopSoundEngine();
-#endif
+                    controlClient.StopSoundEngine();
                 }
 #if NETFX_CORE
                 else if (menuEntries[selectedEntry].IsImportLikes())

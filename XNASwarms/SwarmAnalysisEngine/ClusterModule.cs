@@ -9,13 +9,14 @@ using SwarmAudio;
 #endif
 using System.Threading.Tasks;
 using System.Threading;
+using SwarmAudio;
 
 namespace SwarmAnalysisEngine
 {
     public class ClusterModule : AnalysisModule
     {
         int clusterItemThreshhold = 8;//Number of agents that must be in proximity to be identified as a cluster
-        int clusterBackCount = 30;//Number to count back in existing clusters to detect a match, high makes things slow
+        int clusterBackCount = 10;//Number to count back in existing clusters to detect a match, high makes things slow
         
         public List<Cluster> Clusters;
         Analysis analysis;
@@ -44,11 +45,11 @@ namespace SwarmAnalysisEngine
         {
             if (indvds.Count() > 0)
             {
-                string robinstxt = "";
-                foreach (var indvd in indvds)
-                {
-                    robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
-                }
+                //string robinstxt = "";
+                //foreach (var indvd in indvds)
+                //{
+                //    robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
+                //}
 
                 Clusters.Clear();
 
@@ -91,6 +92,13 @@ namespace SwarmAnalysisEngine
                     //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
                     //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
                     //}
+
+                    SoundEngine.UpdateCluster(biggestCluster.Agents,
+                                              biggestCluster.Center,
+                                              biggestCluster.Area,
+                                              Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
+                                              biggestCluster.ClusterVelocity,
+                                              new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
                 }
 
                 return analysis;
