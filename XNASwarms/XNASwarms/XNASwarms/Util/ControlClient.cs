@@ -23,9 +23,12 @@ namespace XNASwarms.Util
         void ZoomOut();
         SaveWorldParameters SaveWorld();
         void UpdatePopulation(SaveSpecies saveSpecies, bool mutate);
+
 #if NETFX_CORE
         Task<SaveAllSpecies> Import();
         Task<SaveAllSpecies> Export();
+#endif
+
 
         void StartSoundEngine();
         void StopSoundEngine();
@@ -148,6 +151,8 @@ namespace XNASwarms.Util
             swarmScreen.UpdatePopulation(SaveSpeciesHelper.GetPopulationFromSaveSpecies(saveSpecies), mutate);
         }
 
+#if NETFX_CORE
+
         public async Task<SaveAllSpecies> Import()
         {
             SaveAllSpecies import = await ImportExportHelper.Import();
@@ -159,6 +164,7 @@ namespace XNASwarms.Util
             SaveAllSpecies export = await ImportExportHelper.Export();
             return export;
         }
+#endif
 
         public void StartSoundEngine()
         {
@@ -401,6 +407,6 @@ namespace XNASwarms.Util
         }
         #endregion
 
-#endif
+
     }
 }
