@@ -16,6 +16,8 @@ using ScreenSystem.Debug;
 using SwarmEngine;
 using SwarmAudio;
 using SwarmAnalysisEngine;
+using XNASwarms.Screens.SwarmScreen;
+using XNASwarms.Util;
 
 namespace XNASwarms
 {
