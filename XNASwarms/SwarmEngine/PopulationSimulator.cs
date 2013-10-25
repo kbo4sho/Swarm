@@ -238,23 +238,15 @@ namespace SwarmEngine
             resetRanks();
         }
 
-        public void EraseIndividual(Vector2 position)
+        public void EraseIndividual(Individual match)
         {
-            double diameter = StaticEraseParameters.Diameter;
-
-            var matchs = Population.SelectMany(s => s
-                                   .Where(i => (int)i.X >= (int)position.X - diameter &&
-                                               (int)i.X <= (int)position.X + diameter &&
-                                               (int)i.Y >= (int)position.Y - diameter &&
-                                               (int)i.Y <= (int)position.Y + diameter)).ToList();
-
             if (Population.Sum(s => s.Count) >= 2 &&
-                matchs.Count > 0)
+                match != null)
             {
-                swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(matchs[0])]);
-                swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(matchs[0])]);
-                Population.TryRemoveFromExisitingSpecies(matchs[0]);
-                swarmInBirthOrder.Remove(matchs[0]);
+                swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(match)]);
+                swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(match)]);
+                Population.TryRemoveFromExisitingSpecies(match);
+                swarmInBirthOrder.Remove(match);
             }
 
         }
@@ -281,8 +273,6 @@ namespace SwarmEngine
                 swarmInBirthOrder.Remove(swarmInBirthOrder.First());
             }
         }
-
-        
 
         private void AddIndividual(Individual indvd)
         {

@@ -25,10 +25,7 @@ namespace XNASwarms.W8.Analysis.Components
 
         public void Update(List<Individual> swarmInXOrder, GameTime gameTime)
         {
-            if (consoleVisible)
-            {
-                debugScreen.AddAnaysisResult(analysisEngine.Run(swarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
-            }
+            debugScreen.AddAnaysisResult(analysisEngine.Run(swarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
         }
 
         public void SetVisiblity()

@@ -8,12 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 #if NETFX_CORE
 using XNASwarmsXAML.W8;
+#endif
 using XNASwarms.Screens.SwarmScreen;
 using XNASwarms.Saving;
-#endif
-#if WINDOWS
 using SwarmAudio;
-#endif
 
 namespace XNASwarms.Util
 {
@@ -25,13 +23,16 @@ namespace XNASwarms.Util
         void ZoomOut();
         SaveWorldParameters SaveWorld();
         void UpdatePopulation(SaveSpecies saveSpecies, bool mutate);
+
 #if NETFX_CORE
         Task<SaveAllSpecies> Import();
         Task<SaveAllSpecies> Export();
-#elif WINDOWS
+#endif
+
+
         void StartSoundEngine();
         void StopSoundEngine();
-#endif
+        
         void ChangeWorldRandomSteering(double value);
         void ChangeWorldSeperatingForce(double value);
         void ChangeWorldAligningForce(double value);
@@ -151,6 +152,7 @@ namespace XNASwarms.Util
         }
 
 #if NETFX_CORE
+
         public async Task<SaveAllSpecies> Import()
         {
             SaveAllSpecies import = await ImportExportHelper.Import();
@@ -162,8 +164,8 @@ namespace XNASwarms.Util
             SaveAllSpecies export = await ImportExportHelper.Export();
             return export;
         }
+#endif
 
-#elif WINDOWS
         public void StartSoundEngine()
         {
             //SoundEngine.PlayPause(1);
@@ -175,7 +177,7 @@ namespace XNASwarms.Util
             //SoundEngine.PlayPause(0);
             SoundEngine.Pause();
         }
-#endif
+
         #region World
         public void ChangeWorldRandomSteering(double value)
         {
@@ -404,5 +406,7 @@ namespace XNASwarms.Util
             return StaticEraseParameters.Diameter;
         }
         #endregion
+
+
     }
 }

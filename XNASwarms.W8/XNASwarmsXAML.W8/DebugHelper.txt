@@ -1,0 +1,5 @@
+﻿//THIS CHECK FOR DUPLICATE IDS IN THE POPULATION
+//if (populationSimulator.Population.SelectMany(s => s.GroupBy(i => i).Where(d => d.Count() > 1)).Count() > 0)
+//{
+//    debugComponent.AddDebugItem("AGENT ID", indvd.ID.ToString());
+//}

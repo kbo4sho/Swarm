@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using XNASwarms.Emitters;
 using XNASwarms.Util;
-using XNASwarmsXAML.W8;
 
 namespace XNASwarms.Emitters
 {
