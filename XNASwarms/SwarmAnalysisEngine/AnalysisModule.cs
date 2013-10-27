@@ -17,7 +17,7 @@ namespace SwarmAnalysisEngine
         public AnalysisModule(string modulename, float fps)
         {
             ModuleName = modulename;
-            TimePerFrame = (float)1 / fps;
+            TimePerFrame = (float)(1 / fps);
         }
 
         public virtual Analysis TryAnalysis(List<Individual> indvds, float gametime, bool sendaudiodata)
@@ -43,7 +43,7 @@ namespace SwarmAnalysisEngine
 
         protected virtual Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
         {
-            return null;
+            return new Analysis();
         }
 
         

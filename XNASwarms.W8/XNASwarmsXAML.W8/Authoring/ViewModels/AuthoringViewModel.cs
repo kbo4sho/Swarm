@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XNASwarms;
+using XNASwarms.Util;
 
 namespace XNASwarmsXAML.W8.Authoring.ViewModels
 {

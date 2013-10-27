@@ -34,7 +34,7 @@ namespace SwarmEngine
         public int ID
         {
             get;
-            private set;
+            set;
         }
 
         public double X

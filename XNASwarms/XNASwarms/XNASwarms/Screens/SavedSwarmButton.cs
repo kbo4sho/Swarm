@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace XNASwarms.Screens
+namespace XNASwarms.Screens.UI
 {
     class SavedSwarmButton : MenuEntry
     {

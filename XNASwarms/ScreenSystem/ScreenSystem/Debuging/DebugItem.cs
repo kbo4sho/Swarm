@@ -13,7 +13,7 @@ namespace ScreenSystem.Debug
         Important = 2,
     }
 
-    public class DebugItem
+    public struct  DebugItem
     {
         private string Message;
         private string Label;

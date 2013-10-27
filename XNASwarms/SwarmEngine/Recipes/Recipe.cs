@@ -207,7 +207,7 @@ namespace SwarmEngine
             {
                 tempParam = parameters[i];
                 var spcs = new Species(new List<Individual>());
-                for (int j = 0; j < popCounts[i]; j++)
+                for (int j = 1; j < popCounts[i]; j++)
                 {
                     spcs.Add(new Individual(j, rand.NextDouble() * width,
                             rand.NextDouble() * height, rand.NextDouble() * 10 - 5,

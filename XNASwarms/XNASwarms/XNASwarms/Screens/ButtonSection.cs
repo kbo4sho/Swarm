@@ -9,12 +9,14 @@ using SwarmEngine;
 using XNASwarms.Screens;
 using System.Threading.Tasks;
 using SwarmAudio;
+using XNASwarms.Screens.SwarmScreen;
+using XNASwarms.Saving;
+using XNASwarms.Util;
 
-namespace XNASwarms
+namespace XNASwarms.Screens.UI
 {
-    public sealed class ButtonSection : IDisposable
+    public sealed class ButtonSection
     {
-
         private SwarmScreenBase screen;
         private Vector2 position;
         private Texture2D bgSprite;
@@ -372,15 +374,11 @@ namespace XNASwarms
                 }
                 else if (menuEntries[selectedEntry].IsAudioPlay())
                 {
-#if WINDOWS
-                        controlClient.StartSoundEngine();
-#endif
+                    controlClient.StartSoundEngine();
                 }
                 else if (menuEntries[selectedEntry].IsAudioPause())
                 {
-#if WINDOWS
-                        controlClient.StopSoundEngine();
-#endif
+                    controlClient.StopSoundEngine();
                 }
 #if NETFX_CORE
                 else if (menuEntries[selectedEntry].IsImportLikes())
@@ -394,10 +392,6 @@ namespace XNASwarms
 #endif
 
             }
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

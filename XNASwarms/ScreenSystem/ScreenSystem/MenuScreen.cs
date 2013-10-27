@@ -122,16 +122,6 @@ namespace ScreenSystem.ScreenSystem
             _background = ScreenManager.Content.Load<Texture2D>("Backgrounds/MenuBG");
 
             _rectBG = new Rectangle(0, 0, _background.Width, _background.Height);
-            
-
-            //////////////////////////////////////
-            //Loas these only if we have a score
-            //section
-            //////////////////////////////////////
-            //if (_scoreSection != null)
-            //{
-            //    _scoreSection.Load();
-            //}
 
             float scrollBarPos = viewport.Width / 2f;
             for (int i = 0; i < _menuEntries.Count; ++i)

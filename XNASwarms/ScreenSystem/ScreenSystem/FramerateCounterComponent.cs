@@ -1,69 +1,62 @@
 using System;
 using System.Globalization;
 using Microsoft.Xna.Framework;
+using ScreenSystem.ScreenSystem.Debuging;
 
 namespace ScreenSystem.ScreenSystem
 {
     /// <summary>
     /// Displays the FPS
     /// </summary>
-    public class FrameRateCounter : DrawableGameComponent
+    public class FrameRateCounter : IDebugComponent
     {
-        private TimeSpan _elapsedTime = TimeSpan.Zero;
-        private NumberFormatInfo _format;
-        private int _frameCounter;
-        private int _frameRate;
-        private Vector2 _position;
-        private ScreenManager _screenManager;
-        private bool IsVisible;
+        private TimeSpan elapsedTime = TimeSpan.Zero;
+        private NumberFormatInfo format;
+        private int frameCounter;
+        private int frameRate;
+        private Vector2 position;
+        private bool isVisible;
 
-        public FrameRateCounter(ScreenManager screenManager, bool visible)
-            : base(screenManager.Game)
+        public FrameRateCounter(bool isVisible)
         {
-            _screenManager = screenManager;
-            _format = new NumberFormatInfo();
-            _format.NumberDecimalSeparator = ".";
-            IsVisible = visible;
-#if XBOX
-            _position = new Vector2(55, 35);
-#else
-            _position = new Vector2(30, 10);
-#endif
+            format = new NumberFormatInfo();
+            format.NumberDecimalSeparator = ".";
+            this.isVisible = isVisible;
+            position = new Vector2(30, 10);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            if (IsVisible)
+            if (isVisible)
             {
-                _elapsedTime += gameTime.ElapsedGameTime;
+                elapsedTime += gameTime.ElapsedGameTime;
 
-                if (_elapsedTime <= TimeSpan.FromSeconds(1)) return;
+                if (elapsedTime <= TimeSpan.FromSeconds(1)) return;
 
-                _elapsedTime -= TimeSpan.FromSeconds(1);
-                _frameRate = _frameCounter;
-                _frameCounter = 0;
+                elapsedTime -= TimeSpan.FromSeconds(1);
+                frameRate = frameCounter;
+                frameCounter = 0;
             }
         }
 
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime, ScreenManager screenManager)
         {
-            if (IsVisible)
+            if (isVisible)
             {
-                _frameCounter++;
+                frameCounter++;
 
-                string fps = string.Format(_format, "{0} fps", _frameRate);
+                string fps = string.Format(format, "{0} fps", frameRate);
 
-                _screenManager.SpriteBatch.Begin();
-                _screenManager.SpriteBatch.DrawString(_screenManager.Fonts.FrameRateCounterFont, fps,
-                                                      _position, Color.LightBlue);
-                _screenManager.SpriteBatch.End();
+                screenManager.SpriteBatch.Begin();
+                screenManager.SpriteBatch.DrawString(screenManager.Fonts.FrameRateCounterFont, fps,
+                                                      position, Color.LightBlue);
+                screenManager.SpriteBatch.End();
             }
-            base.Draw(gameTime);
         }
 
         public void SetVisiblity()
         {
-            IsVisible = !IsVisible;
+            isVisible = !isVisible;
         }
     }
 }

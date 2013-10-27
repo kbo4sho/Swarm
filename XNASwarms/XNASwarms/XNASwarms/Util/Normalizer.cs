@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XNASwarms
+namespace XNASwarms.Util
 {
+    /// <summary>
+    /// Used to normalize anything
+    /// </summary>
     public static class Normalizer
     {
         public static float Normalize(int from, int to, float min, float max, double toNormalize)

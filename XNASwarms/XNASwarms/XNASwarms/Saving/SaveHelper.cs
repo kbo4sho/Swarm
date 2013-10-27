@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 
 
-namespace XNASwarms
+namespace XNASwarms.Saving
 {
     public static class SaveHelper
     {

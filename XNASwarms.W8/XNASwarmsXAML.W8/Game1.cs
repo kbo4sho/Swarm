@@ -7,6 +7,9 @@ using System;
 using VSS;
 using XNASwarms;
 using XNASwarms.Emitters;
+using XNASwarms.Screens.SwarmScreen;
+using XNASwarms.Util;
+using XNASwarms.W8.Analysis.Components;
 
 namespace XNASwarmsXAML.W8
 {
@@ -28,7 +31,7 @@ namespace XNASwarmsXAML.W8
 
             var backgroundscreen = new BackgroundScreen();
             screenManager.AddScreen(backgroundscreen);
-
+            
             var debugScreen = new DebugScreen(screenManager, false);
             screenManager.Game.Components.Add(debugScreen);
             this.Services.AddService(typeof(IDebugScreen), debugScreen);
@@ -37,11 +40,13 @@ namespace XNASwarmsXAML.W8
             screenManager.AddScreen(audioScreen);
             this.Services.AddService(typeof(IAudio), audioScreen);
 
-            Recipe[] recipes = new Recipe[1];
-            recipes[0] = new Recipe(StockRecipies.Stable_A);
-            PopulationSimulator populationSimulator = new PopulationSimulator(0, 0, recipes);
+            PopulationSimulator populationSimulator = new PopulationSimulator(0, 0);
 
-            SwarmScreen1 swarmScreen = new SwarmScreen1(new SwarmEmitterComponent(populationSimulator), populationSimulator);
+            var swarmEmitterComponent = new SwarmEmitterComponent(populationSimulator);
+
+            var swarmAnalysisComponent = new SwarmAnalysisComponent(this.Services.GetService(typeof(IDebugScreen)) as IDebugScreen);
+
+            SwarmScreen1 swarmScreen = new SwarmScreen1(swarmEmitterComponent, swarmAnalysisComponent,  populationSimulator);
             screenManager.AddScreen(swarmScreen);
 
 #if NETFX_CORE

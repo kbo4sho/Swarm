@@ -16,6 +16,10 @@ using ScreenSystem.Debug;
 using SwarmEngine;
 using SwarmAudio;
 using SwarmAnalysisEngine;
+using XNASwarms.Screens.SwarmScreen;
+using XNASwarms.Util;
+using XNASwarms.Emitters;
+using XNASwarms.W8.Analysis.Components;
 
 namespace XNASwarms
 {
@@ -57,8 +61,8 @@ namespace XNASwarms
             graphics.ApplyChanges();
             //graphics.ToggleFullScreen();
 
-            Normalizer.Width = GraphicsDevice.Viewport.Width;
-            Normalizer.Height = GraphicsDevice.Viewport.Height;
+            SwarmAnalysisEngine.Normalizer.Width = GraphicsDevice.Viewport.Width;
+            SwarmAnalysisEngine.Normalizer.Height = GraphicsDevice.Viewport.Height;
         }
 
         #endregion
@@ -79,7 +83,13 @@ namespace XNASwarms
             screenManager.Game.Components.Add(debugScreen);
             this.Services.AddService(typeof(IDebugScreen), debugScreen);
 
-            SwarmScreen1 swarmScreen = new SwarmScreen1(StockRecipies.Stable_A, false);
+            PopulationSimulator populationSimulator = new PopulationSimulator(0,0);
+
+            var swarmEmitterComponent = new SwarmEmitterComponent(populationSimulator);
+
+            var swarmAnalysisComponent = new SwarmAnalysisComponent(this.Services.GetService(typeof(IDebugScreen)) as IDebugScreen);
+
+            SwarmScreen1 swarmScreen = new SwarmScreen1(swarmEmitterComponent, swarmAnalysisComponent, populationSimulator);
             screenManager.AddScreen(swarmScreen);
 
             ControlClient controlClient = new ControlClient(swarmScreen);

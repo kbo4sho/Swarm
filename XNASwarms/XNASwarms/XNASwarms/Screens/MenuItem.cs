@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using XNASwarms;
 using ScreenSystem.ScreenSystem;
 
-namespace XNASwarms.Screens
+namespace XNASwarms.Screens.UI
 {
     public enum EntryType
     {

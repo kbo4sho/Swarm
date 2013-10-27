@@ -114,8 +114,14 @@
     <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Debuging\DebugItem.cs">
       <Link>ScreenSystem\Debuging\DebugItem.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Debuging\DebugOverlayScreen.cs">
+      <Link>ScreenSystem\Debuging\DebugOverlayScreen.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Debuging\DebugScreen.cs">
       <Link>ScreenSystem\Debuging\DebugScreen.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\Debuging\IDebugComponent.cs">
+      <Link>ScreenSystem\Debuging\IDebugComponent.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\ScreenSystem\ScreenSystem\FramerateCounterComponent.cs">
       <Link>ScreenSystem\FramerateCounterComponent.cs</Link>
@@ -163,7 +169,6 @@
       <Link>ScreenSystem\VirtualStick.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScreenSystem\SnappedScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">

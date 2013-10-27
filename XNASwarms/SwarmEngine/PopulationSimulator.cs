@@ -35,27 +35,17 @@ namespace SwarmEngine
 
         private Species swarmInBirthOrder, swarmInYOrder;
         private Species swarmInXOrder;
+
+
         #region Constuctor
-        public PopulationSimulator(int width, int height, params Recipe[] recipes)
-            :this (width, height, new Population(recipes[0].CreatePopulation(width, height), "CrumpulaAtion"))
-        {
-        }
 
-        public PopulationSimulator(int width, int height, Population pop)
+        public PopulationSimulator(int width, int height)
         {
-            Population = pop;
-
             swarmInBirthOrder = new Species();
             swarmInXOrder = new Species();
             swarmInYOrder = new Species();
+            Population = new Population();
 
-            for (int i = 0; i < Population.Count; i++)
-            {
-                for (int j = 0; j < Population[i].Count; j++)
-                {
-                    InitCollections(Population[i][j]);
-                }
-            }
         }
         #endregion
 
@@ -248,23 +238,15 @@ namespace SwarmEngine
             resetRanks();
         }
 
-        public void EraseIndividual(Vector2 position)
+        public void EraseIndividual(Individual match)
         {
-            double diameter = StaticEraseParameters.Diameter;
-
-            var matchs = Population.SelectMany(s => s
-                                   .Where(i => (int)i.X >= (int)position.X - diameter &&
-                                               (int)i.X <= (int)position.X + diameter &&
-                                               (int)i.Y >= (int)position.Y - diameter &&
-                                               (int)i.Y <= (int)position.Y + diameter)).ToList();
-
             if (Population.Sum(s => s.Count) >= 2 &&
-                matchs.Count > 0)
+                match != null)
             {
-                swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(matchs[0])]);
-                swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(matchs[0])]);
-                Population.TryRemoveFromExisitingSpecies(matchs[0]);
-                swarmInBirthOrder.Remove(matchs[0]);
+                swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(match)]);
+                swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(match)]);
+                Population.TryRemoveFromExisitingSpecies(match);
+                swarmInBirthOrder.Remove(match);
             }
 
         }
@@ -283,8 +265,7 @@ namespace SwarmEngine
         public void EmitIndividual(Individual indvd)
         {
             AddIndividual(indvd);
-            indvd.accelerate(indvd.Dx*10, indvd.Dy*10, 400);
-            if (Population.Sum(s => s.Count) >= StaticWorldParameters.numberOfIndividualsMax -1)
+            if (Population.Sum(s => s.Count) > StaticWorldParameters.numberOfIndividualsMax -1)
             {
                 swarmInXOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
                 swarmInYOrder.Remove(swarmInBirthOrder[swarmInBirthOrder.IndexOf(swarmInBirthOrder.First())]);
@@ -360,37 +341,41 @@ namespace SwarmEngine
             swarmInXOrder.Clear();
             swarmInYOrder.Clear();
         }
+        //public void UpdatePopulation(string recipiText, bool mutate)
+        //{
+        //    foreach(var spec in new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion"))
+        //    {
+        //        foreach (var indvd in spec)
+        //        {
+        //            EmitIndividual(indvd);
+        //        }
+        //    }
+        //    UpdatePopulation(mutate);
+        //}
 
-        public void UpdatePopulation(string recipiText, bool mutate)
-        {
-            Population = new Population(new Recipe(recipiText).CreatePopulation(0, 0), "CrumpulaAtion");
-            UpdatePopulation(Population, mutate);
-        }
+        //public void UpdatePopulation(bool mutate)
+        //{
+        //    //ClearPopulation();
 
-        public void UpdatePopulation(Population tempPopulation, bool mutate)
-        {
-            ClearPopulation();
-       
-            for (int i = 0; i < tempPopulation.Count; i++)
-            {
-                for (int j = 0; j < tempPopulation[i].Count; j++)
-                {
-                    if (mutate)
-                    {
-                        tempPopulation[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
-                    }
-                    InitCollections(tempPopulation[i][j]);
-                }
-            }
+        //    for (int i = 0; i < Population.Count; i++)
+        //    {
+        //        for (int j = 0; j < Population[i].Count; j++)
+        //        {
+        //            if (mutate)
+        //            {
+        //                Population[i][j].Genome.inducePointMutations(rand.NextDouble(), 1);
+        //            }
+        //        }
+        //    }
 
-            if (mutate)
-            {
-                tempPopulation.ReassignSpecies();
-                tempPopulation.ReassignAllColors();
-            }
+        //    if (mutate)
+        //    {
+        //        Population.ReassignSpecies();
+        //        Population.ReassignAllColors();
+        //    }
 
-            Population = tempPopulation;
-        }
+        //    //Population = tempPopulation;
+        //}
     }
 }
 
