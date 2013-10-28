@@ -17,9 +17,9 @@ namespace SwarmAudio
             string audFile = "Soundfile Segment and Localize.aud";
 
             //audFile = "Cluster_datatest.aud";
-            //audFile = "Cluster_datatest_OneMessage.aud";
+            audFile = "Cluster_datatest_OneMessage.aud";
             //audFile = "Cluster_datatest_4Cluster.aud";
-            audFile = "100AgentsDirectPositionDataTest.aud";
+            //audFile = "100AgentsDirectPositionDataTest.aud";
 
             //if (VSSCSharpClient.BeginSoundServerAt("127.0.0.1") != 1)
             if (VSSCSharpClient.BeginSoundServer() != 1)

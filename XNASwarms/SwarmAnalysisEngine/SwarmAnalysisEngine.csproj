@@ -70,6 +70,7 @@
     <Compile Include="FilterType.cs" />
     <Compile Include="NameModule.cs" />
     <Compile Include="Normalizer.cs" />
+    <Compile Include="PersistedCluster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpeedModule.cs" />
   </ItemGroup>

@@ -15,12 +15,10 @@ namespace SwarmAnalysisEngine
 {
     public class ClusterModule : AnalysisModule
     {
-        int maxClustersToPersist = 4;
         int clusterItemThreshhold = 8;//Number of agents that must be in proximity to be identified as a cluster
         int clusterBackCount = 20;//Number to count back in existing clusters to detect a match, high makes things slow
-
-        private List<Cluster> clusters;
-        private Dictionary<int, int> trackedClusters;
+        private List<Cluster> tempClusters;
+        private Dictionary<int, PersistedCluster> trackedClusters;
         Analysis analysis;
 
         List<Individual> lastfew;
@@ -28,12 +26,14 @@ namespace SwarmAnalysisEngine
         public ClusterModule()
             : base("Cluster Module", 15)
         {
-            clusters = new List<Cluster>();
-            trackedClusters = new Dictionary<int, int>();
-            trackedClusters.Add(0, -1);
-            trackedClusters.Add(1, -1);
-            trackedClusters.Add(2, -1);
-            trackedClusters.Add(3, -1);
+            tempClusters = new List<Cluster>();
+            
+            trackedClusters = new Dictionary<int, PersistedCluster>();
+            PersistedCluster p = new PersistedCluster();
+            trackedClusters.Add(0, p);
+            trackedClusters.Add(1, p);
+            trackedClusters.Add(2, p);
+            trackedClusters.Add(3, p);
             analysis = new Analysis();
         }
 
@@ -58,34 +58,36 @@ namespace SwarmAnalysisEngine
                 //    robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
                 //}
 
-                clusters.Clear();
+                tempClusters.Clear();
 
-                clusters.Add(new Cluster() { indvds[0] });
+                tempClusters.Add(new Cluster() { indvds[0] });
 
                 for (int i = 0; i < indvds.Count; i++)
                 {
                     ResetColor(indvds[i]);
                     if (!InExistingCluster(indvds[i]))
                     {
-                        clusters.Add(new Cluster() { indvds[i] });
+                        tempClusters.Add(new Cluster() { indvds[i] });
                     }
                 }
 
                 RemoveSmallClusters();
-
-                foreach (Cluster cluster in clusters.OrderBy(c=>c.Area))
+                
+                #region Update
+                foreach (Cluster cluster in tempClusters.OrderBy(c=>c.Area))
                 {
                     cluster.Update();
                 }
+                #endregion
 
+                #region Persisted Clusters
                 //Update persisting clusters
                 for (int n = 0; n < trackedClusters.Count; n++)
                 {
-
                     //Try to add cluster to tracked
-                    if (trackedClusters[n] == -1)
+                    if (trackedClusters[n].IdentifyingAgent == -1)
                     {
-                        Cluster val = clusters.Where(c => c.All(i => !trackedClusters.ContainsValue(i.ID))).FirstOrDefault();
+                        Cluster val = tempClusters.Where(c => c.All(i => !trackedClusters.ContainsValue(i.ID))).FirstOrDefault();
 
                         if (val != null)
                         {
@@ -100,15 +102,15 @@ namespace SwarmAnalysisEngine
 
                     bool found = false;
 
-                    for (int c = 0; c < clusters.Count();c++)
+                    for (int c = 0; c < tempClusters.Count();c++)
                     {
-                        if (clusters[c].Any(i => i.ID == trackedClusters[n]))
+                        if (tempClusters[c].Any(i => i.ID == trackedClusters[n]))
                         {
-                            var multiples = clusters[c].Where(z => trackedClusters.ContainsValue(z.ID));
+                            var multiples = tempClusters[c].Where(z => trackedClusters.ContainsValue(z.ID));
                             if(multiples.Count() <= 1)
                             {
                                 //this cluster is being tracked
-                                SetClusterColor(clusters[c], n);
+                                SetClusterColor(tempClusters[c], n);
                                 found = true;
                             }
                         }  
@@ -119,13 +121,15 @@ namespace SwarmAnalysisEngine
                         trackedClusters[n] = -1;
                     }
                 }
+                #endregion
+
 
                 GenerateMessages();
                 GenerateFilterResult();
 
-                if (clusters.Count > 0)
+                if (tempClusters.Count > 0)
                 {
-                    Cluster firstTrackedCluster = clusters.FirstOrDefault(c=>c.Any(i => i.ID == trackedClusters[0]));
+                    Cluster firstTrackedCluster = tempClusters.FirstOrDefault(c=>c.Any(i => i.ID == trackedClusters[0]));
                     //Cluster firstTrackedCluster = clusters.OrderBy(x => x.Area).First();
 #if WINDOWS
 
@@ -174,7 +178,7 @@ namespace SwarmAnalysisEngine
         /// </summary>
         private void RemoveSmallClusters()
         {
-            clusters.RemoveAll(s => s.Count() <= clusterItemThreshhold);
+            tempClusters.RemoveAll(s => s.Count() <= clusterItemThreshhold);
         }
 
         /// <summary>
@@ -187,9 +191,9 @@ namespace SwarmAnalysisEngine
             List<int> clustersIds = new List<int>();
             lastfew = new List<Individual>();
 
-            for (int c = 0; c < clusters.Count; c++)
+            for (int c = 0; c < tempClusters.Count; c++)
             {
-                lastfew = clusters[c].Skip(Math.Max(0, clusters[c].Count() - clusterBackCount)).Take(clusterBackCount).ToList();
+                lastfew = tempClusters[c].Skip(Math.Max(0, tempClusters[c].Count() - clusterBackCount)).Take(clusterBackCount).ToList();
 
                 for (int i = 0; i < lastfew.Count(); i++)
                 {
@@ -208,12 +212,12 @@ namespace SwarmAnalysisEngine
                 if (clustersIds.Count > 1)
                 {
                     //Merge the clusters                    
-                    clusters[clustersIds[0]].AddRange(clusters[clustersIds[1]]);
-                    clusters.RemoveAt(clustersIds[1]);
-                    clusters[clustersIds[0]].Add(individual);
+                    tempClusters[clustersIds[0]].AddRange(tempClusters[clustersIds[1]]);
+                    tempClusters.RemoveAt(clustersIds[1]);
+                    tempClusters[clustersIds[0]].Add(individual);
                     return true;
                 }
-                clusters[clustersIds[0]].Add(individual);
+                tempClusters[clustersIds[0]].Add(individual);
                 return true;
             }
             return false;
@@ -254,10 +258,10 @@ namespace SwarmAnalysisEngine
         {
             analysis.Messages.Clear();
 
-            for (int i = 0; i < clusters.Count; i++)
+            for (int i = 0; i < tempClusters.Count; i++)
             {
                 string clusterVisualCount = "";
-                int reducedClusterCount = clusters[i].Count() / 5;
+                int reducedClusterCount = tempClusters[i].Count() / 5;
                 for (int c = 0; c < reducedClusterCount; c++)
                 {
                     if (reducedClusterCount - c > 10)
@@ -270,7 +274,7 @@ namespace SwarmAnalysisEngine
                     }
 
                 }
-                string clusterSpeed = clusters[i].Average(x => (x.Dx2 * x.Dx2) + (x.Dy2 * x.Dy2)).ToString();
+                string clusterSpeed = tempClusters[i].Average(x => (x.Dx2 * x.Dx2) + (x.Dy2 * x.Dy2)).ToString();
 
                 //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5 + " SPEED : " + clusterSpeed });
             }
@@ -282,9 +286,9 @@ namespace SwarmAnalysisEngine
             analysis.FilterResult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterPoints = new List<Vector2>() };
             //TODO: need to send back analysis sysmtery points
 
-            if (clusters.Count > 0)
+            if (tempClusters.Count > 0)
             {
-                Cluster biggestCluster = clusters.OrderBy(x => x.Area).First();
+                Cluster biggestCluster = tempClusters.OrderBy(x => x.Area).First();
                 analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "PERSISTED CLUSTERS " + trackedClusters.Count});
                 analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER ONE        " + trackedClusters[0]});
                 analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER TWO        " + trackedClusters[1]});
