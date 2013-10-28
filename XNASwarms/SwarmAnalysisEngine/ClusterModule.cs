@@ -126,6 +126,7 @@ namespace SwarmAnalysisEngine
                 if (clusters.Count > 0)
                 {
                     Cluster firstTrackedCluster = clusters.FirstOrDefault(c=>c.Any(i => i.ID == trackedClusters[0]));
+                    //Cluster firstTrackedCluster = clusters.OrderBy(x => x.Area).First();
 #if WINDOWS
 
                     //SoundEngine.AgentDataRefresh(cluster.GetEveryOtherIndvd());

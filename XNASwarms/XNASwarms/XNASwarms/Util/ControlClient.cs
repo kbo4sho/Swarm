@@ -12,6 +12,7 @@ using XNASwarmsXAML.W8;
 using XNASwarms.Screens.SwarmScreen;
 using XNASwarms.Saving;
 using SwarmAudio;
+using XNASwarms.Analysis.Components;
 
 namespace XNASwarms.Util
 {
@@ -22,6 +23,7 @@ namespace XNASwarms.Util
         void ZoomIn();
         void ZoomOut();
         void ShowConsole();
+        void ToggleAnalyze();
 
         SaveWorldParameters SaveWorld();
         void UpdatePopulation(SaveSpecies saveSpecies, bool mutate);
@@ -85,6 +87,8 @@ namespace XNASwarms.Util
         void PlayMusic();
         void PauseMusic();
 #endif
+
+        
     }
 
     /// <summary>
@@ -96,13 +100,15 @@ namespace XNASwarms.Util
     public class ControlClient : IControlClient
     {
         SwarmScreenBase swarmScreen;
+        IAnalysisComponent analysisComponent;
 #if NETFX_CORE
         private IAudio audioScreen;
 #endif
 
-        public ControlClient(SwarmScreenBase swarmscreen)
+        public ControlClient(SwarmScreenBase swarmscreen, IAnalysisComponent analysisComponent)
         {
-            swarmScreen = swarmscreen;
+            this.swarmScreen = swarmscreen;
+            this.analysisComponent = analysisComponent;
         }
 
 #if NETFX_CORE
@@ -137,6 +143,11 @@ namespace XNASwarms.Util
         {
  	        StaticGameParameters.ShowConsole = !StaticGameParameters.ShowConsole;
         }
+
+         public void ToggleAnalyze()
+         {
+             analysisComponent.SetVisiblity();
+         }
 
         public SaveWorldParameters SaveWorld()
         {

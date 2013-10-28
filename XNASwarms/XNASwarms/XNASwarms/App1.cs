@@ -33,6 +33,7 @@ namespace XNASwarms
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             ConvertUnits.SetDisplayUnitToSimUnitRatio(1f);
+            IsMouseVisible = true;
             //TargetElapsedTime = TimeSpan.FromTicks(167777);
             //this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 30.0f);   
         }
@@ -92,7 +93,7 @@ namespace XNASwarms
             SwarmScreen1 swarmScreen = new SwarmScreen1(swarmEmitterComponent, swarmAnalysisComponent, populationSimulator);
             screenManager.AddScreen(swarmScreen);
 
-            ControlClient controlClient = new ControlClient(swarmScreen);
+            ControlClient controlClient = new ControlClient(swarmScreen, swarmAnalysisComponent);
             this.Services.AddService(typeof(IControlClient), controlClient);
 
             base.Initialize();
