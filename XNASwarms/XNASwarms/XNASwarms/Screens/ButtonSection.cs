@@ -67,6 +67,7 @@ namespace XNASwarms.Screens.UI
             AddMenuItem("Mutation", EntryType.Mutation, screen);
             AddMenuItem("Start Cluster", EntryType.AudioPlay, screen);
             AddMenuItem("Stop Cluster", EntryType.AudioPause, screen);
+            AddMenuItem("Analyze", EntryType.Analyze, screen);
             AddMenuItem("Console", EntryType.Debugger, screen);
             AddMenuItem("Like", EntryType.Save, screen);
 #else
@@ -380,6 +381,11 @@ namespace XNASwarms.Screens.UI
                 {
                     controlClient.StopSoundEngine();
                 }
+                else if (menuEntries[selectedEntry].IsAnalyze())
+                {
+                    controlClient.ToggleAnalyze();
+                }
+                
 #if NETFX_CORE
                 else if (menuEntries[selectedEntry].IsImportLikes())
                 {

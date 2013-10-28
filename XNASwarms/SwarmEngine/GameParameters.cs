@@ -8,7 +8,7 @@ namespace SwarmEngine
 {
     public static class StaticGameParameters
     {
-        
+        public static bool ShowConsole;
     }
 
     public class GameParameters

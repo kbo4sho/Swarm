@@ -25,7 +25,7 @@ namespace XNASwarms.Screens.Borders
         {
             debugScreen = screenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
 
-            borderWalls = WallFactory.TopBottomPortal(screenManager.GraphicsDevice.Viewport.Width / 2, screenManager.GraphicsDevice.Viewport.Height / 2, 2);
+            borderWalls = WallFactory.FourBouncy(screenManager.GraphicsDevice.Viewport.Width / 2, screenManager.GraphicsDevice.Viewport.Height / 2, 2);
             borderTexture = screenManager.Content.Load<Texture2D>("Backgrounds/gray");
 
             rightBound = borderWalls.Where(s => s.GetWallOrientation() == WallOrientationType.Horizontal).First().GetLength();
@@ -48,13 +48,13 @@ namespace XNASwarms.Screens.Borders
                 {
                     //Right
                     HandleWallAction(borderWalls[2].GetWallActionType(), borderWalls[2].GetWallOrientation(), currentInd);
-                    debugScreen.AddDebugItem("BORDER RIGHT", currentInd.X.ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
+                    //debugScreen.AddDebugItem("BORDER RIGHT", currentInd.X.ToString(), ScreenSystem.Debug.DebugFlagType.Odd);
                 }
                 else if (currentX < -rightBound)
                 {
                     //Left
                     HandleWallAction(borderWalls[0].GetWallActionType(), borderWalls[0].GetWallOrientation(), currentInd);
-                    debugScreen.AddDebugItem("BORDER LEFT", currentInd.Y.ToString());
+                    //debugScreen.AddDebugItem("BORDER LEFT", currentInd.Y.ToString());
 
                 }
 

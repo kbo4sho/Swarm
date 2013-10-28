@@ -123,7 +123,7 @@ namespace ScreenSystem.Debug
         {
             if (consoleVisible)
             {
-                foreach (Analysis analysis in analysisresult)
+                foreach (Analysis analysis in analysisresult.Where(a=>a != null).ToList<Analysis>())
                 {
                     if (this.consoleVisible)
                     {

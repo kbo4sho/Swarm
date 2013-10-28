@@ -16,6 +16,7 @@ using XNASwarms.Analysis.Components;
 using XNASwarms.Screens.UI;
 using XNASwarms.Saving;
 using XNASwarms.Common;
+using XNASwarms.Util;
 
 
 namespace XNASwarms.Screens.SwarmScreen
@@ -29,7 +30,8 @@ namespace XNASwarms.Screens.SwarmScreen
         ControlGroups groups;
         Texture2D individualTexture, bigIndividualTexture, superAgentTexture;
         protected Border Border;
-        private IDebugScreen debugComponent;
+        IDebugScreen debugComponent;
+        IControlClient controlClient;
         List<Individual> swarmInXOrder;
 
         public SwarmScreenBase(IEmitterComponent emitterComponent, IAnalysisComponent analysisComponent, PopulationSimulator populationSimulator)
@@ -50,7 +52,8 @@ namespace XNASwarms.Screens.SwarmScreen
             superAgentTexture = ScreenManager.Content.Load<Texture2D>("Backgrounds/gray");
             
             debugComponent = ScreenManager.Game.Services.GetService(typeof(IDebugScreen)) as IDebugScreen;
-            
+            controlClient = ScreenManager.Game.Services.GetService(typeof(IControlClient)) as IControlClient;
+
             Camera = new SwarmsCamera(ScreenManager.GraphicsDevice);
             Border = new Border(ScreenManager);
             base.LoadContent();
@@ -64,7 +67,7 @@ namespace XNASwarms.Screens.SwarmScreen
                 
                 foreach(var group in groups)
                 {
-                    debugComponent.AddDebugItem(group.Key.ToString(), group.Value);
+                    //debugComponent.AddDebugItem(group.Key.ToString(), group.Value);
                 }
 
                 analysisComponent.Update(swarmInXOrder, gameTime);
@@ -192,7 +195,7 @@ namespace XNASwarms.Screens.SwarmScreen
 
             if (input.IsNewKeyPress(Keys.A))
             {
-                analysisComponent.SetVisiblity();
+                controlClient.ToggleAnalyze();
             }
 
             if (input.IsNewKeyPress(Keys.C))

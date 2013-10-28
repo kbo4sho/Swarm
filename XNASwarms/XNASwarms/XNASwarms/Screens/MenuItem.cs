@@ -38,6 +38,7 @@ namespace XNASwarms.Screens.UI
         ExportLikes,
         AudioPlay,
         AudioPause,
+        Analyze,
     }
 
     /// <summary>
@@ -309,6 +310,11 @@ namespace XNASwarms.Screens.UI
         internal bool IsAudioPause()
         {
             return _type == EntryType.AudioPause;
+        }
+
+        internal bool IsAnalyze()
+        {
+            return _type == EntryType.Analyze;
         }
 
         #endregion

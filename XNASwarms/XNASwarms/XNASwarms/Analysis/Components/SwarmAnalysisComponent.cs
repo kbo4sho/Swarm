@@ -15,7 +15,7 @@ namespace XNASwarms.W8.Analysis.Components
     {
         AnalysisEngine analysisEngine;
         IDebugScreen debugScreen;
-        private bool consoleVisible;
+        private bool visible;
 
         public SwarmAnalysisComponent(IDebugScreen debugScreen)
         {
@@ -25,12 +25,13 @@ namespace XNASwarms.W8.Analysis.Components
 
         public void Update(List<Individual> swarmInXOrder, GameTime gameTime)
         {
-            debugScreen.AddAnaysisResult(analysisEngine.Run(swarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, true));
+            debugScreen.AddAnaysisResult(analysisEngine.Run(swarmInXOrder, (float)gameTime.ElapsedGameTime.TotalSeconds, visible));
         }
 
         public void SetVisiblity()
         {
-            consoleVisible = !consoleVisible;
+            visible = !visible;
+            analysisEngine.ResetIndvividuals();
         }
     }
 }
