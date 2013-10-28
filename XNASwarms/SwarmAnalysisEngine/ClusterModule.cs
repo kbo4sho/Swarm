@@ -15,24 +15,31 @@ namespace SwarmAnalysisEngine
 {
     public class ClusterModule : AnalysisModule
     {
+        int maxClustersToPersist = 4;
         int clusterItemThreshhold = 8;//Number of agents that must be in proximity to be identified as a cluster
-        int clusterBackCount = 10;//Number to count back in existing clusters to detect a match, high makes things slow
-        
-        public List<Cluster> Clusters;
+        int clusterBackCount = 20;//Number to count back in existing clusters to detect a match, high makes things slow
+
+        private List<Cluster> clusters;
+        private Dictionary<int, int> trackedClusters;
         Analysis analysis;
-        double leftMostX, rightMostX, topMostY, bottomMostY;
+
         List<Individual> lastfew;
 
         public ClusterModule()
-            : base("Cluster Module", 30)
+            : base("Cluster Module", 15)
         {
-            Clusters = new List<Cluster>();
+            clusters = new List<Cluster>();
+            trackedClusters = new Dictionary<int, int>();
+            trackedClusters.Add(0, -1);
+            trackedClusters.Add(1, -1);
+            trackedClusters.Add(2, -1);
+            trackedClusters.Add(3, -1);
             analysis = new Analysis();
         }
-        
-        protected override Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
+
+        protected override Analysis Analyze(List<Individual> indvds, bool visible)
         {
-            return DoAnalysis(indvds, sendaudiodata);
+            return DoAnalysis(indvds, visible);
         }
 
         private void ResetColor(Individual indvd)
@@ -41,9 +48,9 @@ namespace SwarmAnalysisEngine
             indvd.setDisplayColor(Color.MidnightBlue);
         }
 
-        private Analysis DoAnalysis(List<Individual> indvds, bool sendaudiodata)
+        private Analysis DoAnalysis(List<Individual> indvds, bool visble)
         {
-            if (indvds.Count() > 0)
+            if (indvds.Count() > 0 && visble)
             {
                 //string robinstxt = "";
                 //foreach (var indvd in indvds)
@@ -51,27 +58,74 @@ namespace SwarmAnalysisEngine
                 //    robinstxt += "" + Normalizer.NormalizeWidthCentered((float)indvd.X) + "," + Normalizer.NormalizeHeight((float)indvd.Y) + ",";
                 //}
 
-                Clusters.Clear();
+                clusters.Clear();
 
-                Clusters.Add(new Cluster() { indvds[0] });
+                clusters.Add(new Cluster() { indvds[0] });
 
                 for (int i = 0; i < indvds.Count; i++)
                 {
                     ResetColor(indvds[i]);
                     if (!InExistingCluster(indvds[i]))
                     {
-                        Clusters.Add(new Cluster() { indvds[i] });
+                        clusters.Add(new Cluster() { indvds[i] });
                     }
                 }
 
                 RemoveSmallClusters();
-                SetClusterColor();
+
+                foreach (Cluster cluster in clusters.OrderBy(c=>c.Area))
+                {
+                    cluster.Update();
+                }
+
+                //Update persisting clusters
+                for (int n = 0; n < trackedClusters.Count; n++)
+                {
+
+                    //Try to add cluster to tracked
+                    if (trackedClusters[n] == -1)
+                    {
+                        Cluster val = clusters.Where(c => c.All(i => !trackedClusters.ContainsValue(i.ID))).FirstOrDefault();
+
+                        if (val != null)
+                        {
+                            //TODO: Why should i have to do this
+                            bool really = trackedClusters.ContainsValue(val.GetPointNearestToCenter());
+                            if (!really)
+                            {
+                                trackedClusters[n] = val.GetPointNearestToCenter();
+                            }
+                        }
+                    }
+
+                    bool found = false;
+
+                    for (int c = 0; c < clusters.Count();c++)
+                    {
+                        if (clusters[c].Any(i => i.ID == trackedClusters[n]))
+                        {
+                            var multiples = clusters[c].Where(z => trackedClusters.ContainsValue(z.ID));
+                            if(multiples.Count() <= 1)
+                            {
+                                //this cluster is being tracked
+                                SetClusterColor(clusters[c], n);
+                                found = true;
+                            }
+                        }  
+                    }                     
+
+                    if (!found)
+                    {
+                        trackedClusters[n] = -1;
+                    }
+                }
+
                 GenerateMessages();
                 GenerateFilterResult();
 
-                if (sendaudiodata && Clusters.Count > 0)
+                if (clusters.Count > 0)
                 {
-                    Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
+                    Cluster firstTrackedCluster = clusters.FirstOrDefault(c=>c.Any(i => i.ID == trackedClusters[0]));
 #if WINDOWS
 
                     //SoundEngine.AgentDataRefresh(cluster.GetEveryOtherIndvd());
@@ -81,24 +135,26 @@ namespace SwarmAnalysisEngine
                     //SoundEngine.SendArea(cluster.Area);
                     //SoundEngine.SendClusterXY(cluster.Center.X, cluster.Center.Y);
                     //SoundEngine.StartCluster();
-                    SoundEngine.UpdateCluster(biggestCluster.Agents,
-                                              biggestCluster.Center,
-                                              biggestCluster.Area,
-                                              Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
-                                              biggestCluster.ClusterVelocity,
-                                              new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
+                    //SoundEngine.UpdateCluster(biggestCluster.Agents,
+                    //                          biggestCluster.Center,
+                    //                          biggestCluster.Area,
+                    //                          Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
+                    //                          biggestCluster.ClusterVelocity,
+                    //                          new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
                     //SoundEngine.StopCluster();
 #endif
                     //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
                     //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
                     //}
-
-                    SoundEngine.UpdateCluster(biggestCluster.Agents,
-                                              biggestCluster.Center,
-                                              biggestCluster.Area,
-                                              Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
-                                              biggestCluster.ClusterVelocity,
-                                              new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
+                    if (firstTrackedCluster != null)
+                    {
+                        SoundEngine.UpdateCluster(firstTrackedCluster.Agents,
+                                                  firstTrackedCluster.Center,
+                                                  firstTrackedCluster.Area,
+                                                  Normalizer.Normalize0ToOne(firstTrackedCluster.AverageAgentEnergy),
+                                                  firstTrackedCluster.ClusterVelocity,
+                                                  new Vector3(firstTrackedCluster.Symmetry.X, firstTrackedCluster.Symmetry.Y, firstTrackedCluster.Symmetry.Z));
+                    }
                 }
 
                 return analysis;
@@ -117,7 +173,7 @@ namespace SwarmAnalysisEngine
         /// </summary>
         private void RemoveSmallClusters()
         {
-            Clusters.RemoveAll(s => s.Count() <= clusterItemThreshhold);
+            clusters.RemoveAll(s => s.Count() <= clusterItemThreshhold);
         }
 
         /// <summary>
@@ -130,9 +186,9 @@ namespace SwarmAnalysisEngine
             List<int> clustersIds = new List<int>();
             lastfew = new List<Individual>();
 
-            for (int c = 0; c < Clusters.Count; c++)
+            for (int c = 0; c < clusters.Count; c++)
             {
-                lastfew = Clusters[c].Skip(Math.Max(0, Clusters[c].Count() - clusterBackCount)).Take(clusterBackCount).ToList();
+                lastfew = clusters[c].Skip(Math.Max(0, clusters[c].Count() - clusterBackCount)).Take(clusterBackCount).ToList();
 
                 for (int i = 0; i < lastfew.Count(); i++)
                 {
@@ -151,48 +207,40 @@ namespace SwarmAnalysisEngine
                 if (clustersIds.Count > 1)
                 {
                     //Merge the clusters                    
-                    Clusters[clustersIds[0]].AddRange(Clusters[clustersIds[1]]);
-                    Clusters.RemoveAt(clustersIds[1]);
-                    Clusters[clustersIds[0]].Add(individual);
+                    clusters[clustersIds[0]].AddRange(clusters[clustersIds[1]]);
+                    clusters.RemoveAt(clustersIds[1]);
+                    clusters[clustersIds[0]].Add(individual);
                     return true;
                 }
-                Clusters[clustersIds[0]].Add(individual);
+                clusters[clustersIds[0]].Add(individual);
                 return true;
             }
             return false;
         }
 
-        private void SetClusterColor()
+        private void SetClusterColor(Cluster cluster, int persitedID)
         {
-            for (int clusterid = 0; clusterid < Clusters.Count; clusterid++)
+            foreach (Individual indvd in cluster)
             {
-                //TODO set colors from config file
-                foreach (Individual indvd in Clusters[clusterid])
+                if (persitedID == 0)
                 {
-                    if (clusterid == 0)
-                    {
-                        indvd.setDisplayColor(Color.Red);
-                    }
-                    else if (clusterid == 1)
-                    {
-                        indvd.setDisplayColor(Color.Chartreuse);
-                    }
-                    else if (clusterid == 2)
-                    {
-                        indvd.setDisplayColor(Color.Yellow);
-                    }
-                    else if (clusterid == 3)
-                    {
-                        indvd.setDisplayColor(Color.Orange);
-                    }
-                    else if (clusterid == 4)
-                    {
-                        indvd.setDisplayColor(Color.Lerp(Color.LightPink, Color.LightBlue, clusterid * .15f));
-                    }
-                    else
-                    {
-                        indvd.setDisplayColor(Color.Lerp(Color.LawnGreen, Color.Cyan, (float)((clusterid - 5) * .25)));
-                    }
+                    indvd.setDisplayColor(Color.Red);
+                }
+                else if (persitedID == 1)
+                {
+                    indvd.setDisplayColor(Color.Green);
+                }
+                else if (persitedID == 2)
+                {
+                    indvd.setDisplayColor(Color.Yellow);
+                }
+                else if (persitedID == 3)
+                {
+                    indvd.setDisplayColor(Color.Blue);
+                }
+                else
+                {
+                    indvd.setDisplayColor(Color.DodgerBlue);
                 }
             }
         }
@@ -205,10 +253,10 @@ namespace SwarmAnalysisEngine
         {
             analysis.Messages.Clear();
 
-            for (int i = 0; i < Clusters.Count; i++)
+            for (int i = 0; i < clusters.Count; i++)
             {
                 string clusterVisualCount = "";
-                int reducedClusterCount = Clusters[i].Count() / 5;
+                int reducedClusterCount = clusters[i].Count() / 5;
                 for (int c = 0; c < reducedClusterCount; c++)
                 {
                     if (reducedClusterCount - c > 10)
@@ -219,11 +267,11 @@ namespace SwarmAnalysisEngine
                     {
                         clusterVisualCount += " |";
                     }
-                    
-                }
-                string clusterSpeed = Clusters[i].Average(x => (x.Dx2 * x.Dx2) + (x.Dy2 * x.Dy2)).ToString();
 
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5 + " SPEED : " + clusterSpeed });
+                }
+                string clusterSpeed = clusters[i].Average(x => (x.Dx2 * x.Dx2) + (x.Dy2 * x.Dy2)).ToString();
+
+                //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "COUNT : " + clusterVisualCount + "  " + reducedClusterCount * 5 + " SPEED : " + clusterSpeed });
             }
             analysis.Messages.Add(new AnalysisMessage() { Type = "              ", Message = "                                                  " });
         }
@@ -231,81 +279,25 @@ namespace SwarmAnalysisEngine
         private void GenerateFilterResult()
         {
             analysis.FilterResult = new FilterResult() { Type = FilterType.ClusterCenter, ClusterPoints = new List<Vector2>() };
+            //TODO: need to send back analysis sysmtery points
 
-            foreach (Cluster cluster in Clusters)
+            if (clusters.Count > 0)
             {
-                leftMostX = cluster.OrderBy(point => point.X).First().X;
-                rightMostX = cluster.OrderByDescending(point => point.X).First().X;
-                topMostY = cluster.OrderBy(point => point.Y).First().Y;
-                bottomMostY = cluster.OrderByDescending(point => point.Y).First().Y;
+                Cluster biggestCluster = clusters.OrderBy(x => x.Area).First();
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "PERSISTED CLUSTERS " + trackedClusters.Count});
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER ONE        " + trackedClusters[0]});
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER TWO        " + trackedClusters[1]});
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER THREE      " + trackedClusters[2] });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER FOUR       " + trackedClusters[3] });
+                //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
 
-                float verticalCenter = (float)(topMostY + bottomMostY) * .5f;
-                float horizontalCenter = (float)(leftMostX + rightMostX) * .5f;
-
-                cluster.Center = new Vector2(Normalizer.NormalizeWidthCentered(horizontalCenter), Normalizer.NormalizeHeight(verticalCenter));
-                AssignClusterCenterPoint(new Vector2(horizontalCenter, verticalCenter));
-
-                //2|1
-                //3|4
-
-                //1
-                AssignQuadCenterPoint(cluster.Where(i => i.X > horizontalCenter && i.Y < verticalCenter));
-                //2
-                AssignQuadCenterPoint(cluster.Where(i => i.X < horizontalCenter && i.Y < verticalCenter));
-                //3
-                AssignQuadCenterPoint(cluster.Where(i => i.X < horizontalCenter && i.Y > verticalCenter));
-                //4
-                AssignQuadCenterPoint(cluster.Where(i => i.X > horizontalCenter && i.Y > verticalCenter));
-
-                ///////////////////////////
-                cluster.SetAreaFromFourPoints(analysis.FilterResult.ClusterPoints);
-                cluster.SetSymmetryFromFourPoints(analysis.FilterResult.ClusterPoints);
-            }
-            if (Clusters.Count > 0)
-            {
-                Cluster biggestCluster = Clusters.OrderBy(x => x.Area).First();
-
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AVERAGE AGENT ENERGY : " + biggestCluster.AverageAgentEnergy });
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED SWARM ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.ClusterVelocity) });
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AGENT SYMMETRY : " + biggestCluster.Symmetry.X + ", " + biggestCluster.Symmetry.Y + ", " + biggestCluster.Symmetry.Z });
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AREA : " + biggestCluster.Area });
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CENTER : " + biggestCluster.Center.X + ", " + biggestCluster.Center.Y });
+                //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AVERAGE AGENT ENERGY : " + biggestCluster.AverageAgentEnergy });
+                //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
+                //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED SWARM ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.ClusterVelocity) });
+                //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AGENT SYMMETRY : " + biggestCluster.Symmetry.X + ", " + biggestCluster.Symmetry.Y + ", " + biggestCluster.Symmetry.Z });
+                //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AREA : " + biggestCluster.Area });
+                //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CENTER : " + biggestCluster.NormalizedCenter.X + ", " + biggestCluster.NormalizedCenter.Y });
             }
         }
-
-        private void AssignQuadCenterPoint(IEnumerable<Individual> quadItems)
-        {
-            if (quadItems.Count() > 0)
-            {
-                leftMostX = quadItems.OrderBy(point => point.X).First().X;
-                rightMostX = quadItems.OrderByDescending(point => point.X).First().X;
-                topMostY = quadItems.OrderByDescending(point => point.Y).First().Y;
-                bottomMostY = quadItems.OrderBy(point => point.Y).First().Y;
-
-                Vector3[] positions;
-
-                positions = new Vector3[3] {
-                        new Vector3((float)(leftMostX + rightMostX) * .5f, (float)(topMostY + bottomMostY) * .5f,0),
-                        new Vector3((float)leftMostX, (float)(bottomMostY + topMostY)*.5f, 0),
-                        new Vector3((float)(leftMostX + rightMostX) * .5f, (float)topMostY, 0)
-                    };
-
-                //TODO Couldn't this just be the center of the Quad?
-                analysis.FilterResult.ClusterPoints.Add(GetSphereDifference(positions));
-            }
-        }
-
-        private Vector2 GetSphereDifference(Vector3[] positions)
-        {
-            BoundingSphere sphere = BoundingSphere.CreateFromPoints(positions);
-            return new Vector2(sphere.Center.X,sphere.Center.Y);
-        }
-
-        private void AssignClusterCenterPoint(Vector2 clusterCenter)
-        {
-            analysis.FilterResult.ClusterPoints.Add(clusterCenter);
-        }
-
     }
 }

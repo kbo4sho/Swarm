@@ -21,6 +21,8 @@ namespace XNASwarms.Util
         void CreateMutationSwarm();
         void ZoomIn();
         void ZoomOut();
+        void ShowConsole();
+
         SaveWorldParameters SaveWorld();
         void UpdatePopulation(SaveSpecies saveSpecies, bool mutate);
 
@@ -129,6 +131,11 @@ namespace XNASwarms.Util
         public void ZoomOut()
         {
             swarmScreen.Camera.Zoom -= .1f;
+        }
+
+         public void ShowConsole()
+        {
+ 	        StaticGameParameters.ShowConsole = !StaticGameParameters.ShowConsole;
         }
 
         public SaveWorldParameters SaveWorld()
@@ -407,6 +414,6 @@ namespace XNASwarms.Util
         }
         #endregion
 
-
+       
     }
 }
