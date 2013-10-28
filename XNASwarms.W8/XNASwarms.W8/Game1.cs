@@ -61,7 +61,7 @@ namespace XNASwarms.W8
             this.Services.AddService(typeof(IControlClient), controlClient);
 
             base.Initialize();
-            SoundEngine.Init();
+            //SoundEngine.Init();
         }
 
         protected override void LoadContent()

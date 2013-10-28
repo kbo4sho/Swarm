@@ -93,12 +93,12 @@ namespace SwarmAnalysisEngine
                     //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
                     //}
 
-                    SoundEngine.UpdateCluster(biggestCluster.Agents,
-                                              biggestCluster.Center,
-                                              biggestCluster.Area,
-                                              Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
-                                              biggestCluster.ClusterVelocity,
-                                              new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
+                    //SoundEngine.UpdateCluster(biggestCluster.Agents,
+                    //                          biggestCluster.Center,
+                    //                          biggestCluster.Area,
+                    //                          Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy),
+                    //                          biggestCluster.ClusterVelocity,
+                    //                          new Vector3(biggestCluster.Symmetry.X, biggestCluster.Symmetry.Y, biggestCluster.Symmetry.Z));
                 }
 
                 return analysis;
