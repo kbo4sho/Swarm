@@ -15,7 +15,6 @@ namespace SwarmAnalysisEngine
 {
     public class ClusterModule : AnalysisModule
     {
-        int maxClustersToPersist = 4;
         int clusterItemThreshhold = 8;//Number of agents that must be in proximity to be identified as a cluster
         int clusterBackCount = 20;//Number to count back in existing clusters to detect a match, high makes things slow
 
