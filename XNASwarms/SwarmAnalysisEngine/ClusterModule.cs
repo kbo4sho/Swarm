@@ -87,7 +87,7 @@ namespace SwarmAnalysisEngine
                     //Try to add cluster to tracked
                     if (trackedClusters[n].IdentifyingAgent == -1)
                     {
-                        Cluster val = tempClusters.Where(c => c.All(i => !trackedClusters.ContainsValue(i.ID))).FirstOrDefault();
+                        Cluster val = tempClusters.Where(c => c.All(i => !trackedClusters.Values (i.ID))).FirstOrDefault();
 
                         if (val != null)
                         {
@@ -102,19 +102,19 @@ namespace SwarmAnalysisEngine
 
                     bool found = false;
 
-                    for (int c = 0; c < tempClusters.Count();c++)
+                    for (int c = 0; c < tempClusters.Count(); c++)
                     {
                         if (tempClusters[c].Any(i => i.ID == trackedClusters[n]))
                         {
                             var multiples = tempClusters[c].Where(z => trackedClusters.ContainsValue(z.ID));
-                            if(multiples.Count() <= 1)
+                            if (multiples.Count() <= 1)
                             {
                                 //this cluster is being tracked
                                 SetClusterColor(tempClusters[c], n);
                                 found = true;
                             }
-                        }  
-                    }                     
+                        }
+                    }
 
                     if (!found)
                     {
