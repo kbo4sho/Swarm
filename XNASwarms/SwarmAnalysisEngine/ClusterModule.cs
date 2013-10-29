@@ -82,20 +82,23 @@ namespace SwarmAnalysisEngine
 
                 #region Persisted Clusters
                 //Update persisting clusters
+
+                var trackedClusterValues = trackedClusters.Values.Select(e=>e.IdentifyingAgent);
+
                 for (int n = 0; n < trackedClusters.Count; n++)
                 {
                     //Try to add cluster to tracked
                     if (trackedClusters[n].IdentifyingAgent == -1)
                     {
-                        Cluster val = tempClusters.Where(c => c.All(i => !trackedClusters.Values (i.ID))).FirstOrDefault();
+                        Cluster val = tempClusters.Where(c => c.All(i => !trackedClusterValues.Contains(i.ID))).FirstOrDefault();
 
                         if (val != null)
                         {
                             //TODO: Why should i have to do this
-                            bool really = trackedClusters.ContainsValue(val.GetPointNearestToCenter());
+                            bool really = trackedClusterValues.Contains(val.GetPointNearestToCenter());
                             if (!really)
                             {
-                                trackedClusters[n] = val.GetPointNearestToCenter();
+                                trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = val.GetPointNearestToCenter() };
                             }
                         }
                     }
@@ -104,9 +107,9 @@ namespace SwarmAnalysisEngine
 
                     for (int c = 0; c < tempClusters.Count(); c++)
                     {
-                        if (tempClusters[c].Any(i => i.ID == trackedClusters[n]))
+                        if (tempClusters[c].Any(i => i.ID == trackedClusters[n].IdentifyingAgent))
                         {
-                            var multiples = tempClusters[c].Where(z => trackedClusters.ContainsValue(z.ID));
+                            var multiples = tempClusters[c].Where(z => trackedClusterValues.Contains(z.ID));
                             if (multiples.Count() <= 1)
                             {
                                 //this cluster is being tracked
@@ -118,7 +121,7 @@ namespace SwarmAnalysisEngine
 
                     if (!found)
                     {
-                        trackedClusters[n] = -1;
+                        trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = -1 };
                     }
                 }
                 #endregion
@@ -129,7 +132,7 @@ namespace SwarmAnalysisEngine
 
                 if (tempClusters.Count > 0)
                 {
-                    Cluster firstTrackedCluster = tempClusters.FirstOrDefault(c=>c.Any(i => i.ID == trackedClusters[0]));
+                    Cluster firstTrackedCluster = tempClusters.FirstOrDefault(c=>c.Any(i => i.ID == trackedClusters[0].IdentifyingAgent));
                     //Cluster firstTrackedCluster = clusters.OrderBy(x => x.Area).First();
 #if WINDOWS
 
@@ -290,10 +293,10 @@ namespace SwarmAnalysisEngine
             {
                 Cluster biggestCluster = tempClusters.OrderBy(x => x.Area).First();
                 analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "PERSISTED CLUSTERS " + trackedClusters.Count});
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER ONE        " + trackedClusters[0]});
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER TWO        " + trackedClusters[1]});
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER THREE      " + trackedClusters[2] });
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER FOUR       " + trackedClusters[3] });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER ONE        " + trackedClusters[0].IdentifyingAgent});
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER TWO        " + trackedClusters[1].IdentifyingAgent});
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER THREE      " + trackedClusters[2].IdentifyingAgent });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER FOUR       " + trackedClusters[3].IdentifyingAgent });
                 //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
 
                 //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AVERAGE AGENT ENERGY : " + biggestCluster.AverageAgentEnergy });
