@@ -132,6 +132,9 @@
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\Normalizer.cs">
       <Link>Normalizer.cs</Link>
     </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\PersistedCluster.cs">
+      <Link>PersistedCluster.cs</Link>
+    </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\SpeedModule.cs">
       <Link>SpeedModule.cs</Link>
     </Compile>

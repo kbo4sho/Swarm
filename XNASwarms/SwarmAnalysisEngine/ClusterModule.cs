@@ -27,13 +27,11 @@ namespace SwarmAnalysisEngine
             : base("Cluster Module", 15)
         {
             tempClusters = new List<Cluster>();
-            
-            trackedClusters = new Dictionary<int, PersistedCluster>();
-            PersistedCluster p = new PersistedCluster();
-            trackedClusters.Add(0, p);
-            trackedClusters.Add(1, p);
-            trackedClusters.Add(2, p);
-            trackedClusters.Add(3, p);
+            trackedClusters = new Dictionary<int,PersistedCluster>();
+            trackedClusters.Add(0, new PersistedCluster() { ColorID = 0 });
+            trackedClusters.Add(1, new PersistedCluster() { ColorID = 1 });
+            trackedClusters.Add(2, new PersistedCluster() { ColorID = 2 });
+            trackedClusters.Add(3, new PersistedCluster() { ColorID = 3 });
             analysis = new Analysis();
         }
 
@@ -83,12 +81,12 @@ namespace SwarmAnalysisEngine
                 #region Persisted Clusters
                 //Update persisting clusters
 
-                var trackedClusterValues = trackedClusters.Values.Select(e=>e.IdentifyingAgent);
-
                 for (int n = 0; n < trackedClusters.Count; n++)
                 {
+                    var trackedClusterValues = trackedClusters.Select(e => e.Value.IdentifyingAgent).ToList();
+
                     //Try to add cluster to tracked
-                    if (trackedClusters[n].IdentifyingAgent == -1)
+                    if (trackedClusterValues[n] == -1)
                     {
                         Cluster val = tempClusters.Where(c => c.All(i => !trackedClusterValues.Contains(i.ID))).FirstOrDefault();
 
@@ -98,30 +96,46 @@ namespace SwarmAnalysisEngine
                             bool really = trackedClusterValues.Contains(val.GetPointNearestToCenter());
                             if (!really)
                             {
-                                trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = val.GetPointNearestToCenter() };
+                                trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = val.GetPointNearestToCenter(), ColorID = trackedClusters[n].ColorID};//trackedClusters[n];//.IdentifyingAgent = 1;//.IdentifyingAgent = val.GetPointNearestToCenter();
+                                continue;
                             }
                         }
                     }
 
                     bool found = false;
 
-                    for (int c = 0; c < tempClusters.Count(); c++)
+                    foreach (Cluster cluster in tempClusters.Where(c => c.Any(g => trackedClusterValues.Contains(g.ID))).ToList<Cluster>())
                     {
-                        if (tempClusters[c].Any(i => i.ID == trackedClusters[n].IdentifyingAgent))
+                        if (cluster.Any(i => i.ID == trackedClusters[n].IdentifyingAgent))
                         {
-                            var multiples = tempClusters[c].Where(z => trackedClusterValues.Contains(z.ID));
+                            var multiples = cluster.Where(z => trackedClusterValues.Contains(z.ID));
                             if (multiples.Count() <= 1)
                             {
                                 //this cluster is being tracked
-                                SetClusterColor(tempClusters[c], n);
+                                SetClusterColor(cluster, n);
                                 found = true;
                             }
                         }
                     }
 
+
+                    //for (int c = 0; c < tempClusters.Count(); c++)
+                    //{
+                    //    if (tempClusters[c].Any(i => i.ID == trackedClusters[n].IdentifyingAgent))
+                    //    {
+                    //        var multiples = tempClusters[c].Where(z => trackedClusterValues.Contains(z.ID));
+                    //        if (multiples.Count() <= 1)
+                    //        {
+                    //            //this cluster is being tracked
+                    //            SetClusterColor(tempClusters[c], trackedClusters[n].ColorID);
+                    //            found = true;
+                    //        }
+                    //    }
+                    //}
+
                     if (!found)
                     {
-                        trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = -1 };
+                        trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = -1, ColorID = trackedClusters[n].ColorID };
                     }
                 }
                 #endregion
@@ -156,12 +170,14 @@ namespace SwarmAnalysisEngine
                     //}
                     if (firstTrackedCluster != null)
                     {
+#if ! NETFX_CORE
                         SoundEngine.UpdateCluster(firstTrackedCluster.Agents,
                                                   firstTrackedCluster.Center,
                                                   firstTrackedCluster.Area,
                                                   Normalizer.Normalize0ToOne(firstTrackedCluster.AverageAgentEnergy),
                                                   firstTrackedCluster.ClusterVelocity,
                                                   new Vector3(firstTrackedCluster.Symmetry.X, firstTrackedCluster.Symmetry.Y, firstTrackedCluster.Symmetry.Z));
+#endif
                     }
                 }
 
@@ -293,10 +309,10 @@ namespace SwarmAnalysisEngine
             {
                 Cluster biggestCluster = tempClusters.OrderBy(x => x.Area).First();
                 analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "PERSISTED CLUSTERS " + trackedClusters.Count});
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER ONE        " + trackedClusters[0].IdentifyingAgent});
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER TWO        " + trackedClusters[1].IdentifyingAgent});
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER THREE      " + trackedClusters[2].IdentifyingAgent });
-                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER FOUR       " + trackedClusters[3].IdentifyingAgent });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER ONE        " + trackedClusters[0].ColorID + " " + trackedClusters[0].IdentifyingAgent});
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER TWO        " + trackedClusters[1].ColorID + " " + trackedClusters[1].IdentifyingAgent});
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER THREE      " + trackedClusters[2].ColorID + " " + trackedClusters[2].IdentifyingAgent });
+                analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "CLUSTER FOUR       " + trackedClusters[3].ColorID + " " + trackedClusters[3].IdentifyingAgent });
                 //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "NORMALIZED AGENT ENERGY : " + Normalizer.Normalize0ToOne(biggestCluster.AverageAgentEnergy) });
 
                 //analysis.Messages.Add(new AnalysisMessage() { Type = this.ModuleName, Message = "AVERAGE AGENT ENERGY : " + biggestCluster.AverageAgentEnergy });

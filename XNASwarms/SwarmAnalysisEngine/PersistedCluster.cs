@@ -8,6 +8,7 @@ namespace SwarmAnalysisEngine
     public struct PersistedCluster
     {
         public int IdentifyingAgent;
+        public int ColorID;
         public int[] PastIdentifyingAgents;
     }
 }

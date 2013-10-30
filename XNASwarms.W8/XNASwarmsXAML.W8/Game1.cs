@@ -50,7 +50,7 @@ namespace XNASwarmsXAML.W8
             screenManager.AddScreen(swarmScreen);
 
 #if NETFX_CORE
-            ControlClient controlClient = new ControlClient(swarmScreen, this.Services.GetService(typeof(IAudio)) as IAudio);
+            ControlClient controlClient = new ControlClient(swarmScreen, swarmAnalysisComponent);
 #else
             ControlClient controlClient = new ControlClient(swarmScreen));
 #endif     

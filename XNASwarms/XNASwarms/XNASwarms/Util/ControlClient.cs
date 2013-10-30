@@ -152,7 +152,7 @@ namespace XNASwarms.Util
         public SaveWorldParameters SaveWorld()
         {
             SaveWorldParameters world = new SaveWorldParameters();
-    world.numberOfIndividualsMax = StaticWorldParameters.numberOfIndividualsMax;
+            world.numberOfIndividualsMax = StaticWorldParameters.numberOfIndividualsMax;
             world.neighborhoodRadiusMax = StaticWorldParameters.neighborhoodRadiusMax;
             world.normalSpeedMax = StaticWorldParameters.normalSpeedMax;
             world.maxSpeedMax = StaticWorldParameters.maxSpeedMax;
