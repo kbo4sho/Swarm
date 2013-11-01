@@ -15,7 +15,7 @@ namespace SwarmAnalysisEngine
 {
     public class ClusterModule : AnalysisModule
     {
-        int clusterItemThreshhold = 8;//Number of agents that must be in proximity to be identified as a cluster
+        int clusterItemThreshhold = 8;//Number of agents that must be grouped to be identified as a cluster
         int clusterBackCount = 20;//Number to count back in existing clusters to detect a match, high makes things slow
         private List<Cluster> tempClusters;
         private Dictionary<int, PersistedCluster> trackedClusters;
@@ -28,10 +28,10 @@ namespace SwarmAnalysisEngine
         {
             tempClusters = new List<Cluster>();
             trackedClusters = new Dictionary<int,PersistedCluster>();
-            trackedClusters.Add(0, new PersistedCluster() { ColorID = 0 });
-            trackedClusters.Add(1, new PersistedCluster() { ColorID = 1 });
-            trackedClusters.Add(2, new PersistedCluster() { ColorID = 2 });
-            trackedClusters.Add(3, new PersistedCluster() { ColorID = 3 });
+            trackedClusters.Add(0, new PersistedCluster() { ColorID = 0, IdentifyingAgent = -2 });
+            trackedClusters.Add(1, new PersistedCluster() { ColorID = 1, IdentifyingAgent = -2 });
+            trackedClusters.Add(2, new PersistedCluster() { ColorID = 2, IdentifyingAgent = -2 });
+            trackedClusters.Add(3, new PersistedCluster() { ColorID = 3, IdentifyingAgent = -2 });
             analysis = new Analysis();
         }
 
@@ -70,37 +70,68 @@ namespace SwarmAnalysisEngine
                 }
 
                 RemoveSmallClusters();
-                
+
                 #region Update
-                foreach (Cluster cluster in tempClusters.OrderBy(c=>c.Area))
+                foreach (Cluster cluster in tempClusters)
                 {
                     cluster.Update();
                 }
                 #endregion
 
                 #region Persisted Clusters
-                //Update persisting clusters
+                //Update persisting clusters 
 
                 for (int n = 0; n < trackedClusters.Count; n++)
                 {
                     var trackedClusterValues = trackedClusters.Select(e => e.Value.IdentifyingAgent).ToList();
 
-                    //Try to add cluster to tracked
-                    if (trackedClusterValues[n] == -1)
+                    #region Try to add cluster to tracked clusters
+                    //Can only add if there is an open cluster
+                    if (trackedClusterValues[n] == -2)
                     {
-                        Cluster val = tempClusters.Where(c => c.All(i => !trackedClusterValues.Contains(i.ID))).FirstOrDefault();
+                        Cluster tempCluster = null;
 
-                        if (val != null)
+                        foreach (Cluster cluster in tempClusters)
+                        {
+                            bool flag = false;
+                            //foreach (int value in trackedClusterValues)
+                            //{
+                            //    if (cluster.GetPointNearestToCenter() == value)
+                            //    {
+                            //        flag = true;
+                            //    }
+                            //}
+
+                            foreach (Individual indvd in cluster)
+                            {
+                                foreach (int value in trackedClusterValues)
+                                {
+                                    if (indvd.ID == value)
+                                    {
+                                        flag = true;
+                                    }
+                                }
+                            }
+
+                            if (!flag)
+                            {
+                                tempCluster = cluster;
+                            }
+                        }
+
+
+                        if (tempCluster != null)
                         {
                             //TODO: Why should i have to do this
-                            bool really = trackedClusterValues.Contains(val.GetPointNearestToCenter());
-                            if (!really)
+                            bool really = trackedClusterValues.Contains(tempCluster.GetPointNearestToCenter());
+                            if (!really && trackedClusters[n].IdentifyingAgent == -2)
                             {
-                                trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = val.GetPointNearestToCenter(), ColorID = trackedClusters[n].ColorID};//trackedClusters[n];//.IdentifyingAgent = 1;//.IdentifyingAgent = val.GetPointNearestToCenter();
+                                trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = tempCluster.GetPointNearestToCenter(), ColorID = trackedClusters[n].ColorID };//trackedClusters[n];//.IdentifyingAgent = 1;//.IdentifyingAgent = val.GetPointNearestToCenter();
                                 continue;
                             }
                         }
                     }
+                    #endregion
 
                     bool found = false;
 
@@ -113,31 +144,42 @@ namespace SwarmAnalysisEngine
                             {
                                 //this cluster is being tracked
                                 SetClusterColor(cluster, n);
-                                found = true;
+                            }
+                            else
+                            {
+                                //There is more than one id tracked id in the cluster 
+                                var multiplesValues = multiples.Select(i => i.ID);
+                                bool firstpass = true;
+                                for (int i = 0; i < trackedClusters.Count(); i++)//var t in  trackedClusters)
+                                {
+                                    if (multiplesValues.Contains(trackedClusters[i].IdentifyingAgent))
+                                    {
+                                        //Reset the tracked agents of cluster
+                                        if (firstpass)
+                                        {
+                                            trackedClusters[i] = new PersistedCluster() { IdentifyingAgent = multiplesValues.First(), ColorID = trackedClusters[n].ColorID };
+                                            SetClusterColor(cluster, i);
+                                            firstpass = false;
+                                        }
+                                        else
+                                        {
+                                            trackedClusters[i] = new PersistedCluster() { IdentifyingAgent = -2, ColorID = trackedClusters[n].ColorID };
+                                            continue;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
 
-
-                    //for (int c = 0; c < tempClusters.Count(); c++)
-                    //{
-                    //    if (tempClusters[c].Any(i => i.ID == trackedClusters[n].IdentifyingAgent))
-                    //    {
-                    //        var multiples = tempClusters[c].Where(z => trackedClusterValues.Contains(z.ID));
-                    //        if (multiples.Count() <= 1)
-                    //        {
-                    //            //this cluster is being tracked
-                    //            SetClusterColor(tempClusters[c], trackedClusters[n].ColorID);
-                    //            found = true;
-                    //        }
-                    //    }
-                    //}
-
-                    if (!found)
+                    if (found)
                     {
-                        trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = -1, ColorID = trackedClusters[n].ColorID };
+                        trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = -2, ColorID = trackedClusters[n].ColorID };
                     }
+
                 }
+
+
                 #endregion
 
 
@@ -146,7 +188,7 @@ namespace SwarmAnalysisEngine
 
                 if (tempClusters.Count > 0)
                 {
-                    Cluster firstTrackedCluster = tempClusters.FirstOrDefault(c=>c.Any(i => i.ID == trackedClusters[0].IdentifyingAgent));
+                    Cluster firstTrackedCluster = tempClusters.FirstOrDefault(c => c.Any(i => i.ID == trackedClusters[0].IdentifyingAgent));
                     //Cluster firstTrackedCluster = clusters.OrderBy(x => x.Area).First();
 #if WINDOWS
 
@@ -184,6 +226,19 @@ namespace SwarmAnalysisEngine
                 return analysis;
             }
             return null;
+        }
+        
+
+        private int UpdateIndex(int index)
+        {
+            if (index <= 3)
+            {
+                return index++;
+            }
+            else
+            {
+                return -2;
+            }
         }
 
         private void GetArea()

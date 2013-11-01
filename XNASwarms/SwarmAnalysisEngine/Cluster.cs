@@ -211,7 +211,7 @@ namespace SwarmAnalysisEngine
         public int GetPointNearestToCenter()
         {
             int identifyingAgentID = -1;
-            float clostestDistance = 100;
+            float clostestDistance = 10000;
 
             for (int n = 0; n < this.Count; n++)
             {
