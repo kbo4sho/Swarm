@@ -11,7 +11,6 @@ namespace SwarmAnalysisEngine
     {
         public float Agents{ get{return this.Count();}}  //Count of agents currently in cluster
         public Vector2 NormalizedCenter { get; set; }
-        public int IdentifyingAgent;
         public Vector2 Center {get;set;}
         public float Area { get; set; }
         public float AverageAgentEnergy { get { return (float)this.Average(i => ((i.Dx2 * i.Dx2) + (i.Dy2 * i.Dy2))); } } // Energy if individuals in cluster
@@ -212,7 +211,7 @@ namespace SwarmAnalysisEngine
         public int GetPointNearestToCenter()
         {
             int identifyingAgentID = -1;
-            float clostestDistance = 100;
+            float clostestDistance = 10000;
 
             for (int n = 0; n < this.Count; n++)
             {

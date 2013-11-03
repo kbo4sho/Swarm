@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ScreenSystem.Debug;
 using ScreenSystem.ScreenSystem;
+using SwarmAudio;
 using SwarmEngine;
 using System;
 using VSS;
@@ -50,12 +51,13 @@ namespace XNASwarmsXAML.W8
             screenManager.AddScreen(swarmScreen);
 
 #if NETFX_CORE
-            ControlClient controlClient = new ControlClient(swarmScreen, this.Services.GetService(typeof(IAudio)) as IAudio);
+            ControlClient controlClient = new ControlClient(swarmScreen, swarmAnalysisComponent);
 #else
             ControlClient controlClient = new ControlClient(swarmScreen));
 #endif     
             this.Services.AddService(typeof(IControlClient), controlClient);
 
+            //SoundEngine.Init();
             
             base.Initialize();
         }

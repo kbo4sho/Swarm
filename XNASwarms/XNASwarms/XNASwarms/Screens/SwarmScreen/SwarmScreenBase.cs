@@ -67,7 +67,7 @@ namespace XNASwarms.Screens.SwarmScreen
                 
                 foreach(var group in groups)
                 {
-                    //debugComponent.AddDebugItem(group.Key.ToString(), group.Value);
+                    debugComponent.AddDebugItem(group.Key.ToString(), group.Key + "  " + group.Value);
                 }
 
                 analysisComponent.Update(swarmInXOrder, gameTime);
