@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ScreenSystem.Debug;
 using ScreenSystem.ScreenSystem;
+using SwarmAudio;
 using SwarmEngine;
 using System;
 using VSS;
@@ -56,6 +57,7 @@ namespace XNASwarmsXAML.W8
 #endif     
             this.Services.AddService(typeof(IControlClient), controlClient);
 
+            //SoundEngine.Init();
             
             base.Initialize();
         }

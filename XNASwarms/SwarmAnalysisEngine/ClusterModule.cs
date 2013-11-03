@@ -24,7 +24,7 @@ namespace SwarmAnalysisEngine
         List<Individual> lastfew;
 
         public ClusterModule()
-            : base("Cluster Module", 15)
+            : base("Cluster Module", 2)
         {
             tempClusters = new List<Cluster>();
             trackedClusters = new Dictionary<int,PersistedCluster>();
@@ -94,13 +94,6 @@ namespace SwarmAnalysisEngine
                         foreach (Cluster cluster in tempClusters)
                         {
                             bool flag = false;
-                            //foreach (int value in trackedClusterValues)
-                            //{
-                            //    if (cluster.GetPointNearestToCenter() == value)
-                            //    {
-                            //        flag = true;
-                            //    }
-                            //}
 
                             foreach (Individual indvd in cluster)
                             {
@@ -126,14 +119,12 @@ namespace SwarmAnalysisEngine
                             bool really = trackedClusterValues.Contains(tempCluster.GetPointNearestToCenter());
                             if (!really && trackedClusters[n].IdentifyingAgent == -2)
                             {
-                                trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = tempCluster.GetPointNearestToCenter(), ColorID = trackedClusters[n].ColorID };//trackedClusters[n];//.IdentifyingAgent = 1;//.IdentifyingAgent = val.GetPointNearestToCenter();
+                                trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = tempCluster.GetPointNearestToCenter(), ColorID = trackedClusters[n].ColorID };
                                 continue;
                             }
                         }
                     }
                     #endregion
-
-                    bool found = false;
 
                     foreach (Cluster cluster in tempClusters.Where(c => c.Any(g => trackedClusterValues.Contains(g.ID))).ToList<Cluster>())
                     {
@@ -171,17 +162,10 @@ namespace SwarmAnalysisEngine
                             }
                         }
                     }
-
-                    if (found)
-                    {
-                        trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = -2, ColorID = trackedClusters[n].ColorID };
-                    }
-
                 }
 
 
                 #endregion
-
 
                 GenerateMessages();
                 GenerateFilterResult();
@@ -212,7 +196,7 @@ namespace SwarmAnalysisEngine
                     //}
                     if (firstTrackedCluster != null)
                     {
-#if ! NETFX_CORE
+#if  NETFX_CORE
                         SoundEngine.UpdateCluster(firstTrackedCluster.Agents,
                                                   firstTrackedCluster.Center,
                                                   firstTrackedCluster.Area,
