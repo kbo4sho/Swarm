@@ -197,7 +197,7 @@ namespace SwarmAnalysisEngine
                     //}
                     if (firstTrackedCluster != null)
                     {
-#if  NETFX_CORE
+#if  !NETFX_CORE
                         SoundEngine.UpdateCluster(firstTrackedCluster.Agents,
                                                   firstTrackedCluster.Center,
                                                   firstTrackedCluster.Area,
