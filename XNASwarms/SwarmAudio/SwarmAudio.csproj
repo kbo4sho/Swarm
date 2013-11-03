@@ -69,7 +69,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="100AgentsDirectPositionDataTest.aud" />
+    <None Include="100Agents.aud" />
     <None Include="Cluster_datatest.aud">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
