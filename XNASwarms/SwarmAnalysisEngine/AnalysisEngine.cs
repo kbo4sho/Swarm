@@ -18,7 +18,7 @@ namespace SwarmAnalysisEngine
             Modules = modules;
         }
 
-        public List<Analysis> Run(List<Individual> indvds, float gametime, bool sendaudiodata)
+        public List<Analysis> Run(List<Individual> indvds, Rectangle viewport, float gametime, bool visible)
         {
             if (reset)
             {
@@ -32,7 +32,7 @@ namespace SwarmAnalysisEngine
             List<Analysis> analysis = new List<Analysis>();
             for (int i = 0; i < Modules.Count; i++)
             {
-                analysis.Add(Modules[i].TryAnalysis(indvds, gametime, sendaudiodata));
+                analysis.Add(Modules[i].TryAnalysis(indvds, viewport, gametime,visible));
             }
             return analysis;
         }

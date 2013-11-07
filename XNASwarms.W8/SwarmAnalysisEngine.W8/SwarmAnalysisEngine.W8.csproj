@@ -130,13 +130,16 @@
       <Link>NameModule.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\Normalizer.cs">
-      <Link>Normalizer.cs</Link>
+      <Link>Util\Normalizer.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\PersistedCluster.cs">
       <Link>PersistedCluster.cs</Link>
     </Compile>
     <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\SpeedModule.cs">
       <Link>SpeedModule.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XNASwarms\SwarmAnalysisEngine\SwarmModule.cs">
+      <Link>SwarmModule.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -159,6 +162,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SoultionItems\Windows8\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="WinRtUtility">
+      <HintPath>..\..\SoultionItems\WinRtUtility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Util\Extensions\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

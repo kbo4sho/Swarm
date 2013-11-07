@@ -14,7 +14,7 @@ namespace SwarmAnalysisEngine
         {
         }
 
-        protected override Analysis Analyze(List<SwarmEngine.Individual> indvds, bool sendaudiodata)
+        protected override Analysis Analyze(List<SwarmEngine.Individual> indvds, Rectangle viewport)
         {
             
             //TODO set colors from config file

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SwarmEngine;
+using Microsoft.Xna.Framework;
 
 namespace SwarmAnalysisEngine
 {
@@ -13,7 +14,7 @@ namespace SwarmAnalysisEngine
         {
         }
 
-        protected override Analysis Analyze(List<Individual> indvds, bool sendaudiodata)
+        protected override Analysis Analyze(List<Individual> indvds, Rectangle viewport)
         {
             return new Analysis(){ Messages = new List<AnalysisMessage>(){ new AnalysisMessage(){ Type = ModuleName, Message = "//"}}};
         }

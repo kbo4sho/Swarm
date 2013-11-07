@@ -8,7 +8,7 @@ namespace SwarmAnalysisEngine
     public class ClusterAnaylsisEngine : AnalysisEngine
     {
         public ClusterAnaylsisEngine()
-            : base(new List<AnalysisModule>() { new ClusterModule() })
+            : base(new List<AnalysisModule>() { new SwarmModule(), new ClusterModule() })
         {
 
         }

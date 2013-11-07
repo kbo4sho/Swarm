@@ -104,5 +104,22 @@ namespace SwarmAnalysisEngine
             }
             return value;
         }
+
+
+        public static float Normalize(int from, int to, float min, float max, double toNormalize)
+        {
+            if (toNormalize < min)
+            {
+                toNormalize = min;
+            }
+
+            if (toNormalize > max)
+            {
+                toNormalize = max;
+            }
+
+            var value = (toNormalize - min) * (to - from) / (max - min);
+            return (float)value;
+        }
     }
 }

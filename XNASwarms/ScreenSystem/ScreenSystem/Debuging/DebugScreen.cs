@@ -34,7 +34,7 @@ namespace ScreenSystem.Debug
         private bool consoleVisible;
 
         public DebugScreen(ScreenManager screenmanager, bool visible)
-            : this(screenmanager, visible, new Vector2(20, 20), new FrameRateCounter(true))
+            : this(screenmanager, visible, new Vector2(screenmanager.GraphicsDevice.Viewport.Width - 300, 20), new FrameRateCounter(true))
         {
         }
 

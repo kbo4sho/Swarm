@@ -19,7 +19,6 @@ namespace SwarmAnalysisEngine
         int clusterBackCount = 20;//Number to count back in existing clusters to detect a match, high makes things slow
         private List<Cluster> tempClusters;
         private Dictionary<int, PersistedCluster> trackedClusters;
-        Analysis analysis;
 
         List<Individual> lastfew;
 
@@ -35,9 +34,10 @@ namespace SwarmAnalysisEngine
             analysis = new Analysis();
         }
 
-        protected override Analysis Analyze(List<Individual> indvds, bool visible)
+        protected override Analysis Analyze(List<Individual> indvds, Rectangle viewport)
         {
-            return DoAnalysis(indvds, visible);
+            DoAnalysis(indvds, viewport);
+            return base.Analyze(indvds, viewport);
         }
 
         private void ResetColor(Individual indvd)
@@ -46,9 +46,9 @@ namespace SwarmAnalysisEngine
             indvd.setDisplayColor(Color.MidnightBlue);
         }
 
-        private Analysis DoAnalysis(List<Individual> indvds, bool visble)
+        private void DoAnalysis(List<Individual> indvds, Rectangle viewport)
         {
-            if (indvds.Count() > 0 && visble)
+            if (indvds.Count() > 0)
             {
                 //string robinstxt = "";
                 //foreach (var indvd in indvds)
@@ -207,10 +207,7 @@ namespace SwarmAnalysisEngine
 #endif
                     }
                 }
-
-                return analysis;
             }
-            return null;
         }
         
 

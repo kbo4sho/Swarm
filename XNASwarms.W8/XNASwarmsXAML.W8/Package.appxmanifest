@@ -16,7 +16,7 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="XNASwarms.W8.App">
       <VisualElements DisplayName="XNASwarms.W8" Logo="Assets\LogoAuthoring.png" SmallLogo="Assets\SmallLogo.png" Description="XNASwarms.W8" ForegroundText="light" BackgroundColor="#000000">
-        <DefaultTile ShowName="allLogos" ShortName="Swarms Authoring" />
+        <DefaultTile ShowName="logoOnly" ShortName="Swarms Authoring" />
         <SplashScreen Image="Assets\SplashScreenAuthoring.png" BackgroundColor="#464646" />
       </VisualElements>
       <Extensions>
@@ -34,12 +34,20 @@
             </SupportedFileTypes>
           </FileSavePicker>
         </Extension>
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name=".dat">
+            <SupportedFileTypes>
+              <FileType>.dat</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
       </Extensions>
     </Application>
   </Applications>
   <Capabilities>
     <Capability Name="privateNetworkClientServer" />
     <Capability Name="internetClientServer" />
+    <Capability Name="documentsLibrary" />
     <DeviceCapability Name="location" />
   </Capabilities>
 </Package>
