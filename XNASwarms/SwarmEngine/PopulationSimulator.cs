@@ -52,7 +52,7 @@ namespace SwarmEngine
         public void stepSimulation(List<Individual> temporaryIndividuals, int weightOfTemporaries)
         {
             int numberOfSwarm = swarmInBirthOrder.Count();
-            updateInternalState();
+            
             for (int i = 0; i < numberOfSwarm; i++)
             {
                 currentInd = swarmInBirthOrder[i];
@@ -223,6 +223,7 @@ namespace SwarmEngine
                         param.getMaxSpeed());
 
             };
+            updateInternalState();
         }
 
         private void updateInternalState()

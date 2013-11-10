@@ -56,8 +56,10 @@ namespace XNASwarms
             //graphics.PreferredBackBufferHeight = 1050;
             //graphics.PreferredBackBufferWidth = 1600;
             //graphics.PreferredBackBufferHeight = 900;
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 768;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
             //graphics.ToggleFullScreen();
