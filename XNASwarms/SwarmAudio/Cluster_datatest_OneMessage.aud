@@ -224,11 +224,15 @@ AddMessage stopCluster Active seq 0.0;
    In that spec: Order of Argument Array Positions:
    0 = NumAgents, 1 = Xpos, 2 = Ypos, 3 = Area, 4 = AgentEnergy, 5 = Velocity, 6-8 = Xsymmetry, Ysymmetry, XYsymmetry 
 */
-updateCluster = Create MessageGroup;
-//AddMessage updateCluster MapAndSend FreqRangeMap SendData SetNumAgents_Area [@*0 *3];
-AddMessage updateCluster SendData SetNumAgents_Area [*0 *3];
-AddMessage updateCluster MapAndSend TempoRangeMap SetTempo seq @*4; 
-AddMessage updateCluster MapAndSend XYsymMap SetMCratio sFm @*8;
-AddMessage updateCluster SendData SetMyPanning [*1];
-AddMessage updateCluster SendData SetMyDistance [*2];
+updateCluster_1 = Create MessageGroup;
+updateCluster_2 = Create MessageGroup;
+updateCluster_3 = Create MessageGroup;
+updateCluster_4 = Create MessageGroup;
+//AddMessage updateCluster_1 MapAndSend FreqRangeMap SendData SetNumAgents_Area [@*0 *3];
+AddMessage updateCluster_1 SendData SetNumAgents_Area [*0 *3];
+AddMessage updateCluster_1 MapAndSend TempoRangeMap SetTempo seq @*4; 
+AddMessage updateCluster_1 MapAndSend XYsymMap SetMCratio sFm @*8;
+AddMessage updateCluster_1 SendData SetMyPanning [*1];
+AddMessage updateCluster_1 SendData SetMyDistance [*2];
+
 

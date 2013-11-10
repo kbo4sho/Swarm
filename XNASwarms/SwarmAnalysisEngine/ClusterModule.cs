@@ -23,7 +23,7 @@ namespace SwarmAnalysisEngine
         List<Individual> lastfew;
 
         public ClusterModule()
-            : base("Cluster Module", 2)
+            : base("Cluster Module", 30)
         {
             tempClusters = new List<Cluster>();
             trackedClusters = new Dictionary<int,PersistedCluster>();
@@ -120,12 +120,15 @@ namespace SwarmAnalysisEngine
                             bool really = trackedClusterValues.Contains(tempCluster.GetPointNearestToCenter());
                             if (!really && trackedClusters[n].IdentifyingAgent == -2)
                             {
+                                //SoundEngine.StartCluster(n);
                                 trackedClusters[n] = new PersistedCluster() { IdentifyingAgent = tempCluster.GetPointNearestToCenter(), ColorID = trackedClusters[n].ColorID };
                                 continue;
                             }
                         }
                     }
                     #endregion
+
+                    bool updated = false;
 
                     foreach (Cluster cluster in tempClusters.Where(c => c.Any(g => trackedClusterValues.Contains(g.ID))).ToList<Cluster>())
                     {
@@ -136,6 +139,7 @@ namespace SwarmAnalysisEngine
                             {
                                 //this cluster is being tracked
                                 SetClusterColor(cluster, n);
+                                updated = true;
                             }
                             else
                             {
@@ -152,16 +156,24 @@ namespace SwarmAnalysisEngine
                                             trackedClusters[i] = new PersistedCluster() { IdentifyingAgent = multiplesValues.First(), ColorID = trackedClusters[n].ColorID };
                                             SetClusterColor(cluster, i);
                                             firstpass = false;
+                                            updated = true;
                                         }
                                         else
                                         {
+                                            //Reset
                                             trackedClusters[i] = new PersistedCluster() { IdentifyingAgent = -2, ColorID = trackedClusters[n].ColorID };
+                                            updated = true;
                                             continue;
                                         }
                                     }
                                 }
                             }
                         }
+                    }
+
+                    if (!updated && trackedClusters[n].IdentifyingAgent >= 0)
+                    {
+                        //SoundEngine.StopCluster(n);
                     }
                 }
 
@@ -171,9 +183,58 @@ namespace SwarmAnalysisEngine
                 GenerateMessages();
                 GenerateFilterResult();
 
+
+                
+
                 if (tempClusters.Count > 0)
                 {
                     Cluster firstTrackedCluster = tempClusters.FirstOrDefault(c => c.Any(i => i.ID == trackedClusters[0].IdentifyingAgent));
+                    Cluster secondTrackedCluster = tempClusters.FirstOrDefault(c => c.Any(i => i.ID == trackedClusters[1].IdentifyingAgent));
+                    Cluster thirdTrackedCluster = tempClusters.FirstOrDefault(c => c.Any(i => i.ID == trackedClusters[2].IdentifyingAgent));
+                    Cluster forthTrackedCluster = tempClusters.FirstOrDefault(c => c.Any(i => i.ID == trackedClusters[3].IdentifyingAgent));
+
+                    if (firstTrackedCluster != null)
+                    {
+                        SoundEngine.UpdateCluster_1(firstTrackedCluster.Agents,
+                                                  new Vector2(Normalizer.NormalizeWidthCentered(firstTrackedCluster.Center.X), Normalizer.NormalizeHeightCentered0to1(firstTrackedCluster.Center.Y)),
+                                                  firstTrackedCluster.Area,
+                                                  Normalizer.Normalize0ToOne(firstTrackedCluster.AverageAgentEnergy),
+                                                  Normalizer.Normalize0ToOne(firstTrackedCluster.ClusterVelocity),
+                                                  new Vector3(firstTrackedCluster.Symmetry.X, firstTrackedCluster.Symmetry.Y, firstTrackedCluster.Symmetry.Z));
+                    }
+
+                    if (secondTrackedCluster != null)
+                    {
+                        SoundEngine.UpdateCluster_2(secondTrackedCluster.Agents,
+                                                  new Vector2(Normalizer.NormalizeWidthCentered(secondTrackedCluster.Center.X), Normalizer.NormalizeHeightCentered0to1(secondTrackedCluster.Center.Y)),
+                                                  secondTrackedCluster.Area,
+                                                  Normalizer.Normalize0ToOne(secondTrackedCluster.AverageAgentEnergy),
+                                                  Normalizer.Normalize0ToOne(secondTrackedCluster.ClusterVelocity),
+                                                  new Vector3(secondTrackedCluster.Symmetry.X, secondTrackedCluster.Symmetry.Y, secondTrackedCluster.Symmetry.Z));
+
+                    }
+
+                    if (thirdTrackedCluster != null)
+                    {
+                        SoundEngine.UpdateCluster_3(thirdTrackedCluster.Agents,
+                                                  new Vector2(Normalizer.NormalizeWidthCentered(thirdTrackedCluster.Center.X), Normalizer.NormalizeHeightCentered0to1(thirdTrackedCluster.Center.Y)),
+                                                  thirdTrackedCluster.Area,
+                                                  Normalizer.Normalize0ToOne(thirdTrackedCluster.AverageAgentEnergy),
+                                                  Normalizer.Normalize0ToOne(thirdTrackedCluster.ClusterVelocity),
+                                                  new Vector3(thirdTrackedCluster.Symmetry.X, thirdTrackedCluster.Symmetry.Y, thirdTrackedCluster.Symmetry.Z));
+
+                    }
+
+                    if (forthTrackedCluster != null)
+                    {
+                        SoundEngine.UpdateCluster_4(forthTrackedCluster.Agents,
+                                                  new Vector2(Normalizer.NormalizeWidthCentered(forthTrackedCluster.Center.X), Normalizer.NormalizeHeightCentered0to1(forthTrackedCluster.Center.Y)),
+                                                  forthTrackedCluster.Area,
+                                                  Normalizer.Normalize0ToOne(forthTrackedCluster.AverageAgentEnergy),
+                                                  Normalizer.Normalize0ToOne(forthTrackedCluster.ClusterVelocity),
+                                                  new Vector3(forthTrackedCluster.Symmetry.X, forthTrackedCluster.Symmetry.Y, forthTrackedCluster.Symmetry.Z));
+                    }
+
                     //Cluster firstTrackedCluster = clusters.OrderBy(x => x.Area).First();
 #if WINDOWS
 
@@ -195,17 +256,19 @@ namespace SwarmAnalysisEngine
                     //SoundEngine.UpdateCluster(1, new Vector2(.1f, .2f), 1.1f, 1.1f, 1, new Vector3(1, 1, 1));
                     //SoundEngine.SendClusterXY(Normalizer.NormalizeWidthCentered(cluster.Center.X), Normalizer.NormalizeHeight(cluster.Center.Y));
                     //}
-                    if (firstTrackedCluster != null)
-                    {
-#if  !NETFX_CORE
-                        SoundEngine.UpdateCluster(firstTrackedCluster.Agents,
-                                                  firstTrackedCluster.Center,
-                                                  firstTrackedCluster.Area,
-                                                  Normalizer.Normalize0ToOne(firstTrackedCluster.AverageAgentEnergy),
-                                                  firstTrackedCluster.ClusterVelocity,
-                                                  new Vector3(firstTrackedCluster.Symmetry.X, firstTrackedCluster.Symmetry.Y, firstTrackedCluster.Symmetry.Z));
-#endif
-                    }
+//                    if (firstTrackedCluster != null)
+//                    {
+                       
+//#if  !NETFX_CORE
+
+//                        SoundEngine.UpdateCluster(firstTrackedCluster.Agents,
+//                                                  new Vector2(Normalizer.NormalizeWidthCentered(firstTrackedCluster.Center.X), Normalizer.NormalizeHeightCentered0to1(firstTrackedCluster.Center.Y)),
+//                                                  firstTrackedCluster.Area,
+//                                                  Normalizer.Normalize0ToOne(firstTrackedCluster.AverageAgentEnergy),
+//                                                  Normalizer.Normalize0ToOne(firstTrackedCluster.ClusterVelocity),
+//                                                  new Vector3(firstTrackedCluster.Symmetry.X, firstTrackedCluster.Symmetry.Y, firstTrackedCluster.Symmetry.Z));
+//#endif
+//                    }
                 }
             }
         }

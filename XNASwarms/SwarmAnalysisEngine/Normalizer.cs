@@ -54,6 +54,11 @@ namespace SwarmAnalysisEngine
             return KeepValueInCenteredBound((float)((((f + Height / 2) * 2) / (Height)) - 1));
         }
 
+        public static float NormalizeHeightCentered0to1(float f)
+        {
+            return Normalize(0, 1, -(Height / 2), Height / 2, f);
+        }
+
         private static float KeepValueInCenteredBound(float value)
         {
             if (value < -1)
@@ -79,18 +84,6 @@ namespace SwarmAnalysisEngine
         public static float NormalizePointOneToTen(float f)
         {
             return (f - 0) * (10 - (float).1) / (Width - 0);
-        }
-
-        public static float Normalize120To800(float f)
-        {
-            // 5 = min val
-            //40 = max val
-            var value = (f - 5) * (800 - 120) / (40 - 5);
-            if (value > 800)
-            {
-                value = 800;
-            }
-            return value;
         }
 
         public static float Normalize0ToOne(float f)

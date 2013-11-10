@@ -64,6 +64,7 @@ namespace XNASwarms.Screens.UI
             //AddMenuItem("Export", EntryType.ExportLikes, _screen);
             //AddMenuItem("Like", EntryType.Save, _screen);
 #if WINDOWS
+            AddMenuItem("Stable", EntryType.Stable, screen);
             AddMenuItem("Mutation", EntryType.Mutation, screen);
             AddMenuItem("Start Cluster", EntryType.AudioPlay, screen);
             AddMenuItem("Stop Cluster", EntryType.AudioPause, screen);

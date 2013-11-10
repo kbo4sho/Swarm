@@ -64,9 +64,19 @@ namespace SwarmAudio
             VSSCSharpClient.AUDupdate(handle, "startCluster", 1, new float[] { 1 });
         }
 
+        public static void StartCluster(int index)
+        {
+            VSSCSharpClient.AUDupdate(handle, "startCluster" +  "_" + index, 1, new float[] { 1 });
+        }
+
         public static void StopCluster()
         {
             VSSCSharpClient.AUDupdate(handle, "stopCluster", 1, new float[] { 0 });
+        }
+
+        public static void StopCluster(int index)
+        {
+            VSSCSharpClient.AUDupdate(handle, "stopCluster" + "_" + index, 1, new float[] { 1 });
         }
 
         public static void Play()
