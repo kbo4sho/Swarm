@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using SwarmEngine;
 using Microsoft.Xna.Framework;
+#if NETFX_CORE
 using Windows.Storage;
+#endif
 
 namespace SwarmAnalysisEngine
 {
@@ -49,6 +51,7 @@ namespace SwarmAnalysisEngine
             return analysis;
         }
 
+#if NETFX_CORE
         protected virtual async void CreateReadOut(string fileName, string message = "")
         {
             try
@@ -72,6 +75,7 @@ namespace SwarmAnalysisEngine
             }
 
         }
+#endif
 
     }
 }

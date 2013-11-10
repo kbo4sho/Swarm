@@ -60,7 +60,9 @@ namespace SwarmAnalysisEngine
                 if (lineCount == sampleCount)
                 {
                     //CREATE READOUT
+#if NETFX_CORE
                     CreateReadOut(fileName, builder.ToString());
+#endif
                 }
 
                 lineCount = 0;
@@ -71,9 +73,11 @@ namespace SwarmAnalysisEngine
             return base.Analyze(indvds, viewport);
         }
 
+#if NETFX_CORE
         protected override void CreateReadOut(string fileName, string message = "")
         {
             base.CreateReadOut(fileName, message);
         }
+#endif
     }
 }

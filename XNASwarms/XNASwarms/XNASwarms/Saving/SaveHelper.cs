@@ -65,12 +65,10 @@ namespace XNASwarms.Saving
             }
             catch
             {
-                return null;
+                return new SaveAllSpecies();
             }
-#else
-            return null;
-
 #endif
+            return new SaveAllSpecies();
         }
 #if NETFX_CORE
         public static async Task<SaveAllSpecies> LoadGameFile(string filename)

@@ -27,7 +27,7 @@ namespace XNASwarms.Screens.UI
         SpriteBatch spriteBatch;
 
         private readonly int maxLikedItems = 6;
-       
+
         private List<MenuEntry> menuEntries = new List<MenuEntry>();
 
         private readonly Vector2 _containerMargin = new Vector2(10, 70);
@@ -56,7 +56,7 @@ namespace XNASwarms.Screens.UI
             //AddMenuItem("+ ZOOM", EntryType.ZoomIn, _screen);
             //AddMenuItem("- ZOOM", EntryType.ZoomOut, _screen);
             //AddMenuItem("Mutation", EntryType.Game, _screen);
-            
+
             //AddMenuItem("Stable", EntryType.Stable, _screen);
             //AddMenuItem("Swinger", EntryType.Swinger, _screen);
             //AddMenuItem("Console", EntryType.Debugger, _screen);
@@ -79,6 +79,7 @@ namespace XNASwarms.Screens.UI
             AddMenuItem("Like", EntryType.Save, swarmscreen);
             
 #endif
+
 
         }
 
@@ -106,6 +107,7 @@ namespace XNASwarms.Screens.UI
 #if WINDOWS
             UpdateLikedItemsUI();
 #endif
+            allLikedItems = SaveHelper.Load("SwarmsSaves");
         }
 
         public void UpdateMenuEntryLocations()
@@ -134,14 +136,14 @@ namespace XNASwarms.Screens.UI
         private void UpdateLikedItemsUI()
         {
 #if WINDOWS
-            SaveAllSpecies allLikedItems = SaveHelper.Load("allLikedItems");
+            SaveAllSpecies allLikedItems = SaveHelper.Load("SwarmsSaves");
 #endif
             menuEntries.RemoveAll(s => s.GetType() == typeof(SavedSwarmButton));
             if (allLikedItems != null)
             {
                 if (allLikedItems.Count == 1)
                 {
-                    AddSavedSwarm(allLikedItems[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1,allLikedItems[0].GetMostUsedColors(), screen);
+                    AddSavedSwarm(allLikedItems[0].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall1, allLikedItems[0].GetMostUsedColors(), screen);
                 }
                 else if (allLikedItems.Count == 2)
                 {
@@ -178,7 +180,7 @@ namespace XNASwarms.Screens.UI
                     AddSavedSwarm(allLikedItems[4].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall5, allLikedItems[4].GetMostUsedColors(), screen);
                     AddSavedSwarm(allLikedItems[5].CreadtedDt.ToString("h:mm:ss"), EntryType.Recall6, allLikedItems[5].GetMostUsedColors(), screen);
                 }
-                
+
             }
         }
 
@@ -191,7 +193,11 @@ namespace XNASwarms.Screens.UI
 
         private async void ImportSwarmSaveData()
         {
+#if WINDOWS
+            
+#else
             allLikedItems = await controlClient.Import();
+#endif
             UpdateLikedItemsUI();
         }
 
@@ -385,7 +391,7 @@ namespace XNASwarms.Screens.UI
                 {
                     controlClient.ToggleAnalyze();
                 }
-                
+
 #if NETFX_CORE
                 else if (menuEntries[selectedEntry].IsImportLikes())
                 {

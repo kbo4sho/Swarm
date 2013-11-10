@@ -34,22 +34,23 @@ namespace ScreenSystem.Debug
         private bool consoleVisible;
 
         public DebugScreen(ScreenManager screenmanager, bool visible)
-            : this(screenmanager, visible, new Vector2(screenmanager.GraphicsDevice.Viewport.Width - 300, 20), new FrameRateCounter(true))
+            : this(screenmanager, visible, new FrameRateCounter(true))
         {
         }
 
-        public DebugScreen(ScreenManager screenManager, bool visible, Vector2 position, IDebugComponent frameRateCounter)
+        public DebugScreen(ScreenManager screenManager, bool visible, IDebugComponent frameRateCounter)
             : base(screenManager.Game)
         {
             this.frameRateCounter = frameRateCounter;
             this.screenManager = screenManager;
             consoleVisible = visible;
-            debugPanelTopLeft = position;
+            
             DebugItems = new List<DebugItem>();
         }
 
         protected override void LoadContent()
-        {   
+        {
+            debugPanelTopLeft = new Vector2(screenManager.GraphicsDevice.Viewport.Width - 300, 20);
             maxDebugItems = (screenManager.GraphicsDevice.Viewport.Height - (panelPadding * 2)) / itemSpacer;
             base.LoadContent();
         }
