@@ -213,7 +213,7 @@
                     </Grid>
                 </Grid>
             </DataTemplate>
-            <SolidColorBrush x:Key="BrushAppBackground" Color="#BA000000"/>
+            <SolidColorBrush x:Key="BrushAppBackground" Color="#CA000000"/>
 
          
             <ResourceDictionary.MergedDictionaries>
