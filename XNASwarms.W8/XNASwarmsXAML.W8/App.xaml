@@ -18,6 +18,11 @@
 
             <DataTemplate x:Key="WorldEditorTemplate">
                 <StackPanel Grid.Row="1" DataContext="{Binding}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
                     <StackPanel.Resources>
                         <Style TargetType="Grid">
                             <Setter Property="Margin" Value="0,0,20,0"/>
@@ -25,15 +30,15 @@
                     </StackPanel.Resources>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
                             <RowDefinition Height="1*"/>
-                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Agent Count" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="300" Value="{Binding NumberOfIndividualsMax, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="10" Maximum="500"/>
+                        <Slider Value="{Binding NumberOfIndividualsMax, Mode=TwoWay}" Grid.Row="1" Minimum="10" Maximum="500"/>
                         <TextBlock Text="Neighborhood Radius" Style="{StaticResource BasicTextStyle}" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="300" Value="{Binding NeighborhoodRadiusMax, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="100"/>
+                        <Slider Value="{Binding NeighborhoodRadiusMax, Mode=TwoWay}" Grid.Row="3" Minimum="0" Maximum="100"/>
                     </Grid>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -43,9 +48,9 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Normal Speed" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="300" Value="{Binding NormalSpeed, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="0" Maximum="15" x:Name="NormalSpeedSlider"/>
+                        <Slider Value="{Binding NormalSpeed, Mode=TwoWay}" Grid.Row="1" Minimum="0" Maximum="15" x:Name="NormalSpeedSlider"/>
                         <TextBlock Text="Max Speed" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="300" Value="{Binding MaxSpeed, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="{Binding ElementName=NormalSpeedSlider,Path=Value}" Maximum="500"/>
+                        <Slider Value="{Binding MaxSpeed, Mode=TwoWay}" Grid.Row="3" Minimum="{Binding ElementName=NormalSpeedSlider,Path=Value}" Maximum="500"/>
                     </Grid>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -55,9 +60,9 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Cohesive Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="300" Value="{Binding CohesiveForce, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="0" Maximum="1" StepFrequency=".1"/>
+                        <Slider Value="{Binding CohesiveForce, Mode=TwoWay}" Grid.Row="1" Minimum="0" Maximum="1" StepFrequency=".1"/>
                         <TextBlock Text="Alligning Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="300" Value="{Binding AlligningForce, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="1" StepFrequency=".1" />
+                        <Slider Value="{Binding AlligningForce, Mode=TwoWay}" Grid.Row="3" Minimum="0" Maximum="1" StepFrequency=".1" />
                     </Grid>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -67,9 +72,9 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Seperating Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="300" Value="{Binding SperatingForce, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="25" Maximum="100"/>
+                        <Slider Value="{Binding SperatingForce, Mode=TwoWay}" Grid.Row="1" Minimum="25" Maximum="100"/>
                         <TextBlock Text="Chance of Random Steering" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="300" Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="1" StepFrequency=".1" />
+                        <Slider Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="3" Minimum="0" Maximum="1" StepFrequency=".1" />
                     </Grid>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -84,24 +89,29 @@
 
             <DataTemplate x:Key="BrushEditorTemplate">
                 <StackPanel Grid.Row="1" DataContext="{Binding}" x:Name="brushcontrolroot" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
                     <StackPanel.Resources>
                         <Style TargetType="Grid">
-                            <Setter Property="Margin" Value="0,0,0,0"/>
+                            <Setter Property="Margin" Value="0,0,20,0"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Grid Margin="0,0,20,0">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Random Steering" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="150" Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="0" Maximum="1" StepFrequency=".1" />
+                        <TextBlock Text="Random Steering" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontFamily="Global User Interface"/>
+                        <Slider Value="{Binding ChanceOfRandomSteering, Mode=TwoWay}" Grid.Row="1" Minimum="0" Maximum="1" StepFrequency=".1" />
                         <TextBlock Text="Neighborhood Radius" Style="{StaticResource BasicTextStyle}" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="150" Value="{Binding NeighborhoodRadiusMax, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="100"/>
+                        <Slider Value="{Binding NeighborhoodRadiusMax, Mode=TwoWay}" Grid.Row="3" Minimum="0" Maximum="100"/>
                     </Grid>
-                    <Grid Margin="0,0,20,0">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
@@ -109,11 +119,11 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Normal Speed" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="150" Value="{Binding NormalSpeed, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="0" Maximum="15" x:Name="NormalSpeedSlider"/>
+                        <Slider Value="{Binding NormalSpeed, Mode=TwoWay}" Grid.Row="1" Minimum="0" Maximum="15" x:Name="NormalSpeedSlider"/>
                         <TextBlock Text="Max Speed" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="150" Value="{Binding MaxSpeed, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="{Binding ElementName=NormalSpeedSlider,Path=Value}" Maximum="500"/>
+                        <Slider Value="{Binding MaxSpeed, Mode=TwoWay}" Grid.Row="3" Minimum="{Binding ElementName=NormalSpeedSlider,Path=Value}" Maximum="500"/>
                     </Grid>
-                    <Grid Margin="0,0,20,0">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
@@ -121,33 +131,39 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Cohesive Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="150" Value="{Binding CohesiveForce, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="0" Maximum="1" StepFrequency=".01"/>
-                        <TextBlock Text="Alligning Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="150" Value="{Binding AlligningForce, Mode=TwoWay}" Grid.Row="3" Height="32" Minimum="0" Maximum="1" StepFrequency=".01" />
+                        <Slider Value="{Binding CohesiveForce, Mode=TwoWay}" Grid.Row="1" Minimum="0" Maximum="1" StepFrequency=".01"/>
+                        <TextBlock Text="Alligning Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontFamily="Global User Interface"/>
+                        <Slider  Value="{Binding AlligningForce, Mode=TwoWay}" Grid.Row="3" Minimum="0" Maximum="1" StepFrequency=".01" />
                     </Grid>
-                    <Grid Margin="0,0,20,0">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
+                       
                         <TextBlock Text="Seperating Force" Style="{StaticResource BasicTextStyle}"  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Width="150" Value="{Binding SperatingForce, Mode=TwoWay}" Grid.Row="1" Height="32" Minimum="25" Maximum="100" StepFrequency=".01"/>
-                        <CheckBox Grid.Row="2"  Content="Mobile" IsChecked="{Binding IsMobile, Mode=TwoWay}" VerticalAlignment="Bottom"/>
-                        <CheckBox Grid.Row="3"  Content="Undo" IsChecked="{Binding IsUndo, Mode=TwoWay}" VerticalAlignment="Bottom"/>
-                    </Grid>
-                    <Grid Margin="0,0,20,0">
-                        <toolkit:ColorHexagonPicker ColorSize="12" x:Name="colorPicker"  Color="{Binding BrushColor, Mode=TwoWay}" />
+                        <Slider Value="{Binding SperatingForce, Mode=TwoWay}" Grid.Row="1" Minimum="25" Maximum="100" StepFrequency=".01"/>
+                       
                     </Grid>
                     <Grid>
-                        <localControls:Knob x:Name="knob" Angle="{Binding StartingDirection, Mode=TwoWay}" />
+                        <toolkit:ColorHexagonPicker ColorSize="13" x:Name="colorPicker" Color="{Binding BrushColor, Mode=TwoWay}" />
+                    </Grid>
+                    <Grid>
+                        <CheckBox Grid.Row="2" Grid.RowSpan="2" Content="Mobile" IsChecked="{Binding IsMobile, Mode=TwoWay}" VerticalAlignment="Center"/>
+                        <!--<localControls:Knob x:Name="knob" Angle="{Binding StartingDirection, Mode=TwoWay}" />-->
                     </Grid>
                 </StackPanel>
             </DataTemplate>
 
             <DataTemplate x:Key="EraseEditorTemplate">
                 <StackPanel Grid.Row="1" DataContext="{Binding}">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
                     <Grid Margin="0,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
@@ -161,6 +177,11 @@
 
             <DataTemplate x:Key="HandEditorTemplate">
                 <Grid Grid.Row="1" DataContext="{Binding}" VerticalAlignment="Bottom">
+                    <Grid.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                        </TransitionCollection>
+                    </Grid.Transitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
@@ -192,6 +213,7 @@
                     </Grid>
                 </Grid>
             </DataTemplate>
+            <SolidColorBrush x:Key="BrushAppBackground" Color="#BA000000"/>
 
          
             <ResourceDictionary.MergedDictionaries>

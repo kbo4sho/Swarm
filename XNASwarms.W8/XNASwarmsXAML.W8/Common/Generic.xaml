@@ -4105,6 +4105,8 @@
   </Style>
   <!-- Default style for Windows.UI.Xaml.Controls.Slider -->
   <Style TargetType="Slider">
+	<Setter Property="Width" Value="150"/>
+	<Setter Property="Height" Value="32"/>
     <Setter Property="Background" Value="{StaticResource SliderTrackBackgroundThemeBrush}" />
     <Setter Property="BorderBrush" Value="{StaticResource SliderBorderThemeBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource SliderBorderThemeThickness}" />

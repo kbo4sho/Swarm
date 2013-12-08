@@ -20,7 +20,7 @@
       
     </SwapChainBackgroundPanel.Resources>
     <Grid>
-        <AppBar x:Name="myappbar" VerticalAlignment="Bottom" IsOpen="True">
+        <AppBar x:Name="myappbar" VerticalAlignment="Bottom" IsOpen="True" Height="310" Background="{StaticResource BrushAppBackground}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
