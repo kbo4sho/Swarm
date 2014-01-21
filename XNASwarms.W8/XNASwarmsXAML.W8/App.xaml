@@ -36,7 +36,7 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Agent Count" Style="{StaticResource BasicTextStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <Slider Value="{Binding NumberOfIndividualsMax, Mode=TwoWay}" Grid.Row="1" Minimum="10" Maximum="500"/>
+                        <Slider Value="{Binding NumberOfIndividualsMax, Mode=TwoWay}" Grid.Row="1" Minimum="10" Maximum="1000"/>
                         <TextBlock Text="Neighborhood Radius" Style="{StaticResource BasicTextStyle}" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                         <Slider Value="{Binding NeighborhoodRadiusMax, Mode=TwoWay}" Grid.Row="3" Minimum="0" Maximum="100"/>
                     </Grid>

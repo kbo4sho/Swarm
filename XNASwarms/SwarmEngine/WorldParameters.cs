@@ -11,7 +11,7 @@ namespace SwarmEngine
     /// </summary>
     public static class StaticWorldParameters
     {
-        public static int numberOfIndividualsMax = 200;
+        public static int numberOfIndividualsMax = 1000;
         public static int neighborhoodRadiusMax = 45;
         public static int normalSpeedMax = 4;
         public static int maxSpeedMax = 8;
